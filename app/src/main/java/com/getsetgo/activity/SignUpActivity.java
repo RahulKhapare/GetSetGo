@@ -31,6 +31,7 @@ public class SignUpActivity extends AppCompatActivity {
     /*private void initView(){
 
         onClick();
+        //
     }
 
     private void onClick(){
