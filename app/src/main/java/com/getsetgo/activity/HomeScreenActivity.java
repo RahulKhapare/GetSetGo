@@ -3,6 +3,8 @@ package com.getsetgo.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
@@ -13,8 +15,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.getsetgo.Adapter.ActiveCourseAdapter;
+import com.getsetgo.Adapter.BestSellingCourseAdapter;
+import com.getsetgo.Adapter.OtherCategoriesAdapter;
 import com.getsetgo.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.List;
 
 public class HomeScreenActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,6 +31,9 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
     public RecyclerView recyclerViewCources, recyclerViewOtherCategories, recyclerBestSellingCources;
     BottomNavigationView bottomNavigationView;
     CardView cardViewCurrentLearning;
+    ActiveCourseAdapter activeCourseAdapter;
+    OtherCategoriesAdapter otherCategoriesAdapter;
+    BestSellingCourseAdapter bestSellingCourseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +61,9 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         txtViewAllBestCourse.setOnClickListener(this);
         txtViewAll.setOnClickListener(this);
 
+        //setupRecyclerViewForActiveCourse();
+        //setupRecyclerViewForOthersCategories();
+        //setupRecyclerViewForBestSellingCourse();
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -67,5 +80,29 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
             case R.id.cardViewCurrentLearning:
                 break;
         }
+    }
+
+    private void setupRecyclerViewForActiveCourse() {
+        recyclerViewCources.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
+        activeCourseAdapter = new ActiveCourseAdapter(this);
+        recyclerViewCources.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewCources.setAdapter(activeCourseAdapter);
+        activeCourseAdapter.notifyDataSetChanged();
+    }
+
+    private void setupRecyclerViewForOthersCategories() {
+        recyclerViewOtherCategories.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
+        otherCategoriesAdapter = new OtherCategoriesAdapter(this);
+        recyclerViewOtherCategories.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewOtherCategories.setAdapter(otherCategoriesAdapter);
+        otherCategoriesAdapter.notifyDataSetChanged();
+    }
+
+    private void setupRecyclerViewForBestSellingCourse() {
+        recyclerBestSellingCources.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
+        bestSellingCourseAdapter = new BestSellingCourseAdapter(this);
+        recyclerBestSellingCources.setItemAnimator(new DefaultItemAnimator());
+        recyclerBestSellingCources.setAdapter(bestSellingCourseAdapter);
+        bestSellingCourseAdapter.notifyDataSetChanged();
     }
 }

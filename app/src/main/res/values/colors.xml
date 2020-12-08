@@ -16,4 +16,6 @@
     <color name="best_seller_color">#FFAE0C</color>
     <color name="main_backgound">#F9F9F9</color>
     <color name="viewall_text_color">#F7B205</color>
+    <color name="progress_color">#64B13F</color>
+    <color name="progress_back_color">#CED5DB</color>
 </resources>

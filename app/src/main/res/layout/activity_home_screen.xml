@@ -100,7 +100,7 @@
                         android:id="@+id/imvCourse"
                         android:layout_width="93dp"
                         android:layout_height="97dp"
-                        android:src="@drawable/ic_launcher_background" />
+                        android:src="@drawable/download" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -139,12 +139,24 @@
                             android:textColor="@color/main_text_color"
                             android:textSize="12sp" />
 
+                        <com.sasank.roundedhorizontalprogress.RoundedHorizontalProgressBar
+                            android:id="@+id/progress_bar_1"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="194dp"
+                            android:layout_marginTop="13dp"
+                            android:layout_height="7dp"
+                            android:indeterminate="false"
+                            android:maxHeight="12dp"
+                            android:minHeight="12dp"
+                            android:progress="30"
+                            app:backgroundColor="@color/progress_back_color"
+                            app:progressColor="@color/progress_color"/>
+
 
                         <TextView
                             android:id="@+id/txtStatus"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
                             android:fontFamily="@font/nunit_sans_bold"
                             android:text="30% Complete"
                             android:textColor="@color/main_text_color"

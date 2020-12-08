@@ -18,7 +18,7 @@
             android:layout_width="240dp"
             android:layout_height="134dp"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_launcher_background" />
+            android:src="@drawable/images" />
     </LinearLayout>
 
     <LinearLayout
@@ -52,18 +52,52 @@
             android:layout_height="15dp"
             android:gravity="center">
 
-            <ImageView
-                android:id="@+id/imgReview"
-                android:layout_width="63dp"
-                android:layout_height="15dp"
-                android:src="@drawable/ic_review" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:id="@+id/rlReview"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/imgReview1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_star_review" />
+                <ImageView
+                    android:id="@+id/imgReview2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/imgReview1"
+                    android:src="@drawable/ic_star_review" />
+                <ImageView
+                    android:id="@+id/imgReview3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/imgReview2"
+                    android:src="@drawable/ic_star_review" />
+                <ImageView
+                    android:id="@+id/imgReview4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/imgReview3"
+                    android:src="@drawable/ic_star_review" />
+                <ImageView
+                    android:id="@+id/imgReview5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/imgReview4"
+                    android:src="@drawable/ic_star_review" />
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/txtReview"
                 android:layout_width="wrap_content"
-                android:layout_height="15dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:layout_toRightOf="@+id/imgReview"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@+id/rlReview"
                 android:fontFamily="@font/nunit_sans_bold"
                 android:gravity="end"
                 android:text="4.5"
@@ -80,7 +114,7 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/txtPrice"
+                android:id="@+id/txtNewPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="23dp"
                 android:fontFamily="@font/nunit_sans_bold"
@@ -89,10 +123,10 @@
                 android:textColor="@color/main_text_color"
                 android:textSize="14sp" />
             <TextView
-                android:id="@+id/oldPrice"
+                android:id="@+id/txtOldPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="23dp"
-                android:layout_toRightOf="@+id/txtPrice"
+                android:layout_toRightOf="@+id/txtNewPrice"
                 android:layout_marginLeft="7dp"
                 android:fontFamily="@font/nunito_sans_regular"
                 android:text="₹ 699.00"

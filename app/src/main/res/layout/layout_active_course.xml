@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="5dp">
 
     <LinearLayout
@@ -15,10 +15,11 @@
         android:background="@drawable/bg_elevation">
 
         <ImageView
+            android:id="@+id/imvActiveCourse"
             android:layout_width="156dp"
             android:layout_height="93dp"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_launcher_background"/>
+            android:src="@drawable/images"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,6 +56,7 @@
             android:gravity="end"/>
 
         <TextView
+            android:id="@+id/txtActiveProgram"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunit_sans_bold"
@@ -63,6 +65,7 @@
             android:text="PhotoShop"
             android:gravity="end"/>
         <TextView
+            android:id="@+id/txtCountStudents"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunito_sans_semibold"
@@ -71,10 +74,24 @@
             android:text="1K Student"
             android:gravity="end"/>
 
+        <com.sasank.roundedhorizontalprogress.RoundedHorizontalProgressBar
+            android:id="@+id/progressActiveCourse"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_marginTop="7dp"
+            android:layout_height="7dp"
+            android:indeterminate="false"
+            android:maxHeight="12dp"
+            android:minHeight="12dp"
+            android:progress="30"
+            app:backgroundColor="@color/progress_back_color"
+            app:progressColor="@color/progress_color"/>
+
+
         <TextView
+            android:id="@+id/txtStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:fontFamily="@font/nunito_sans_semibold"
             android:textSize="10sp"
             android:textColor="@color/main_text_color"
