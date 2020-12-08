@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.adoisstudio.helper.H;
 import com.getsetgo.R;
-import com.getsetgo.databinding.ActivitySignUpBinding;
+//import com.getsetgo.databinding.ActivitySignUpBinding;
 import com.getsetgo.util.Click;
 import com.getsetgo.util.Validation;
 import com.getsetgo.util.WindowView;
@@ -18,17 +18,17 @@ import com.getsetgo.util.WindowView;
 public class SignUpActivity extends AppCompatActivity {
 
     private SignUpActivity activity = this;
-    private ActivitySignUpBinding binding;
+    //private ActivitySignUpBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         WindowView.getWindow(activity);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up);
-        initView();
+        //binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up);
+        //initView();
     }
 
-    private void initView(){
+    /*private void initView(){
 
         onClick();
     }
@@ -100,6 +100,6 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         return value;
-    }
+    }*/
 
 }

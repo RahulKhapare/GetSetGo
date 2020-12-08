@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@drawable/bg_elevation">
+
+        <ImageView
+            android:layout_width="156dp"
+            android:layout_height="93dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_launcher_background"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp">
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:textSize="12sp"
+                android:id="@+id/textTech"
+                android:textColor="@color/main_text_color"
+                android:text="Technology"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:textSize="12sp"
+                android:layout_toRightOf="@+id/textTech"
+                android:text="dfd"
+                android:textColor="@color/main_text_color"
+                android:layout_alignParentRight="true"
+                android:gravity="end"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_sans_semibold"
+            android:textSize="14sp"
+            android:maxLines="2"
+            android:text="Basics of"
+            android:textColor="@color/programme_text_color"
+            android:gravity="end"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunit_sans_bold"
+            android:textSize="16sp"
+            android:textColor="@color/programme_text_color"
+            android:text="PhotoShop"
+            android:gravity="end"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_sans_semibold"
+            android:textSize="12sp"
+            android:textColor="@color/main_text_color"
+            android:text="1K Student"
+            android:gravity="end"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/nunito_sans_semibold"
+            android:textSize="10sp"
+            android:textColor="@color/main_text_color"
+            android:text="30% Complete"
+            android:layout_marginBottom="10dp"
+            android:gravity="end"/>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
