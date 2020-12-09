@@ -31,6 +31,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_marginTop="3dp">
 
                 <TextView
@@ -42,16 +43,12 @@
                     android:textColor="@color/main_highlighttext_color"
                     android:textSize="12sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="16dp"
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    android:layout_toRightOf="@+id/textTech"
-                    android:fontFamily="@font/nunito_sans_semibold"
-                    android:gravity="end"
-                    android:text="dfd"
-                    android:textColor="@color/main_text_color"
-                    android:textSize="12sp" />
+                    android:background="@drawable/circle_disable_stroke"/>
             </RelativeLayout>
 
             <TextView
@@ -94,7 +91,7 @@
                 android:indeterminate="false"
                 android:maxHeight="12dp"
                 android:minHeight="12dp"
-                android:progress="30"
+                android:progress="20"
                 app:backgroundColor="@color/progress_back_color"
                 app:progressColor="@color/progress_color" />
 
@@ -107,7 +104,7 @@
                 android:layout_marginTop="3dp"
                 android:fontFamily="@font/nunito_sans_semibold"
                 android:gravity="end"
-                android:text="30% Complete"
+                android:text="20% Complete"
                 android:textColor="@color/main_highlighttext_color"
                 android:textSize="10sp" />
 

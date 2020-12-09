@@ -138,10 +138,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="8dp"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="5dp"
                         android:layout_toRightOf="@+id/rlReview"
                         android:fontFamily="@font/nunit_sans_bold"
-                        android:gravity="center"
+                        android:layout_centerVertical="true"
                         android:text="4.5"
                         android:textColor="@color/main_text_color"
                         android:textSize="10sp" />
