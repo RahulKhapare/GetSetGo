@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,6 +61,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
 
         txtViewAllBestCourse.setOnClickListener(this);
         txtViewAll.setOnClickListener(this);
+        ivNotify.setOnClickListener(this);
 
         setupRecyclerViewForActiveCourse();
         setupRecyclerViewForOthersCategories();
@@ -71,7 +73,13 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.txtViewAll:
+            case R.id.ivNotify:
+                Intent intent = new Intent(context,MyCourseActivity.class);
+                startActivity(intent);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                break;
+
+                case R.id.txtViewAll:
                 break;
 
             case R.id.txtViewAllBestCourse:

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="112dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewMyCourse"
+        android:layout_width="325dp"
+        android:layout_height="105dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="2dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingRight="3dp"
+            android:paddingLeft="7dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/imvMyCourse"
+                android:layout_width="93dp"
+                android:layout_height="97dp"
+                android:src="@drawable/download" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toLeftOf="@id/imvCourseCircle"
+                android:layout_toEndOf="@+id/imvMyCourse"
+                android:layout_toRightOf="@+id/imvMyCourse"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtCourseTech"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:text="Technology"
+                    android:textColor="@color/main_text_color"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/txtCourseDes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:text="Easiest way to Learn"
+                    android:textColor="@color/programme_text_color"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/txtCourseProgramme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunit_sans_bold"
+                    android:text="Mobile App Designing"
+                    android:textColor="@color/main_text_color"
+                    android:textSize="12sp" />
+
+                <com.sasank.roundedhorizontalprogress.RoundedHorizontalProgressBar
+                    android:id="@+id/progress_barCourse"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="194dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_height="7dp"
+                    android:indeterminate="false"
+                    android:maxHeight="12dp"
+                    android:minHeight="12dp"
+                    android:progress="30"
+                    app:backgroundColor="@color/progress_back_color"
+                    app:progressColor="@color/progress_color"/>
+
+
+                <TextView
+                    android:id="@+id/txtCourseStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunit_sans_bold"
+                    android:text="30% Complete"
+                    android:textColor="@color/main_text_color"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/imvCourseCircle"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/circle_stroke" />
+
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
