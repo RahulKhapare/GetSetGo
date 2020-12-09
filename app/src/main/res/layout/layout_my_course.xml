@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunit_sans_bold"
                     android:text="30% Complete"
-                    android:textColor="@color/main_text_color"
+                    android:textColor="@color/main_highlighttext_color"
                     android:textSize="12sp" />
 
 

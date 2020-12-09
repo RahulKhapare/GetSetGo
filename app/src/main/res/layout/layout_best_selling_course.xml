@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunito_sans_regular"
             android:text="prof John Doe"
-            android:textColor="@color/main_text_color"
+            android:textColor="@color/main_highlighttext_color"
             android:textSize="12sp" />
 
         <RelativeLayout
@@ -148,7 +148,7 @@
                 android:fontFamily="@font/nunito_sans_regular"
                 android:gravity="center"
                 android:text="₹ 699.00"
-                android:textColor="@color/main_text_color"
+                android:textColor="@color/main_highlighttext_color"
                 android:textSize="12sp" />
 
         </RelativeLayout>

@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_sans_regular"
                     android:text="prof John Doe"
-                    android:textColor="@color/main_text_color"
+                    android:textColor="@color/main_highlighttext_color"
                     android:textSize="12sp" />
 
                 <RelativeLayout
@@ -136,12 +136,12 @@
                     <TextView
                         android:id="@+id/txtWishReview"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="8dp"
-                        android:layout_marginTop="0dp"
+                        android:layout_marginTop="2dp"
                         android:layout_toRightOf="@+id/rlReview"
                         android:fontFamily="@font/nunit_sans_bold"
-                        android:gravity="end"
+                        android:gravity="center"
                         android:text="4.5"
                         android:textColor="@color/main_text_color"
                         android:textSize="10sp" />
@@ -150,7 +150,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="23dp">
 
                     <TextView
                         android:id="@+id/txtWishNewPrice"
@@ -172,7 +172,7 @@
                         android:fontFamily="@font/nunito_sans_regular"
                         android:gravity="center"
                         android:text="₹ 699.00"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/main_highlighttext_color"
                         android:textSize="12sp" />
 
                     <TextView

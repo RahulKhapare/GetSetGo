@@ -39,7 +39,7 @@
                     android:layout_height="16dp"
                     android:fontFamily="@font/nunito_sans_semibold"
                     android:text="Technology"
-                    android:textColor="@color/main_text_color"
+                    android:textColor="@color/main_highlighttext_color"
                     android:textSize="12sp" />
 
                 <TextView
@@ -108,7 +108,7 @@
                 android:fontFamily="@font/nunito_sans_semibold"
                 android:gravity="end"
                 android:text="30% Complete"
-                android:textColor="@color/main_text_color"
+                android:textColor="@color/main_highlighttext_color"
                 android:textSize="10sp" />
 
 
