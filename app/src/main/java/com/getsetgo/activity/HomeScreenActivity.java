@@ -61,9 +61,9 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         txtViewAllBestCourse.setOnClickListener(this);
         txtViewAll.setOnClickListener(this);
 
-        //setupRecyclerViewForActiveCourse();
-        //setupRecyclerViewForOthersCategories();
-        //setupRecyclerViewForBestSellingCourse();
+        setupRecyclerViewForActiveCourse();
+        setupRecyclerViewForOthersCategories();
+        setupRecyclerViewForBestSellingCourse();
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -83,7 +83,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void setupRecyclerViewForActiveCourse() {
-        recyclerViewCources.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
+        recyclerViewCources.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         activeCourseAdapter = new ActiveCourseAdapter(this);
         recyclerViewCources.setItemAnimator(new DefaultItemAnimator());
         recyclerViewCources.setAdapter(activeCourseAdapter);
@@ -91,7 +91,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void setupRecyclerViewForOthersCategories() {
-        recyclerViewOtherCategories.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
+        recyclerViewOtherCategories.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         otherCategoriesAdapter = new OtherCategoriesAdapter(this);
         recyclerViewOtherCategories.setItemAnimator(new DefaultItemAnimator());
         recyclerViewOtherCategories.setAdapter(otherCategoriesAdapter);
@@ -99,7 +99,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void setupRecyclerViewForBestSellingCourse() {
-        recyclerBestSellingCources.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
+        recyclerBestSellingCources.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         bestSellingCourseAdapter = new BestSellingCourseAdapter(this);
         recyclerBestSellingCources.setItemAnimator(new DefaultItemAnimator());
         recyclerBestSellingCources.setAdapter(bestSellingCourseAdapter);

@@ -1,25 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="2dp">
+    android:padding="2dp"
+    android:layout_marginEnd="10dp">
 
-    <LinearLayout
-        android:id="@+id/llMain"
+    <!--<androidx.cardview.widget.CardView
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/bg_elevation"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:layout_gravity="center"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="2dp">-->
 
-        <ImageView
-            android:id="@+id/ivCourseImage"
-            android:layout_width="240dp"
-            android:layout_height="134dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/images" />
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llMain"
+            android:layout_width="250dp"
+            android:layout_height="143dp"
+            android:gravity="center"
+            android:elevation="2dp"
+            android:background="@drawable/bg_elevation">
+
+            <ImageView
+                android:id="@+id/ivCourseImage"
+                android:layout_width="240dp"
+                android:layout_height="134dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/images" />
+        </LinearLayout>
+
+<!--    //</androidx.cardview.widget.CardView>-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,10 +64,10 @@
             android:gravity="center">
 
             <RelativeLayout
+                android:id="@+id/rlReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:id="@+id/rlReview"
                 android:gravity="center">
 
                 <ImageView
@@ -64,24 +75,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_star_review" />
+
                 <ImageView
                     android:id="@+id/imgReview2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/imgReview1"
                     android:src="@drawable/ic_star_review" />
+
                 <ImageView
                     android:id="@+id/imgReview3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/imgReview2"
                     android:src="@drawable/ic_star_review" />
+
                 <ImageView
                     android:id="@+id/imgReview4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/imgReview3"
                     android:src="@drawable/ic_star_review" />
+
                 <ImageView
                     android:id="@+id/imgReview5"
                     android:layout_width="wrap_content"
@@ -118,20 +133,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="23dp"
                 android:fontFamily="@font/nunit_sans_bold"
-                android:text="₹ 399.00"
                 android:gravity="center"
+                android:text="₹ 399.00"
                 android:textColor="@color/main_text_color"
                 android:textSize="14sp" />
+
             <TextView
                 android:id="@+id/txtOldPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="23dp"
-                android:layout_toRightOf="@+id/txtNewPrice"
                 android:layout_marginLeft="7dp"
-                android:fontFamily="@font/nunito_sans_regular"
-                android:text="₹ 699.00"
-                android:gravity="center"
+                android:layout_toRightOf="@+id/txtNewPrice"
                 android:background="@drawable/strike_through_line"
+                android:fontFamily="@font/nunito_sans_regular"
+                android:gravity="center"
+                android:text="₹ 699.00"
                 android:textColor="@color/main_text_color"
                 android:textSize="12sp" />
 
