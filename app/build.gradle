@@ -21,6 +21,11 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     dataBinding {
         enabled = true
     }
@@ -39,6 +44,7 @@ dependencies {
     implementation 'com.sasank.roundedhorizontalprogress:roundedhorizontalprogress:1.0.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.daimajia.swipelayout:library:1.2.0@aar'
     implementation project(path: ':helper')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

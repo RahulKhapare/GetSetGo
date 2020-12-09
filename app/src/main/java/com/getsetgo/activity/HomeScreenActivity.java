@@ -62,24 +62,31 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         txtViewAllBestCourse.setOnClickListener(this);
         txtViewAll.setOnClickListener(this);
         ivNotify.setOnClickListener(this);
+        ivMenu.setOnClickListener(this);
 
         setupRecyclerViewForActiveCourse();
         setupRecyclerViewForOthersCategories();
         setupRecyclerViewForBestSellingCourse();
+
+
     }
 
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         int id = v.getId();
+        Intent intent = null;
         switch (id) {
             case R.id.ivNotify:
-                Intent intent = new Intent(context,MyCourseActivity.class);
-                startActivity(intent);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent = new Intent(context, WishlistActivity.class);
                 break;
 
-                case R.id.txtViewAll:
+            case R.id.ivMenu:
+                intent = new Intent(context, MyCourseActivity.class);
+
+                break;
+
+            case R.id.txtViewAll:
                 break;
 
             case R.id.txtViewAllBestCourse:
@@ -88,6 +95,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
             case R.id.cardViewCurrentLearning:
                 break;
         }
+        startActivity(intent);
     }
 
     private void setupRecyclerViewForActiveCourse() {
