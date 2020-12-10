@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="137dp"
+    android:gravity="center">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewAllCategories"
+        android:layout_width="325dp"
+        android:layout_height="130dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="2dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:paddingLeft="7dp"
+            android:paddingRight="3dp">
+
+            <ImageView
+                android:id="@+id/imvViewCategory"
+                android:layout_width="120dp"
+                android:layout_height="124dp"
+                android:src="@drawable/download" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toEndOf="@+id/imvViewCategory"
+                android:layout_toRightOf="@+id/imvViewCategory"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/txtViewCategory"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:text="Student's Brain Booster"
+                        android:textColor="@color/main_text_color"
+                        android:textSize="14sp" />
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="3dp"
+                        android:layout_toRightOf="@+id/txtViewCategory">
+
+                        <CheckBox
+                            android:id="@+id/chkViewCategoryFavourites"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="10dp"
+                            android:button="@drawable/favorite_checkox"
+                            android:focusableInTouchMode="false" />
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txtViewCategoryProfName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_sans_regular"
+                    android:text="prof John Doe"
+                    android:textColor="@color/main_highlighttext_color"
+                    android:textSize="12sp" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:id="@+id/rlReview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/imgViewCategoryReview1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_star_review" />
+
+                        <ImageView
+                            android:id="@+id/imgViewCategoryReview2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/imgViewCategoryReview1"
+                            android:src="@drawable/ic_star_review" />
+
+                        <ImageView
+                            android:id="@+id/imgViewCategoryReview3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/imgViewCategoryReview2"
+                            android:src="@drawable/ic_star_review" />
+
+                        <ImageView
+                            android:id="@+id/imgViewCategoryReview4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/imgViewCategoryReview3"
+                            android:src="@drawable/ic_star_review" />
+
+                        <ImageView
+                            android:id="@+id/imgViewCategoryReview5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/imgViewCategoryReview4"
+                            android:src="@drawable/ic_star_review" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/txtViewCategoryReview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/rlReview"
+                        android:fontFamily="@font/nunit_sans_bold"
+                        android:text="4.5"
+                        android:textColor="@color/main_text_color"
+                        android:textSize="10sp" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txtViewCategoryBestSeller"
+                    android:layout_width="60dp"
+                    android:layout_height="18dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/best_seller_color"
+                    android:fontFamily="@font/nunito_sans_regular"
+                    android:gravity="center"
+                    android:text="BestSeller"
+                    android:textColor="@color/main_text_color"
+                    android:textSize="10sp" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="23dp"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:id="@+id/txtViewCategoryNewPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="23dp"
+                        android:fontFamily="@font/nunit_sans_bold"
+                        android:gravity="center"
+                        android:text="₹ 399.00"
+                        android:textColor="@color/main_text_color"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/txtViewCategoryOldPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="23dp"
+                        android:layout_marginLeft="7dp"
+                        android:layout_toRightOf="@+id/txtViewCategoryNewPrice"
+                        android:background="@drawable/strike_white_through_line"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:gravity="center"
+                        android:text="₹ 699.00"
+                        android:textColor="@color/main_highlighttext_color"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

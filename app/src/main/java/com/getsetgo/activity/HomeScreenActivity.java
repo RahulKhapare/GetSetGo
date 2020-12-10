@@ -58,6 +58,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         cardViewCurrentLearning = findViewById(R.id.cardViewCurrentLearning);
         recyclerBestSellingCources = findViewById(R.id.recyclerBestSellingCources);
         recyclerViewOtherCategories = findViewById(R.id.recyclerViewOtherCategories);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         txtViewAllBestCourse.setOnClickListener(this);
         txtViewAll.setOnClickListener(this);
@@ -68,6 +69,23 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         setupRecyclerViewForOthersCategories();
         setupRecyclerViewForBestSellingCourse();
 
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.menu_favourites:
+                        startActivity(new Intent(context,WishlistActivity.class));
+                        break;
+                        case R.id.menu_search:
+                        startActivity(new Intent(context,MyCourseActivity.class));
+                        break;
+                        case R.id.menu_yourCourse:
+                        startActivity(new Intent(context,CategoriesActivity.class));
+                        break;
+                }
+                return false;
+            }
+        });
 
     }
 
@@ -78,7 +96,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         Intent intent = null;
         switch (id) {
             case R.id.ivNotify:
-                intent = new Intent(context, WishlistActivity.class);
+                intent = new Intent(context, MyCourseActivity.class);
                 break;
 
             case R.id.ivMenu:

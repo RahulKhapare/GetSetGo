@@ -143,8 +143,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="23dp"
                 android:layout_marginLeft="7dp"
+                android:layout_marginTop="2dp"
                 android:layout_toRightOf="@+id/txtNewPrice"
-                android:background="@drawable/strike_through_line"
                 android:fontFamily="@font/nunito_sans_regular"
                 android:gravity="center"
                 android:text="₹ 699.00"
@@ -154,6 +154,7 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/txtBestSeller"
             android:layout_width="74dp"
             android:layout_height="20dp"
             android:layout_marginTop="1dp"

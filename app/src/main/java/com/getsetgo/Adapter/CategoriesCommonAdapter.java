@@ -1,5 +1,6 @@
 package com.getsetgo.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,25 +11,28 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.daimajia.swipe.SwipeLayout;
 import com.getsetgo.R;
 
-public class BestSellingCourseAdapter extends RecyclerView.Adapter<BestSellingCourseAdapter.BestSellingCourseViewHolder> {
+public class CategoriesCommonAdapter extends RecyclerView.Adapter<CategoriesCommonAdapter.CategoriesCommonViewHolder> {
 
     Context context;
 
-    public BestSellingCourseAdapter(Context context) {
+
+    public CategoriesCommonAdapter(Context context) {
         this.context = context;
+
     }
 
     @NonNull
     @Override
-    public BestSellingCourseAdapter.BestSellingCourseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CategoriesCommonAdapter.CategoriesCommonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.layout_best_selling_course, parent, false);
-        return new BestSellingCourseViewHolder(view);
+        return new CategoriesCommonViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BestSellingCourseAdapter.BestSellingCourseViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CategoriesCommonAdapter.CategoriesCommonViewHolder holder, int position) {
 
     }
 
@@ -37,13 +41,13 @@ public class BestSellingCourseAdapter extends RecyclerView.Adapter<BestSellingCo
         return 5;
     }
 
-    public class BestSellingCourseViewHolder extends RecyclerView.ViewHolder {
+    public class CategoriesCommonViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtCourseName,txtProfName,txtReview,txtNewPrice,txtOldPrice;
+        TextView txtCourseName,txtProfName,txtReview,txtNewPrice,txtOldPrice,txtBestSeller;
         ImageView ivCourseImage,imgReview1,imgReview2,imgReview3,imgReview4,imgReview5;
 
 
-        public BestSellingCourseViewHolder(@NonNull View itemView) {
+        public CategoriesCommonViewHolder(@NonNull View itemView) {
             super(itemView);
 
             txtCourseName = itemView.findViewById(R.id.txtCourseName);
@@ -52,12 +56,14 @@ public class BestSellingCourseAdapter extends RecyclerView.Adapter<BestSellingCo
             txtReview = itemView.findViewById(R.id.txtReview);
             txtNewPrice = itemView.findViewById(R.id.txtNewPrice);
             txtOldPrice = itemView.findViewById(R.id.txtOldPrice);
-            txtOldPrice.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.strike_through_line));
+            txtOldPrice.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.strike_white_through_line));
             imgReview1 = itemView.findViewById(R.id.imgReview1);
             imgReview2 = itemView.findViewById(R.id.imgReview2);
             imgReview3 = itemView.findViewById(R.id.imgReview3);
             imgReview4 = itemView.findViewById(R.id.imgReview4);
             imgReview5 = itemView.findViewById(R.id.imgReview5);
+            txtBestSeller = itemView.findViewById(R.id.txtBestSeller);
+            txtBestSeller.setVisibility(View.GONE);
 
         }
     }
