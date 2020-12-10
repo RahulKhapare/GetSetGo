@@ -22,8 +22,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="146dp"
-                    android:layout_height="52dp"
+                    android:layout_width="166dp"
+                    android:layout_height="62dp"
                     android:layout_marginTop="15dp"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/ic_splash_logo">
@@ -57,7 +57,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="?actionBarSize"
-                    android:textColorHint="@color/colorTextDark"
+                    android:textColorHint="@color/colorTextHint"
                     android:layout_marginTop="15dp"
                     >
 
@@ -79,7 +79,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="?actionBarSize"
-                    android:textColorHint="@color/colorTextDark"
+                    android:textColorHint="@color/colorTextHint"
                     android:layout_marginTop="15dp"
                     app:passwordToggleEnabled="true"
                     >
@@ -176,16 +176,17 @@
 
                     <ImageView
                         android:id="@+id/ivFacebook"
-                        android:layout_width="31dp"
-                        android:layout_height="31dp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_marginRight="15dp"
                         android:src="@drawable/ic_facebook"/>
 
                     <ImageView
                         android:id="@+id/ivGoogle"
-                        android:layout_width="31dp"
-                        android:layout_height="31dp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
                         android:layout_toRightOf="@+id/ivFacebook"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="15dp"
                         android:src="@drawable/ic_google"/>
 
                 </RelativeLayout>

@@ -28,7 +28,7 @@ public class MyCourseActivity extends AppCompatActivity {
         setupRecyclerViewForMyCourse();
     }
     private void setupRecyclerViewForMyCourse() {
-        recyclerViewCourse.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
+        recyclerViewCourse.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         myCourseAdapter = new MyCourseAdapter(this);
         recyclerViewCourse.setItemAnimator(new DefaultItemAnimator());
         recyclerViewCourse.setAdapter(myCourseAdapter);

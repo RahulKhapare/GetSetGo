@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.getsetgo.R;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 public class ViewAllCategoriesAdapter extends RecyclerView.Adapter<ViewAllCategoriesAdapter.ViewAllCategoriesViewHolder> {
 
@@ -46,7 +47,7 @@ public class ViewAllCategoriesAdapter extends RecyclerView.Adapter<ViewAllCatego
 
         TextView txtCourse, txtProfName, txtReview,
                 txtNewPrice, txtOldPrice, txtBestSeller;
-        ImageView imgCategory;
+        RoundedImageView imgCategory;
         CheckBox chkFav;
 
 

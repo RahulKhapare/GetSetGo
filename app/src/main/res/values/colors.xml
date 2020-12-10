@@ -8,6 +8,7 @@
     <color name="colorTrans">#00000000</color>
     <color name="colorGray">#888888</color>
     <color name="colorTextDark">#232323</color>
+    <color name="colorTextHint">#50232323</color>
     <color name="colorTextBlue">#4169E1</color>
     <color name="nav_item_state_list">#00768C</color>
     <color name="not_selected_icon">#9C9E9F</color>
@@ -15,6 +16,7 @@
     <color name="main_highlighttext_color">#50232323</color>
     <color name="programme_text_color">#374451</color>
     <color name="best_seller_color">#FFAE0C</color>
+    <color name="best_sellerhighlight">#80FFAE0C</color>
     <color name="main_backgound">#F9F9F9</color>
     <color name="toolbar_backgound">#374451</color>
     <color name="disbale_circle_inner">#CED5DB</color>
@@ -23,4 +25,5 @@
     <color name="progress_color">#64B13F</color>
     <color name="progress_back_color">#CED5DB</color>
     <color name="colorBackground">#FCFCFC</color>
+    <color name="colorStrokeView">#CED5DB</color>
 </resources>

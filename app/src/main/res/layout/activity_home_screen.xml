@@ -22,9 +22,9 @@
             android:id="@+id/ivMenu"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_gravity="start"
-            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="start"
             android:src="@drawable/ic_ham_menu"
             android:visibility="visible" />
 
@@ -33,10 +33,10 @@
             android:id="@+id/ivLogo"
             android:layout_width="97dp"
             android:layout_height="35dp"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:scaleType="fitCenter"
-            android:layout_centerVertical="true"
-            android:layout_centerInParent="true"
             android:src="@drawable/ic_splash_logo" />
 
 
@@ -45,8 +45,8 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentRight="true"
-            android:layout_gravity="end"
             android:layout_centerVertical="true"
+            android:layout_gravity="end"
             android:src="@drawable/ic_notification"
             android:visibility="visible" />
 
@@ -65,14 +65,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <TextView
                 android:layout_width="138dp"
                 android:layout_height="22dp"
                 android:fontFamily="@font/nunit_sans_bold"
-                android:text="Current Learning"
+                android:text="Currently Learning"
                 android:textColor="@color/main_text_color"
                 android:textSize="16sp" />
 
@@ -80,10 +80,10 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewCurrentLearning"
                 android:layout_width="325dp"
-                android:layout_height="112dp"
+                android:layout_height="120dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
-                app:cardCornerRadius="5dp"
+                app:cardCornerRadius="10dp"
                 app:cardElevation="2dp">
 
 
@@ -91,14 +91,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:paddingRight="3dp"
+                    android:gravity="center_vertical"
                     android:paddingLeft="7dp"
-                    android:gravity="center_vertical">
+                    android:paddingRight="3dp">
 
-                    <ImageView
+                    <com.makeramen.roundedimageview.RoundedImageView
                         android:id="@+id/imvCourse"
                         android:layout_width="93dp"
                         android:layout_height="97dp"
+                        app:riv_corner_radius="5dp"
                         android:src="@drawable/download" />
 
                     <LinearLayout
@@ -143,14 +144,14 @@
                             android:id="@+id/progress_bar_1"
                             style="?android:attr/progressBarStyleHorizontal"
                             android:layout_width="194dp"
-                            android:layout_marginTop="10dp"
                             android:layout_height="7dp"
+                            android:layout_marginTop="10dp"
                             android:indeterminate="false"
                             android:maxHeight="12dp"
                             android:minHeight="12dp"
                             android:progress="30"
                             app:backgroundColor="@color/progress_back_color"
-                            app:progressColor="@color/progress_color"/>
+                            app:progressColor="@color/progress_color" />
 
 
                         <TextView
@@ -213,7 +214,7 @@
                 android:id="@+id/recyclerViewCources"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"/>
 
 
             <TextView
@@ -230,7 +231,7 @@
                 android:id="@+id/recyclerViewOtherCategories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -264,7 +265,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="25dp"/>
+                android:layout_marginBottom="25dp" />
 
         </LinearLayout>
 
@@ -272,17 +273,15 @@
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:layout_width="match_parent"
         android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/navigation"
         android:background="@color/colorWhite"
-        app:itemTextColor="@drawable/item_selector"
         app:itemIconTint="@drawable/item_selector"
-        app:labelVisibilityMode="labeled"/>
-
-
+        app:itemTextColor="@drawable/item_selector"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/navigation" />
 
 
 </RelativeLayout>

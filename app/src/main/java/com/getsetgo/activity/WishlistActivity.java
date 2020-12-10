@@ -28,7 +28,7 @@ public class WishlistActivity extends AppCompatActivity {
         setupRecyclerViewForWishlist();
     }
     private void setupRecyclerViewForWishlist() {
-        recyclerViewWishlist.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
+        recyclerViewWishlist.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         wishlistCourseAdapter = new WishlistCourseAdapter(this,recyclerViewWishlist);
         recyclerViewWishlist.setItemAnimator(new DefaultItemAnimator());
         recyclerViewWishlist.setAdapter(wishlistCourseAdapter);

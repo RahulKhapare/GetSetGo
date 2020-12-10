@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.getsetgo.R;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.sasank.roundedhorizontalprogress.RoundedHorizontalProgressBar;
 
 public class OtherCategoriesAdapter extends RecyclerView.Adapter<OtherCategoriesAdapter.OtherCategoriesViewHolder> {
@@ -41,7 +42,7 @@ public class OtherCategoriesAdapter extends RecyclerView.Adapter<OtherCategories
     public class OtherCategoriesViewHolder extends RecyclerView.ViewHolder{
 
         TextView txtOtherCategories;
-        ImageView imvOtherCategories;
+        RoundedImageView imvOtherCategories;
 
 
         public OtherCategoriesViewHolder(@NonNull View itemView) {

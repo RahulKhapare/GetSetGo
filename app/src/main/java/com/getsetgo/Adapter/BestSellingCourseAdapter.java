@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.getsetgo.R;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 public class BestSellingCourseAdapter extends RecyclerView.Adapter<BestSellingCourseAdapter.BestSellingCourseViewHolder> {
 
@@ -40,7 +41,8 @@ public class BestSellingCourseAdapter extends RecyclerView.Adapter<BestSellingCo
     public class BestSellingCourseViewHolder extends RecyclerView.ViewHolder {
 
         TextView txtCourseName,txtProfName,txtReview,txtNewPrice,txtOldPrice;
-        ImageView ivCourseImage,imgReview1,imgReview2,imgReview3,imgReview4,imgReview5;
+        RoundedImageView ivCourseImage;
+        ImageView imgReview1,imgReview2,imgReview3,imgReview4,imgReview5;
 
 
         public BestSellingCourseViewHolder(@NonNull View itemView) {

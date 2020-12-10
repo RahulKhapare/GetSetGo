@@ -2,14 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="112dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewMyCourse"
         android:layout_width="325dp"
-        android:layout_height="105dp"
-        app:cardCornerRadius="5dp"
+        android:layout_height="110dp"
+        app:cardCornerRadius="10dp"
         app:cardElevation="2dp">
 
 
@@ -21,10 +23,11 @@
             android:paddingLeft="7dp"
             android:gravity="center_vertical">
 
-            <ImageView
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/imvMyCourse"
                 android:layout_width="93dp"
                 android:layout_height="97dp"
+                app:riv_corner_radius="5dp"
                 android:src="@drawable/download" />
 
             <LinearLayout

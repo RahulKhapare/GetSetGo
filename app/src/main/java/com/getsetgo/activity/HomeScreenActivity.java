@@ -96,11 +96,9 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         Intent intent = null;
         switch (id) {
             case R.id.ivNotify:
-                intent = new Intent(context, MyCourseActivity.class);
                 break;
 
             case R.id.ivMenu:
-                intent = new Intent(context, MyCourseActivity.class);
 
                 break;
 

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.getsetgo.R;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 public class CategoriesCommonAdapter extends RecyclerView.Adapter<CategoriesCommonAdapter.CategoriesCommonViewHolder> {
 
@@ -44,7 +45,8 @@ public class CategoriesCommonAdapter extends RecyclerView.Adapter<CategoriesComm
     public class CategoriesCommonViewHolder extends RecyclerView.ViewHolder {
 
         TextView txtCourseName,txtProfName,txtReview,txtNewPrice,txtOldPrice,txtBestSeller;
-        ImageView ivCourseImage,imgReview1,imgReview2,imgReview3,imgReview4,imgReview5;
+        RoundedImageView ivCourseImage;
+        ImageView imgReview1,imgReview2,imgReview3,imgReview4,imgReview5;
 
 
         public CategoriesCommonViewHolder(@NonNull View itemView) {
