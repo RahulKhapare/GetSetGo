@@ -11,8 +11,6 @@
     app:edMenuSize="280dp"
     app:edPosition="1"
     tools:context=".activity.HomeScreenActivity">
-
-
     <include layout="@layout/layout_main" />
 
 
