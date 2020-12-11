@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
                 //}
             }
         });
-        /*binding.txtSignUp.setOnClickListener(new View.OnClickListener() {
+        binding.txtSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 finish();
             }
-        });*/
+        });
     }
 
     private boolean checkValidation(){

@@ -141,6 +141,10 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
+    public void Cancel(View view){
+        mDrawer.closeMenu();
+    }
+
 
     @Override
     public void onBackPressed() {
