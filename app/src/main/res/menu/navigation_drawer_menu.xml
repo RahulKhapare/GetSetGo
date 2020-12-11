@@ -23,6 +23,7 @@
         android:icon="@drawable/ic_nav_myearning"
         android:title="My Earnings"
         app:actionLayout="@layout/down_action_layout"/>
+
     <item
         android:id="@+id/nav_courseEarn"
         android:title="Course Earning"
@@ -68,11 +69,11 @@
         android:id="@+id/nav_Settings"
         android:icon="@drawable/ic_nav_setting"
         android:title="Settings"/>
-
     <item
-        android:id="@+id/nav_Logout"
-        android:icon="@drawable/ic_nav_logout"
-        android:title="Logout"/>
+        android:id="@+id/navs"
+        tools:ignore="MenuTitle"/>
+
+
 
 
 </menu>

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,8 +29,11 @@ public class NavDrawerFragment extends Fragment {
     static AppCompatActivity activity;
     private ImageView ivCancel;
     public TextView txtName,txtProfile,txtEmail;
-    private static MenuItem menuBusiness,menuEarn,menuPoints,menuTrans,menuIncentive;
-    private static CheckBox chkBusiness,chkEarn,chkPoints,chkTrans,chkIncentive;;
+    public static MenuItem menuBusiness,menuEarn,
+            menuPoints,menuTrans,menuIncentive,
+            nav_courseEarn,nav_totalEarn,nav_crashcourseEarn;
+    public static CheckBox chkBusiness,chkEarn,
+            chkPoints,chkTrans,chkIncentive;;
     static NavDrawerFragment navDrawerFragment;
     NavigationView vNavigation;
     View view = null;
@@ -59,6 +63,9 @@ public class NavDrawerFragment extends Fragment {
         vNavigation = view.findViewById(R.id.vNavigation);
 
         Menu navigate = vNavigation.getMenu();
+        nav_courseEarn = navigate.findItem(R.id.nav_courseEarn);
+        nav_crashcourseEarn = navigate.findItem(R.id.nav_crashcourseEarn);
+        nav_totalEarn = navigate.findItem(R.id.nav_totalEarn);
         menuBusiness = navigate.findItem(R.id.nav_business);
         menuEarn = navigate.findItem(R.id.nav_MyEarning);
         menuTrans = navigate.findItem(R.id.nav_Transactions);
@@ -79,6 +86,21 @@ public class NavDrawerFragment extends Fragment {
 
         View incentiveActionView = menuIncentive.getActionView();
         chkIncentive = incentiveActionView.findViewById(R.id.chkUpDown);
+
+        chkEarn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    navigate.findItem(R.id.nav_courseEarn).setVisible(true);
+                    navigate.findItem(R.id.nav_crashcourseEarn).setVisible(true);
+                    navigate.findItem(R.id.nav_totalEarn).setVisible(true);
+                }else{
+                    navigate.findItem(R.id.nav_courseEarn).setVisible(false);
+                    navigate.findItem(R.id.nav_crashcourseEarn).setVisible(false);
+                    navigate.findItem(R.id.nav_totalEarn).setVisible(false);
+                }
+            }
+        });
 
 
         vNavigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

@@ -28,31 +28,45 @@
             android:layout_height="match_parent" />
 
 
-        <LinearLayout
+
+
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:visibility="gone">
+            android:background="@color/colorWhite"
+            android:visibility="visible">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorStrokeView"/>
 
             <ImageView
+                android:id="@+id/ivlogout"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="18dp"
                 android:src="@drawable/ic_nav_logout" />
 
             <TextView
-                android:id="@+id/tvVersion"
+                android:id="@+id/txtLogout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="25dp"
                 android:text="Logout"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@+id/ivlogout"
+                android:fontFamily="@font/nunito_sans_regular"
                 android:textColor="@color/main_text_color"
-                android:textSize="12sp" />
+                android:textSize="16sp"
+                style="@style/TextAppearance"/>
 
-
-        </LinearLayout>
+        </RelativeLayout>
 
 
     </com.mxn.soul.flowingdrawer_core.FlowingMenuLayout>
