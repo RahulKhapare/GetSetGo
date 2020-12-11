@@ -12,6 +12,7 @@
     <color name="colorTextBlue">#4169E1</color>
     <color name="colorTextProfile">#00768C</color>
     <color name="colorArrow">#707070</color>
+    <color name="colorNotification">#FF1515</color>
     <color name="nav_item_state_list">#00768C</color>
     <color name="not_selected_icon">#9C9E9F</color>
     <color name="main_text_color">#232323</color>

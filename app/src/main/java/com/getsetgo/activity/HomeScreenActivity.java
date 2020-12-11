@@ -12,10 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.getsetgo.Adapter.ActiveCourseAdapter;
 import com.getsetgo.Adapter.BestSellingCourseAdapter;
@@ -38,6 +41,10 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
     BestSellingCourseAdapter bestSellingCourseAdapter;
     NavDrawerFragment mMenuFragment;
     Toolbar toolbar;
+    MenuItem item;
+    View itemChooser;
+    TextView count;
+
 
     private FlowingDrawer mDrawer;
 
@@ -85,15 +92,15 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.menu_favourites:
-                        startActivity(new Intent(context,WishlistActivity.class));
+                        startActivity(new Intent(context, WishlistActivity.class));
                         break;
-                        case R.id.menu_search:
-                        startActivity(new Intent(context,MyCourseActivity.class));
+                    case R.id.menu_search:
+                        startActivity(new Intent(context, MyCourseActivity.class));
                         break;
-                        case R.id.menu_yourCourse:
-                        startActivity(new Intent(context,CategoriesActivity.class));
+                    case R.id.menu_yourCourse:
+                        startActivity(new Intent(context, CategoriesActivity.class));
                         break;
                 }
                 return false;
@@ -104,7 +111,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
 
     private void setupMenu() {
         FragmentManager fm = getSupportFragmentManager();
-        mMenuFragment= (NavDrawerFragment) fm.findFragmentById(R.id.id_container_menu);
+        mMenuFragment = (NavDrawerFragment) fm.findFragmentById(R.id.id_container_menu);
         if (mMenuFragment == null) {
             mMenuFragment = new NavDrawerFragment();
             fm.beginTransaction().add(R.id.id_container_menu, mMenuFragment).commit();
@@ -141,7 +148,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
-    public void Cancel(View view){
+    public void Cancel(View view) {
         mDrawer.closeMenu();
     }
 
@@ -195,4 +202,26 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         recyclerBestSellingCources.setAdapter(bestSellingCourseAdapter);
         bestSellingCourseAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        MenuInflater findMenuItems = getMenuInflater();
+        findMenuItems.inflate(R.menu.menu_main, menu);
+        item = menu.findItem(R.id.menu_notify);
+        itemChooser = item.getActionView();
+        count = itemChooser.findViewById(R.id.count);
+        count.setText("5");
+        if (itemChooser != null) {
+            itemChooser.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "Hello", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        return true;
+    }
+
+
 }
