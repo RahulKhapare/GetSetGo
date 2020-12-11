@@ -1,287 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.mxn.soul.flowingdrawer_core.FlowingDrawer xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_backgound"
+    android:clipChildren="true"
+    android:fitsSystemWindows="true"
+    android:windowSoftInputMode="stateHidden"
+    app:edMenuSize="280dp"
+    app:edPosition="1"
     tools:context=".activity.HomeScreenActivity">
 
 
-    <RelativeLayout
-        android:id="@+id/ll_toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_main" />
+
+    </LinearLayout>
 
 
-        <ImageView
-            android:id="@+id/ivMenu"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="start"
-            android:src="@drawable/ic_ham_menu"
-            android:visibility="visible" />
+    <com.mxn.soul.flowingdrawer_core.FlowingMenuLayout
+        android:id="@+id/menulayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
+        <FrameLayout
+            android:id="@+id/id_container_menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
-        <ImageView
-            android:id="@+id/ivLogo"
-            android:layout_width="97dp"
-            android:layout_height="35dp"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_splash_logo" />
-
-
-        <ImageView
-            android:id="@+id/ivNotify"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="end"
-            android:src="@drawable/ic_notification"
-            android:visibility="visible" />
-
-
-    </RelativeLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScroll"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@+id/bottom_navigation"
-        android:layout_below="@id/ll_toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="vertical"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_nav_logout" />
 
             <TextView
-                android:layout_width="138dp"
-                android:layout_height="22dp"
-                android:fontFamily="@font/nunit_sans_bold"
-                android:text="Currently Learning"
+                android:id="@+id/tvVersion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+                android:layout_marginLeft="20dp"
                 android:textColor="@color/main_text_color"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
 
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewCurrentLearning"
-                android:layout_width="325dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="2dp">
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="7dp"
-                    android:paddingRight="3dp">
-
-                    <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/imvCourse"
-                        android:layout_width="93dp"
-                        android:layout_height="97dp"
-                        app:riv_corner_radius="5dp"
-                        android:src="@drawable/download" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toLeftOf="@id/imvCircle"
-                        android:layout_toEndOf="@+id/imvCourse"
-                        android:layout_toRightOf="@+id/imvCourse"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/txtTech"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/nunito_sans_semibold"
-                            android:text="Technology"
-                            android:textColor="@color/main_highlighttext_color"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/txtDes"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:fontFamily="@font/nunito_sans_semibold"
-                            android:text="Easiest way to Learn"
-                            android:textColor="@color/programme_text_color"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/txtProgramme"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/nunit_sans_bold"
-                            android:text="Mobile App Designing"
-                            android:textColor="@color/main_text_color"
-                            android:textSize="12sp" />
-
-                        <com.sasank.roundedhorizontalprogress.RoundedHorizontalProgressBar
-                            android:id="@+id/progress_bar_1"
-                            style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="194dp"
-                            android:layout_height="7dp"
-                            android:layout_marginTop="10dp"
-                            android:indeterminate="false"
-                            android:maxHeight="12dp"
-                            android:minHeight="12dp"
-                            android:progress="30"
-                            app:backgroundColor="@color/progress_back_color"
-                            app:progressColor="@color/progress_color" />
-
-
-                        <TextView
-                            android:id="@+id/txtStatus"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:fontFamily="@font/nunit_sans_bold"
-                            android:text="30% Complete"
-                            android:textColor="@color/main_highlighttext_color"
-                            android:textSize="12sp" />
-
-
-                    </LinearLayout>
-
-
-                    <ImageView
-                        android:id="@+id/imvCircle"
-                        android:layout_width="8dp"
-                        android:layout_height="8dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/circle_stroke" />
-
-
-                </RelativeLayout>
-
-            </androidx.cardview.widget.CardView>
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
-
-                <TextView
-                    android:id="@+id/titleCourse"
-                    android:layout_width="110dp"
-                    android:layout_height="22dp"
-                    android:fontFamily="@font/nunit_sans_bold"
-                    android:text="Active Courses"
-                    android:textColor="@color/main_text_color"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/txtViewAll"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignRight="@+id/titleCourse"
-                    android:layout_alignParentRight="true"
-                    android:fontFamily="@font/nunito_sans_semibold"
-                    android:gravity="end"
-                    android:text="View All"
-                    android:textColor="@color/viewall_text_color"
-                    android:textSize="12sp" />
-            </RelativeLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewCources"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"/>
-
-
-            <TextView
-                android:id="@+id/titleCategories"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:fontFamily="@font/nunit_sans_bold"
-                android:text="Explore Other Categories"
-                android:textColor="@color/main_text_color"
-                android:textSize="16sp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewOtherCategories"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"/>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
-
-                <TextView
-                    android:id="@+id/titleBestCourse"
-                    android:layout_width="110dp"
-                    android:layout_height="22dp"
-                    android:fontFamily="@font/nunit_sans_bold"
-                    android:text="Active Courses"
-                    android:textColor="@color/main_text_color"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/txtViewAllBestCourse"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignRight="@+id/titleBestCourse"
-                    android:layout_alignParentRight="true"
-                    android:fontFamily="@font/nunito_sans_semibold"
-                    android:gravity="end"
-                    android:text="View All"
-                    android:textColor="@color/viewall_text_color"
-                    android:textSize="12sp" />
-            </RelativeLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerBestSellingCources"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="25dp" />
 
         </LinearLayout>
 
 
-    </androidx.core.widget.NestedScrollView>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorWhite"
-        app:itemIconTint="@drawable/item_selector"
-        app:itemTextColor="@drawable/item_selector"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/navigation" />
+    </com.mxn.soul.flowingdrawer_core.FlowingMenuLayout>
 
 
-</RelativeLayout>
+</com.mxn.soul.flowingdrawer_core.FlowingDrawer>

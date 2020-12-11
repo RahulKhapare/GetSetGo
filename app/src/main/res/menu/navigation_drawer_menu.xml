@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/nav_Dashboard"
+        android:icon="@drawable/ic_nav_dashboard"
+        android:title="Dashboard"/>
+
+    <item
+        android:id="@+id/nav_Account"
+        android:icon="@drawable/ic_nav_account"
+        android:title="Account"/>
+
+    <item
+        android:id="@+id/nav_Notification"
+        android:icon="@drawable/ic_nav_notification"
+        android:title="Notifications"/>
+
+    <item
+        android:id="@+id/nav_MyEarning"
+        android:icon="@drawable/ic_nav_myearning"
+        android:title="My Earnings"
+        app:actionLayout="@layout/down_action_layout"/>
+    <item
+        android:id="@+id/nav_courseEarn"
+        android:title="Course Earning"
+        android:visible="false"/>
+    <item
+        android:id="@+id/nav_crashcourseEarn"
+        android:title="Crash Course Earning"
+        android:visible="false"/>
+    <item
+        android:id="@+id/nav_totalEarn"
+        android:title="Total Earning"
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/nav_business"
+        android:icon="@drawable/ic_nav_businessprofile"
+        android:title="Business Profile"
+        app:actionLayout="@layout/down_action_layout"/>
+    <item
+        android:id="@+id/nav_Transactions"
+        android:icon="@drawable/ic_nav_transaction"
+        android:title="Transactions"
+        app:actionLayout="@layout/down_action_layout"/>
+    <item
+        android:id="@+id/nav_Userincentive"
+        android:icon="@drawable/ic_nav_userincentive"
+        android:title="User Incentives"
+        app:actionLayout="@layout/down_action_layout"/>
+    <item
+        android:id="@+id/nav_MyPoints"
+        android:icon="@drawable/ic_nav_mypoints"
+        android:title="My Points"
+        app:actionLayout="@layout/down_action_layout"/>
+    <item
+        android:id="@+id/nav_HelpSupport"
+        android:icon="@drawable/ic_nav_helpsupport"
+        android:title="Help &amp; Support"/>
+    <item
+        android:id="@+id/nav_TermsCondition"
+        android:icon="@drawable/ic_nav_termandcondition"
+        android:title="Terms &amp; Condition"/>
+    <item
+        android:id="@+id/nav_Settings"
+        android:icon="@drawable/ic_nav_setting"
+        android:title="Settings"/>
+
+    <item
+        android:id="@+id/nav_Logout"
+        android:icon="@drawable/ic_nav_logout"
+        android:title="Logout"/>
+
+
+</menu>

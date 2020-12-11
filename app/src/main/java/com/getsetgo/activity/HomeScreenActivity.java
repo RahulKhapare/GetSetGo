@@ -2,12 +2,13 @@ package com.getsetgo.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,8 +22,8 @@ import com.getsetgo.Adapter.BestSellingCourseAdapter;
 import com.getsetgo.Adapter.OtherCategoriesAdapter;
 import com.getsetgo.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.List;
+import com.mxn.soul.flowingdrawer_core.ElasticDrawer;
+import com.mxn.soul.flowingdrawer_core.FlowingDrawer;
 
 public class HomeScreenActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -35,6 +36,10 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
     ActiveCourseAdapter activeCourseAdapter;
     OtherCategoriesAdapter otherCategoriesAdapter;
     BestSellingCourseAdapter bestSellingCourseAdapter;
+    NavDrawerFragment mMenuFragment;
+    Toolbar toolbar;
+
+    private FlowingDrawer mDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         txtProgramme = findViewById(R.id.txtProgramme);
         txtViewAll = findViewById(R.id.txtViewAll);
         txtStatus = findViewById(R.id.txtStatus);
+
         recyclerViewCources = findViewById(R.id.recyclerViewCources);
         txtViewAllBestCourse = findViewById(R.id.txtViewAllBestCourse);
         cardViewCurrentLearning = findViewById(R.id.cardViewCurrentLearning);
@@ -60,14 +66,21 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         recyclerViewOtherCategories = findViewById(R.id.recyclerViewOtherCategories);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
+
+        mDrawer = (FlowingDrawer) findViewById(R.id.drawerLayout);
+        mDrawer.setTouchMode(ElasticDrawer.TOUCH_MODE_NONE);
+        setupToolbar();
+        setupMenu();
+
         txtViewAllBestCourse.setOnClickListener(this);
         txtViewAll.setOnClickListener(this);
         ivNotify.setOnClickListener(this);
-        ivMenu.setOnClickListener(this);
+        //ivMenu.setOnClickListener(this);
 
         setupRecyclerViewForActiveCourse();
         setupRecyclerViewForOthersCategories();
         setupRecyclerViewForBestSellingCourse();
+
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -89,19 +102,60 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
 
     }
 
-    @SuppressLint("NonConstantResourceId")
+    private void setupMenu() {
+        FragmentManager fm = getSupportFragmentManager();
+        mMenuFragment= (NavDrawerFragment) fm.findFragmentById(R.id.id_container_menu);
+        if (mMenuFragment == null) {
+            mMenuFragment = new NavDrawerFragment();
+            fm.beginTransaction().add(R.id.id_container_menu, mMenuFragment).commit();
+        }
+
+//        mDrawer.setOnDrawerStateChangeListener(new ElasticDrawer.OnDrawerStateChangeListener() {
+//            @Override
+//            public void onDrawerStateChange(int oldState, int newState) {
+//                if (newState == ElasticDrawer.STATE_CLOSED) {
+//                    Log.i("MainActivity", "Drawer STATE_CLOSED");
+//                }
+//            }
+//
+//            @Override
+//            public void onDrawerSlide(float openRatio, int offsetPixels) {
+//                Log.i("MainActivity", "openRatio=" + openRatio + " ,offsetPixels=" + offsetPixels);
+//            }
+//        });
+    }
+
+    protected void setupToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        ImageView ivLogo = toolbar.findViewById(R.id.ivLogo);
+        ivLogo.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_splash_logo));
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_ham_menud);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawer.toggleMenu();
+            }
+        });
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (mDrawer.isMenuVisible()) {
+            mDrawer.closeMenu();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        Intent intent = null;
         switch (id) {
-            case R.id.ivNotify:
-                break;
-
-            case R.id.ivMenu:
-
-                break;
-
             case R.id.txtViewAll:
                 break;
 
@@ -111,8 +165,8 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
             case R.id.cardViewCurrentLearning:
                 break;
         }
-        startActivity(intent);
     }
+
 
     private void setupRecyclerViewForActiveCourse() {
         recyclerViewCources.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
