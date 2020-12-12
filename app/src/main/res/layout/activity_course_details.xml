@@ -105,44 +105,45 @@
                         android:layout_height="187dp"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="3dp">
+
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
-                        <com.makeramen.roundedimageview.RoundedImageView
-                            android:id="@+id/ivCourseImage"
-                            android:layout_width="314dp"
-                            android:layout_height="176dp"
-                            android:layout_gravity="center"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/images"
-                            app:riv_corner_radius="10dp"/>
+                            <com.makeramen.roundedimageview.RoundedImageView
+                                android:id="@+id/ivCourseImage"
+                                android:layout_width="314dp"
+                                android:layout_height="176dp"
+                                android:layout_gravity="center"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/images"
+                                app:riv_corner_radius="10dp" />
 
                             <RelativeLayout
                                 android:id="@+id/rlFrame"
-                                android:visibility="visible"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_margin="10dp"
-                                android:background="@drawable/bg_play_back">
+                                android:background="@drawable/bg_play_back"
+                                android:visibility="visible">
 
                                 <ImageView
                                     android:layout_width="45dp"
                                     android:layout_height="45dp"
-                                    android:layout_centerVertical="true"
                                     android:layout_centerInParent="true"
-                                    android:src="@drawable/ic_play"/>
+                                    android:layout_centerVertical="true"
+                                    android:src="@drawable/ic_play" />
 
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Preview This Course"
-                                    android:fontFamily="@font/nunit_sans_bold"
-                                    android:textSize="18sp"
-                                    android:gravity="center"
-                                    android:textColor="@color/colorWhite"
                                     android:layout_alignParentBottom="true"
-                                    android:layout_marginBottom="10dp"/>
+                                    android:layout_marginBottom="10dp"
+                                    android:fontFamily="@font/nunit_sans_bold"
+                                    android:gravity="center"
+                                    android:text="Preview This Course"
+                                    android:textColor="@color/colorWhite"
+                                    android:textSize="18sp" />
 
                             </RelativeLayout>
 
@@ -401,8 +402,8 @@
                             android:layout_below="@+id/txtLearn"
                             android:layout_marginLeft="5dp"
                             android:layout_marginTop="5dp"
-                            android:text="View more"
                             android:fontFamily="@font/nunit_sans_bold"
+                            android:text="View more"
                             android:textColor="@color/viewall_text_color"
                             android:textSize="12sp" />
 
@@ -410,6 +411,7 @@
 
 
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/rlDesc"
                     android:layout_width="match_parent"
@@ -446,18 +448,19 @@
                             android:layout_below="@+id/txtTitleDesc"
                             android:layout_marginLeft="5dp"
                             android:layout_marginTop="5dp"
-                            app:trimLines="5"
-                            app:trimExpandedText="Show more"
-                            app:trimCollapsedText="Show less"
-                            app:colorClickableText="@color/viewall_text_color"
                             android:fontFamily="@font/nunito_sans_regular"
                             android:textColor="@color/main_highlighttext_color"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            app:colorClickableText="@color/viewall_text_color"
+                            app:trimCollapsedText="Show less"
+                            app:trimExpandedText="Show more"
+                            app:trimLines="5" />
 
                     </RelativeLayout>
 
 
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/rlCur"
                     android:layout_width="match_parent"
@@ -474,45 +477,89 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                       >
+                        android:layout_marginTop="10dp">
 
                         <TextView
                             android:id="@+id/txtTitleCur"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/nunito_sans_semibold"
-                            android:text="Curriculum"
                             android:paddingLeft="16dp"
                             android:paddingRight="16dp"
+                            android:text="Curriculum"
                             android:textColor="@color/main_text_color"
                             android:textSize="16sp" />
+
                         <TextView
                             android:id="@+id/txtTimeLect"
-                            android:layout_below="@+id/txtTitleCur"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/txtTitleCur"
+                            android:fontFamily="@font/nunito_sans_regular"
                             android:paddingLeft="16dp"
                             android:paddingRight="16dp"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/nunito_sans_regular"
                             android:text="Lectures(400) Total time(50h 10 m)"
                             android:textColor="@color/colorTextHighLight"
                             android:textSize="14sp" />
 
                         <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerViewLecture"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_below="@id/txtTimeLect"
                             android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:id="@+id/recyclerViewLecture"/>
+                            android:nestedScrollingEnabled="false"/>
+
+                        <ProgressBar
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/recyclerViewLecture"
+                            android:id="@+id/progress"
+                            android:visibility="gone"
+                            android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"/>
+
+                        <TextView
+                            android:id="@+id/txtMoreSections"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/progress"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/nunit_sans_bold"
+                            android:gravity="center"
+                            android:text="Show 20 More Sections"
+                            android:textColor="@color/viewall_text_color"
+                            android:textSize="14sp" />
 
                     </RelativeLayout>
 
-
                 </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlCur"
+                    android:layout_marginTop="10dp">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorStrokeView"
+                        android:paddingTop="10dp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+
+                    </RelativeLayout>
+                </RelativeLayout>
+
             </RelativeLayout>
         </androidx.core.widget.NestedScrollView>
 

@@ -1,5 +1,6 @@
 package com.getsetgo.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -7,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,12 +24,15 @@ import java.util.ArrayList;
 
 public class CourseDetailsActivity extends AppCompatActivity {
 
-    TextView txtCourseTitle, txtCourseIncludes, txtLearn, txtViewMore;
+    TextView txtCourseTitle, txtCourseIncludes, txtLearn, txtViewMore,txtMoreSections;
     ImageView icCourseImage;
     ReadMoreTextView readMoreTextView;
     Context context;
     RecyclerView recyclerLecture;
     CurriculumLectureAdapter curriculumLectureAdapter;
+    boolean isScrolling = false;
+    LinearLayoutManager layoutManager;
+    int currentItem,scrollOutItems,totalItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         txtLearn = findViewById(R.id.txtLearn);
         txtViewMore = findViewById(R.id.txtViewMore);
         readMoreTextView = findViewById(R.id.txtDesc);
+        txtMoreSections = findViewById(R.id.txtMoreSections);
         recyclerLecture = findViewById(R.id.recyclerViewLecture);
         icCourseImage = findViewById(R.id.ivCourseImage);
 
@@ -54,6 +61,8 @@ public class CourseDetailsActivity extends AppCompatActivity {
         CharSequence bulletedList2 = BulletTextUtil.makeBulletList(10, "First line", "Second line", "third line", "First line", "Second line", "third line");
         txtLearn.setText(bulletedList2);
 
+        layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+
 
         txtViewMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,13 +71,31 @@ public class CourseDetailsActivity extends AppCompatActivity {
             }
         });
         setupRecyclerViewCurriculumLecture();
+
+        txtMoreSections.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fetch(5);
+            }
+        });
     }
 
     private void setupRecyclerViewCurriculumLecture() {
-        recyclerLecture.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        curriculumLectureAdapter = new CurriculumLectureAdapter(this);
+        recyclerLecture.setLayoutManager(layoutManager);
+        curriculumLectureAdapter = new CurriculumLectureAdapter(this,2);
         recyclerLecture.setItemAnimator(new DefaultItemAnimator());
         recyclerLecture.setAdapter(curriculumLectureAdapter);
         curriculumLectureAdapter.notifyDataSetChanged();
+    }
+
+    void fetch(int count){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                curriculumLectureAdapter = new CurriculumLectureAdapter(context,count);
+                recyclerLecture.setItemAnimator(new DefaultItemAnimator());
+                recyclerLecture.setAdapter(curriculumLectureAdapter);
+            }
+        },3000);
     }
 }

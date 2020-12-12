@@ -21,9 +21,11 @@ import com.makeramen.roundedimageview.RoundedImageView;
 public class CurriculumLectureAdapter extends RecyclerView.Adapter<CurriculumLectureAdapter.CurriculumLecturViewHolder> {
 
     Context context;
+    int Count;
 
-    public CurriculumLectureAdapter(Context context) {
+    public CurriculumLectureAdapter(Context context, int count) {
         this.context = context;
+        this.Count = count;
 
     }
 
@@ -40,14 +42,14 @@ public class CurriculumLectureAdapter extends RecyclerView.Adapter<CurriculumLec
         holder.chkExpClp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     holder.rlCollapse.setVisibility(View.VISIBLE);
                     holder.recyclerCollapsed.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
                     LecturePreviewAdapter lecturePreviewAdapter = new LecturePreviewAdapter(context);
                     holder.recyclerCollapsed.setItemAnimator(new DefaultItemAnimator());
                     holder.recyclerCollapsed.setAdapter(lecturePreviewAdapter);
                     lecturePreviewAdapter.notifyDataSetChanged();
-                }else{
+                } else {
                     holder.rlCollapse.setVisibility(View.GONE);
                 }
             }
@@ -57,7 +59,7 @@ public class CurriculumLectureAdapter extends RecyclerView.Adapter<CurriculumLec
 
     @Override
     public int getItemCount() {
-        return 5;
+        return Count;
     }
 
     public class CurriculumLecturViewHolder extends RecyclerView.ViewHolder {
