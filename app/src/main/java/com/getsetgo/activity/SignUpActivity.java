@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil;
 
 import com.adoisstudio.helper.H;
 import com.getsetgo.R;
-//import com.getsetgo.databinding.ActivitySignUpBinding;
 import com.getsetgo.databinding.ActivitySignUpBinding;
 import com.getsetgo.util.Click;
 import com.getsetgo.util.Validation;

@@ -217,37 +217,6 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
-                <LinearLayout
-                    android:id="@+id/lnrLogin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:padding="10dp"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:text="Already have account ?"
-                        android:fontFamily="@font/nunito_sans_semibold"
-                        android:textColor="#70232323">
-
-                    </TextView>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:text=" LogIn"
-                        android:fontFamily="@font/nunito_sans_semibold"
-                        android:textColor="@color/colorTextBlue">
-
-                    </TextView>
-
-                </LinearLayout>
-
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
@@ -260,6 +229,8 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:elevation="10dp"
+            android:gravity="center"
+            android:layout_centerVertical="true"
             android:background="@drawable/bg_button_corner"
             >
 
@@ -269,15 +240,46 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:paddingTop="20dp"
-                android:layout_centerVertical="true"
                 android:paddingBottom="20dp"
+                android:layout_marginTop="25dp"
                 android:gravity="center"
-                android:layout_marginTop="50dp"
                 android:text="Sign up"
                 android:background="@drawable/button_dark_bg"
                 android:fontFamily="@font/nunit_sans_bold"
                 android:textColor="@color/colorWhite">
             </TextView>
+
+            <LinearLayout
+                android:id="@+id/lnrLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_below="@+id/txtSignUp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="Already have account ?"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:textColor="#70232323">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text=" LogIn"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:textColor="@color/colorTextBlue">
+
+                </TextView>
+
+            </LinearLayout>
+
 
 
 

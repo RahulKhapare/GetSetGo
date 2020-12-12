@@ -27,7 +27,6 @@ public class NavDrawerFragment extends Fragment {
 
     public static Context context;
     static AppCompatActivity activity;
-    private ImageView ivCancel;
     public TextView txtName,txtProfile,txtEmail;
     public static MenuItem menuBusiness,menuEarn,
             menuPoints,menuTrans,menuIncentive,
@@ -59,7 +58,6 @@ public class NavDrawerFragment extends Fragment {
         txtProfile = view.findViewById(R.id.txtProfile);
         txtEmail = view.findViewById(R.id.txtEmail);
         txtName = view.findViewById(R.id.txtName);
-        ivCancel =view.findViewById(R.id.ivCancel);
         vNavigation = view.findViewById(R.id.vNavigation);
 
         Menu navigate = vNavigation.getMenu();

@@ -13,9 +13,22 @@
         android:icon="@drawable/ic_nav_account"
         android:title="Account"/>
 
+
+    <item
+        android:id="@+id/nav_Orders"
+        android:icon="@drawable/ic_nav_order"
+        android:visible="false"
+        android:title="Orders"/>
+
+    <item
+        android:id="@+id/nav_wishlist"
+        android:icon="@drawable/ic_nav_wishlist"
+        android:visible="false"
+        android:title="Wishlist"/>
+
     <item
         android:id="@+id/nav_Notification"
-        android:icon="@drawable/ic_nav_notification"
+        android:icon="@drawable/ic_notify"
         android:title="Notifications"/>
 
     <item
@@ -61,13 +74,19 @@
         android:id="@+id/nav_HelpSupport"
         android:icon="@drawable/ic_nav_helpsupport"
         android:title="Help &amp; Support"/>
+
+    <item
+        android:id="@+id/nav_Faq"
+        android:icon="@drawable/ic_nav_helpsupport"
+        android:visible="false"
+        android:title="FAQ"/>
     <item
         android:id="@+id/nav_TermsCondition"
         android:icon="@drawable/ic_nav_termandcondition"
         android:title="Terms &amp; Condition"/>
     <item
         android:id="@+id/nav_Settings"
-        android:icon="@drawable/ic_nav_setting"
+        android:icon="@drawable/ic_nav_settng"
         android:title="Settings"/>
     <item
         android:id="@+id/navs"

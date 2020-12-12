@@ -59,8 +59,6 @@ public class LoginActivity extends AppCompatActivity {
                 Click.preventTwoClick(v);
                 Intent intent = new Intent(activity,SignUpActivity.class);
                 startActivity(intent);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                finish();
             }
         });
     }

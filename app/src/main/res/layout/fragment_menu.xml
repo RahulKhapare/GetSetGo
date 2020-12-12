@@ -13,6 +13,7 @@
         android:background="@color/colorWhite"
         android:theme="@style/TextAppearance"
         app:headerLayout="@layout/view_header_layout"
+        app:itemIconTint="@color/main_text_color"
         app:itemTextColor="@color/main_text_color"
         app:menu="@menu/navigation_drawer_menu">
 
