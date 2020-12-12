@@ -102,6 +102,10 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
                     case R.id.menu_yourCourse:
                         startActivity(new Intent(context, CategoriesActivity.class));
                         break;
+
+                    case R.id.menu_Account:
+                        startActivity(new Intent(context, CourseDetailsActivity.class));
+                        break;
                 }
                 return false;
             }

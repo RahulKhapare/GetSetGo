@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:layout_width="328dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_lect"
+        android:layout_marginTop="5dp"
+        android:elevation="0.5dp"
+        android:layout_marginBottom="5dp"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:id="@+id/rlExpand"
+            android:layout_width="320dp"
+            android:layout_height="40dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:gravity="start|center"
+                android:textColor="@color/main_text_color"
+                android:text="Front-End Web Development"
+                android:textSize="14sp" />
+
+            <CheckBox
+                android:id="@+id/chkExpClp"
+                android:layout_width="26dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="25dp"
+                android:layout_alignParentEnd="true"
+                android:button="@drawable/chekcbox_exp_clp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlCollapse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_below="@+id/rlExpand">
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorStrokeView"
+                android:paddingTop="10dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view"
+                android:id="@+id/recyclerCollapsed"/>
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

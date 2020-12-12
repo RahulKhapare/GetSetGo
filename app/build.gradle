@@ -42,6 +42,7 @@ dependencies {
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
     implementation 'com.aurelhubert:ahbottomnavigation:2.3.4'
     implementation 'com.sasank.roundedhorizontalprogress:roundedhorizontalprogress:1.0.1'
+    implementation 'com.borjabravo:readmoretextview:2.1.0'
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'com.mxn.soul:flowingdrawer-core:2.1.0'
     implementation 'com.nineoldandroids:library:2.4.0'
