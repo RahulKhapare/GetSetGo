@@ -45,7 +45,7 @@
             android:id="@+id/rlCollapse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_below="@+id/rlExpand">
 
             <View
