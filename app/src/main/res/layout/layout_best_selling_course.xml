@@ -29,7 +29,7 @@
                 android:layout_height="134dp"
                 android:scaleType="fitXY"
                 android:layout_gravity="center"
-                android:src="@drawable/images" />
+                android:src="@drawable/ic_wp" />
         </androidx.cardview.widget.CardView>
 
 <!--    //</androidx.cardview.widget.CardView>-->

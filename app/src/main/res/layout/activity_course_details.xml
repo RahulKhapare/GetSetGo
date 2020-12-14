@@ -116,14 +116,14 @@
                                 android:layout_height="176dp"
                                 android:layout_gravity="center"
                                 android:scaleType="fitXY"
-                                android:src="@drawable/images"
+                                android:src="@drawable/ic_wp"
                                 app:riv_corner_radius="10dp" />
 
                             <RelativeLayout
                                 android:id="@+id/rlFrame"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_margin="10dp"
+                                android:layout_margin="7dp"
                                 android:background="@drawable/bg_play_back"
                                 android:visibility="visible">
 
@@ -745,7 +745,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/txtTitleFeedback"
-                            android:layout_marginTop="5dp" />
+                            android:layout_marginTop="3dp" />
 
                         <TextView
                             android:id="@+id/txtMoreFeedback"
