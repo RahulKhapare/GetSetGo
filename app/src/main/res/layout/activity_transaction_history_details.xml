@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/toolbar_backgound"
+    tools:context=".activity.DashBoardActivity">
+
+    <RelativeLayout
+        android:id="@+id/ll_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="start"
+            android:src="@drawable/ic_back" />
+
+        <ImageView
+            android:id="@+id/ivMenu"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="start"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/ivBack"
+            android:src="@drawable/ic_ham_menu"
+            app:tint="@color/colorWhite" />
+
+
+        <TextView
+            android:id="@+id/ivLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:fontFamily="@font/nunit_sans_bold"
+            android:text="Transaction History"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_toolbar"
+        android:background="@drawable/main_layout_bg">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScroll"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="30dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+
+                <RelativeLayout
+                    android:id="@+id/rlNameAmt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/rlName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/txtTitle"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:text="Created by"
+                            android:textColor="@color/colorTextHint60"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/txtTitleName"
+                            android:layout_width="260dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/txtTitle"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:text="Abhilasha Hanwante"
+                            android:textColor="@color/main_text_color"
+                            android:textSize="16sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_toRightOf="@+id/rlName">
+
+                        <TextView
+                            android:id="@+id/txtTitleAmt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:gravity="center"
+                            android:text="Amount"
+                            android:textColor="@color/colorTextHint60"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/txtAmount"
+                            android:layout_width="250dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/txtTitleAmt"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:gravity="center"
+                            android:text="₹5900"
+                            android:textColor="@color/main_text_color"
+                            android:textSize="16sp" />
+
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlNameAmt"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:id="@+id/txtDateTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:text="Date/Time"
+                        android:textColor="@color/colorTextHint60"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/txtDateTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtDateTitle"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:text="10 Jan 2020, 10:00 AM"
+                        android:textColor="@color/main_text_color"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlAction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlDate"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:id="@+id/txtActionTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:text="Action"
+                        android:textColor="@color/colorTextHint60"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/txtAction"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtActionTitle"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:text="Debit"
+                        android:textColor="@color/main_text_color"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlParent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlAction"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:id="@+id/txtParentTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:text="Parent"
+                        android:textColor="@color/colorTextHint60"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/txtParent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtParentTitle"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:text="Rahul Chandrakant Hanwante"
+                        android:textColor="@color/main_text_color"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlCourses"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlParent"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:id="@+id/txtCourseTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:text="Courses"
+                        android:textColor="@color/colorTextHint60"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/txtCourse"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtCourseTitle"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:text="Student's Brain booster, Financial Freedom, Mastery Freedom, Business Model, Freedom Business"
+                        android:textColor="@color/main_text_color"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlIncomeType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlCourses"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:id="@+id/txtIncomeTypeTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:text="Income Type"
+                        android:textColor="@color/colorTextHint60"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/txtIncomeType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtIncomeTypeTitle"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:text="Transfer"
+                        android:textColor="@color/main_text_color"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlIncomeType"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:id="@+id/txtDescriptionTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:text="Description"
+                        android:textColor="@color/colorTextHint60"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/txtDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtDescriptionTitle"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:text="5900 Amount Transfer"
+                        android:textColor="@color/main_text_color"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlGoBack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlDescription"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center">
+
+
+                    <Button
+                        android:id="@+id/btnGoBack"
+                        android:layout_width="290dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/button_dark_bg"
+                        android:fontFamily="@font/nunit_sans_bold"
+                        android:gravity="center"
+                        android:text="Go Back"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="16sp"/>
+
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

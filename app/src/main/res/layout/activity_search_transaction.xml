@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/toolbar_backgound"
+    tools:context=".activity.DashBoardActivity">
+
+    <RelativeLayout
+        android:id="@+id/ll_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="start"
+            android:src="@drawable/ic_back" />
+
+        <ImageView
+            android:id="@+id/ivMenu"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="start"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/ivBack"
+            android:src="@drawable/ic_ham_menu"
+            app:tint="@color/colorWhite" />
+
+
+        <TextView
+            android:id="@+id/ivLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:fontFamily="@font/nunit_sans_bold"
+            android:text="Search Transaction"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_toolbar"
+        android:background="@drawable/main_layout_bg">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScroll"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="30dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+
+                <LinearLayout
+                    android:id="@+id/rlNameAmt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="?actionBarSize"
+                        android:layout_marginTop="20dp"
+                        android:textColorHint="@color/colorTextHint">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etStartDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorTextDark"
+                            android:drawableRight="@drawable/ic_ddate"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:hint="Create Start Date"
+                            android:imeOptions="actionNext"
+                            android:inputType="textCapWords"
+                            android:textColor="@color/colorTextDark"
+                            android:textColorHint="@color/colorTextHint" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="?actionBarSize"
+                        android:layout_marginTop="20dp"
+                        android:textColorHint="@color/colorTextHint">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEndDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorTextDark"
+                            android:drawableRight="@drawable/ic_ddate"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:hint="Create End Date"
+                            android:imeOptions="actionNext"
+                            android:inputType="textCapWords"
+                            android:textColor="@color/colorTextDark"
+                            android:textColorHint="@color/colorTextHint" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginTop="15dp"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <Spinner
+                                android:id="@+id/spnActionType"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_gravity="end|center"
+                                android:background="@null"
+                                android:drawablePadding="10dp"
+                                android:gravity="start|center_vertical"
+                                android:hint="Action Type"
+                                android:paddingLeft="5dp"
+                                android:singleLine="true" />
+
+                            <RelativeLayout
+                                android:id="@+id/rl_spnTime"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:visibility="visible">
+
+                                <ImageView
+                                    android:id="@+id/imgTime"
+                                    android:layout_width="35dp"
+                                    android:layout_height="33dp"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentBottom="true"
+                                    app:tint="#80232323"
+                                    android:src="@drawable/ic_down_spiner" />
+                            </RelativeLayout>
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"
+                        android:layout_below="@+id/actPurpose"
+                        android:src="@drawable/underline" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginTop="15dp"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <Spinner
+                                android:id="@+id/spnIncomeType"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_gravity="end|center"
+                                android:background="@null"
+                                android:drawablePadding="10dp"
+                                android:gravity="start|center_vertical"
+                                android:hint="Income Type"
+                                android:paddingLeft="5dp"
+                                android:singleLine="true" />
+
+                            <RelativeLayout
+                                android:id="@+id/rl_spnIncomeType"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:visibility="visible">
+
+                                <ImageView
+                                    android:id="@+id/imgDown2"
+                                    android:layout_width="35dp"
+                                    android:layout_height="33dp"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentBottom="true"
+                                    app:tint="#80232323"
+                                    android:src="@drawable/ic_down_spiner" />
+                            </RelativeLayout>
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"
+                        android:layout_below="@+id/spnIncomeType"
+                        android:src="@drawable/underline" />
+
+
+
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rlResetSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_below="@+id/rlNameAmt"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center">
+
+
+                    <Button
+                        android:id="@+id/btnReset"
+                        android:layout_width="140dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/button_corner_bg"
+                        android:fontFamily="@font/nunit_sans_bold"
+                        android:gravity="center"
+                        android:text="Reset"
+                        android:textColor="@color/main_text_color"
+                        android:textSize="16sp" />
+
+
+                    <Button
+                        android:id="@+id/btnSubmit"
+                        android:layout_width="140dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/button_dark_bg"
+                        android:fontFamily="@font/nunit_sans_bold"
+                        android:gravity="center"
+                        android:layout_toRightOf="@+id/btnReset"
+                        android:text="Submit"
+                        android:layout_marginLeft="30dp"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="16sp" />
+
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

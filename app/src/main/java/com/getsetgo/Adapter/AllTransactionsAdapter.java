@@ -1,6 +1,7 @@
 package com.getsetgo.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.getsetgo.R;
+import com.getsetgo.activity.TransactionHistoryDetails;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.sasank.roundedhorizontalprogress.RoundedHorizontalProgressBar;
 
@@ -31,6 +33,12 @@ public class AllTransactionsAdapter extends RecyclerView.Adapter<AllTransactions
     @Override
     public void onBindViewHolder(@NonNull AllTransactionsAdapter.AllTransactionsViewHolder holder, int position) {
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, TransactionHistoryDetails.class));
+            }
+        });
     }
 
     @Override
