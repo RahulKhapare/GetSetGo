@@ -27,4 +27,11 @@
         <item name="android:textSize">16sp</item>
         <item name="fontFamily">@font/nunito_sans_regular</item>
     </style>
+
+    <style name="TextAppearances" parent="Widget.AppCompat.TextView">
+        <!-- reference our hint & error styles -->
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/nunit_sans_bold</item>
+
+    </style>
 </resources>

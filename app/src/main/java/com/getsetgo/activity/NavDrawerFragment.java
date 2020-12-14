@@ -29,12 +29,13 @@ public class NavDrawerFragment extends Fragment {
 
     public static Context context;
     static AppCompatActivity activity;
-    public TextView txtName,txtProfile,txtEmail;
-    public static MenuItem menuBusiness,menuEarn,
-            menuPoints,menuTrans,menuIncentive,
-            nav_courseEarn,nav_totalEarn,nav_crashcourseEarn;
-    public static CheckBox chkBusiness,chkEarn,
-            chkPoints,chkTrans,chkIncentive;;
+    public TextView txtName, txtProfile, txtEmail;
+    public static MenuItem menuBusiness, menuEarn,
+            menuPoints, menuTrans, menuIncentive,
+            nav_courseEarn, nav_totalEarn, nav_crashcourseEarn;
+    public static CheckBox chkBusiness, chkEarn,
+            chkPoints, chkTrans, chkIncentive;
+    ;
     static NavDrawerFragment navDrawerFragment;
     NavigationView vNavigation;
     View view = null;
@@ -90,11 +91,11 @@ public class NavDrawerFragment extends Fragment {
         chkEarn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     navigate.findItem(R.id.nav_courseEarn).setVisible(true);
                     navigate.findItem(R.id.nav_crashcourseEarn).setVisible(true);
                     navigate.findItem(R.id.nav_totalEarn).setVisible(true);
-                }else{
+                } else {
                     navigate.findItem(R.id.nav_courseEarn).setVisible(false);
                     navigate.findItem(R.id.nav_crashcourseEarn).setVisible(false);
                     navigate.findItem(R.id.nav_totalEarn).setVisible(false);
@@ -109,21 +110,25 @@ public class NavDrawerFragment extends Fragment {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        switch (menuItem.getItemId()){
+                        switch (menuItem.getItemId()) {
                             case R.id.nav_Dashboard:
-                                startActivity(new Intent(context,DashBoardActivity.class));
+                                startActivity(new Intent(context, DashBoardActivity.class));
+                                break;
+
+                            case R.id.nav_Transactions:
+                                startActivity(new Intent(context, TransactionHistoryActivity.class));
                                 break;
                         }
+                        HomeScreenActivity.mDrawer.closeMenu();
 
                     }
-                },300);
+                }, 300);
 
                 return false;
             }
-        }) ;
-        return  view ;
+        });
+        return view;
     }
-
 
 
 }

@@ -46,7 +46,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
     TextView count;
 
 
-    private FlowingDrawer mDrawer;
+    public static FlowingDrawer mDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
