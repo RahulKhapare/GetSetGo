@@ -2,7 +2,9 @@
 package com.getsetgo.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -104,7 +106,18 @@ public class NavDrawerFragment extends Fragment {
         vNavigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-                Toast.makeText(getActivity(),menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch (menuItem.getItemId()){
+                            case R.id.nav_Dashboard:
+                                startActivity(new Intent(context,DashBoardActivity.class));
+                                break;
+                        }
+
+                    }
+                },300);
+
                 return false;
             }
         }) ;

@@ -31,4 +31,9 @@
     <color name="progress_back_color">#CED5DB</color>
     <color name="colorBackground">#FCFCFC</color>
     <color name="colorStrokeView">#CED5DB</color>
+    <color name="colorBlueBusiness">#374451</color>
+    <color name="colorCourseBoard">#00768C</color>
+    <color name="colorFranchise">#F05919</color>
+    <color name="colorInfo">#72B633</color>
+    <color name="colorReward">#EF4A4F</color>
 </resources>

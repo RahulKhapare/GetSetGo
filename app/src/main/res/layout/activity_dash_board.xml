@@ -1,9 +1,820 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/toolbar_backgound"
     tools:context=".activity.DashBoardActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:id="@+id/ll_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="start"
+            android:src="@drawable/ic_back" />
+
+        <ImageView
+            android:id="@+id/ivMenu"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="start"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/ivBack"
+            android:src="@drawable/ic_ham_menu"
+            app:tint="@color/colorWhite" />
+
+
+        <TextView
+            android:id="@+id/ivLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:fontFamily="@font/nunit_sans_bold"
+            android:text="Dashboard"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_toolbar"
+        android:background="@drawable/main_layout_bg">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScroll"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="30dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <RelativeLayout
+                    android:id="@+id/rlCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center">
+
+
+                    <RelativeLayout
+                        android:id="@+id/llMain"
+                        android:layout_width="328dp"
+                        android:layout_height="153dp"
+                        android:background="@drawable/bg_dash_elevation"
+                        android:elevation="3dp"
+                        android:orientation="vertical"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <RelativeLayout
+                            android:id="@+id/rlMainDetails"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="13dp"
+                            android:gravity="center_vertical">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/imvViewProfile"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/download" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_toEndOf="@+id/imvViewProfile"
+                                android:layout_toRightOf="@+id/imvViewProfile"
+                                android:orientation="vertical">
+
+
+                                <TextView
+                                    android:id="@+id/txtName"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/nunito_sans_regular"
+                                    android:text="Abhilasha Hanwante"
+                                    android:textColor="@color/main_text_color"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:id="@+id/txtEmail"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="3dp"
+                                    android:fontFamily="@font/nunito_sans_regular"
+                                    android:text="abhilasha.dani@gmail.com"
+                                    android:textColor="@color/colorTextHint60"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/txtUserId"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="3dp"
+                                    android:fontFamily="@font/nunito_sans_regular"
+                                    android:text="User Id - 12345678"
+                                    android:textColor="@color/colorTextHint60"
+                                    android:textSize="14sp" />
+
+
+                            </LinearLayout>
+
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rlComplete"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/rlMainDetails"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="15dp">
+
+                            <TextView
+                                android:id="@+id/txttitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_sans_regular"
+                                android:text="Complete your profile"
+                                android:textColor="@color/main_text_color"
+                                android:textSize="14sp" />
+
+                            <com.sasank.roundedhorizontalprogress.RoundedHorizontalProgressBar
+                                android:id="@+id/progressBarDash"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="7dp"
+                                android:layout_below="@+id/txttitle"
+                                android:layout_marginTop="7dp"
+                                android:layout_marginRight="5dp"
+                                android:indeterminate="false"
+                                android:maxHeight="12dp"
+                                android:minHeight="12dp"
+                                android:progress="30"
+                                app:backgroundColor="@color/progress_back_color"
+                                app:progressColor="@color/progress_color" />
+
+                            <TextView
+                                android:id="@+id/txtStatus"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/progressBarDash"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/nunito_sans_semibold"
+                                android:text="30% Completed"
+                                android:textColor="@color/colorTextHint"
+                                android:textSize="10sp" />
+
+
+                        </RelativeLayout>
+
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlAffliate"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:layout_below="@id/rlCard"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:id="@+id/llAffliate"
+                        android:layout_width="328dp"
+                        android:layout_height="128dp"
+                        android:background="@drawable/bg_dash_elevation"
+                        android:elevation="3dp"
+                        android:orientation="vertical"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <RelativeLayout
+                            android:id="@+id/rlAfflink"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/txttle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_sans_regular"
+                                android:text="Affiliate Link"
+                                android:textColor="@color/colorTextHint60"
+                                android:textSize="14sp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/txttle">
+
+                                <TextView
+                                    android:id="@+id/txtAffLink"
+                                    android:layout_width="230dp"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/nunito_sans_regular"
+                                    android:text="https://getsetgoworld.com/register?rf=167567341"
+                                    android:textColor="@color/viewall_text_color"
+                                    android:textSize="14sp" />
+
+                                <ImageView
+                                    android:id="@+id/imvCopyLink"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_toRightOf="@+id/txtAffLink"
+                                    android:src="@drawable/ic_copied" />
+
+
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rlAffCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/rlAfflink"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/txttlCode"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_sans_regular"
+                                android:text="Affiliate Code"
+                                android:textColor="@color/colorTextHint60"
+                                android:textSize="14sp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/txttlCode">
+
+                                <TextView
+                                    android:id="@+id/txtAffCode"
+                                    android:layout_width="230dp"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/nunito_sans_regular"
+                                    android:text="167567341"
+                                    android:textColor="@color/viewall_text_color"
+                                    android:textSize="14sp" />
+
+                                <ImageView
+                                    android:id="@+id/imvCopyCode"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_toRightOf="@+id/txtAffCode"
+                                    android:src="@drawable/ic_copied" />
+
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlTotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_below="@id/rlAffliate"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <RelativeLayout
+                            android:id="@+id/rlTotalUser"
+                            android:layout_width="154dp"
+                            android:layout_height="94dp"
+                            android:background="@drawable/bg_dash_elevation"
+                            android:elevation="3dp"
+                            android:gravity="center">
+
+                            <RelativeLayout
+                                android:id="@+id/rlText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/ivUser"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:src="@drawable/ic_group" />
+
+                                <TextView
+                                    android:id="@+id/txtTotalUser"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginLeft="7dp"
+                                    android:layout_toRightOf="@id/ivUser"
+                                    android:fontFamily="@font/nunito_sans_regular"
+                                    android:text="1500"
+                                    android:textColor="@color/main_text_color"
+                                    android:textSize="24sp" />
+
+                            </RelativeLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/rlText"
+                                android:layout_marginLeft="7dp"
+                                android:fontFamily="@font/nunito_sans_regular"
+                                android:gravity="center"
+                                android:text="Total Users"
+                                android:textColor="@color/colorTextHint60"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rlTotalDirectUser"
+                            android:layout_width="154dp"
+                            android:layout_height="94dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_toRightOf="@+id/rlTotalUser"
+                            android:background="@drawable/bg_dash_elevation"
+                            android:elevation="3dp"
+                            android:gravity="center">
+
+                            <RelativeLayout
+                                android:id="@+id/rlDirect"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/ivDirectUser"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:src="@drawable/ic_group" />
+
+                                <TextView
+                                    android:id="@+id/txtTotalDirectUser"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginLeft="7dp"
+                                    android:layout_toRightOf="@id/ivDirectUser"
+                                    android:fontFamily="@font/nunito_sans_regular"
+                                    android:text="1500"
+                                    android:textColor="@color/main_text_color"
+                                    android:textSize="24sp" />
+
+                            </RelativeLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/rlDirect"
+                                android:layout_marginLeft="7dp"
+                                android:fontFamily="@font/nunito_sans_regular"
+                                android:gravity="center"
+                                android:text="Total Direct Users"
+                                android:textColor="@color/colorTextHint60"
+                                android:textSize="12sp" />
+
+                        </RelativeLayout>
+
+
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlOptions"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/rlTotal"
+                    android:layout_marginTop="7dp"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <RelativeLayout
+                            android:id="@+id/rlBusKit"
+                            android:layout_width="328dp"
+                            android:layout_height="68dp"
+                            android:background="@drawable/bg_dash_elevation"
+                            android:backgroundTint="@color/colorBlueBusiness"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/ivBusKit"
+                                android:layout_width="33dp"
+                                android:layout_height="30dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="25dp"
+                                android:src="@drawable/ic_business_kit" />
+
+                            <TextView
+                                android:id="@+id/txtBusinessKit"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="25dp"
+                                android:layout_toRightOf="@+id/ivBusKit"
+                                android:fontFamily="@font/nunito_sans_regular"
+                                android:text="Business Kit"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="16sp" />
+
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rlCourseBoard"
+                            android:layout_width="328dp"
+                            android:layout_height="68dp"
+                            android:layout_below="@id/rlBusKit"
+                            android:layout_marginTop="13dp"
+                            android:background="@drawable/bg_dash_elevation"
+                            android:backgroundTint="@color/colorCourseBoard"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/ivCB"
+                                android:layout_width="33dp"
+                                android:layout_height="30dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="25dp"
+                                android:src="@drawable/ic_course_dash" />
+
+                            <TextView
+                                android:id="@+id/txtCB"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="25dp"
+                                android:layout_toRightOf="@+id/ivCB"
+                                android:fontFamily="@font/nunito_sans_regular"
+                                android:text="Course Dashboard"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="16sp" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rlFranchise"
+                            android:layout_width="328dp"
+                            android:layout_height="68dp"
+                            android:layout_below="@id/rlCourseBoard"
+                            android:layout_marginTop="13dp"
+                            android:background="@drawable/bg_dash_elevation"
+                            android:backgroundTint="@color/colorFranchise"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/ivFrans"
+                                android:layout_width="33dp"
+                                android:layout_height="30dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="25dp"
+                                android:src="@drawable/ic_franchise" />
+
+                            <TextView
+                                android:id="@+id/txtFranch"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="25dp"
+                                android:layout_toRightOf="@+id/ivFrans"
+                                android:fontFamily="@font/nunito_sans_regular"
+                                android:text="Become a Franchise"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="16sp" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rlInfo"
+                            android:layout_width="328dp"
+                            android:layout_height="68dp"
+                            android:layout_below="@id/rlFranchise"
+                            android:layout_marginTop="13dp"
+                            android:background="@drawable/bg_dash_elevation"
+                            android:backgroundTint="@color/colorInfo"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/ivInfo"
+                                android:layout_width="33dp"
+                                android:layout_height="30dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="25dp"
+                                android:src="@drawable/ic_salary" />
+
+                            <TextView
+                                android:id="@+id/txtInfo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="25dp"
+                                android:layout_toRightOf="@+id/ivInfo"
+                                android:fontFamily="@font/nunito_sans_regular"
+                                android:text="Income 10% Information"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="16sp" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rlReward"
+                            android:layout_width="328dp"
+                            android:layout_height="68dp"
+                            android:layout_below="@id/rlInfo"
+                            android:layout_marginTop="13dp"
+                            android:background="@drawable/bg_dash_elevation"
+                            android:backgroundTint="@color/colorReward"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/ivReward"
+                                android:layout_width="33dp"
+                                android:layout_height="30dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="25dp"
+                                android:src="@drawable/ic_reward_points" />
+
+                            <TextView
+                                android:id="@+id/txtReward"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="25dp"
+                                android:layout_toRightOf="@+id/ivReward"
+                                android:fontFamily="@font/nunito_sans_regular"
+                                android:text="Reward Points -"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="16sp" />
+
+                        </RelativeLayout>
+
+
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlMasterDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/rlOptions"
+                    android:layout_marginTop="13dp"
+                    android:gravity="center">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorStrokeView"
+                        android:paddingTop="10dp" />
+                    <RelativeLayout
+                        android:id="@+id/rlMaster"
+                        android:layout_width="328dp"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorTextHint60"
+                            android:textSize="14sp"
+                            android:layout_marginTop="10dp"
+                            android:text="Master Franchise"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:id="@+id/txtMasterTitle"/>
+
+                        <TextView
+                            android:id="@+id/txtMasterName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/txtMasterTitle"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/main_text_color"
+                            android:textSize="16sp"
+                            android:text="Rahul Chandrakant Hanwante"
+                            android:fontFamily="@font/nunito_sans_regular"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorTextHint60"
+                            android:textSize="14sp"
+                            android:layout_below="@+id/txtMasterName"
+                            android:layout_marginTop="15dp"
+                            android:text="Master Franchise Contact"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:id="@+id/txtMasterContactTitle"/>
+
+                        <TextView
+                            android:id="@+id/txtMasterContact"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/txtMasterContactTitle"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/main_text_color"
+                            android:textSize="16sp"
+                            android:text="8898888179"
+                            android:fontFamily="@font/nunito_sans_regular"/>
+
+                    </RelativeLayout>
+                    <View
+                        android:id="@+id/viewFran"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/rlMaster"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/colorStrokeView"
+                        android:paddingTop="10dp" />
+                    <RelativeLayout
+                        android:id="@+id/rlFranc"
+                        android:layout_width="328dp"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@+id/viewFran"
+                        android:gravity="center">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorTextHint60"
+                            android:textSize="14sp"
+                            android:layout_marginTop="10dp"
+                            android:text="Franchise"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:id="@+id/txtFranchiseTitle"/>
+
+                        <TextView
+                            android:id="@+id/txtFranchiseName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/txtFranchiseTitle"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/main_text_color"
+                            android:textSize="16sp"
+                            android:text="Rahul Chandrakant Hanwante"
+                            android:fontFamily="@font/nunito_sans_regular"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorTextHint60"
+                            android:textSize="14sp"
+                            android:layout_below="@+id/txtFranchiseName"
+                            android:layout_marginTop="15dp"
+                            android:text="Franchise Contact"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:id="@+id/txtFranciseContactTitle"/>
+
+                        <TextView
+                            android:id="@+id/txtFranchiseConatct"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/txtFranciseContactTitle"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/main_text_color"
+                            android:textSize="16sp"
+                            android:text="8898888179"
+                            android:fontFamily="@font/nunito_sans_regular"/>
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/viewAdviser"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/rlFranc"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/colorStrokeView"
+                        android:paddingTop="10dp" />
+                    <RelativeLayout
+                        android:id="@+id/rlAdvisor"
+                        android:layout_width="328dp"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@+id/viewAdviser"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="center">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorTextHint60"
+                            android:textSize="14sp"
+                            android:layout_marginTop="10dp"
+                            android:text="Advisor Name"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:id="@+id/txtAdviserTitle"/>
+
+                        <TextView
+                            android:id="@+id/txtAdviserName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/txtAdviserTitle"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/main_text_color"
+                            android:textSize="16sp"
+                            android:text="Abhilasha Hanwante"
+                            android:fontFamily="@font/nunito_sans_regular"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorTextHint60"
+                            android:textSize="14sp"
+                            android:layout_below="@+id/txtAdviserName"
+                            android:layout_marginTop="15dp"
+                            android:text="Advisor Contact Number"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:id="@+id/txtAdviserContactTitle"/>
+
+                        <TextView
+                            android:id="@+id/txtAvisorContact"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/txtAdviserContactTitle"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/main_text_color"
+                            android:textSize="16sp"
+                            android:text="8898888179"
+                            android:fontFamily="@font/nunito_sans_regular"/>
+
+                    </RelativeLayout>
+
+
+
+
+
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
