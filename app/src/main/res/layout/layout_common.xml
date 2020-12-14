@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlProfile"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/rlCur"
+    android:gravity="center"
+    android:paddingLeft="16dp">
+
+
+    <RelativeLayout
+        android:id="@+id/rlReview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <ImageView
+            android:id="@+id/imgWishReview1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_star_review" />
+
+        <ImageView
+            android:id="@+id/imgWishReview2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/imgWishReview1"
+            android:src="@drawable/ic_star_review" />
+
+        <ImageView
+            android:id="@+id/imgWishReview3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/imgWishReview2"
+            android:src="@drawable/ic_star_review" />
+
+        <ImageView
+            android:id="@+id/imgWishReview4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/imgWishReview3"
+            android:src="@drawable/ic_star_review" />
+
+        <ImageView
+            android:id="@+id/imgWishReview5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/imgWishReview4"
+            android:src="@drawable/ic_star_review" />
+
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtFedback"
+        android:fontFamily="@font/nunito_sans_regular"
+        android:textColor="@color/main_text_color"
+        android:textSize="14sp"
+        android:layout_below="@+id/rlReview"
+        android:layout_marginTop="5dp"
+        android:text="@string/dummy_text"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtFeedbackDate"
+        android:fontFamily="@font/nunito_sans_semibold"
+        android:textColor="@color/colorTextHint60"
+        android:textSize="12sp"
+        android:layout_below="@id/txtFedback"
+        android:layout_marginTop="5dp"
+        android:text="John Doe 2 months ago"/>
+
+
+
+</RelativeLayout>

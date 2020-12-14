@@ -9,6 +9,7 @@
     <color name="colorGray">#888888</color>
     <color name="colorTextDark">#232323</color>
     <color name="colorTextHint">#50232323</color>
+    <color name="colorTextHint60">#60232323</color>
     <color name="colorTextHighLight">#70232323</color>
     <color name="colorTextBlue">#4169E1</color>
     <color name="colorTextProfile">#00768C</color>

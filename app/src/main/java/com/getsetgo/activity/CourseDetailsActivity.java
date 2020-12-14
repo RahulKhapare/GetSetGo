@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.borjabravo.readmoretextview.ReadMoreTextView;
 import com.getsetgo.Adapter.CategoriesCommonAdapter;
 import com.getsetgo.Adapter.CurriculumLectureAdapter;
+import com.getsetgo.Adapter.StudentsFeedbackAdapter;
 import com.getsetgo.R;
 import com.getsetgo.util.BulletTextUtil;
 
@@ -28,11 +29,11 @@ public class CourseDetailsActivity extends AppCompatActivity {
     ImageView icCourseImage;
     ReadMoreTextView readMoreTextView;
     Context context;
-    RecyclerView recyclerLecture;
+    RecyclerView recyclerLecture,recyclerViewFeedback;
     CurriculumLectureAdapter curriculumLectureAdapter;
-    boolean isScrolling = false;
+    StudentsFeedbackAdapter studentsFeedbackAdapter;
     LinearLayoutManager layoutManager;
-    int currentItem,scrollOutItems,totalItems;
+    LinearLayoutManager mLayoutManagerStudentFeedback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         readMoreTextView = findViewById(R.id.txtDesc);
         txtMoreSections = findViewById(R.id.txtMoreSections);
         recyclerLecture = findViewById(R.id.recyclerViewLecture);
+        recyclerViewFeedback = findViewById(R.id.recyclerViewFeedback);
         icCourseImage = findViewById(R.id.ivCourseImage);
 
         readMoreTextView.setText(R.string.dummy_text);
@@ -62,6 +64,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         txtLearn.setText(bulletedList2);
 
         layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        mLayoutManagerStudentFeedback = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
 
 
         txtViewMore.setOnClickListener(new View.OnClickListener() {
@@ -71,21 +74,30 @@ public class CourseDetailsActivity extends AppCompatActivity {
             }
         });
         setupRecyclerViewCurriculumLecture();
+        setupRecyclerViewStudenrFeedback();
 
         txtMoreSections.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fetch(5);
+                //fetch(5);
             }
         });
     }
 
     private void setupRecyclerViewCurriculumLecture() {
         recyclerLecture.setLayoutManager(layoutManager);
-        curriculumLectureAdapter = new CurriculumLectureAdapter(this,2);
+        curriculumLectureAdapter = new CurriculumLectureAdapter(this,5);
         recyclerLecture.setItemAnimator(new DefaultItemAnimator());
         recyclerLecture.setAdapter(curriculumLectureAdapter);
         curriculumLectureAdapter.notifyDataSetChanged();
+    }
+
+    private void setupRecyclerViewStudenrFeedback() {
+        recyclerViewFeedback.setLayoutManager(mLayoutManagerStudentFeedback);
+        studentsFeedbackAdapter = new StudentsFeedbackAdapter(this);
+        recyclerViewFeedback.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewFeedback.setAdapter(studentsFeedbackAdapter);
+        studentsFeedbackAdapter.notifyDataSetChanged();
     }
 
     void fetch(int count){
