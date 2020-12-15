@@ -18,22 +18,13 @@ import com.getsetgo.R;
 public class MyEarningFragment extends Fragment {
 
     RecyclerView recyclerView;
-    MyEarningsCommonAdapter myEarningsCommonAdapter;
-    LinearLayoutManager layoutManager;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(
-                R.layout.fragment_myearning, container, false);
-
+        View view = inflater.inflate(R.layout.fragment_myearning, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewMyEarning);
-
         setupRecyclerViewMyEarnings();
-
         return view;
-
-
     }
 
     @Override
@@ -42,9 +33,8 @@ public class MyEarningFragment extends Fragment {
     }
 
     private void setupRecyclerViewMyEarnings() {
-        layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-        myEarningsCommonAdapter = new MyEarningsCommonAdapter(getActivity());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        MyEarningsCommonAdapter myEarningsCommonAdapter = new MyEarningsCommonAdapter(getActivity());
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(myEarningsCommonAdapter);
     }
