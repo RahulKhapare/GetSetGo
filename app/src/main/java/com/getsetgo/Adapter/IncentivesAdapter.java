@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,10 +32,15 @@ public class IncentivesAdapter extends RecyclerView.Adapter<IncentivesAdapter.In
     @Override
     public void onBindViewHolder(@NonNull IncentivesAdapter.IncentivesViewHolder holder, int position) {
 
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, TransactionHistoryDetails.class));
+                if(holder.rlDetails.getVisibility() == View.VISIBLE){
+                    holder.rlDetails.setVisibility(View.GONE);
+                }else{
+                    holder.rlDetails.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
@@ -46,7 +52,9 @@ public class IncentivesAdapter extends RecyclerView.Adapter<IncentivesAdapter.In
 
     public class IncentivesViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtDate,txtAmountNp,txtNP,txtStatusDate, txtStatus, txtAmount;
+        TextView txtDate,txtAmountNp,txtNP,txtStatusDate, txtStatus,
+                txtAmount,txtTransactionId,txtApproveDate,txtSlipDetails,txtRemark;
+        RelativeLayout rlDetails;
 
         public IncentivesViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -57,6 +65,11 @@ public class IncentivesAdapter extends RecyclerView.Adapter<IncentivesAdapter.In
             txtNP = itemView.findViewById(R.id.txtIncNP);
             txtStatus = itemView.findViewById(R.id.txtStatusTitle);
             txtStatusDate = itemView.findViewById(R.id.txtStatusDate);
+            txtTransactionId = itemView.findViewById(R.id.txtTransactionId);
+            txtApproveDate = itemView.findViewById(R.id.txtApproveDate);
+            txtSlipDetails = itemView.findViewById(R.id.txtSlipDetails);
+            txtRemark = itemView.findViewById(R.id.txtRemark);
+            rlDetails = itemView.findViewById(R.id.rlDetails);
 
         }
     }

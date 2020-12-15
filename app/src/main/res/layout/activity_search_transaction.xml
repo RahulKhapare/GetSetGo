@@ -32,7 +32,7 @@
             android:layout_height="24dp"
             android:layout_centerVertical="true"
             android:layout_gravity="start"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:layout_toEndOf="@+id/ivBack"
             android:src="@drawable/ic_ham_menu"
             app:tint="@color/colorWhite" />
@@ -190,14 +190,12 @@
                                 android:id="@+id/spnIncomeType"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
-                                android:layout_gravity="end"
                                 android:background="@null"
                                 android:gravity="start"
                                 style="@style/SpinnerTextViewItem"
                                 android:spinnerMode="dropdown"
                                 android:dropDownVerticalOffset="40dp"
-                                android:hint="Income Type"
-                                android:singleLine="true" />
+                                android:hint="Income Type" />
 
                             <RelativeLayout
                                 android:id="@+id/rl_spnIncomeType"

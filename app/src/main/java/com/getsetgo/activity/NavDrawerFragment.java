@@ -118,6 +118,10 @@ public class NavDrawerFragment extends Fragment {
                             case R.id.nav_Transactions:
                                 startActivity(new Intent(context, TransactionHistoryActivity.class));
                                 break;
+
+                                case R.id.nav_Notification:
+                                startActivity(new Intent(context, IncentiveActivity.class));
+                                break;
                         }
                         HomeScreenActivity.mDrawer.closeMenu();
 
