@@ -30,8 +30,8 @@
 
     <style name="TextAppearances" parent="Widget.AppCompat.TextView">
         <!-- reference our hint & error styles -->
-        <item name="android:textSize">12sp</item>
-        <item name="android:fontFamily">@font/nunit_sans_bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/nunito_sans_regular</item>
 
     </style>
 

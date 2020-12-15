@@ -6,29 +6,30 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.getsetgo.Adapter.MyEarningsViewPagerAdapter;
 import com.getsetgo.Adapter.TransactionViewPagerAdapter;
 import com.getsetgo.R;
 import com.google.android.material.tabs.TabLayout;
 
-public class TransactionHistoryActivity extends AppCompatActivity {
+public class MyEarningActivity extends AppCompatActivity {
 
     Context context;
     TabLayout tabLayout;
     ViewPager viewPager;
-    TransactionViewPagerAdapter transactionViewPagerAdapter;
+    MyEarningsViewPagerAdapter myEarningsViewPagerAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transaction_history);
-        context = TransactionHistoryActivity.this;
+        setContentView(R.layout.activity_my_earning);
+        context = MyEarningActivity.this;
         init();
     }
 
     private void init() {
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-        transactionViewPagerAdapter = new TransactionViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(transactionViewPagerAdapter);
-        tabLayout = (TabLayout)findViewById(R.id.tablayout);
+        viewPager = (ViewPager) findViewById(R.id.viewPagerEarning);
+        myEarningsViewPagerAdapter = new MyEarningsViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(myEarningsViewPagerAdapter);
+        tabLayout = (TabLayout)findViewById(R.id.tablayoutEarnings);
         tabLayout.setupWithViewPager(viewPager);
     }
 }

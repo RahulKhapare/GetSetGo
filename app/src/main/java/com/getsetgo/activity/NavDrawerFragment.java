@@ -129,6 +129,9 @@ public class NavDrawerFragment extends Fragment {
                             case R.id.nav_crashcourseEarn:
                                 startActivity(new Intent(context, SearchIncentivesActivity.class));
                                 break;
+                            case R.id.nav_MyEarning:
+                                startActivity(new Intent(context, MyEarningActivity.class));
+                                break;
 
                         }
                         HomeScreenActivity.mDrawer.closeMenu();

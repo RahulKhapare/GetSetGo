@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/toolbar_backgound"
-    tools:context=".activity.CategoriesActivity">
-
+    tools:context=".activity.MyEarningActivity">
 
     <RelativeLayout
         android:id="@+id/ll_toolbar"
@@ -33,7 +32,7 @@
             android:layout_height="24dp"
             android:layout_centerVertical="true"
             android:layout_gravity="start"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:layout_toEndOf="@+id/ivBack"
             android:src="@drawable/ic_ham_menu"
             app:tint="@color/colorWhite" />
@@ -47,11 +46,12 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:fontFamily="@font/nunit_sans_bold"
-            android:text="Transaction History"
+            android:text="My Earnings"
             android:textColor="@color/colorWhite"
             android:textSize="18sp" />
 
     </RelativeLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -59,9 +59,8 @@
         android:layout_below="@id/ll_toolbar"
         android:background="@drawable/main_layout_bg">
 
-
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tablayout"
+            android:id="@+id/tablayoutEarnings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?actionBarSize"
@@ -73,12 +72,12 @@
             app:tabTextAppearance="@style/TextAppearances"/>
 
         <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPager"
+            android:id="@+id/viewPagerEarning"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:layout_below="@id/tablayout" />
-
+            android:layout_below="@id/tablayoutEarnings" />
 
     </RelativeLayout>
+
 
 </RelativeLayout>
