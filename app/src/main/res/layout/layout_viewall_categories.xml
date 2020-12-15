@@ -11,7 +11,7 @@
         android:layout_width="325dp"
         android:layout_height="143dp"
         app:cardCornerRadius="10dp"
-        app:cardElevation="4dp">
+        app:cardElevation="3dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_sans_semibold"
                         android:text="Student's Brain Booster"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/colorTextDark"
                         android:textSize="14sp" />
 
 
@@ -139,7 +139,7 @@
                         android:layout_toRightOf="@+id/rlReview"
                         android:fontFamily="@font/nunit_sans_bold"
                         android:text="4.5"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/colorTextDark"
                         android:textSize="10sp" />
 
                 </RelativeLayout>
@@ -149,11 +149,11 @@
                     android:layout_width="60dp"
                     android:layout_height="18dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/best_sellerhighlight"
+                    android:background="@drawable/bg_bestseller"
                     android:fontFamily="@font/nunito_sans_regular"
                     android:gravity="center"
                     android:text="BestSeller"
-                    android:textColor="@color/main_text_color"
+                    android:textColor="@color/colorTextDark"
                     android:textSize="10sp" />
 
 
@@ -169,7 +169,7 @@
                         android:fontFamily="@font/nunit_sans_bold"
                         android:gravity="center"
                         android:text="₹ 399.00"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/colorTextDark"
                         android:textSize="14sp" />
 
                     <TextView

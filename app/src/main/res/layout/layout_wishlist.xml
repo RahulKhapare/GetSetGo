@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_sans_semibold"
                     android:text="2020 Mobile App Development Bootcamp"
-                    android:textColor="@color/main_text_color"
+                    android:textColor="@color/colorTextDark"
                     android:textSize="14sp" />
 
                 <TextView
@@ -145,7 +145,7 @@
                         android:fontFamily="@font/nunit_sans_bold"
                         android:layout_centerVertical="true"
                         android:text="4.5"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/colorTextDark"
                         android:textSize="10sp" />
 
                 </RelativeLayout>
@@ -161,7 +161,7 @@
                         android:fontFamily="@font/nunit_sans_bold"
                         android:gravity="center"
                         android:text="₹ 399.00"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/colorTextDark"
                         android:textSize="14sp" />
 
                     <TextView

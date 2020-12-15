@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunito_sans_regular"
             android:text="14 Aug 2020"
-            android:textColor="@color/main_text_color"
+            android:textColor="@color/colorTextDark"
             android:textSize="16sp" />
 
         <TextView

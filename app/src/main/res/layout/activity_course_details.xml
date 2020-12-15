@@ -86,7 +86,7 @@
                         android:fontFamily="@font/nunito_sans_semibold"
                         android:gravity="center"
                         android:text="2020 Web Developement Bootcamp"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/colorTextDark"
                         android:textSize="18sp" />
                 </RelativeLayout>
 
@@ -262,7 +262,7 @@
                             android:fontFamily="@font/nunit_sans_bold"
                             android:gravity="center"
                             android:text="4.5"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/colorTextDark"
                             android:textSize="10sp" />
 
                     </RelativeLayout>
@@ -279,7 +279,7 @@
                             android:fontFamily="@font/nunit_sans_bold"
                             android:gravity="center"
                             android:text="₹ 399.00"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/colorTextDark"
                             android:textSize="14sp" />
 
                         <TextView
@@ -336,7 +336,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/nunito_sans_semibold"
                             android:text="This Course Includes"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/colorTextDark"
                             android:textSize="16sp" />
 
                         <TextView
@@ -381,7 +381,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/nunito_sans_semibold"
                             android:text="What will i learn? "
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/colorTextDark"
                             android:textSize="16sp" />
 
                         <TextView
@@ -438,7 +438,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/nunito_sans_semibold"
                             android:text="Description"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/colorTextDark"
                             android:textSize="16sp" />
 
                         <com.borjabravo.readmoretextview.ReadMoreTextView
@@ -487,7 +487,7 @@
                             android:paddingLeft="16dp"
                             android:paddingRight="16dp"
                             android:text="Curriculum"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/colorTextDark"
                             android:textSize="16sp" />
 
                         <TextView
@@ -571,7 +571,7 @@
                                 android:layout_marginTop="5dp"
                                 android:fontFamily="@font/nunit_sans_bold"
                                 android:text="Created by Prof. John Doe"
-                                android:textColor="@color/main_text_color"
+                                android:textColor="@color/colorTextDark"
                                 android:textSize="16sp" />
 
                             <RelativeLayout
@@ -736,7 +736,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/nunito_sans_semibold"
                             android:text="Student's Feedback"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/colorTextDark"
                             android:paddingLeft="16dp"
                             android:textSize="16sp" />
 

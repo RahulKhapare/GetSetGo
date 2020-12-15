@@ -97,7 +97,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
                         startActivity(new Intent(context, WishlistActivity.class));
                         break;
                     case R.id.menu_search:
-                        startActivity(new Intent(context, SearchTransactionActivity.class));
+                        startActivity(new Intent(context, MyCourseActivity.class));
                         break;
                     case R.id.menu_yourCourse:
                         startActivity(new Intent(context, CategoriesActivity.class));

@@ -81,7 +81,7 @@
                 android:gravity="end"
                 android:layout_marginTop="3dp"
                 android:text="1K Student"
-                android:textColor="@color/main_text_color"
+                android:textColor="@color/colorTextDark"
                 android:textSize="12sp" />
 
             <com.sasank.roundedhorizontalprogress.RoundedHorizontalProgressBar

@@ -36,7 +36,7 @@
                     android:id="@+id/txtName"
                     android:fontFamily="@font/nunit_sans_bold"
                     android:textSize="18sp"
-                    android:textColor="@color/main_text_color"
+                    android:textColor="@color/colorTextDark"
                     android:layout_marginTop="5dp"
                     android:layout_below="@+id/ivCancel"
                     android:text="John Doe"/>

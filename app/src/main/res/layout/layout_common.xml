@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/txtFedback"
         android:fontFamily="@font/nunito_sans_regular"
-        android:textColor="@color/main_text_color"
+        android:textColor="@color/colorTextDark"
         android:textSize="14sp"
         android:layout_below="@+id/rlReview"
         android:layout_marginTop="5dp"

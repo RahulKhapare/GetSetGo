@@ -27,7 +27,7 @@
                 android:layout_marginLeft="15dp"
                 android:fontFamily="@font/nunito_sans_semibold"
                 android:gravity="start|center"
-                android:textColor="@color/main_text_color"
+                android:textColor="@color/colorTextDark"
                 android:text="Front-End Web Development"
                 android:textSize="14sp" />
 

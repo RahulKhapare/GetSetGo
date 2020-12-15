@@ -84,7 +84,7 @@
                         android:layout_height="22dp"
                         android:fontFamily="@font/nunit_sans_bold"
                         android:text="Smart School"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/colorTextDark"
                         android:textSize="16sp" />
 
                     <TextView
@@ -125,7 +125,7 @@
                         android:layout_height="22dp"
                         android:fontFamily="@font/nunit_sans_bold"
                         android:text="Professional"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/colorTextDark"
                         android:textSize="16sp" />
 
                     <TextView
@@ -167,7 +167,7 @@
                         android:layout_height="22dp"
                         android:fontFamily="@font/nunit_sans_bold"
                         android:text="Art"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/colorTextDark"
                         android:textSize="16sp" />
 
                     <TextView
@@ -209,7 +209,7 @@
                         android:layout_height="22dp"
                         android:fontFamily="@font/nunit_sans_bold"
                         android:text="Technology"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/colorTextDark"
                         android:textSize="16sp" />
 
                     <TextView
@@ -251,7 +251,7 @@
                         android:layout_height="22dp"
                         android:fontFamily="@font/nunit_sans_bold"
                         android:text="Creativity &amp; Innovation "
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/colorTextDark"
                         android:textSize="16sp" />
 
                     <TextView

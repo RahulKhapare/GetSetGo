@@ -98,7 +98,7 @@
                             android:layout_below="@id/txtTitle"
                             android:fontFamily="@font/nunito_sans_regular"
                             android:text="Abhilasha Hanwante"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/colorTextDark"
                             android:textSize="16sp" />
 
                     </RelativeLayout>
@@ -128,7 +128,7 @@
                             android:fontFamily="@font/nunito_sans_regular"
                             android:gravity="center"
                             android:text="₹5900"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/colorTextDark"
                             android:textSize="16sp" />
 
                     </RelativeLayout>
@@ -157,7 +157,7 @@
                         android:layout_below="@+id/txtDateTitle"
                         android:fontFamily="@font/nunito_sans_regular"
                         android:text="10 Jan 2020, 10:00 AM"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/colorTextDark"
                         android:textSize="16sp" />
 
                 </RelativeLayout>
@@ -185,7 +185,7 @@
                         android:layout_below="@+id/txtActionTitle"
                         android:fontFamily="@font/nunito_sans_regular"
                         android:text="Debit"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/colorTextDark"
                         android:textSize="16sp" />
 
                 </RelativeLayout>
@@ -213,7 +213,7 @@
                         android:layout_below="@+id/txtParentTitle"
                         android:fontFamily="@font/nunito_sans_regular"
                         android:text="Rahul Chandrakant Hanwante"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/colorTextDark"
                         android:textSize="16sp" />
 
                 </RelativeLayout>
@@ -241,7 +241,7 @@
                         android:layout_below="@+id/txtCourseTitle"
                         android:fontFamily="@font/nunito_sans_regular"
                         android:text="Student's Brain booster, Financial Freedom, Mastery Freedom, Business Model, Freedom Business"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/colorTextDark"
                         android:textSize="16sp" />
 
                 </RelativeLayout>
@@ -269,7 +269,7 @@
                         android:layout_below="@+id/txtIncomeTypeTitle"
                         android:fontFamily="@font/nunito_sans_regular"
                         android:text="Transfer"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/colorTextDark"
                         android:textSize="16sp" />
 
                 </RelativeLayout>
@@ -297,7 +297,7 @@
                         android:layout_below="@+id/txtDescriptionTitle"
                         android:fontFamily="@font/nunito_sans_regular"
                         android:text="5900 Amount Transfer"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="@color/colorTextDark"
                         android:textSize="16sp" />
 
                 </RelativeLayout>

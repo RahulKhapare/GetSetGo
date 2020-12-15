@@ -121,7 +121,7 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/nunito_sans_regular"
                                     android:text="Abhilasha Hanwante"
-                                    android:textColor="@color/main_text_color"
+                                    android:textColor="@color/colorTextDark"
                                     android:textSize="16sp" />
 
                                 <TextView
@@ -164,7 +164,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/nunito_sans_regular"
                                 android:text="Complete your profile"
-                                android:textColor="@color/main_text_color"
+                                android:textColor="@color/colorTextDark"
                                 android:textSize="14sp" />
 
                             <com.sasank.roundedhorizontalprogress.RoundedHorizontalProgressBar
@@ -357,7 +357,7 @@
                                     android:layout_toRightOf="@id/ivUser"
                                     android:fontFamily="@font/nunito_sans_regular"
                                     android:text="1500"
-                                    android:textColor="@color/main_text_color"
+                                    android:textColor="@color/colorTextDark"
                                     android:textSize="24sp" />
 
                             </RelativeLayout>
@@ -407,7 +407,7 @@
                                     android:layout_toRightOf="@id/ivDirectUser"
                                     android:fontFamily="@font/nunito_sans_regular"
                                     android:text="1500"
-                                    android:textColor="@color/main_text_color"
+                                    android:textColor="@color/colorTextDark"
                                     android:textSize="24sp" />
 
                             </RelativeLayout>
@@ -647,7 +647,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/txtMasterTitle"
                             android:layout_marginTop="5dp"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/colorTextDark"
                             android:textSize="16sp"
                             android:text="Rahul Chandrakant Hanwante"
                             android:fontFamily="@font/nunito_sans_regular"/>
@@ -669,7 +669,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/txtMasterContactTitle"
                             android:layout_marginTop="5dp"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/colorTextDark"
                             android:textSize="16sp"
                             android:text="8898888179"
                             android:fontFamily="@font/nunito_sans_regular"/>
@@ -709,7 +709,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/txtFranchiseTitle"
                             android:layout_marginTop="5dp"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/colorTextDark"
                             android:textSize="16sp"
                             android:text="Rahul Chandrakant Hanwante"
                             android:fontFamily="@font/nunito_sans_regular"/>
@@ -731,7 +731,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/txtFranciseContactTitle"
                             android:layout_marginTop="5dp"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/colorTextDark"
                             android:textSize="16sp"
                             android:text="8898888179"
                             android:fontFamily="@font/nunito_sans_regular"/>
@@ -773,7 +773,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/txtAdviserTitle"
                             android:layout_marginTop="5dp"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/colorTextDark"
                             android:textSize="16sp"
                             android:text="Abhilasha Hanwante"
                             android:fontFamily="@font/nunito_sans_regular"/>
@@ -795,7 +795,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/txtAdviserContactTitle"
                             android:layout_marginTop="5dp"
-                            android:textColor="@color/main_text_color"
+                            android:textColor="@color/colorTextDark"
                             android:textSize="16sp"
                             android:text="8898888179"
                             android:fontFamily="@font/nunito_sans_regular"/>
