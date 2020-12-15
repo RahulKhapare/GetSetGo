@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingRight="16dp"
+    android:paddingLeft="16dp">
+
+
+    <RelativeLayout
+        android:id="@+id/rlEarn"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:paddingLeft="16dp"
+        android:layout_marginTop="15dp"
+        android:paddingRight="16dp">
+
+        <RelativeLayout
+            android:layout_width="326dp"
+            android:layout_height="90dp"
+            android:background="@drawable/bg_dash_elevation"
+
+            android:elevation="4dp">
+
+            <ImageView
+                android:id="@+id/imgIncome"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="25dp"
+                android:src="@drawable/ic_income" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@+id/imgIncome">
+
+                <TextView
+                    android:id="@+id/txtIncome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:text="5900"
+                    android:textColor="@color/colorGreen"
+                    android:textSize="26sp" />
+
+                <TextView
+                    android:id="@+id/txtRefIncome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtIncome"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="@font/nunito_sans_regular"
+                    android:text="Referral Income"
+                    android:textColor="@color/colorGreen"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rlCrash"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:layout_below="@id/rlEarn"
+        android:layout_marginTop="15dp">
+
+        <RelativeLayout
+            android:layout_width="326dp"
+            android:layout_height="90dp"
+            android:background="@drawable/bg_dash_elevation"
+
+            android:elevation="4dp">
+
+            <ImageView
+                android:id="@+id/imgCrash"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="25dp"
+                android:src="@drawable/ic_income" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@+id/imgCrash">
+
+                <TextView
+                    android:id="@+id/txtCrash"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:text="5900"
+                    android:textColor="@color/colorGreen"
+                    android:textSize="26sp" />
+
+                <TextView
+                    android:id="@+id/txtRefCrash"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtCrash"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="@font/nunito_sans_regular"
+                    android:text="Crash Course Income"
+                    android:textColor="@color/colorGreen"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
+

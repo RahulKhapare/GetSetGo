@@ -6,7 +6,9 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.getsetgo.Fragment.AllTransactionsFragment;
 import com.getsetgo.Fragment.CrashCourseFragment;
+import com.getsetgo.Fragment.MyEarnCrashCourseFragment;
 import com.getsetgo.Fragment.MyEarningFragment;
+import com.getsetgo.Fragment.TotalEarningFragment;
 
 public class MyEarningsViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -23,11 +25,11 @@ public class MyEarningsViewPagerAdapter extends FragmentPagerAdapter {
         }
         else if (position == 1)
         {
-            fragment = new CrashCourseFragment();
+            fragment = new MyEarnCrashCourseFragment();
         }
         else if (position == 2)
         {
-            fragment = new CrashCourseFragment();
+            fragment = new TotalEarningFragment();
         }
         return fragment;
     }
