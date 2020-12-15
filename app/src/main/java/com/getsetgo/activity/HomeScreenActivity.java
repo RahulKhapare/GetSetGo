@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.getsetgo.Adapter.ActiveCourseAdapter;
 import com.getsetgo.Adapter.BestSellingCourseAdapter;
 import com.getsetgo.Adapter.OtherCategoriesAdapter;
+import com.getsetgo.Fragment.NavDrawerFragment;
 import com.getsetgo.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mxn.soul.flowingdrawer_core.ElasticDrawer;

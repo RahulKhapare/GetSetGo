@@ -1,5 +1,5 @@
 
-package com.getsetgo.activity;
+package com.getsetgo.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,16 +12,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
 import com.getsetgo.R;
+import com.getsetgo.activity.DashBoardActivity;
+import com.getsetgo.activity.HomeScreenActivity;
+import com.getsetgo.activity.IncentiveActivity;
+import com.getsetgo.activity.MyEarningActivity;
+import com.getsetgo.activity.SearchEarningsActivity;
+import com.getsetgo.activity.SearchIncentivesActivity;
+import com.getsetgo.activity.SearchTransactionActivity;
+import com.getsetgo.activity.TransactionHistoryActivity;
 import com.google.android.material.navigation.NavigationView;
 
 
@@ -114,20 +119,20 @@ public class NavDrawerFragment extends Fragment {
                             case R.id.nav_Dashboard:
                                 startActivity(new Intent(context, DashBoardActivity.class));
                                 break;
-
                             case R.id.nav_Transactions:
                                 startActivity(new Intent(context, TransactionHistoryActivity.class));
                                 break;
-
                             case R.id.nav_Userincentive:
                                 startActivity(new Intent(context, IncentiveActivity.class));
                                 break;
-
                             case R.id.nav_courseEarn:
                                 startActivity(new Intent(context, SearchTransactionActivity.class));
                                 break;
                             case R.id.nav_crashcourseEarn:
                                 startActivity(new Intent(context, SearchIncentivesActivity.class));
+                                break;
+                            case R.id.nav_totalEarn:
+                                startActivity(new Intent(context, SearchEarningsActivity.class));
                                 break;
                             case R.id.nav_MyEarning:
                                 startActivity(new Intent(context, MyEarningActivity.class));
