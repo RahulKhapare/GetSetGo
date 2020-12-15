@@ -37,4 +37,5 @@
     <color name="colorFranchise">#F05919</color>
     <color name="colorInfo">#72B633</color>
     <color name="colorReward">#EF4A4F</color>
+    <color name="colorTransferred">#098705</color>
 </resources>

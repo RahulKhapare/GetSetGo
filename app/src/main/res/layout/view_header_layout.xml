@@ -36,6 +36,7 @@
                     android:id="@+id/txtName"
                     android:fontFamily="@font/nunit_sans_bold"
                     android:textSize="18sp"
+                    android:textColor="@color/main_text_color"
                     android:layout_marginTop="5dp"
                     android:layout_below="@+id/ivCancel"
                     android:text="John Doe"/>
@@ -46,6 +47,7 @@
                     android:fontFamily="@font/nunito_sans_regular"
                     android:textSize="14sp"
                     android:layout_below="@+id/txtName"
+                    android:textColor="@color/colorTextHighLight"
                     android:text="JohnDoe@gmail.com"/>
                 <TextView
                     android:layout_width="wrap_content"

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorLightStrokeView" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:gravity="center"
+        android:paddingLeft="18dp"
+        android:paddingTop="12dp"
+        android:paddingRight="18dp"
+        android:paddingBottom="12dp">
+
+
+        <RelativeLayout
+            android:id="@+id/rlIncAmt"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/txtIncAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_sans_regular"
+                android:text="₹5900"
+                android:textColor="@color/main_text_color"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txtIncDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtIncAmount"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/nunito_sans_regular"
+                android:text="14 Aug 2020"
+                android:textColor="@color/colorTextHint60"
+                android:textSize="12sp" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlIncType"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_toRightOf="@+id/rlIncAmt"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/txtIncAmountNP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_sans_regular"
+                android:text="₹5900"
+                android:textColor="@color/main_text_color"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txtIncNP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtIncAmountNP"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/nunito_sans_regular"
+                android:text="Net Payable"
+                android:textColor="@color/colorTextHint60"
+                android:textSize="12sp" />
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rlStatus"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@+id/rlIncType"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/txtStatusTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_sans_regular"
+                android:text="Transferred"
+                android:textColor="@color/colorTransferred"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txtStatusDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtStatusTitle"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/nunito_sans_regular"
+                android:text="1 Jan 2020"
+                android:textColor="@color/colorTextHint60"
+                android:textSize="12sp" />
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

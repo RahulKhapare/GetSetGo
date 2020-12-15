@@ -19,7 +19,7 @@
             android:layout_height="143dp"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
-            app:cardElevation="3dp"
+            app:cardElevation="4dp"
             app:cardCornerRadius="10dp">
 
             <com.makeramen.roundedimageview.RoundedImageView
@@ -160,7 +160,7 @@
             android:layout_width="74dp"
             android:layout_height="20dp"
             android:layout_marginTop="1dp"
-            android:background="@color/best_sellerhighlight"
+            android:background="@drawable/bg_bestseller"
             android:fontFamily="@font/nunito_sans_regular"
             android:gravity="center"
             android:text="BestSeller"

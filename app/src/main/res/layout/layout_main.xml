@@ -81,8 +81,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="vertical"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
 
             <TextView
                 android:layout_width="138dp"
@@ -96,11 +96,11 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewCurrentLearning"
                 android:layout_width="325dp"
-                android:layout_height="120dp"
+                android:layout_height="130dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
                 app:cardCornerRadius="10dp"
-                app:cardElevation="2dp">
+                app:cardElevation="5dp">
 
 
                 <RelativeLayout
@@ -113,8 +113,8 @@
 
                     <com.makeramen.roundedimageview.RoundedImageView
                         android:id="@+id/imvCourse"
-                        android:layout_width="93dp"
-                        android:layout_height="97dp"
+                        android:layout_width="97dp"
+                        android:layout_height="100dp"
                         android:src="@drawable/download"
                         app:riv_corner_radius="5dp" />
 
@@ -220,7 +220,8 @@
                     android:layout_alignRight="@+id/titleCourse"
                     android:layout_alignParentRight="true"
                     android:fontFamily="@font/nunito_sans_semibold"
-                    android:gravity="end"
+                    android:gravity="end|center"
+                    android:layout_centerInParent="true"
                     android:text="View All"
                     android:textColor="@color/viewall_text_color"
                     android:textSize="12sp" />
@@ -230,7 +231,7 @@
                 android:id="@+id/recyclerViewCources"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="15dp" />
 
 
             <TextView
@@ -247,7 +248,7 @@
                 android:id="@+id/recyclerViewOtherCategories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="15dp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -270,7 +271,8 @@
                     android:layout_alignRight="@+id/titleBestCourse"
                     android:layout_alignParentRight="true"
                     android:fontFamily="@font/nunito_sans_semibold"
-                    android:gravity="end"
+                    android:gravity="end|center"
+                    android:layout_centerInParent="true"
                     android:text="View All"
                     android:textColor="@color/viewall_text_color"
                     android:textSize="12sp" />
@@ -280,7 +282,7 @@
                 android:id="@+id/recyclerBestSellingCources"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginBottom="25dp" />
 
         </LinearLayout>

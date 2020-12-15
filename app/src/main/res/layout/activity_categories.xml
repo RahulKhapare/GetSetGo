@@ -95,6 +95,7 @@
                         android:layout_alignParentRight="true"
                         android:fontFamily="@font/nunito_sans_semibold"
                         android:gravity="end"
+                        android:layout_centerInParent="true"
                         android:text="View All"
                         android:textColor="@color/viewall_text_color"
                         android:textSize="12sp" />
@@ -106,7 +107,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rlSmartSchoolLabel"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:paddingLeft="16dp" />
 
                 <RelativeLayout
@@ -135,6 +136,7 @@
                         android:layout_alignParentRight="true"
                         android:fontFamily="@font/nunito_sans_semibold"
                         android:gravity="end"
+                        android:layout_centerInParent="true"
                         android:text="View All"
                         android:textColor="@color/viewall_text_color"
                         android:textSize="12sp" />
@@ -146,7 +148,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rlProfessionalLabel"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:paddingLeft="16dp" />
 
 
@@ -176,6 +178,7 @@
                         android:layout_alignParentRight="true"
                         android:fontFamily="@font/nunito_sans_semibold"
                         android:gravity="end"
+                        android:layout_centerInParent="true"
                         android:text="View All"
                         android:textColor="@color/viewall_text_color"
                         android:textSize="12sp" />
@@ -187,7 +190,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rlArtLabel"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:paddingLeft="16dp" />
 
 
@@ -217,6 +220,7 @@
                         android:layout_alignParentRight="true"
                         android:fontFamily="@font/nunito_sans_semibold"
                         android:gravity="end"
+                        android:layout_centerInParent="true"
                         android:text="View All"
                         android:textColor="@color/viewall_text_color"
                         android:textSize="12sp" />
@@ -228,7 +232,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rlTechnologyLabel"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:paddingLeft="16dp" />
 
 
@@ -259,6 +263,7 @@
                         android:fontFamily="@font/nunito_sans_semibold"
                         android:gravity="end"
                         android:text="View All"
+                        android:layout_centerInParent="true"
                         android:textColor="@color/viewall_text_color"
                         android:textSize="12sp" />
 
@@ -269,7 +274,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rlCreInnLabel"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:paddingLeft="16dp" />
 
 
