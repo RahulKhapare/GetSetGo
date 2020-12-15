@@ -93,6 +93,8 @@
                             android:fontFamily="@font/nunito_sans_regular"
                             android:hint="Create Start Date"
                             android:imeOptions="actionNext"
+                            android:editable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="textCapWords"
                             android:textColor="@color/colorTextDark"
                             android:textColorHint="@color/colorTextHint" />
@@ -113,6 +115,8 @@
                             android:drawableRight="@drawable/ic_ddate"
                             android:fontFamily="@font/nunito_sans_regular"
                             android:hint="Create End Date"
+                            android:editable="false"
+                            android:focusableInTouchMode="false"
                             android:imeOptions="actionNext"
                             android:inputType="textCapWords"
                             android:textColor="@color/colorTextDark"
@@ -137,10 +141,11 @@
                                 android:layout_height="50dp"
                                 android:layout_gravity="end|center"
                                 android:background="@null"
-                                android:drawablePadding="10dp"
                                 android:gravity="start|center_vertical"
                                 android:hint="Action Type"
-                                android:paddingLeft="5dp"
+                                style="@style/SpinnerTextViewItem"
+                                android:spinnerMode="dropdown"
+                                android:dropDownVerticalOffset="40dp"
                                 android:singleLine="true" />
 
                             <RelativeLayout
@@ -155,7 +160,7 @@
                                     android:layout_height="33dp"
                                     android:layout_alignParentEnd="true"
                                     android:layout_alignParentBottom="true"
-                                    app:tint="#80232323"
+                                    app:tint="#90232323"
                                     android:src="@drawable/ic_down_spiner" />
                             </RelativeLayout>
                         </FrameLayout>
@@ -165,7 +170,9 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="5dp"
-                        android:layout_below="@+id/actPurpose"
+                        android:layout_below="@+id/spnActionType"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="2dp"
                         android:src="@drawable/underline" />
 
                     <LinearLayout
@@ -183,12 +190,13 @@
                                 android:id="@+id/spnIncomeType"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
-                                android:layout_gravity="end|center"
+                                android:layout_gravity="end"
                                 android:background="@null"
-                                android:drawablePadding="10dp"
-                                android:gravity="start|center_vertical"
+                                android:gravity="start"
+                                style="@style/SpinnerTextViewItem"
+                                android:spinnerMode="dropdown"
+                                android:dropDownVerticalOffset="40dp"
                                 android:hint="Income Type"
-                                android:paddingLeft="5dp"
                                 android:singleLine="true" />
 
                             <RelativeLayout
@@ -203,7 +211,7 @@
                                     android:layout_height="33dp"
                                     android:layout_alignParentEnd="true"
                                     android:layout_alignParentBottom="true"
-                                    app:tint="#80232323"
+                                    app:tint="#90232323"
                                     android:src="@drawable/ic_down_spiner" />
                             </RelativeLayout>
                         </FrameLayout>
@@ -214,6 +222,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="5dp"
                         android:layout_below="@+id/spnIncomeType"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="2dp"
                         android:src="@drawable/underline" />
 
 
