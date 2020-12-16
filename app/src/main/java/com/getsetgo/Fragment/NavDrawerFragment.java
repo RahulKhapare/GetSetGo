@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.getsetgo.R;
+import com.getsetgo.activity.AccountActivity;
 import com.getsetgo.activity.DashBoardActivity;
 import com.getsetgo.activity.HomeScreenActivity;
 import com.getsetgo.activity.IncentiveActivity;
@@ -118,6 +119,9 @@ public class NavDrawerFragment extends Fragment {
                         switch (menuItem.getItemId()) {
                             case R.id.nav_Dashboard:
                                 startActivity(new Intent(context, DashBoardActivity.class));
+                                break;
+                            case R.id.nav_Account:
+                                startActivity(new Intent(context, AccountActivity.class));
                                 break;
                             case R.id.nav_Transactions:
                                 startActivity(new Intent(context, TransactionHistoryActivity.class));
