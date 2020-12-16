@@ -3,7 +3,12 @@ package com.getsetgo.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -27,6 +32,8 @@ public class TermsAndConditionActivity extends AppCompatActivity {
     }
 
     private void init() {
+
+        binding.txtExpandTerms.setText(getString(R.string.dummy_text));
         onClick();
     }
 

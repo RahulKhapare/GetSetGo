@@ -101,7 +101,7 @@
 
                     </LinearLayout>
 
-                    <TextView
+                    <com.borjabravo.readmoretextview.ReadMoreTextView
                         android:id="@+id/txtExpandTerms"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -109,10 +109,13 @@
                         android:fontFamily="@font/nunito_sans_regular"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
-                        android:text="@string/dummy_text"
                         android:textColor="@color/colorTextHint60"
                         android:textSize="14sp"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        app:colorClickableText="@color/viewall_text_color"
+                        app:trimCollapsedText="Read less"
+                        app:trimExpandedText="Read More"
+                        app:trimLines="3" />
 
                     <View
                         android:layout_width="match_parent"
