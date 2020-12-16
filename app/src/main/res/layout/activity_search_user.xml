@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/toolbar_backgound"
+        tools:context=".activity.SearchUserActivity">
+
+        <RelativeLayout
+            android:id="@+id/ll_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="start"
+                android:src="@drawable/ic_back" />
+
+            <ImageView
+                android:id="@+id/ivMenu"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_gravity="start"
+                android:layout_marginLeft="20dp"
+                android:layout_toEndOf="@+id/ivBack"
+                android:src="@drawable/ic_ham_menu"
+                app:tint="@color/colorWhite" />
+
+
+            <TextView
+                android:id="@+id/ivLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:fontFamily="@font/nunit_sans_bold"
+                android:text="Search User"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_toolbar"
+            android:background="@drawable/main_layout_bg">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nestedScroll"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="30dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:layout_marginTop="20dp"
+                            android:textColorHint="@color/colorTextHint">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etUserName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorTextDark"
+                                android:fontFamily="@font/nunito_sans_semibold"
+                                android:hint="User Name"
+                                android:imeOptions="actionNext"
+                                android:inputType="textCapWords"
+                                android:textColor="@color/colorTextDark"
+                                android:textColorHint="@color/colorTextHint"
+                                android:textSize="16sp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:layout_marginTop="20dp"
+                            android:textColorHint="@color/colorTextHint">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etEmailId"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorTextDark"
+                                android:fontFamily="@font/nunito_sans_semibold"
+                                android:hint="Email Id"
+                                android:imeOptions="actionNext"
+                                android:inputType="textCapWords"
+                                android:textColor="@color/colorTextDark"
+                                android:textColorHint="@color/colorTextHint"
+                                android:textSize="16sp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:layout_marginTop="20dp"
+                            android:textColorHint="@color/colorTextHint">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etPhoneNumber"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorTextDark"
+                                android:fontFamily="@font/nunito_sans_semibold"
+                                android:hint="Phone Number"
+                                android:imeOptions="actionNext"
+                                android:inputType="textCapWords"
+                                android:textColor="@color/colorTextDark"
+                                android:textColorHint="@color/colorTextHint"
+                                android:textSize="16sp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!--<com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:layout_marginTop="20dp"
+                            android:textColorHint="@color/colorTextHint">
+
+
+                            &lt;!&ndash;<com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etColorCode"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorTextDark"
+                                android:fontFamily="@font/nunito_sans_semibold"
+                                android:hint="Red/ Green"
+                                style="@style/spinnerItemStyle"
+                                android:singleLine="true"
+                                android:paddingLeft="2dp"
+                                android:imeOptions="actionNext"
+                                android:inputType="textCapWords"
+                                android:textColor="@color/colorTextDark"
+                                android:textColorHint="@color/colorTextHint"
+                                android:textSize="16sp" />&ndash;&gt;
+
+                        </com.google.android.material.textfield.TextInputLayout>
+-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginTop="20dp"
+                            android:orientation="vertical">
+
+                            <FrameLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <Spinner
+                                    android:id="@+id/spnColorType"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="end|center"
+                                    android:background="@null"
+                                    android:gravity="start|center_vertical"
+                                    style="@style/SpinnerTextViewItem"
+                                    android:spinnerMode="dropdown"
+                                    android:dropDownVerticalOffset="40dp"
+                                    android:singleLine="true" />
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:visibility="visible">
+
+                                    <ImageView
+                                        android:layout_width="35dp"
+                                        android:layout_height="33dp"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_alignParentBottom="true"
+                                        app:tint="#90232323"
+                                        android:src="@drawable/ic_down_spiner" />
+                                </RelativeLayout>
+                            </FrameLayout>
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="5dp"
+                            android:layout_below="@+id/spnColorType"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="2dp"
+                            android:src="@drawable/underline" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginTop="20dp"
+                            android:orientation="vertical">
+
+                            <FrameLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <Spinner
+                                    android:id="@+id/spnAffUser"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="end|center"
+                                    android:background="@null"
+                                    android:gravity="start|center_vertical"
+                                    style="@style/SpinnerTextViewItem"
+                                    android:spinnerMode="dropdown"
+                                    android:dropDownVerticalOffset="40dp"
+                                    android:singleLine="true" />
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:visibility="visible">
+
+                                    <ImageView
+                                        android:layout_width="35dp"
+                                        android:layout_height="33dp"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_alignParentBottom="true"
+                                        app:tint="#90232323"
+                                        android:src="@drawable/ic_down_spiner" />
+                                </RelativeLayout>
+                            </FrameLayout>
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="5dp"
+                            android:layout_below="@+id/spnAffUser"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="2dp"
+                            android:src="@drawable/underline" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:layout_marginTop="20dp"
+                            android:textColorHint="@color/colorTextHint">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etRegFrom"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorTextDark"
+                                android:fontFamily="@font/nunito_sans_semibold"
+                                android:hint="Registration from"
+                                android:imeOptions="actionNext"
+                                android:inputType="textCapWords"
+                                android:textColor="@color/colorTextDark"
+                                android:textColorHint="@color/colorTextHint"
+                                android:textSize="16sp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:layout_marginTop="20dp"
+                            android:textColorHint="@color/colorTextHint">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etRegTo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorTextDark"
+                                android:fontFamily="@font/nunito_sans_semibold"
+                                android:hint="Registration to"
+                                android:imeOptions="actionNext"
+                                android:inputType="textCapWords"
+                                android:textColor="@color/colorTextDark"
+                                android:textColorHint="@color/colorTextHint"
+                                android:textSize="16sp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginTop="20dp"
+                            android:orientation="vertical">
+
+                            <FrameLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <Spinner
+                                    android:id="@+id/spnCrashCourse"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="end|center"
+                                    android:background="@null"
+                                    android:gravity="start|center_vertical"
+                                    style="@style/SpinnerTextViewItem"
+                                    android:spinnerMode="dropdown"
+                                    android:dropDownVerticalOffset="40dp"
+                                    android:singleLine="true" />
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:visibility="visible">
+
+                                    <ImageView
+                                        android:layout_width="35dp"
+                                        android:layout_height="33dp"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_alignParentBottom="true"
+                                        app:tint="#90232323"
+                                        android:src="@drawable/ic_down_spiner" />
+                                </RelativeLayout>
+                            </FrameLayout>
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="5dp"
+                            android:layout_below="@+id/spnCrashCourse"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="2dp"
+                            android:src="@drawable/underline" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginTop="20dp"
+                            android:orientation="vertical">
+
+                            <FrameLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <Spinner
+                                    android:id="@+id/spnCourse"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="end|center"
+                                    android:background="@null"
+                                    android:gravity="start|center_vertical"
+                                    style="@style/SpinnerTextViewItem"
+                                    android:spinnerMode="dropdown"
+                                    android:dropDownVerticalOffset="40dp"
+                                    android:singleLine="true" />
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:visibility="visible">
+
+                                    <ImageView
+                                        android:layout_width="35dp"
+                                        android:layout_height="33dp"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_alignParentBottom="true"
+                                        app:tint="#90232323"
+                                        android:src="@drawable/ic_down_spiner" />
+                                </RelativeLayout>
+                            </FrameLayout>
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="5dp"
+                            android:layout_below="@+id/spnCourse"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="2dp"
+                            android:src="@drawable/underline" />
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:layout_marginTop="20dp"
+                            android:textColorHint="@color/colorTextHint">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etPshFrom"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorTextDark"
+                                android:fontFamily="@font/nunito_sans_semibold"
+                                android:hint="Purchased From"
+                                android:imeOptions="actionNext"
+                                android:inputType="textCapWords"
+                                android:textColor="@color/colorTextDark"
+                                android:textColorHint="@color/colorTextHint"
+                                android:textSize="16sp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:layout_marginTop="20dp"
+                            android:textColorHint="@color/colorTextHint">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etPshTo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorTextDark"
+                                android:fontFamily="@font/nunito_sans_semibold"
+                                android:hint="Purchased To"
+                                android:imeOptions="actionNext"
+                                android:inputType="textCapWords"
+                                android:textColor="@color/colorTextDark"
+                                android:textColorHint="@color/colorTextHint"
+                                android:textSize="16sp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:layout_marginTop="20dp"
+                            android:textColorHint="@color/colorTextHint">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etParentName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorTextDark"
+                                android:fontFamily="@font/nunito_sans_semibold"
+                                android:hint="Parent Name"
+                                android:imeOptions="actionNext"
+                                android:inputType="textCapWords"
+                                android:textColor="@color/colorTextDark"
+                                android:textColorHint="@color/colorTextHint"
+                                android:textSize="16sp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginTop="20dp"
+                            android:orientation="vertical">
+
+                            <FrameLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <Spinner
+                                    android:id="@+id/spnRegdPurpose"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="end|center"
+                                    android:background="@null"
+                                    android:gravity="start|center_vertical"
+                                    style="@style/SpinnerTextViewItem"
+                                    android:spinnerMode="dropdown"
+                                    android:dropDownVerticalOffset="40dp"
+                                    android:singleLine="true" />
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:visibility="visible">
+
+                                    <ImageView
+                                        android:layout_width="35dp"
+                                        android:layout_height="33dp"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_alignParentBottom="true"
+                                        app:tint="#90232323"
+                                        android:src="@drawable/ic_down_spiner" />
+                                </RelativeLayout>
+                            </FrameLayout>
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="5dp"
+                            android:layout_below="@+id/spnRegdPurpose"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="2dp"
+                            android:src="@drawable/underline" />
+
+
+                        <TextView
+                            android:id="@+id/txtSaveNext"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="25dp"
+                            android:background="@drawable/button_dark_bg"
+                            android:fontFamily="@font/nunit_sans_bold"
+                            android:gravity="center"
+                            android:paddingTop="20dp"
+                            android:paddingBottom="20dp"
+                            android:text="Search"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+
+            </androidx.core.widget.NestedScrollView>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</layout>

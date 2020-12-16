@@ -21,6 +21,7 @@ public class TotalUserActivity extends AppCompatActivity {
     TotalUserAdapter totalUserAdapter;
     private TotalUserActivity activity = this;
     private ActivityTotalUserBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,12 +29,17 @@ public class TotalUserActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_total_user);
         init();
     }
-    private void init(){
 
-        String data = getIntent().getExtras().getString("titleText","Total User");
-        binding.txtUserTitle.setText(data);
+    private void init() {
+
+        String data = "";
+        if ((getIntent().getExtras().getString("titleText", "Total User")) != null) {
+            data = getIntent().getExtras().getString("titleText", "Total User");
+            binding.txtUserTitle.setText(data);
+        }
         setupRecyclerViewForTotalUser();
     }
+
     private void setupRecyclerViewForTotalUser() {
         binding.recyclerViewTotalUser.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         totalUserAdapter = new TotalUserAdapter(this);
