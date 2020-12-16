@@ -25,6 +25,7 @@ import com.getsetgo.activity.DashBoardActivity;
 import com.getsetgo.activity.HomeScreenActivity;
 import com.getsetgo.activity.IncentiveActivity;
 import com.getsetgo.activity.MyEarningActivity;
+import com.getsetgo.activity.NotificationsActivity;
 import com.getsetgo.activity.SearchEarningsActivity;
 import com.getsetgo.activity.SearchIncentivesActivity;
 import com.getsetgo.activity.SearchTransactionActivity;
@@ -154,6 +155,9 @@ public class NavDrawerFragment extends Fragment {
                                 break;
                             case R.id.nav_Settings:
                                 startActivity(new Intent(context, AddNewUserActivity.class));
+                                break;
+                            case R.id.nav_Notification:
+                                startActivity(new Intent(context, NotificationsActivity.class));
                                 break;
 
 

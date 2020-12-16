@@ -32,7 +32,6 @@ public class TermsAndConditionActivity extends AppCompatActivity {
     }
 
     private void init() {
-
         binding.txtExpandTerms.setText(getString(R.string.dummy_text));
         onClick();
     }

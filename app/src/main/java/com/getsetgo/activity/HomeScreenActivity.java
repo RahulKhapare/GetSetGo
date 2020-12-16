@@ -221,7 +221,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
             itemChooser.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "Click", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(context,NotificationsActivity.class));
                 }
             });
         }

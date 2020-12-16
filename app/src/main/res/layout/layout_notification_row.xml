@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="93dp"
+    android:gravity="center">
+
+    <LinearLayout
+        android:id="@+id/cardViewMyCourse"
+        android:layout_width="323dp"
+        android:layout_height="78dp"
+        android:elevation="2.5dp"
+        android:background="@drawable/bg_dash_elevation">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:paddingLeft="7dp"
+            android:paddingRight="3dp">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                app:riv_corner_radius="5dp"
+                android:id="@+id/imvNotification"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/download" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:layout_toEndOf="@+id/imvNotification"
+                android:layout_toRightOf="@+id/imvNotification"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtNotifyTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:text="Thanks for buying this Course!!!"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txtNotifyDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="2dp"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/nunito_sans_regular"
+                    android:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam."
+                    android:textColor="@color/colorTextHighLight"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
