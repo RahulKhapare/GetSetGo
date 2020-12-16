@@ -1,6 +1,7 @@
 package com.getsetgo.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,28 +12,32 @@ import android.os.Bundle;
 import com.getsetgo.Adapter.IncentivesAdapter;
 import com.getsetgo.Adapter.MyCourseAdapter;
 import com.getsetgo.R;
+import com.getsetgo.databinding.ActivityBankDetailsBinding;
+import com.getsetgo.databinding.ActivityIncentiveBinding;
+import com.getsetgo.util.WindowView;
 
 public class IncentiveActivity extends AppCompatActivity {
 
-    Context context;
-    public RecyclerView recyclerView;
     IncentivesAdapter incentivesAdapter;
+    private IncentiveActivity activity = this;
+    private ActivityIncentiveBinding binding;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_incentive);
-        context = IncentiveActivity.this;
+        WindowView.getWindow(activity);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_incentive);
         init();
     }
     private void init(){
-        recyclerView = findViewById(R.id.recyclerViewIncentive);
         setupRecyclerViewForIncentives();
     }
     private void setupRecyclerViewForIncentives() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        binding.recyclerViewIncentive.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         incentivesAdapter = new IncentivesAdapter(this);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(incentivesAdapter);
+        binding.recyclerViewIncentive.setItemAnimator(new DefaultItemAnimator());
+        binding.recyclerViewIncentive.setAdapter(incentivesAdapter);
         incentivesAdapter.notifyDataSetChanged();
     }
 }

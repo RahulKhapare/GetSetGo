@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/toolbar_backgound"
-        tools:context=".activity.IncentiveActivity">
+        tools:context=".activity.TotalUserActivity">
 
         <RelativeLayout
             android:id="@+id/ll_toolbar"
@@ -48,7 +48,7 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:fontFamily="@font/nunit_sans_bold"
-                android:text="Incentives"
+                android:text="Total Users"
                 android:textColor="@color/colorWhite"
                 android:textSize="18sp" />
 
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content">
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerViewIncentive"
+                        android:id="@+id/recyclerViewTotalUser"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 

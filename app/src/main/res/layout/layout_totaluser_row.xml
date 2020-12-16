@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/colorLightStrokeView" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="16dp"
+        android:paddingTop="12dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="12dp">
+
+        <LinearLayout
+            android:id="@+id/rlMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_sans_regular"
+                    android:text="Poonam Rokade"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtUserColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:text="Green"
+                    android:textColor="@color/colorTransferred"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtUserDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_sans_regular"
+                    android:text="01 Jan 2020"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtUserAddDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_sans_regular"
+                    android:text="Add Date"
+                    android:textColor="@color/colorTextHint60"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_weight="1">
+
+                <CheckBox
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:id="@+id/chcShowHide"
+                    android:gravity="center"
+                    android:button="@drawable/chekcbox_up_down"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rlMain"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="10dp"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:id="@+id/rlPaymentStatus"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtTDS"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_sans_regular"
+                    android:text="TDS(3.75%)"
+                    android:textColor="@color/colorTextHint60"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txtTDSAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtTDS"
+                    android:fontFamily="@font/nunito_sans_regular"
+                    android:text="1500"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="16sp" />
+
+
+                <TextView
+                    android:id="@+id/txtNetPay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtTDSAmount"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/nunito_sans_regular"
+                    android:text="Net Payable"
+                    android:textColor="@color/colorTextHint60"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txtNetPayAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtNetPay"
+                    android:fontFamily="@font/nunito_sans_regular"
+                    android:text="5723"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtStatusPay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtNetPayAmount"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/nunito_sans_regular"
+                    android:text="Status"
+                    android:textColor="@color/colorTextHint60"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txtStatusPayAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtStatusPay"
+                    android:fontFamily="@font/nunito_sans_regular"
+                    android:text="Transfer"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="16sp" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlPaymentDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@+id/rlPaymentStatus">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/payment_border"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:text="Payment Details"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/txtTransactionId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:text="Transaction Id - 123456789"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/txtRemark"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:text="Remark - Transferred Rs 5679 on 13 August"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/txtApproveDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:text="Approved Date - 14th August 2020"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/txtSlipDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:text="Slip Details - "
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="12sp" />
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

@@ -27,6 +27,7 @@ import com.getsetgo.activity.MyEarningActivity;
 import com.getsetgo.activity.SearchEarningsActivity;
 import com.getsetgo.activity.SearchIncentivesActivity;
 import com.getsetgo.activity.SearchTransactionActivity;
+import com.getsetgo.activity.TotalUserActivity;
 import com.getsetgo.activity.TransactionHistoryActivity;
 import com.google.android.material.navigation.NavigationView;
 
@@ -140,6 +141,9 @@ public class NavDrawerFragment extends Fragment {
                                 break;
                             case R.id.nav_MyEarning:
                                 startActivity(new Intent(context, MyEarningActivity.class));
+                                break;
+                            case R.id.nav_TermsCondition:
+                                startActivity(new Intent(context, TotalUserActivity.class));
                                 break;
 
                         }
