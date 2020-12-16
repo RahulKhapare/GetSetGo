@@ -4,14 +4,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.getsetgo.Fragment.ComposeFragment;
+import com.getsetgo.Fragment.CrashCourseFragment;
 
-import com.getsetgo.Fragment.MyEarnCrashCourseFragment;
-import com.getsetgo.Fragment.MyEarningFragment;
-import com.getsetgo.Fragment.TotalEarningFragment;
+public class SupportHelpViewPagerAdapter extends FragmentPagerAdapter {
 
-public class MyEarningsViewPagerAdapter extends FragmentPagerAdapter {
-
-    public MyEarningsViewPagerAdapter(FragmentManager fm) {
+    public SupportHelpViewPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
@@ -20,15 +18,15 @@ public class MyEarningsViewPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         if (position == 0)
         {
-            fragment = new MyEarningFragment();
+            fragment = new ComposeFragment();
         }
         else if (position == 1)
         {
-            fragment = new MyEarnCrashCourseFragment();
+            fragment = new CrashCourseFragment();
         }
         else if (position == 2)
         {
-            fragment = new TotalEarningFragment();
+            fragment = new CrashCourseFragment();
         }
         return fragment;
     }
@@ -43,15 +41,15 @@ public class MyEarningsViewPagerAdapter extends FragmentPagerAdapter {
         String title = null;
         if (position == 0)
         {
-            title = "My Earnings";
+            title = "Compose";
         }
         else if (position == 1)
         {
-            title = "Crash Course";
+            title = "Inbox";
         }
         else if (position == 2)
         {
-            title = "Total Earnings";
+            title = "Outbox";
         }
         return title;
     }

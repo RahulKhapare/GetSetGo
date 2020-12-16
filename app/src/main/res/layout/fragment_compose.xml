@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_backgound">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_layout_bg">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nestedScroll"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:text="Subject"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/etSubject"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/bg_edittext"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:hint="Type subject here..."
+                        android:paddingLeft="16dp"
+                        android:textColor="@color/colorTextHint"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:text="Message"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/etMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="265dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/bg_edittext"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:gravity="top"
+                        android:hint="Type your Message here..."
+                        android:paddingLeft="16dp"
+                        android:paddingTop="16dp"
+                        android:paddingRight="5dp"
+                        android:textColor="@color/colorTextHint"
+                        android:textSize="14sp" />
+
+                    <RelativeLayout
+                        android:id="@+id/rlResetSubmit"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_marginTop="30dp"
+                        android:gravity="center">
+
+
+                        <Button
+                            android:id="@+id/btnDiscard"
+                            android:layout_width="140dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/button_corner_bg"
+                            android:fontFamily="@font/nunit_sans_bold"
+                            android:gravity="center"
+                            android:text="Discard"
+                            android:textColor="@color/colorTextDark"
+                            android:textSize="16sp" />
+
+
+                        <Button
+                            android:id="@+id/btnSubmit"
+                            android:layout_width="140dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@+id/btnDiscard"
+                            android:background="@drawable/button_dark_bg"
+                            android:fontFamily="@font/nunit_sans_bold"
+                            android:gravity="center"
+                            android:text="Submit"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="16sp" />
+
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</layout>
+

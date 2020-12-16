@@ -7,7 +7,6 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.getsetgo.Adapter.MyEarningsViewPagerAdapter;
-import com.getsetgo.Adapter.TransactionViewPagerAdapter;
 import com.getsetgo.R;
 import com.google.android.material.tabs.TabLayout;
 

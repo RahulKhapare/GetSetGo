@@ -30,6 +30,7 @@ import com.getsetgo.activity.SearchEarningsActivity;
 import com.getsetgo.activity.SearchIncentivesActivity;
 import com.getsetgo.activity.SearchTransactionActivity;
 import com.getsetgo.activity.SearchUserActivity;
+import com.getsetgo.activity.SupportHelpActivity;
 import com.getsetgo.activity.TermsAndConditionActivity;
 import com.getsetgo.activity.TotalUserActivity;
 import com.getsetgo.activity.TransactionHistoryActivity;
@@ -147,14 +148,15 @@ public class NavDrawerFragment extends Fragment {
                                 startActivity(new Intent(context, MyEarningActivity.class));
                                 break;
 
-                            case R.id.nav_HelpSupport:
-                                startActivity(new Intent(context, SearchUserActivity.class));
-                                break;
                             case R.id.nav_TermsCondition:
                                 startActivity(new Intent(context, TermsAndConditionActivity.class));
                                 break;
                             case R.id.nav_Settings:
                                 startActivity(new Intent(context, AddNewUserActivity.class));
+                                break;
+
+                            case R.id.nav_HelpSupport:
+                                startActivity(new Intent(context, SupportHelpActivity.class));
                                 break;
                             case R.id.nav_Notification:
                                 startActivity(new Intent(context, NotificationsActivity.class));
