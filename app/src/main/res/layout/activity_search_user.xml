@@ -140,31 +140,6 @@
 
                         </com.google.android.material.textfield.TextInputLayout>
 
-                        <!--<com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="?actionBarSize"
-                            android:layout_marginTop="20dp"
-                            android:textColorHint="@color/colorTextHint">
-
-
-                            &lt;!&ndash;<com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etColorCode"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:backgroundTint="@color/colorTextDark"
-                                android:fontFamily="@font/nunito_sans_semibold"
-                                android:hint="Red/ Green"
-                                style="@style/spinnerItemStyle"
-                                android:singleLine="true"
-                                android:paddingLeft="2dp"
-                                android:imeOptions="actionNext"
-                                android:inputType="textCapWords"
-                                android:textColor="@color/colorTextDark"
-                                android:textColorHint="@color/colorTextHint"
-                                android:textSize="16sp" />&ndash;&gt;
-
-                        </com.google.android.material.textfield.TextInputLayout>
--->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

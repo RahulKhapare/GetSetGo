@@ -7,10 +7,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppThemes" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <!-- Customize your theme -->
-    </style>
-
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -32,7 +28,7 @@
         <item name="fontFamily">@font/nunito_sans_regular</item>
     </style>
 
-    <style name="TextAppearances" parent="Widget.AppCompat.TextView">
+    <style name="TextAppearanceForTabLayout" parent="Widget.AppCompat.TextView">
         <!-- reference our hint & error styles -->
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/nunito_sans_regular</item>
@@ -45,17 +41,6 @@
         <item name="android:textColor">@color/colorTextDark</item>
         <item name="android:textColorHint">@color/colorTextHint</item>
     </style>
-    <style name="spinnerStyle" parent="Widget.AppCompat.Spinner">
-        <item name="android:dropDownVerticalOffset">40dip</item>
-        <item name="overlapAnchor">false</item>
-        <!--Other customizations-->
-    </style>
-    <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem">
-    </style>
 
-    <style name="spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
-        <item name="android:background">@drawable/spinner_style</item>
-
-    </style>
 
 </resources>

@@ -70,7 +70,7 @@
             app:tabInlineLabel="true"
             app:tabSelectedTextColor="@color/viewall_text_color"
             app:tabTextColor="@color/colorTextDark"
-            app:tabTextAppearance="@style/TextAppearances"/>
+            app:tabTextAppearance="@style/TextAppearanceForTabLayout"/>
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"

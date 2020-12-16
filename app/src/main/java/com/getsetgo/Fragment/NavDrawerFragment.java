@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import com.getsetgo.R;
 import com.getsetgo.activity.AccountActivity;
+import com.getsetgo.activity.AddNewUserActivity;
 import com.getsetgo.activity.DashBoardActivity;
 import com.getsetgo.activity.HomeScreenActivity;
 import com.getsetgo.activity.IncentiveActivity;
@@ -147,6 +148,10 @@ public class NavDrawerFragment extends Fragment {
                             case R.id.nav_HelpSupport:
                                 startActivity(new Intent(context, SearchUserActivity.class));
                                 break;
+                            case R.id.nav_Settings:
+                                startActivity(new Intent(context, AddNewUserActivity.class));
+                                break;
+
 
                         }
                         HomeScreenActivity.mDrawer.closeMenu();
