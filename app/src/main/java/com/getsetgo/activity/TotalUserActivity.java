@@ -29,6 +29,9 @@ public class TotalUserActivity extends AppCompatActivity {
         init();
     }
     private void init(){
+
+        String data = getIntent().getExtras().getString("titleText","Total User");
+        binding.txtUserTitle.setText(data);
         setupRecyclerViewForTotalUser();
     }
     private void setupRecyclerViewForTotalUser() {

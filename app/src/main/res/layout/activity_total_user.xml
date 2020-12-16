@@ -41,7 +41,7 @@
 
 
             <TextView
-                android:id="@+id/ivLogo"
+                android:id="@+id/txtUserTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
