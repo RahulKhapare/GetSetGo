@@ -35,7 +35,8 @@
                     android:hint="Search for Courses"
                     android:maxLines="3"
                     android:paddingLeft="16dp"
-                    android:textColor="@color/colorTextHint"
+                    android:textColor="@color/colorTextDark"
+                    android:textColorHint="@color/colorTextHint"
                     android:textSize="14sp" />
 
 
