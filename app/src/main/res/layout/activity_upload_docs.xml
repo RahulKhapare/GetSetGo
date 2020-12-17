@@ -98,14 +98,6 @@
 
                         </com.google.android.material.textfield.TextInputLayout>
 
-
-                        <ImageView
-                            android:layout_marginTop="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/ic_launcher"
-                            android:id="@+id/imvPan"/>
-
                         <LinearLayout
                             android:id="@+id/llUploadPan"
                             android:layout_width="match_parent"

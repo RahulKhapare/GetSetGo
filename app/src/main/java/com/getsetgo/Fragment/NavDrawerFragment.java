@@ -149,17 +149,17 @@ public class NavDrawerFragment extends Fragment {
                                 break;
 
                             case R.id.nav_TermsCondition:
-                                //startActivity(new Intent(context, TermsAndConditionActivity.class));
+                                startActivity(new Intent(context, TermsAndConditionActivity.class));
                                 break;
                             case R.id.nav_Settings:
-                               // startActivity(new Intent(context, AddNewUserActivity.class));
+                                startActivity(new Intent(context, AddNewUserActivity.class));
                                 break;
 
                             case R.id.nav_HelpSupport:
-                                //startActivity(new Intent(context, SupportHelpActivity.class));
+                                startActivity(new Intent(context, SupportHelpActivity.class));
                                 break;
                             case R.id.nav_Notification:
-                                //startActivity(new Intent(context, NotificationsActivity.class));
+                                startActivity(new Intent(context, NotificationsActivity.class));
                                 break;
 
 
