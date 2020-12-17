@@ -57,7 +57,6 @@ public class BankDetailsActivity extends AppCompatActivity {
     }
     private void init(){
         onClick();
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_upload_docs);
         try {
             StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
             StrictMode.setVmPolicy(builder.build());
@@ -70,6 +69,12 @@ public class BankDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(activity,UploadDocumentsActivity.class));
+            }
+        });
+        binding.llUploadDocs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onUploadClick();
             }
         });
     }

@@ -162,9 +162,8 @@ public class NavDrawerFragment extends Fragment {
                                 startActivity(new Intent(context, NotificationsActivity.class));
                                 break;
 
-
                         }
-                        HomeScreenActivity.mDrawer.closeMenu();
+                        HomeScreenActivity.binding.drawerLayout.closeMenu();
 
                     }
                 }, 300);
