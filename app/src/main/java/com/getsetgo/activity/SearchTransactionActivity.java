@@ -75,8 +75,8 @@ public class SearchTransactionActivity extends AppCompatActivity {
         Date d1 = null;
         Date d2 = null;
         try {
-            d1 = dfDate.parse(!binding.etStartDate.getText().toString().isEmpty() ? binding.etStartDate.getText().toString() : " ");
-            d2 = dfDate.parse(!binding.etEndDate.getText().toString().isEmpty() ? binding.etEndDate.getText().toString() : " ");
+            d1 = dfDate.parse(binding.etStartDate.getText().toString());
+            d2 = dfDate.parse(binding.etEndDate.getText().toString());
         } catch (ParseException e) {
             e.printStackTrace();
         }
