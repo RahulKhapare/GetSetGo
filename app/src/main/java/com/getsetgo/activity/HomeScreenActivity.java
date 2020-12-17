@@ -28,6 +28,7 @@ import com.getsetgo.Adapter.OtherCategoriesAdapter;
 import com.getsetgo.Fragment.FavouritesFragment;
 import com.getsetgo.Fragment.HomeFragment;
 import com.getsetgo.Fragment.NavDrawerFragment;
+import com.getsetgo.Fragment.SearchFragment;
 import com.getsetgo.Fragment.YourCourseFragment;
 import com.getsetgo.R;
 import com.getsetgo.databinding.ActivityBankDetailsBinding;
@@ -76,7 +77,7 @@ public class HomeScreenActivity extends AppCompatActivity {
                         fragment = new FavouritesFragment();
                         break;
                     case R.id.menu_search:
-                        startActivity(new Intent(activity, MyCourseActivity.class));
+                        fragment = new SearchFragment();
                         break;
                     case R.id.menu_yourCourse:
                         fragment = new YourCourseFragment();
