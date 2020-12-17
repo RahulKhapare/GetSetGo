@@ -20,21 +20,24 @@
         android:paddingRight="16dp"
         android:paddingBottom="12dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/rlMain"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10">
 
 
             <RelativeLayout
                 android:id="@+id/rlIncAmt"
-                android:layout_width="130dp"
+                android:layout_width="0dp"
                 android:layout_height="50dp"
+                android:layout_weight="3.33"
                 android:gravity="center">
 
                 <TextView
                     android:id="@+id/txtIncAmount"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunit_sans_bold"
                     android:text="₹5900"
@@ -57,10 +60,10 @@
 
             <RelativeLayout
                 android:id="@+id/rlIncType"
-                android:layout_width="120dp"
+                android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/rlIncAmt"
+                android:layout_weight="3.23"
                 android:gravity="center">
 
                 <TextView
@@ -88,10 +91,9 @@
 
             <RelativeLayout
                 android:id="@+id/rlStatus"
-                android:layout_width="120dp"
+                android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/rlIncType"
+                android:layout_weight="3.44"
                 android:gravity="center">
 
 
@@ -101,6 +103,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_sans_regular"
                     android:text="Transferred"
+                    android:gravity="center"
                     android:textColor="@color/colorTransferred"
                     android:textSize="16sp" />
 
@@ -111,87 +114,90 @@
                     android:layout_below="@+id/txtStatusTitle"
                     android:fontFamily="@font/nunito_sans_regular"
                     android:text="1 Jan 2020"
+                    android:gravity="center"
                     android:textColor="@color/colorTextHint60"
                     android:textSize="12sp"
                     android:visibility="visible" />
 
             </RelativeLayout>
-        </RelativeLayout>
+        </LinearLayout>
+
         <RelativeLayout
             android:id="@+id/rlDetails"
-            android:layout_below="@id/rlMain"
             android:layout_width="match_parent"
-            android:paddingLeft="10dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rlMain"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp"
-            android:visibility="gone"
-            android:layout_height="wrap_content">
+            android:paddingLeft="10dp"
+            android:visibility="gone">
 
             <RelativeLayout
+                android:id="@+id/rlPaymentStatus"
                 android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/rlPaymentStatus">
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:id="@+id/txtTDS"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_sans_regular"
                     android:text="TDS(3.75%)"
-                    android:fontFamily="@font/nunito_sans_regular"
-                    android:textSize="14sp"
-                    android:textColor="@color/colorTextHint60"/>
+                    android:textColor="@color/colorTextHint60"
+                    android:textSize="14sp" />
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:id="@+id/txtTDSAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_below="@id/txtTDS"
-                    android:textSize="16sp"
-                    android:text="1500"
                     android:fontFamily="@font/nunito_sans_regular"
-                    android:textColor="@color/colorTextDark"/>
+                    android:text="1500"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="16sp" />
 
 
                 <TextView
+                    android:id="@+id/txtNetPay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/txtNetPay"
                     android:layout_below="@id/txtTDSAmount"
                     android:layout_marginTop="20dp"
-                    android:textSize="14sp"
+                    android:fontFamily="@font/nunito_sans_regular"
                     android:text="Net Payable"
-                    android:fontFamily="@font/nunito_sans_regular"
-                    android:textColor="@color/colorTextHint60"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtNetPayAmount"
-                    android:layout_below="@id/txtNetPay"
-                    android:textSize="16sp"
-                    android:text="5723"
-                    android:fontFamily="@font/nunito_sans_regular"
-                    android:textColor="@color/colorTextDark"/>
+                    android:textColor="@color/colorTextHint60"
+                    android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/txtNetPayAmount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/txtNetPay"
+                    android:fontFamily="@font/nunito_sans_regular"
+                    android:text="5723"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="16sp" />
+
+                <TextView
                     android:id="@+id/txtStatusPay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_below="@id/txtNetPayAmount"
                     android:layout_marginTop="20dp"
-                    android:textSize="14sp"
-                    android:text="Status"
                     android:fontFamily="@font/nunito_sans_regular"
-                    android:textColor="@color/colorTextHint60"/>
+                    android:text="Status"
+                    android:textColor="@color/colorTextHint60"
+                    android:textSize="14sp" />
+
                 <TextView
+                    android:id="@+id/txtStatusPayAmount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/txtStatusPayAmount"
                     android:layout_below="@id/txtStatusPay"
-                    android:textSize="16sp"
-                    android:text="Transfer"
                     android:fontFamily="@font/nunito_sans_regular"
-                    android:textColor="@color/colorTextDark"/>
-
+                    android:text="Transfer"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="16sp" />
 
 
             </RelativeLayout>
@@ -200,83 +206,71 @@
                 android:id="@+id/rlPaymentDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/rlPaymentStatus"
-                android:layout_alignParentRight="true">
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@+id/rlPaymentStatus">
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/payment_border"
                     android:orientation="vertical"
-                    android:padding="15dp"
-                    android:background="@drawable/payment_border">
+                    android:padding="15dp">
 
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans_semibold"
                         android:text="Payment Details"
-                        android:textSize="16sp"
                         android:textColor="@color/colorTextDark"
-                        android:fontFamily="@font/nunito_sans_semibold"/>
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/txtTransactionId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorTextDark"
-                        android:textSize="12sp"
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/nunito_sans_regular"
-                        android:text="Transaction Id - 123456789"/>
+                        android:text="Transaction Id - 123456789"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="12sp" />
+
                     <TextView
                         android:id="@+id/txtRemark"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorTextDark"
-                        android:textSize="12sp"
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/nunito_sans_regular"
-                        android:text="Remark - Transferred Rs 5679 on 13 August"/>
+                        android:text="Remark - Transferred Rs 5679 on 13 August"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="12sp" />
+
                     <TextView
                         android:id="@+id/txtApproveDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorTextDark"
-                        android:textSize="12sp"
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/nunito_sans_regular"
-                        android:text="Approved Date - 14th August 2020"/>
+                        android:text="Approved Date - 14th August 2020"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/txtSlipDetails"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorTextDark"
-                        android:textSize="12sp"
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/nunito_sans_regular"
-                        android:text="Slip Details - "/>
-
-
-
-
-
-
+                        android:text="Slip Details - "
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="12sp" />
 
 
                 </LinearLayout>
 
 
-
-
-
-
-
             </RelativeLayout>
-
-
-
 
 
         </RelativeLayout>

@@ -202,15 +202,18 @@
                 </androidx.cardview.widget.CardView>
 
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp">
+                    android:layout_marginTop="15dp"
+                    android:weightSum="10"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/titleCourse"
-                        android:layout_width="110dp"
-                        android:layout_height="22dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="8"
+                        android:layout_height="wrap_content"
                         android:fontFamily="@font/nunit_sans_bold"
                         android:text="Active Courses"
                         android:textColor="@color/colorTextDark"
@@ -218,17 +221,15 @@
 
                     <TextView
                         android:id="@+id/txtViewAll"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
                         android:layout_height="wrap_content"
-                        android:layout_alignRight="@+id/titleCourse"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerInParent="true"
                         android:fontFamily="@font/nunito_sans_semibold"
                         android:gravity="end|center"
                         android:text="View All"
                         android:textColor="@color/viewall_text_color"
                         android:textSize="12sp" />
-                </RelativeLayout>
+                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewCources"
@@ -253,33 +254,34 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp" />
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp">
+                    android:layout_marginTop="15dp"
+                    android:weightSum="10"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/titleBestCourse"
-                        android:layout_width="110dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="8"
                         android:layout_height="22dp"
                         android:fontFamily="@font/nunit_sans_bold"
-                        android:text="Active Courses"
+                        android:text="Best Selling Courses"
                         android:textColor="@color/colorTextDark"
                         android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/txtViewAllBestCourse"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
                         android:layout_height="wrap_content"
-                        android:layout_alignRight="@+id/titleBestCourse"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerInParent="true"
                         android:fontFamily="@font/nunito_sans_semibold"
                         android:gravity="end|center"
                         android:text="View All"
                         android:textColor="@color/viewall_text_color"
                         android:textSize="12sp" />
-                </RelativeLayout>
+                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerBestSellingCources"
