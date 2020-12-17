@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.getsetgo.Fragment.ComposeFragment;
 import com.getsetgo.Fragment.CrashCourseFragment;
+import com.getsetgo.Fragment.InboxOutboxFragment;
 
 public class SupportHelpViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -22,11 +23,11 @@ public class SupportHelpViewPagerAdapter extends FragmentPagerAdapter {
         }
         else if (position == 1)
         {
-            fragment = new CrashCourseFragment();
+            fragment = new InboxOutboxFragment();
         }
         else if (position == 2)
         {
-            fragment = new CrashCourseFragment();
+            fragment = new InboxOutboxFragment();
         }
         return fragment;
     }

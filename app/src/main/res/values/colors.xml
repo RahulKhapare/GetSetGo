@@ -6,6 +6,7 @@
     <color name="colorWhite">#FFFF</color>
     <color name="colorBlack">#000</color>
     <color name="colorTrans">#00000000</color>
+    <color name="colorBlackHighlight">#80000000</color>
     <color name="colorGray">#888888</color>
     <color name="colorTextDark">#232323</color>
     <color name="colorTextHint">#50232323</color>
@@ -33,9 +34,12 @@
     <color name="colorLightStrokeView">#80CED5DB</color>
     <color name="colorBlueBusiness">#374451</color>
     <color name="colorCourseBoard">#00768C</color>
+    <color name="colorBlueGetSetGo">#9500768C</color>
     <color name="colorFranchise">#F05919</color>
     <color name="colorInfo">#72B633</color>
     <color name="colorReward">#EF4A4F</color>
     <color name="colorTransferred">#098705</color>
     <color name="colorGreen">#64B13F</color>
+    <color name="colorWhiteTime">#60FFFFFF</color>
+    <color name="colorBlackTime">#60000000</color>
 </resources>
