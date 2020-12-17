@@ -34,7 +34,7 @@
             android:layout_gravity="start"
             android:layout_toEndOf="@+id/ivBack"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             app:tint="@color/colorWhite"
             android:src="@drawable/ic_ham_menu" />
 

@@ -33,7 +33,7 @@
             android:layout_height="24dp"
             android:layout_centerVertical="true"
             android:layout_gravity="start"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:layout_toEndOf="@+id/ivBack"
             android:src="@drawable/ic_ham_menu"
             app:tint="@color/colorWhite" />

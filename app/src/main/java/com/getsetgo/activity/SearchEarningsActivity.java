@@ -15,8 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.getsetgo.R;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class SearchEarningsActivity extends AppCompatActivity {
 
@@ -68,7 +70,7 @@ public class SearchEarningsActivity extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         month = month+1;
                         String sDate = dayOfMonth + "/" + month+ "/"+ year;
-                        etEndDate.setText(sDate);
+                        etEndDate.setText(formatedDate(sDate));
                     }
                 }
                 ,year,month,day);
@@ -77,5 +79,16 @@ public class SearchEarningsActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
+    }
+
+    private String formatedDate(String stringDate){
+        String orderDate = stringDate;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+            Date date = dateFormat.parse(orderDate);
+            orderDate = dateFormat.format(date);
+        }catch (Exception e){
+        }
+        return orderDate;
     }
 }
