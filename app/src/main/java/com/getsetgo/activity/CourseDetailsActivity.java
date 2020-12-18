@@ -12,6 +12,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Html;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ImageView;
@@ -29,6 +30,7 @@ import com.getsetgo.util.BulletTextUtil;
 import com.getsetgo.util.WindowView;
 
 import java.util.ArrayList;
+
 
 public class CourseDetailsActivity extends AppCompatActivity {
 
@@ -76,45 +78,28 @@ public class CourseDetailsActivity extends AppCompatActivity {
         dynamicTextView();
     }
 
-    private void dynamicTextView(){
+    private void dynamicTextView() {
         Typeface typeface = ResourcesCompat.getFont(activity, R.font.nunito_sans_regular);
         LinearLayout.LayoutParams dim = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         String[] arr = activity.getResources().getStringArray(R.array.listArray);
         t = new TextView[arr.length];
-        for (int i = 0; i < arr.length; i++) {
-            t[i] = new TextView(activity);
-            t[i].setLayoutParams(dim);
-            t[i].setText("\u25CF   " + arr[i]);
-            t[i].setTextSize(14);
-            t[i].setTypeface(typeface);
-            t[i].setTextColor(activity.getResources().getColor(R.color.colorTextDark));
-            binding.llCourseIncludes.addView(t[i]);
-        }
-
+        textViewMore(t, dim, typeface, arr, arr.length, binding.llCourseIncludes);
 
         LinearLayout.LayoutParams llm = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
         String[] arrCat = activity.getResources().getStringArray(R.array.categoryArray);
         tC = new TextView[arrCat.length];
-        textViewMore(llm, typeface, arrCat, arrCat.length);
+        textViewMore(tC, llm, typeface, arrCat, arrCat.length, binding.llLearn);
     }
 
-    private void textViewMore(LinearLayout.LayoutParams dim, Typeface typeface, String[] arrCat, int length) {
+    private void textViewMore(TextView tC[], LinearLayout.LayoutParams dim, Typeface typeface, String[] arrCat, int length, LinearLayout linearLayout) {
         for (int i = 0; i < length; i++) {
             tC[i] = new TextView(activity);
             tC[i].setLayoutParams(dim);
-            tC[i].setText("\u25CF   " + arrCat[i]);
+            tC[i].setText("\u25CF  " + arrCat[i]);
             tC[i].setTextSize(14);
             tC[i].setTypeface(typeface);
             tC[i].setTextColor(activity.getResources().getColor(R.color.colorTextDark));
-            binding.llLearn.addView(tC[i]);
-            int finalI = i;
-            tC[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(activity, arrCat[finalI], Toast.LENGTH_SHORT).show();
-                }
-            });
+            linearLayout.addView(tC[i]);
         }
     }
 
