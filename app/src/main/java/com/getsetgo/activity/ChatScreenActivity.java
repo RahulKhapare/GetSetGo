@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-
 
 
 import com.getsetgo.Adapter.ChatAdapter;
@@ -40,8 +41,9 @@ public class ChatScreenActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chat_screen);
         init();
     }
+
     private void init() {
-        mLayoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL,false);
+        mLayoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
         mLayoutManager.setStackFromEnd(true);
         binding.recyclerViewChats.setLayoutManager(mLayoutManager);
         binding.recyclerViewChats.setItemAnimator(new DefaultItemAnimator());
@@ -50,24 +52,21 @@ public class ChatScreenActivity extends AppCompatActivity {
         binding.rlSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!binding.etMessage.getText().toString().isEmpty()) {
-
-                    String msg = binding.etMessage.getText().toString();
+                if (!binding.etMessage.getText().toString().trim().isEmpty() &&
+                        !binding.etMessage.getText().toString().trim().equals("")) {
+                    String msg = binding.etMessage.getText().toString().trim();
                     ResponseMessage responseMessage = new ResponseMessage();
                     responseMessage.setMessage(msg);
-
                     responseMessage.setTime(Utilities.getCurrentDateTime());
                     responseMessage.setViewType(0);
                     responseMessages.add(responseMessage);
-
                     chatAdapter.notifyDataSetChanged();
                     binding.recyclerViewChats.smoothScrollToPosition(responseMessages.lastIndexOf(responseMessage));
-
                     binding.etMessage.setText("");
+
                 }
             }
         });
-
 
     }
 
