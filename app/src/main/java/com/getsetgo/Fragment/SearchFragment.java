@@ -47,7 +47,6 @@ public class SearchFragment extends Fragment {
         for (int i = 0; i < arr.length; i++) {
             t[i] = new TextView(getActivity());
             t[i].setLayoutParams(dim);
-            t[i].setText(arr[i]);
             t[i].setTextSize(14);
             t[i].setTypeface(typeface);
             t[i].setTextColor(getActivity().getResources().getColor(R.color.colorTextHint60));
