@@ -18,8 +18,11 @@ import com.getsetgo.databinding.ActivityChatScreenBinding;
 import com.getsetgo.util.Utilities;
 import com.getsetgo.util.WindowView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class ChatScreenActivity extends AppCompatActivity {
@@ -52,7 +55,8 @@ public class ChatScreenActivity extends AppCompatActivity {
                     String msg = binding.etMessage.getText().toString();
                     ResponseMessage responseMessage = new ResponseMessage();
                     responseMessage.setMessage(msg);
-                    responseMessage.setTime(Utilities.getCurrentTime());
+
+                    responseMessage.setTime(Utilities.getCurrentDateTime());
                     responseMessage.setViewType(0);
                     responseMessages.add(responseMessage);
 
