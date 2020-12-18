@@ -44,7 +44,7 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }
         },3000);
-        generateFcmToken();
+        //generateFcmToken();
     }
 
     private void generateFcmToken() {
