@@ -50,7 +50,7 @@ public class SearchTransactionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isFormValidation()) {
-                    if(checkDateValidation()){
+                    if (checkDateValidation()) {
 
                     }
                 }
@@ -66,7 +66,6 @@ public class SearchTransactionActivity extends AppCompatActivity {
                 binding.spnIncomeType.setSelection(0);
             }
         });
-
     }
 
     private boolean checkDateValidation() {
