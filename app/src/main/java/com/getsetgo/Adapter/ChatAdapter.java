@@ -12,8 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.getsetgo.Model.ResponseMessage;
 import com.getsetgo.R;
-import com.getsetgo.ResponseMessage;
 
 import java.util.List;
 

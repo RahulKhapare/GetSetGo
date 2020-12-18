@@ -1,4 +1,4 @@
-package com.getsetgo;
+package com.getsetgo.Model;
 
 public class ResponseMessage {
     public String getMessage() {

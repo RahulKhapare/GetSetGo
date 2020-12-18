@@ -1,4 +1,4 @@
-package com.getsetgo;
+package com.getsetgo.Service;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -13,6 +13,7 @@ import android.widget.RemoteViews;
 import androidx.core.app.NotificationCompat;
 
 import com.adoisstudio.helper.H;
+import com.getsetgo.R;
 import com.getsetgo.activity.NotificationsActivity;
 import com.getsetgo.util.P;
 import com.google.firebase.messaging.FirebaseMessagingService;

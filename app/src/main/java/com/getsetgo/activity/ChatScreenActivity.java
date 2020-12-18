@@ -13,8 +13,8 @@ import android.view.View;
 
 
 import com.getsetgo.Adapter.ChatAdapter;
+import com.getsetgo.Model.ResponseMessage;
 import com.getsetgo.R;
-import com.getsetgo.ResponseMessage;
 import com.getsetgo.databinding.ActivityChatScreenBinding;
 import com.getsetgo.util.Utilities;
 import com.getsetgo.util.WindowView;
