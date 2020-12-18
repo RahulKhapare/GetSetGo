@@ -17,16 +17,13 @@ public class SupportHelpViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Fragment fragment = null;
-        if (position == 0)
-        {
+        if (position == 0) {
             fragment = new ComposeFragment();
         }
-        else if (position == 1)
-        {
+        else if (position == 1) {
             fragment = new InboxOutboxFragment();
         }
-        else if (position == 2)
-        {
+        else if (position == 2) {
             fragment = new InboxOutboxFragment();
         }
         return fragment;
@@ -40,16 +37,11 @@ public class SupportHelpViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         String title = null;
-        if (position == 0)
-        {
+        if (position == 0) {
             title = "Compose";
-        }
-        else if (position == 1)
-        {
+        } else if (position == 1) {
             title = "Inbox";
-        }
-        else if (position == 2)
-        {
+        } else if (position == 2) {
             title = "Outbox";
         }
         return title;

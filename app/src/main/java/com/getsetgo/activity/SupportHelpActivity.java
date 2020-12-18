@@ -28,6 +28,10 @@ public class SupportHelpActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        setupRecyclerview();
+    }
+
+    private void setupRecyclerview() {
         supportHelpViewPagerAdapter = new SupportHelpViewPagerAdapter(getSupportFragmentManager());
         binding.viewPagerSupportHelp.setAdapter(supportHelpViewPagerAdapter);
         binding.tablayoutSupport.setupWithViewPager(binding.viewPagerSupportHelp);

@@ -32,13 +32,13 @@ public class NotificationsActivity extends AppCompatActivity {
     }
     private void init(){
         onClick();
-        setupRecyclerViewForNotifications();
+        setupRecyclerViewForNotification();
     }
     private void onClick(){
 
     }
 
-    private void setupRecyclerViewForNotifications() {
+    private void setupRecyclerViewForNotification() {
         binding.recyclerViewNotifications.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         notificationAdapter = new NotificationAdapter(this);
         binding.recyclerViewNotifications.setItemAnimator(new DefaultItemAnimator());

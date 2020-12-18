@@ -15,6 +15,7 @@ import com.getsetgo.Adapter.ChatAdapter;
 import com.getsetgo.R;
 import com.getsetgo.ResponseMessage;
 import com.getsetgo.databinding.ActivityChatScreenBinding;
+import com.getsetgo.util.Utilities;
 import com.getsetgo.util.WindowView;
 
 import java.util.ArrayList;
@@ -36,12 +37,11 @@ public class ChatScreenActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chat_screen);
         init();
     }
-
     private void init() {
-
         mLayoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL,false);
         mLayoutManager.setStackFromEnd(true);
         binding.recyclerViewChats.setLayoutManager(mLayoutManager);
+        binding.recyclerViewChats.setItemAnimator(new DefaultItemAnimator());
 
         setupRecyclerViewForChats();
         binding.rlSend.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +52,7 @@ public class ChatScreenActivity extends AppCompatActivity {
                     String msg = binding.etMessage.getText().toString();
                     ResponseMessage responseMessage = new ResponseMessage();
                     responseMessage.setMessage(msg);
-                    responseMessage.setTime("7:25 PM");
+                    responseMessage.setTime(Utilities.getCurrentTime());
                     responseMessage.setViewType(0);
                     responseMessages.add(responseMessage);
 
@@ -100,11 +100,9 @@ public class ChatScreenActivity extends AppCompatActivity {
 
 
         chatAdapter = new ChatAdapter(activity, responseMessages);
-        binding.recyclerViewChats.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerViewChats.setAdapter(chatAdapter);
         chatAdapter.notifyDataSetChanged();
         binding.recyclerViewChats.smoothScrollToPosition(responseMessages.lastIndexOf(responseMessage));
-
 
     }
 }

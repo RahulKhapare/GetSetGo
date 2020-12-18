@@ -25,7 +25,6 @@ public class ComposeFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_compose, container, false);
         View rootView = binding.getRoot();
 
-
         return rootView;
     }
 

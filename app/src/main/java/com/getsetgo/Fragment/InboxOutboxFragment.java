@@ -38,9 +38,9 @@ public class InboxOutboxFragment extends Fragment {
 
     private void setupRecyclerviewForInboxOutBox() {
         binding.recyclerViewInboxOutbox.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        InboxOutboxAdapter inboxOutboxAdapter = new InboxOutboxAdapter(getActivity());
+        InboxOutboxAdapter inboxAndOutboxAdapter = new InboxOutboxAdapter(getActivity());
         binding.recyclerViewInboxOutbox.setItemAnimator(new DefaultItemAnimator());
-        binding.recyclerViewInboxOutbox.setAdapter(inboxOutboxAdapter);
+        binding.recyclerViewInboxOutbox.setAdapter(inboxAndOutboxAdapter);
     }
 
 
