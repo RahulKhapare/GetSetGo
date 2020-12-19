@@ -3,6 +3,8 @@ package com.adoisstudio.helper;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.text.Html;
 import android.text.Spanned;
@@ -10,6 +12,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -60,6 +63,35 @@ public class H {
         alertDialog.show();
 
     }//show ok dialog
+
+    public static boolean isInternetAvailable(Context context) {
+        boolean connected = false;
+
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null) {
+            // connected to the internet
+            switch (activeNetwork.getType()) {
+                case ConnectivityManager.TYPE_WIFI:
+                    // connected to wifi
+                    connected = true;
+                    break;
+
+                case ConnectivityManager.TYPE_MOBILE:
+                    // connected to mobile data
+                    connected = true;
+                    break;
+
+                default:
+                    connected = false;
+            }
+        } else {
+            // not connected to the internet
+            connected = false;
+        }
+
+        return connected;
+    }
 
 
     public static void showYesNoDialog(Context context, String title, String msg, final OnYesNoListener listener) {
@@ -261,5 +293,19 @@ public class H {
         }
 
         return jsonArray;
+    }
+
+    public static int getDeviceWidth(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics mDisplayMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(mDisplayMetrics);
+        return mDisplayMetrics.widthPixels;
+    }
+
+    public static int getDeviceHeight(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics mDisplayMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(mDisplayMetrics);
+        return mDisplayMetrics.heightPixels;
     }
 }
