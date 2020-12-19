@@ -97,7 +97,7 @@ public class HomeScreenActivity extends AppCompatActivity {
                         int i = json.getInt(P.time);
                         i *= 1000;
 
-                        App.app.startVideoActivity(activity, string, i,false);
+                        App.app.startMyCourseActivity(activity, string, i);
                         break;
                 }
                 return loadFragment(fragment);

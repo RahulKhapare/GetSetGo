@@ -121,7 +121,6 @@ public class CourseDetailsActivity extends AppCompatActivity implements GestureD
 
     private void init() {
 
-
         recyclerViewFeedback = findViewById(R.id.recyclerViewFeedback);
         recyclerViewLecture = findViewById(R.id.recyclerViewLecture);
         llCourseIncludes = findViewById(R.id.llCourseIncludes);

@@ -23,13 +23,16 @@ public class App extends Application {
     public static JsonList jsonList;
 
 
-    public void startVideoActivity(Context context, String string, int videoProgress, boolean isFromPreview) {
-        Intent intent = null;
-        if (isFromPreview) {
-            new Intent(context, VideoActivity.class);
-        } else {
-            new Intent(context, CourseDetailsActivity.class);
-        }
+    public void startVideoActivity(Context context, String string, int videoProgress) {
+        Intent intent = new Intent(context, VideoActivity.class);
+        intent.putExtra(P.url, string);
+        intent.putExtra("videoProgress", videoProgress);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        context.startActivity(intent);
+    }
+
+    public void startMyCourseActivity(Context context, String string, int videoProgress) {
+        Intent intent = new Intent(context, CourseDetailsActivity.class);
         intent.putExtra(P.url, string);
         intent.putExtra("videoProgress", videoProgress);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

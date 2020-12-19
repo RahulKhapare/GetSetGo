@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -642,7 +641,7 @@
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardViewAllCategories"
                         android:layout_width="match_parent"
-                        android:layout_height="126dp"
+                        android:layout_height="140dp"
                         android:layout_centerInParent="true"
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="20dp"
@@ -674,7 +673,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/txtProff"
                                 android:layout_gravity="center"
-                                android:layout_marginTop="7dp"
+                                android:layout_marginTop="5dp"
                                 android:gravity="center_vertical"
                                 android:paddingLeft="7dp"
                                 android:paddingRight="3dp">
@@ -683,6 +682,7 @@
                                     android:id="@+id/imvViewCategory"
                                     android:layout_width="66dp"
                                     android:layout_height="66dp"
+                                    android:layout_centerVertical="true"
                                     android:src="@drawable/download"
                                     app:riv_corner_radius="5dp" />
 
@@ -697,15 +697,15 @@
 
                                     <RelativeLayout
                                         android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginTop="5dp">
+                                        android:layout_height="25dp"
+                                        android:layout_marginTop="2dp">
 
                                         <ImageView
                                             android:id="@+id/imvStudents"
-                                            android:layout_width="13dp"
-                                            android:layout_height="8dp"
+                                            android:layout_width="24dp"
+                                            android:layout_height="24dp"
                                             android:layout_centerVertical="true"
-                                            android:src="@drawable/ic_home_menu" />
+                                            android:src="@drawable/ic_student" />
 
                                         <TextView
                                             android:id="@+id/txtViewCategory"
@@ -713,6 +713,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_alignParentRight="true"
                                             android:layout_marginLeft="10dp"
+                                            android:layout_centerVertical="true"
                                             android:layout_toRightOf="@id/imvStudents"
                                             android:fontFamily="@font/nunito_sans_regular"
                                             android:text="20,000 Students"
@@ -724,22 +725,23 @@
 
                                     <RelativeLayout
                                         android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginTop="5dp">
+                                        android:layout_height="25dp"
+                                        android:layout_marginTop="2dp">
 
                                         <ImageView
                                             android:id="@+id/imvCourse"
-                                            android:layout_width="13dp"
-                                            android:layout_height="8dp"
+                                            android:layout_width="24dp"
+                                            android:layout_height="24dp"
                                             android:layout_centerVertical="true"
-                                            android:src="@drawable/ic_home_menu" />
+                                            android:src="@drawable/ic_cours" />
 
                                         <TextView
                                             android:id="@+id/txtCourses"
-                                            android:layout_width="120dp"
+                                            android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_alignParentRight="true"
                                             android:layout_marginLeft="10dp"
+                                            android:layout_centerVertical="true"
                                             android:layout_toRightOf="@id/imvCourse"
                                             android:fontFamily="@font/nunito_sans_regular"
                                             android:text="10 Courses"
@@ -751,15 +753,15 @@
 
                                     <RelativeLayout
                                         android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginTop="5dp">
+                                        android:layout_height="25dp"
+                                        android:layout_marginTop="2dp">
 
                                         <ImageView
                                             android:id="@+id/imvRating"
-                                            android:layout_width="13dp"
-                                            android:layout_height="8dp"
+                                            android:layout_width="24dp"
+                                            android:layout_height="24dp"
                                             android:layout_centerVertical="true"
-                                            android:src="@drawable/ic_home_menu" />
+                                            android:src="@drawable/ic_rating" />
 
                                         <TextView
                                             android:id="@+id/txtRating"
@@ -767,6 +769,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_alignParentRight="true"
                                             android:layout_marginLeft="10dp"
+                                            android:layout_centerVertical="true"
                                             android:layout_toRightOf="@id/imvRating"
                                             android:fontFamily="@font/nunito_sans_regular"
                                             android:text="4.8 Average Rating"

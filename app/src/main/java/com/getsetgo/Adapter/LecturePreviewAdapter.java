@@ -47,7 +47,7 @@ public class LecturePreviewAdapter extends RecyclerView.Adapter<LecturePreviewAd
                 int i = json.getInt(P.time);
                 i *= 1000;
 
-                App.app.startVideoActivity(context, string, i,true);
+                App.app.startVideoActivity(context, string, i);
             }
         });
 
