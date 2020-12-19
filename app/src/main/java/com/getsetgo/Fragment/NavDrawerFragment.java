@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.getsetgo.R;
@@ -34,6 +35,7 @@ import com.getsetgo.activity.SupportHelpActivity;
 import com.getsetgo.activity.TermsAndConditionActivity;
 import com.getsetgo.activity.TotalUserActivity;
 import com.getsetgo.activity.TransactionHistoryActivity;
+import com.getsetgo.databinding.FragmentMenuBinding;
 import com.google.android.material.navigation.NavigationView;
 
 
@@ -49,8 +51,8 @@ public class NavDrawerFragment extends Fragment {
             chkPoints, chkTrans, chkIncentive;
     ;
     static NavDrawerFragment navDrawerFragment;
-    NavigationView vNavigation;
     View view = null;
+    FragmentMenuBinding binding;
 
 
     public static NavDrawerFragment getInstance() {
@@ -65,17 +67,17 @@ public class NavDrawerFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_menu, container,
-                false);
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_menu, container, false);
+        view = binding.getRoot();
+
         context = getActivity();
         activity = (AppCompatActivity) getActivity();
         navDrawerFragment = this;
         txtProfile = view.findViewById(R.id.txtProfile);
         txtEmail = view.findViewById(R.id.txtEmail);
         txtName = view.findViewById(R.id.txtName);
-        vNavigation = view.findViewById(R.id.vNavigation);
 
-        Menu navigate = vNavigation.getMenu();
+        Menu navigate = binding.vNavigation.getMenu();
         nav_courseEarn = navigate.findItem(R.id.nav_courseEarn);
         nav_crashcourseEarn = navigate.findItem(R.id.nav_crashcourseEarn);
         nav_totalEarn = navigate.findItem(R.id.nav_totalEarn);
@@ -116,7 +118,7 @@ public class NavDrawerFragment extends Fragment {
         });
 
 
-        vNavigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        binding.vNavigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 new Handler().postDelayed(new Runnable() {
