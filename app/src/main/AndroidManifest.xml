@@ -60,6 +60,7 @@
         <activity
             android:name=".activity.CourseDetailsActivity"
             android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
@@ -190,6 +191,12 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".Others.VideoActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
 
         <service android:name=".Service.FirebaseMessageReceiver">
             <intent-filter>

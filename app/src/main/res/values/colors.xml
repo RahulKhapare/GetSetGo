@@ -42,4 +42,22 @@
     <color name="colorGreen">#64B13F</color>
     <color name="colorWhiteTime">#60FFFFFF</color>
     <color name="colorBlackTime">#60000000</color>
+
+    <color name="textColor">#AF8354</color>
+    <color name="blackCard">#101010</color>
+    <color name="cardText">#959595</color>
+    <color name="roundRectangleBlack">#343434</color>
+    <color name="textColorBlack">#474747</color>
+    <color name="whiteColor">#FFFFFF</color>
+    <color name="fBlue">#3B5998</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="semi_transparent">#39000000</color>
+    <color name="titleBarBlack">#0C0C0C</color>
+    <color name="navigationBlackColor">#0A0A0A</color>
+    <color name="drawerBlack">#232323</color>
+    <color name="drawerTextBlack">#6B6B6B</color>
+    <color name="baseIconColor">#2B2B2B</color>
+    <color name="listViewTextBlack">#666666</color>
+    <color name="txtColorBlack">#636363</color>
 </resources>

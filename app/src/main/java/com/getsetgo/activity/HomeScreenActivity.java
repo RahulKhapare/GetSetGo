@@ -22,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.Json;
 import com.getsetgo.Adapter.ActiveCourseAdapter;
 import com.getsetgo.Adapter.BestSellingCourseAdapter;
 import com.getsetgo.Adapter.OtherCategoriesAdapter;
@@ -33,6 +35,8 @@ import com.getsetgo.Fragment.YourCourseFragment;
 import com.getsetgo.R;
 import com.getsetgo.databinding.ActivityBankDetailsBinding;
 import com.getsetgo.databinding.ActivityHomeScreenBinding;
+import com.getsetgo.util.App;
+import com.getsetgo.util.P;
 import com.getsetgo.util.WindowView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mxn.soul.flowingdrawer_core.ElasticDrawer;
@@ -59,6 +63,10 @@ public class HomeScreenActivity extends AppCompatActivity {
     }
 
     private void init() {
+        if (SplashActivity.deviceHeight == 0)
+            SplashActivity.deviceHeight = H.getDeviceHeight(this);
+        if (SplashActivity.deviceWidth == 0)
+            SplashActivity.deviceWidth = H.getDeviceWidth(this);
         binding.drawerLayout.setTouchMode(ElasticDrawer.TOUCH_MODE_NONE);
         setupToolbar();
         setupMenu();
@@ -84,7 +92,12 @@ public class HomeScreenActivity extends AppCompatActivity {
                         break;
 
                     case R.id.menu_Account:
-                        startActivity(new Intent(activity, CourseDetailsActivity.class));
+                        Json json = new Json();
+                        String string = P.baseUrl + "series_check/" + json.getString(P.series_slug) + "/" + json.getString(P.video_slug);
+                        int i = json.getInt(P.time);
+                        i *= 1000;
+
+                        App.app.startMyCourseActivity(activity, string, i);
                         break;
                 }
                 return loadFragment(fragment);

@@ -7,6 +7,8 @@ import androidx.databinding.DataBindingUtil;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.view.WindowManager;
 
 import com.adoisstudio.helper.H;
 import com.adoisstudio.helper.Session;
@@ -25,11 +27,15 @@ public class SplashActivity extends AppCompatActivity {
 
     private SplashActivity activity = this;
     private ActivitySplashBinding binding;
+    public static int deviceWidth;
+    public static int deviceHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         WindowView.getWindow(activity);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
         initView();
     }
@@ -45,6 +51,10 @@ public class SplashActivity extends AppCompatActivity {
             }
         },3000);
         //generateFcmToken();
+
+
+        deviceWidth = H.getDeviceWidth(this);
+        deviceHeight = H.getDeviceHeight(this);
     }
 
     private void generateFcmToken() {

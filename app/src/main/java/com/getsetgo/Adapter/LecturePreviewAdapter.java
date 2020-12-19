@@ -14,7 +14,10 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adoisstudio.helper.Json;
 import com.getsetgo.R;
+import com.getsetgo.util.App;
+import com.getsetgo.util.P;
 
 public class LecturePreviewAdapter extends RecyclerView.Adapter<LecturePreviewAdapter.LecturePreviewViewHolder> {
 
@@ -36,6 +39,17 @@ public class LecturePreviewAdapter extends RecyclerView.Adapter<LecturePreviewAd
     @Override
     public void onBindViewHolder(@NonNull LecturePreviewAdapter.LecturePreviewViewHolder holder, int position) {
 
+        holder.txtPreview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Json json = new Json();
+                String string = P.baseUrl + "series_check/" + json.getString(P.series_slug) + "/" + json.getString(P.video_slug);
+                int i = json.getInt(P.time);
+                i *= 1000;
+
+                App.app.startVideoActivity(context, string, i);
+            }
+        });
 
     }
 
