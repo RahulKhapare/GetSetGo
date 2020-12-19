@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,24 +16,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.getsetgo.Adapter.AllTransactionsAdapter;
 import com.getsetgo.Adapter.CurriculumLectureAdapter;
 import com.getsetgo.R;
+import com.getsetgo.databinding.FragmentAllTransactionsBinding;
 
 public class AllTransactionsFragment extends Fragment {
 
-    RecyclerView recyclerView;
     AllTransactionsAdapter transactionsAdapter;
     LinearLayoutManager layoutManager;
+    FragmentAllTransactionsBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(
-                R.layout.fragment_all_transactions, container, false);
-
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewAllTransactions);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_all_transactions, container, false);
+        View rootView = binding.getRoot();
 
         setupRecyclerViewTransactions();
 
-        return view;
+        return rootView;
 
 
     }
@@ -44,10 +44,10 @@ public class AllTransactionsFragment extends Fragment {
 
     private void setupRecyclerViewTransactions() {
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
+        binding.recyclerViewAllTransactions.setLayoutManager(layoutManager);
         transactionsAdapter = new AllTransactionsAdapter(getActivity());
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(transactionsAdapter);
+        binding.recyclerViewAllTransactions.setItemAnimator(new DefaultItemAnimator());
+        binding.recyclerViewAllTransactions.setAdapter(transactionsAdapter);
     }
 
 }

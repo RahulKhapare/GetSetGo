@@ -1,6 +1,7 @@
 package com.getsetgo.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -14,6 +15,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.getsetgo.R;
+import com.getsetgo.databinding.ActivitySearchIncentivesBinding;
+import com.getsetgo.util.WindowView;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -21,20 +24,17 @@ import java.util.Calendar;
 
 public class SearchIncentivesActivity extends AppCompatActivity {
 
-    Context context;
-    EditText etDate;
-    Spinner spnStatus;
+    SearchIncentivesActivity activity = this;
+    ActivitySearchIncentivesBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_incentives);
-        context = SearchIncentivesActivity.this;
+        WindowView.getWindow(activity);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_search_incentives);
         init();
     }
     private void init(){
 
-        etDate = findViewById(R.id.etDate);
-        spnStatus = findViewById(R.id.spnStatus);
         bindStatus();
         initCalendar();
 
@@ -45,15 +45,15 @@ public class SearchIncentivesActivity extends AppCompatActivity {
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        etDate.setOnClickListener(new View.OnClickListener() {
+        binding.etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         month = month+1;
                         String sDate = dayOfMonth + "/" + month+ "/"+ year;
-                        etDate.setText(sDate);
+                        binding.etDate.setText(sDate);
                     }
                 }
                         ,year,month,day);
@@ -73,14 +73,14 @@ public class SearchIncentivesActivity extends AppCompatActivity {
         stringArrayList.add("Transferred");
 
 
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(context,
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(activity,
                 R.layout.spinner_display_text, stringArrayList);
-        spnStatus.setAdapter(stringArrayAdapter);
-        spnStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.spnStatus.setAdapter(stringArrayAdapter);
+        binding.spnStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (spnStatus.getSelectedItem() != "Active") {
-                    Log.d("Tag", "Active =" + spnStatus.getSelectedItem().toString());
+                if (binding.spnStatus.getSelectedItem() != "Active") {
+                    Log.d("Tag", "Active =" + binding.spnStatus.getSelectedItem().toString());
                 }
             }
 

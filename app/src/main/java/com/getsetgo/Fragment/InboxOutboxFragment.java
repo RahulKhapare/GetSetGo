@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.getsetgo.Adapter.InboxOutboxAdapter;
-import com.getsetgo.Adapter.MyEarningsCommonAdapter;
+
 import com.getsetgo.R;
-import com.getsetgo.databinding.FragmentComposeBinding;
+
 import com.getsetgo.databinding.FragmentInboxOutboxBinding;
 
 public class InboxOutboxFragment extends Fragment {

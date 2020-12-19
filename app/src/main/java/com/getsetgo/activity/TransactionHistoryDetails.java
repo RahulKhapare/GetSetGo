@@ -1,6 +1,7 @@
 package com.getsetgo.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,32 +10,27 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.getsetgo.R;
+import com.getsetgo.databinding.ActivityTransactionHistoryDetailsBinding;
+import com.getsetgo.util.WindowView;
 
 public class TransactionHistoryDetails extends AppCompatActivity {
 
-    TextView txtName,txtAmount,txtDateTime,txtAction,txtParent,txtCourse,txtIncomeType,txtDescription;
-    Button btnGoBack;
-    Context context;
+
+    TransactionHistoryDetails activity = this;
+    ActivityTransactionHistoryDetailsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transaction_history_details);
-        context = TransactionHistoryDetails.this;
+        WindowView.getWindow(activity);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_transaction_history_details);
         init();
     }
-    private void init(){
-        txtName = findViewById(R.id.txtTitleName);
-        txtAmount = findViewById(R.id.txtAmount);
-        txtDateTime = findViewById(R.id.txtDateTime);
-        txtAction = findViewById(R.id.txtAction);
-        txtParent = findViewById(R.id.txtParent);
-        txtCourse = findViewById(R.id.txtCourse);
-        txtIncomeType = findViewById(R.id.txtIncomeType);
-        txtDescription = findViewById(R.id.txtDescription);
-        btnGoBack = findViewById(R.id.btnGoBack);
 
-        btnGoBack.setOnClickListener(new View.OnClickListener() {
+    private void init() {
+
+
+        binding.btnGoBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();

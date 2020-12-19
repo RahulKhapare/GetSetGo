@@ -1,6 +1,7 @@
 package com.getsetgo.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,24 +12,24 @@ import android.os.Bundle;
 import com.getsetgo.Adapter.CategoriesCommonAdapter;
 import com.getsetgo.Adapter.ViewAllCategoriesAdapter;
 import com.getsetgo.R;
+import com.getsetgo.databinding.ActivityViewAllCategoriesBinding;
+import com.getsetgo.util.WindowView;
 
 public class ViewAllCategoriesActivity extends AppCompatActivity {
-    Context context;
-    public RecyclerView recyclerViewCategory;
+    ViewAllCategoriesActivity activity = this;
+    ActivityViewAllCategoriesBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_all_categories);
-        context = ViewAllCategoriesActivity.this;
+        WindowView.getWindow(activity);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_view_all_categories);
         init();
     }
 
     private void init() {
 
-        recyclerViewCategory = findViewById(R.id.recyclerViewAllCategory);
-
-        setupRecyclerViewForViewAllCategories(recyclerViewCategory);
+        setupRecyclerViewForViewAllCategories(binding.recyclerViewAllCategory);
 
     }
 

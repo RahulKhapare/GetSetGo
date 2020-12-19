@@ -1,285 +1,288 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/toolbar_backgound"
-    tools:context=".activity.CategoriesActivity">
-
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
-        android:id="@+id/ll_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:layout_height="match_parent"
+        android:background="@color/toolbar_backgound"
+        tools:context=".activity.CategoriesActivity">
 
 
-        <ImageView
-            android:id="@+id/ivBack"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="start"
-            android:src="@drawable/ic_back" />
-
-        <ImageView
-            android:id="@+id/ivMenu"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_centerVertical="true"
-            android:layout_gravity="start"
-            android:layout_marginLeft="20dp"
-            android:layout_toEndOf="@+id/ivBack"
-            android:src="@drawable/ic_ham_menu"
-            app:tint="@color/colorWhite" />
+        <RelativeLayout
+            android:id="@+id/ll_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
 
 
-        <TextView
-            android:id="@+id/ivLogo"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="start"
+                android:src="@drawable/ic_back" />
+
+            <ImageView
+                android:id="@+id/ivMenu"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_gravity="start"
+                android:layout_marginLeft="20dp"
+                android:layout_toEndOf="@+id/ivBack"
+                android:src="@drawable/ic_ham_menu"
+                app:tint="@color/colorWhite" />
+
+
+            <TextView
+                android:id="@+id/ivLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:fontFamily="@font/nunit_sans_bold"
+                android:text="Categories"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:fontFamily="@font/nunit_sans_bold"
-            android:text="Categories"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp" />
+            android:layout_below="@id/ll_toolbar"
+            android:background="@drawable/main_layout_bg">
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ll_toolbar"
-        android:background="@drawable/main_layout_bg">
-
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nestedScroll"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginTop="30dp">
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nestedScroll"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="30dp">
 
 
                 <RelativeLayout
-                    android:id="@+id/rlSmartSchoolLabel"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
-
-                    <TextView
-                        android:id="@+id/txtSmartSchool"
-                        android:layout_width="110dp"
-                        android:layout_height="22dp"
-                        android:fontFamily="@font/nunit_sans_bold"
-                        android:text="Smart School"
-                        android:textColor="@color/colorTextDark"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/txtSmartSchoolViewAll"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignRight="@+id/txtSmartSchool"
-                        android:layout_alignParentRight="true"
-                        android:fontFamily="@font/nunito_sans_semibold"
-                        android:gravity="end"
-                        android:layout_centerInParent="true"
-                        android:text="View All"
-                        android:textColor="@color/viewall_text_color"
-                        android:textSize="12sp" />
-
-                </RelativeLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewSmartSchool"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/rlSmartSchoolLabel"
-                    android:layout_marginTop="15dp"
-                    android:paddingLeft="16dp" />
-
-                <RelativeLayout
-                    android:id="@+id/rlProfessionalLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/recyclerViewSmartSchool"
-                    android:layout_marginTop="20dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
-
-                    <TextView
-                        android:id="@+id/txtProfessional"
-                        android:layout_width="110dp"
-                        android:layout_height="22dp"
-                        android:fontFamily="@font/nunit_sans_bold"
-                        android:text="Professional"
-                        android:textColor="@color/colorTextDark"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/txtProfessionalViewAll"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignRight="@+id/txtProfessional"
-                        android:layout_alignParentRight="true"
-                        android:fontFamily="@font/nunito_sans_semibold"
-                        android:gravity="end"
-                        android:layout_centerInParent="true"
-                        android:text="View All"
-                        android:textColor="@color/viewall_text_color"
-                        android:textSize="12sp" />
-
-                </RelativeLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewProfessional"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/rlProfessionalLabel"
-                    android:layout_marginTop="15dp"
-                    android:paddingLeft="16dp" />
+                    android:layout_height="match_parent">
 
 
-                <RelativeLayout
-                    android:id="@+id/rlArtLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/recyclerViewProfessional"
-                    android:layout_marginTop="20dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
-
-                    <TextView
-                        android:id="@+id/txtArt"
-                        android:layout_width="110dp"
-                        android:layout_height="22dp"
-                        android:fontFamily="@font/nunit_sans_bold"
-                        android:text="Art"
-                        android:textColor="@color/colorTextDark"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/txtArtViewAll"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignRight="@+id/txtArt"
-                        android:layout_alignParentRight="true"
-                        android:fontFamily="@font/nunito_sans_semibold"
-                        android:gravity="end"
-                        android:layout_centerInParent="true"
-                        android:text="View All"
-                        android:textColor="@color/viewall_text_color"
-                        android:textSize="12sp" />
-
-                </RelativeLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewArt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/rlArtLabel"
-                    android:layout_marginTop="15dp"
-                    android:paddingLeft="16dp" />
-
-
-                <RelativeLayout
-                    android:id="@+id/rlTechnologyLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/recyclerViewArt"
-                    android:layout_marginTop="20dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
-
-                    <TextView
-                        android:id="@+id/txtTechnology"
-                        android:layout_width="110dp"
-                        android:layout_height="22dp"
-                        android:fontFamily="@font/nunit_sans_bold"
-                        android:text="Technology"
-                        android:textColor="@color/colorTextDark"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/txtTechnologyViewAll"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignRight="@+id/txtTechnology"
-                        android:layout_alignParentRight="true"
-                        android:fontFamily="@font/nunito_sans_semibold"
-                        android:gravity="end"
-                        android:layout_centerInParent="true"
-                        android:text="View All"
-                        android:textColor="@color/viewall_text_color"
-                        android:textSize="12sp" />
-
-                </RelativeLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewTechnology"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/rlTechnologyLabel"
-                    android:layout_marginTop="15dp"
-                    android:paddingLeft="16dp" />
-
-
-                <RelativeLayout
-                    android:id="@+id/rlCreInnLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/recyclerViewTechnology"
-                    android:layout_marginTop="20dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
-
-                    <TextView
-                        android:id="@+id/txtCreInn"
+                    <RelativeLayout
+                        android:id="@+id/rlSmartSchoolLabel"
                         android:layout_width="match_parent"
-                        android:layout_height="22dp"
-                        android:fontFamily="@font/nunit_sans_bold"
-                        android:text="Creativity &amp; Innovation "
-                        android:textColor="@color/colorTextDark"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/txtCreInnViewAll"
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignRight="@+id/txtCreInn"
-                        android:layout_alignParentRight="true"
-                        android:fontFamily="@font/nunito_sans_semibold"
-                        android:gravity="end"
-                        android:text="View All"
-                        android:layout_centerInParent="true"
-                        android:textColor="@color/viewall_text_color"
-                        android:textSize="12sp" />
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <TextView
+                            android:id="@+id/txtSmartSchool"
+                            android:layout_width="110dp"
+                            android:layout_height="22dp"
+                            android:fontFamily="@font/nunit_sans_bold"
+                            android:text="Smart School"
+                            android:textColor="@color/colorTextDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/txtSmartSchoolViewAll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignRight="@+id/txtSmartSchool"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/nunito_sans_semibold"
+                            android:gravity="end"
+                            android:text="View All"
+                            android:textColor="@color/viewall_text_color"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewSmartSchool"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rlSmartSchoolLabel"
+                        android:layout_marginTop="15dp"
+                        android:paddingLeft="16dp" />
+
+                    <RelativeLayout
+                        android:id="@+id/rlProfessionalLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/recyclerViewSmartSchool"
+                        android:layout_marginTop="20dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <TextView
+                            android:id="@+id/txtProfessional"
+                            android:layout_width="110dp"
+                            android:layout_height="22dp"
+                            android:fontFamily="@font/nunit_sans_bold"
+                            android:text="Professional"
+                            android:textColor="@color/colorTextDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/txtProfessionalViewAll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignRight="@+id/txtProfessional"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/nunito_sans_semibold"
+                            android:gravity="end"
+                            android:text="View All"
+                            android:textColor="@color/viewall_text_color"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewProfessional"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rlProfessionalLabel"
+                        android:layout_marginTop="15dp"
+                        android:paddingLeft="16dp" />
+
+
+                    <RelativeLayout
+                        android:id="@+id/rlArtLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/recyclerViewProfessional"
+                        android:layout_marginTop="20dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <TextView
+                            android:id="@+id/txtArt"
+                            android:layout_width="110dp"
+                            android:layout_height="22dp"
+                            android:fontFamily="@font/nunit_sans_bold"
+                            android:text="Art"
+                            android:textColor="@color/colorTextDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/txtArtViewAll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignRight="@+id/txtArt"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/nunito_sans_semibold"
+                            android:gravity="end"
+                            android:text="View All"
+                            android:textColor="@color/viewall_text_color"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewArt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rlArtLabel"
+                        android:layout_marginTop="15dp"
+                        android:paddingLeft="16dp" />
+
+
+                    <RelativeLayout
+                        android:id="@+id/rlTechnologyLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/recyclerViewArt"
+                        android:layout_marginTop="20dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <TextView
+                            android:id="@+id/txtTechnology"
+                            android:layout_width="110dp"
+                            android:layout_height="22dp"
+                            android:fontFamily="@font/nunit_sans_bold"
+                            android:text="Technology"
+                            android:textColor="@color/colorTextDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/txtTechnologyViewAll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignRight="@+id/txtTechnology"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/nunito_sans_semibold"
+                            android:gravity="end"
+                            android:text="View All"
+                            android:textColor="@color/viewall_text_color"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewTechnology"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rlTechnologyLabel"
+                        android:layout_marginTop="15dp"
+                        android:paddingLeft="16dp" />
+
+
+                    <RelativeLayout
+                        android:id="@+id/rlCreInnLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/recyclerViewTechnology"
+                        android:layout_marginTop="20dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <TextView
+                            android:id="@+id/txtCreInn"
+                            android:layout_width="match_parent"
+                            android:layout_height="22dp"
+                            android:fontFamily="@font/nunit_sans_bold"
+                            android:text="Creativity &amp; Innovation "
+                            android:textColor="@color/colorTextDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/txtCreInnViewAll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignRight="@+id/txtCreInn"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/nunito_sans_semibold"
+                            android:gravity="end"
+                            android:text="View All"
+                            android:textColor="@color/viewall_text_color"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewCreInn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rlCreInnLabel"
+                        android:layout_marginTop="15dp"
+                        android:paddingLeft="16dp" />
+
 
                 </RelativeLayout>
+            </androidx.core.widget.NestedScrollView>
+        </RelativeLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewCreInn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/rlCreInnLabel"
-                    android:layout_marginTop="15dp"
-                    android:paddingLeft="16dp" />
-
-
-            </RelativeLayout>
-        </androidx.core.widget.NestedScrollView>
     </RelativeLayout>
-
-</RelativeLayout>
+</layout>

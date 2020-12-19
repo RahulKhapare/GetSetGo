@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import androidx.cardview.widget.CardView;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,25 +21,25 @@ import com.getsetgo.Adapter.ActiveCourseAdapter;
 import com.getsetgo.Adapter.BestSellingCourseAdapter;
 import com.getsetgo.Adapter.OtherCategoriesAdapter;
 import com.getsetgo.R;
+import com.getsetgo.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
 
-
-    public ImageView ivNotify, ivMenu, ivCourseImage;
-    public TextView txtTech, txtDesciption, txtProgramme, txtStatus, txtViewAll, txtViewAllBestCourse;
-    public RecyclerView recyclerViewCources, recyclerViewOtherCategories, recyclerBestSellingCources;
-    CardView cardViewCurrentLearning;
+    FragmentHomeBinding binding;
     ActiveCourseAdapter activeCourseAdapter;
     OtherCategoriesAdapter otherCategoriesAdapter;
     BestSellingCourseAdapter bestSellingCourseAdapter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(
-                R.layout.fragment_home, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
+        View rootView = binding.getRoot();
 
-        init(view);
-        return view;
+        setupRecyclerViewForActiveCourse();
+        setupRecyclerViewForOthersCategories();
+        setupRecyclerViewForBestSellingCourse();
+        return rootView;
     }
 
     @Override
@@ -46,51 +47,27 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void init(View view) {
-        ivNotify = view.findViewById(R.id.ivNotify);
-        ivMenu = view.findViewById(R.id.ivMenu);
-        ivCourseImage = view.findViewById(R.id.imvCourse);
-        txtTech = view.findViewById(R.id.textTech);
-        txtDesciption = view.findViewById(R.id.txtDes);
-        txtProgramme = view.findViewById(R.id.txtProgramme);
-        txtViewAll = view.findViewById(R.id.txtViewAll);
-        txtStatus = view.findViewById(R.id.txtStatus);
-
-        recyclerViewCources = view.findViewById(R.id.recyclerViewCources);
-        txtViewAllBestCourse = view.findViewById(R.id.txtViewAllBestCourse);
-        cardViewCurrentLearning = view.findViewById(R.id.cardViewCurrentLearning);
-        recyclerBestSellingCources = view.findViewById(R.id.recyclerBestSellingCources);
-        recyclerViewOtherCategories = view.findViewById(R.id.recyclerViewOtherCategories);
-
-
-        setupRecyclerViewForActiveCourse();
-        setupRecyclerViewForOthersCategories();
-        setupRecyclerViewForBestSellingCourse();
-
-
-    }
-
     private void setupRecyclerViewForActiveCourse() {
-        recyclerViewCources.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        binding.recyclerViewCources.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         activeCourseAdapter = new ActiveCourseAdapter(getActivity());
-        recyclerViewCources.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewCources.setAdapter(activeCourseAdapter);
+        binding.recyclerViewCources.setItemAnimator(new DefaultItemAnimator());
+        binding.recyclerViewCources.setAdapter(activeCourseAdapter);
         activeCourseAdapter.notifyDataSetChanged();
     }
 
     private void setupRecyclerViewForOthersCategories() {
-        recyclerViewOtherCategories.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        binding.recyclerViewOtherCategories.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         otherCategoriesAdapter = new OtherCategoriesAdapter(getActivity());
-        recyclerViewOtherCategories.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewOtherCategories.setAdapter(otherCategoriesAdapter);
+        binding.recyclerViewOtherCategories.setItemAnimator(new DefaultItemAnimator());
+        binding.recyclerViewOtherCategories.setAdapter(otherCategoriesAdapter);
         otherCategoriesAdapter.notifyDataSetChanged();
     }
 
     private void setupRecyclerViewForBestSellingCourse() {
-        recyclerBestSellingCources.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        binding.recyclerBestSellingCources.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         bestSellingCourseAdapter = new BestSellingCourseAdapter(getActivity());
-        recyclerBestSellingCources.setItemAnimator(new DefaultItemAnimator());
-        recyclerBestSellingCources.setAdapter(bestSellingCourseAdapter);
+        binding.recyclerBestSellingCources.setItemAnimator(new DefaultItemAnimator());
+        binding.recyclerBestSellingCources.setAdapter(bestSellingCourseAdapter);
         bestSellingCourseAdapter.notifyDataSetChanged();
     }
 

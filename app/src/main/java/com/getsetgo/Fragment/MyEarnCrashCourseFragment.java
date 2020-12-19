@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,21 +15,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.getsetgo.Adapter.MyEarningsCommonAdapter;
 import com.getsetgo.R;
+import com.getsetgo.databinding.FragmentMyearningBinding;
 
 public class MyEarnCrashCourseFragment extends Fragment {
 
-    RecyclerView recyclerView;
-    TextView txtCrashIncome;
+    FragmentMyearningBinding binding;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_myearning, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_myearning, container, false);
+        View rootView = binding.getRoot();
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewMyEarning);
-        txtCrashIncome = view.findViewById(R.id.txtRefIncome);
-        txtCrashIncome.setText("Crash Course Income");
+        binding.txtRefIncome.setText("Crash Course Income");
         setupRecyclerViewCrashCourse();
-        return view;
+        return rootView;
     }
 
     @Override
@@ -37,10 +38,10 @@ public class MyEarnCrashCourseFragment extends Fragment {
     }
 
     private void setupRecyclerViewCrashCourse() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        binding.recyclerViewMyEarning.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         MyEarningsCommonAdapter myEarningsCommonAdapter = new MyEarningsCommonAdapter(getActivity());
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(myEarningsCommonAdapter);
+        binding.recyclerViewMyEarning.setItemAnimator(new DefaultItemAnimator());
+        binding.recyclerViewMyEarning.setAdapter(myEarningsCommonAdapter);
     }
 
 }

@@ -16,6 +16,7 @@ public class WishlistActivity extends AppCompatActivity {
     Context context;
     public RecyclerView recyclerViewWishlist;
     WishlistCourseAdapter wishlistCourseAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,13 +24,15 @@ public class WishlistActivity extends AppCompatActivity {
         context = WishlistActivity.this;
         init();
     }
-    private void init(){
+
+    private void init() {
         recyclerViewWishlist = findViewById(R.id.recyclerViewWishlist);
         setupRecyclerViewForWishlist();
     }
+
     private void setupRecyclerViewForWishlist() {
         recyclerViewWishlist.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        wishlistCourseAdapter = new WishlistCourseAdapter(this,recyclerViewWishlist);
+        wishlistCourseAdapter = new WishlistCourseAdapter(this, recyclerViewWishlist);
         recyclerViewWishlist.setItemAnimator(new DefaultItemAnimator());
         recyclerViewWishlist.setAdapter(wishlistCourseAdapter);
         wishlistCourseAdapter.notifyDataSetChanged();

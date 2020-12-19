@@ -1,6 +1,7 @@
 package com.getsetgo.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
@@ -8,27 +9,24 @@ import android.os.Bundle;
 
 import com.getsetgo.Adapter.MyEarningsViewPagerAdapter;
 import com.getsetgo.R;
+import com.getsetgo.databinding.ActivityMyEarningBinding;
 import com.google.android.material.tabs.TabLayout;
 
 public class MyEarningActivity extends AppCompatActivity {
 
-    Context context;
-    TabLayout tabLayout;
-    ViewPager viewPager;
+    MyEarningActivity activity = this;
+    ActivityMyEarningBinding binding;
     MyEarningsViewPagerAdapter myEarningsViewPagerAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_earning);
-        context = MyEarningActivity.this;
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_my_earning);
         init();
     }
 
     private void init() {
-        viewPager = (ViewPager) findViewById(R.id.viewPagerEarning);
         myEarningsViewPagerAdapter = new MyEarningsViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(myEarningsViewPagerAdapter);
-        tabLayout = (TabLayout)findViewById(R.id.tablayoutEarnings);
-        tabLayout.setupWithViewPager(viewPager);
+        binding.viewPagerEarning.setAdapter(myEarningsViewPagerAdapter);
+        binding.tablayoutEarnings.setupWithViewPager(binding.viewPagerEarning);
     }
 }

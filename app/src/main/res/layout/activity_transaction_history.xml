@@ -1,95 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/toolbar_backgound"
-    tools:context=".activity.CategoriesActivity">
-
-
-    <RelativeLayout
-        android:id="@+id/ll_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
-
-
-        <ImageView
-            android:id="@+id/ivBack"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="start"
-            android:src="@drawable/ic_back" />
-
-        <ImageView
-            android:id="@+id/ivMenu"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_centerVertical="true"
-            android:layout_gravity="start"
-            android:layout_marginLeft="20dp"
-            android:layout_toEndOf="@+id/ivBack"
-            android:src="@drawable/ic_ham_menu"
-            app:tint="@color/colorWhite" />
-
-
-        <TextView
-            android:id="@+id/ivLogo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:fontFamily="@font/nunit_sans_bold"
-            android:text="Transaction History"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp" />
-
-        <ImageView
-            android:id="@+id/ivFilter"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="end"
-            app:tint="@color/colorWhite"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_filter" />
-
-    </RelativeLayout>
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ll_toolbar"
-        android:background="@drawable/main_layout_bg">
+        android:layout_height="match_parent"
+        android:background="@color/toolbar_backgound"
+        tools:context=".activity.TransactionHistoryActivity">
 
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tablayout"
+        <RelativeLayout
+            android:id="@+id/ll_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="start"
+                android:src="@drawable/ic_back" />
+
+            <ImageView
+                android:id="@+id/ivMenu"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_gravity="start"
+                android:layout_marginLeft="20dp"
+                android:layout_toEndOf="@+id/ivBack"
+                android:src="@drawable/ic_ham_menu"
+                app:tint="@color/colorWhite" />
+
+
+            <TextView
+                android:id="@+id/ivLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:fontFamily="@font/nunit_sans_bold"
+                android:text="Transaction History"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/ivFilter"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="end"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_filter"
+                app:tint="@color/colorWhite" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="?actionBarSize"
-            app:tabIndicatorColor="@color/viewall_text_color"
-            app:tabIndicatorHeight="1.5dp"
-            app:tabInlineLabel="true"
-            app:tabSelectedTextColor="@color/viewall_text_color"
-            app:tabTextColor="@color/colorTextDark"
-            app:tabTextAppearance="@style/TextAppearanceForTabLayout"/>
+            android:layout_below="@id/ll_toolbar"
+            android:background="@drawable/main_layout_bg">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_below="@id/tablayout" />
 
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tablayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?actionBarSize"
+                app:tabIndicatorColor="@color/viewall_text_color"
+                app:tabIndicatorHeight="1.5dp"
+                app:tabInlineLabel="true"
+                app:tabSelectedTextColor="@color/viewall_text_color"
+                app:tabTextAppearance="@style/TextAppearanceForTabLayout"
+                app:tabTextColor="@color/colorTextDark" />
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@id/tablayout" />
+
+
+        </RelativeLayout>
 
     </RelativeLayout>
-
-</RelativeLayout>
+</layout>
