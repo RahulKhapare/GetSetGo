@@ -21,9 +21,11 @@ import com.getsetgo.R;
 public class StudentsFeedbackAdapter extends RecyclerView.Adapter<StudentsFeedbackAdapter.StudentsFeedbackViewHolder> {
 
     Context context;
+    int count;
 
-    public StudentsFeedbackAdapter(Context context) {
+    public StudentsFeedbackAdapter(Context context,int count) {
         this.context = context;
+        this.count = count;
 
     }
 
@@ -42,7 +44,7 @@ public class StudentsFeedbackAdapter extends RecyclerView.Adapter<StudentsFeedba
 
     @Override
     public int getItemCount() {
-        return 3;
+        return count;
     }
 
     public class StudentsFeedbackViewHolder extends RecyclerView.ViewHolder {

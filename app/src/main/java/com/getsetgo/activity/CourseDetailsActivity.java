@@ -121,6 +121,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements GestureD
 
     private void init() {
 
+
         recyclerViewFeedback = findViewById(R.id.recyclerViewFeedback);
         recyclerViewLecture = findViewById(R.id.recyclerViewLecture);
         llCourseIncludes = findViewById(R.id.llCourseIncludes);
@@ -138,6 +139,22 @@ public class CourseDetailsActivity extends AppCompatActivity implements GestureD
 
         dynamicTextView();
 
+        recyclerViewFeedback.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                    //fetch("onScrollStateChanged");
+
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                    fetch("onScrolled");
+
+            }
+        });
+
     }
 
     private void dynamicTextView() {
@@ -151,6 +168,18 @@ public class CourseDetailsActivity extends AppCompatActivity implements GestureD
         String[] arrCat = context.getResources().getStringArray(R.array.categoryArray);
         tC = new TextView[arrCat.length];
         textViewMore(tC, llm, typeface, arrCat, arrCat.length, llLearn);
+    }
+
+    private void fetch(String msg) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //H.showMessage(context,msg);
+                studentsFeedbackAdapter = new StudentsFeedbackAdapter(context, 20);
+                recyclerViewFeedback.setAdapter(studentsFeedbackAdapter);
+                studentsFeedbackAdapter.notifyDataSetChanged();
+            }
+        }, 3000);
     }
 
     private void textViewMore(TextView tC[], LinearLayout.LayoutParams dim, Typeface typeface, String[] arrCat, int length, LinearLayout linearLayout) {
@@ -175,7 +204,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements GestureD
 
     private void setupRecyclerViewStudenrFeedback() {
         recyclerViewFeedback.setLayoutManager(mLayoutManagerStudentFeedback);
-        studentsFeedbackAdapter = new StudentsFeedbackAdapter(this);
+        studentsFeedbackAdapter = new StudentsFeedbackAdapter(context, 10);
         recyclerViewFeedback.setItemAnimator(new DefaultItemAnimator());
         recyclerViewFeedback.setAdapter(studentsFeedbackAdapter);
         studentsFeedbackAdapter.notifyDataSetChanged();
@@ -241,101 +270,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements GestureD
                 }).run("hitSeriesApi/videoScreen");
     }
 
-    /*private void makeEpisodeList(Json json) {
-        JsonList jsonList = json.getJsonList(P.series_videos);
-        //H.log("jsonListIs", jsonList.toString());
 
-        LinearLayout linearLayout = findViewById(R.id.episodeContainer);
-        linearLayout.removeAllViews();
-        ImageView imageView;
-
-        for (final Json j : jsonList) {
-            View view = getLayoutInflater().inflate(R.layout.episods_item_list, null, false);
-            //view.setTag(j.getString(P.slug));
-            ((TextView) view.findViewById(R.id.titleTextView)).setText(j.getString(P.title) + "");
-            ((TextView) view.findViewById(R.id.descriptionTextView)).setText(j.getString(P.description) + "");
-            imageView = view.findViewById(R.id.imageView);
-            view.setTag(j.getString(P.slug));
-            String str = j.getString(P.banner_image) + "";
-            if (str.equals("null") || str.isEmpty())
-                str = "pathMustNotBeEmpty";
-            Picasso.get().load(str).error(getDrawable(R.drawable.ic_broken_image_black_24dp)).placeholder(getDrawable(R.drawable.ic_image_black_24dp)).into(imageView);
-            linearLayout.addView(view);
-
-            H.log("videoIdIs", videoId);
-            H.log("idIs", j.getString(P.id));
-
-            if (videoId.equalsIgnoreCase(j.getString(P.id)))
-                view.setBackground(getDrawable(R.drawable.golden_rectangle_stroke));
-           *//* else
-                view.findViewById(R.id.view).setVisibility(View.VISIBLE);*//*
-
-            view.setOnClickListener(v -> {
-                //hitVideoProgressApi();
-
-                ((ImageView) findViewById(R.id.imageView)).setImageDrawable(getDrawable(R.drawable.ic_play));
-
-                H.log("urlIs", apiUrl);
-                String string = apiUrl.substring(0, apiUrl.lastIndexOf("/")) + "/" + j.getString(P.slug);
-                if (string.equalsIgnoreCase(apiUrl) && !isTrailer) {
-                    H.showMessage(this, "Video is already playing");
-                    return;
-                }
-                isTrailer = false;
-                this.view = null;// to make different video quality pop up
-                apiUrl = string;
-                customVideoView.stopPlayback();
-                if (mediaPlayer != null)
-                    mediaPlayer.release();
-
-                findViewById(R.id.fL).setVisibility(View.VISIBLE);
-
-                hitSeriesApi();
-
-                findViewById(R.id.progressBar).setVisibility(View.GONE);
-                checkUrl = checkUrl.substring(0, checkUrl.lastIndexOf("/") + 1) + v.getTag() + "";
-                //H.log("newCheckUrlIs",checkUrl);
-
-                findViewById(R.id.videoControllerLayout).setVisibility(View.GONE);
-                if (videoController != null)
-                    videoController.handlePlayPause(true);
-            });
-        }
-    }*/
-
-    /*private void prepareUrlList(Json json) {
-        fullVideoResolutionList.clear();
-        trailerVideoResolutionList.clear();
-        fullVideoUrlList.clear();
-        trailerVideoUrlList.clear();
-
-        json = json.getJson(P.video);
-        seriesId = json.getString(P.series_id);
-        videoId = json.getString(P.id);
-        JsonList jsonList = json.getJsonList(P.full_video_urls);
-
-        Json singleJson;
-        for (int i = 0; i < jsonList.size(); i++) {
-            singleJson = jsonList.get(i);
-            fullVideoResolutionList.add(singleJson.getInt(P.height) + "");
-            fullVideoUrlList.add(singleJson.getString(P.link));
-            if (jsonList.size() - 1 == i)
-                videoUrl = singleJson.getString(P.link);
-        }
-        fullVideoResolutionList.add("Auto");
-        fullVideoUrlList.add("");
-
-        jsonList = json.getJsonList(P.preview_video_urls);
-        for (int i = 0; i < jsonList.size(); i++) {
-            singleJson = jsonList.get(i);
-            trailerVideoResolutionList.add(singleJson.getInt(P.height) + "");
-            trailerVideoUrlList.add(singleJson.getString(P.link));
-            if (jsonList.size() - 1 == i)
-                findViewById(R.id.watchTrailerTextView).setTag(singleJson.getString(P.link));
-        }
-        trailerVideoResolutionList.add("Auto");
-        trailerVideoUrlList.add("");
-    }*/
 
     /*private void setCurrentVideosData(Json json) {
         Json seriesJson = json.getJson(P.series);
