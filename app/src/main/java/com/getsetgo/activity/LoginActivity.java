@@ -62,7 +62,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
-public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class LoginActivity extends AppCompatActivity {
 
     private LoginActivity activity = this;
     private ActivityLoginBinding binding;
@@ -70,9 +70,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private static final String EMAIL = "email";
     private static final int RC_SIGN_IN = 31;
     private static final String PROFILE_PUBLIC = "public_profile";
-    private GoogleApiClient mGoogleApiClient;
-    private GoogleSignInClient mGoogleSignInClient;
-    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,15 +97,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         PendingIntent intent = Auth.CredentialsApi.getHintPickerIntent(googleApiClient, hintRequest);
 
         try {
-            startIntentSenderForResult(intent.getIntentSender(), 31, null, 0, 0, 0);
+            startIntentSenderForResult(intent.getIntentSender(), RC_SIGN_IN, null, 0, 0, 0);
         } catch (IntentSender.SendIntentException e) {
             e.printStackTrace();
         }
-    }
-
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     private void onClick() {
@@ -239,7 +231,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         callbackManager.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK && requestCode == 31) {
+        if (resultCode == RESULT_OK && requestCode == RC_SIGN_IN) {
             Log.e("dataIs", data + "");
             Log.e("resultCodeIs", requestCode + "");
 
@@ -265,26 +257,5 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         }
 
-    }
-
-    private void handleIntent(FirebaseUser signInResult) {
-        Log.e("TAG", "display name: " + signInResult.getEmail());
-        Log.e("givenNameIs", "" + signInResult.getDisplayName());
-        Log.e("profileUriIs", "" + signInResult.getPhotoUrl());
-        Log.e("idIs", "" + signInResult.getUid());
-        Session session = new Session(this);
-        session.addString(P.full_name, signInResult.getDisplayName() + "");
-        session.addString(P.profile_url, signInResult.getPhotoUrl() + "");
-        session.addString(P.email_id, signInResult.getEmail() + "");
-
-        if (signInResult.getUid() != null) {
-            //hitSocialLoginApi(session, 2);
-        } else
-            H.showMessage(this, "Could not login. Please try another login methods");
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.d("TAG", "onConnectionFailed:" + connectionResult);
     }
 }
