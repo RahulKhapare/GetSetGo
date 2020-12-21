@@ -3,8 +3,12 @@ package com.getsetgo.activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 
@@ -14,14 +18,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.Session;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.getsetgo.R;
 import com.getsetgo.databinding.ActivityLoginBinding;
 import com.getsetgo.util.Click;
+import com.getsetgo.util.P;
 import com.getsetgo.util.Validation;
 import com.getsetgo.util.WindowView;
 import com.google.android.gms.auth.api.Auth;
@@ -35,6 +44,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -43,8 +57,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private ActivityLoginBinding binding;
     private CallbackManager callbackManager;
     private static final String EMAIL = "email";
-    private static final String USER_POSTS = "user_posts";
-    private static final String AUTH_TYPE = "rerequest";
+    private static final String PROFILE_PUBLIC = "public_profile";
     private GoogleApiClient mGoogleApiClient;
 
     @Override
@@ -106,7 +119,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onClick(View v) {
                 Click.preventTwoClick(v);
                 LoginManager.getInstance().logOut();
-                LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList(EMAIL, USER_POSTS));
+                LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList(EMAIL, PROFILE_PUBLIC));
             }
         });
 
@@ -126,15 +139,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        //loadFacebookInfo(loginResult.getAccessToken());
+                        loadFacebookInfo(loginResult.getAccessToken());
                         Log.e("onSuccess", "isExecuted");
-                        setResult(RESULT_OK);
+                        //setResult(RESULT_OK);
                     }
 
                     @Override
                     public void onCancel() {
                         Log.e("onCancel", "isExecuted");
-                        setResult(RESULT_CANCELED);
+                        //setResult(RESULT_CANCELED);
                     }
 
                     @Override
@@ -163,6 +176,37 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         return value;
     }
 
+    private void loadFacebookInfo(final AccessToken token) {
+        GraphRequest request = GraphRequest.newMeRequest(token,
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject json, GraphResponse response) {
+                        //socialLogin("facebook", Api.getString(json, "name"),Api.getString(json, "email"), token.getToken());
+                        Log.e("usernameIs", json.toString());
+
+                        try {
+                            Session session = new Session(LoginActivity.this);
+
+                            session.addString(P.full_name, json.getString("name") + "");
+                            session.addString(P.email_id, json.getString("email") + "");
+                            session.addString(P.id, json.getString("id") + "");
+
+                            //hitSocialLoginApi(session, 3);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        Log.e("responseIs", response.toString());
+                    }//
+                });
+
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,email,name");
+        request.setParameters(parameters);
+        request.executeAsync();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -181,6 +225,18 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if (signInResult.isSuccess()) {
             GoogleSignInAccount signInAccount = signInResult.getSignInAccount();
             Log.e("TAG", "display name: " + signInAccount.getDisplayName());
+            Log.e("givenNameIs", "" + signInAccount.getGivenName());
+            Log.e("profileUriIs", "" + signInAccount.getPhotoUrl());
+            Log.e("idIs", "" + signInAccount.getId());
+            Session session = new Session(this);
+            session.addString(P.full_name, signInAccount.getGivenName() + "");
+            session.addString(P.profile_url, signInAccount.getPhotoUrl() + "");
+            session.addString(P.email_id, signInAccount.getId() + "");
+
+            if (signInAccount.getId() != null) {
+                //hitSocialLoginApi(session, 2);
+            } else
+                H.showMessage(this, "Could not login. Please try another login methods");
         } else {
         }
 

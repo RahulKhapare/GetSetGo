@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import com.getsetgo.R;
 import com.getsetgo.activity.AccountActivity;
 import com.getsetgo.activity.AddNewUserActivity;
+import com.getsetgo.activity.CategoriesActivity;
 import com.getsetgo.activity.DashBoardActivity;
 import com.getsetgo.activity.HomeScreenActivity;
 import com.getsetgo.activity.IncentiveActivity;
@@ -67,7 +68,7 @@ public class NavDrawerFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_menu, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_menu, container, false);
         view = binding.getRoot();
 
         context = getActivity();
@@ -148,6 +149,10 @@ public class NavDrawerFragment extends Fragment {
                                 break;
                             case R.id.nav_MyEarning:
                                 startActivity(new Intent(context, MyEarningActivity.class));
+                                break;
+
+                            case R.id.nav_business:
+                                startActivity(new Intent(context, CategoriesActivity.class));
                                 break;
 
                             case R.id.nav_TermsCondition:
