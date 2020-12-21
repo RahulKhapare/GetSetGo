@@ -58,32 +58,17 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }
         },3000);
-        //generateFcmToken();
+        generateFcmToken();
 
 
         deviceWidth = H.getDeviceWidth(this);
         deviceHeight = H.getDeviceHeight(this);
-        printHashKey(activity);
     }
 
-    public static void printHashKey(Context pContext) {
-        try {
-            PackageInfo info = pContext.getPackageManager().getPackageInfo(pContext.getPackageName(), PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                String hashKey = new String(Base64.encode(md.digest(), 0));
-                Log.i("TAG", "printHashKey() Hash Key: " + hashKey);
-            }
-        } catch (NoSuchAlgorithmException e) {
-            Log.e("TAG", "printHashKey()", e);
-        } catch (Exception e) {
-            Log.e("TAG", "printHashKey()", e);
-        }
-    }
+
 
     private void generateFcmToken() {
-       /* FirebaseInstanceId.getInstance().getInstanceId()
+        FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(task -> {
                     if (!task.isSuccessful()) {
                         return;
@@ -92,8 +77,8 @@ public class SplashActivity extends AppCompatActivity {
                     String id = FirebaseInstanceId.getInstance().getId();
                     new Session(SplashActivity.this).addString(P.fcmToken, token);
                     H.log("fcmTokenIs", token);
-                    H.log("idIs", id);
-                });*/
+                  //  H.log("idIs", id);
+                });
         String token =FirebaseInstanceId.getInstance().getToken();
         new Session(SplashActivity.this).addString(P.fcmToken, token);
         H.log("fcmTokenIs", token);

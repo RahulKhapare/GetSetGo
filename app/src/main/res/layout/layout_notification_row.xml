@@ -8,8 +8,8 @@
     <LinearLayout
         android:id="@+id/cardViewMyCourse"
         android:layout_width="323dp"
-        android:layout_height="78dp"
-        android:elevation="2.5dp"
+        android:layout_height="85dp"
+        android:elevation="3dp"
         android:background="@drawable/bg_dash_elevation">
 
         <RelativeLayout
@@ -17,15 +17,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center_vertical"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:paddingLeft="7dp"
             android:paddingRight="3dp">
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                app:riv_corner_radius="5dp"
+            <ImageView
                 android:id="@+id/imvNotification"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:scaleType="fitXY"
+                android:layout_width="62dp"
+                android:layout_height="62dp"
                 android:src="@drawable/download" />
 
             <LinearLayout
@@ -33,7 +33,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:gravity="center"
                 android:layout_toEndOf="@+id/imvNotification"
                 android:layout_toRightOf="@+id/imvNotification"
                 android:orientation="vertical">
@@ -53,8 +52,9 @@
                     android:layout_height="wrap_content"
                     android:paddingRight="2dp"
                     android:layout_marginTop="2dp"
+                    android:maxLines="3"
                     android:fontFamily="@font/nunito_sans_regular"
-                    android:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam."
+                    android:text="Lorem Ispum"
                     android:textColor="@color/colorTextHighLight"
                     android:textSize="10sp" />
 
