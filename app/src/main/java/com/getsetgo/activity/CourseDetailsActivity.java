@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -69,6 +70,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements GestureD
     StudentsFeedbackAdapter studentsFeedbackAdapter;
     LinearLayoutManager layoutManager;
     LinearLayoutManager mLayoutManagerStudentFeedback;
+    TextView txtMoreFeedback;
 
     RecyclerView recyclerViewLecture, recyclerViewFeedback;
     LinearLayout llCourseIncludes, llLearn;
@@ -123,6 +125,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements GestureD
 
 
         recyclerViewFeedback = findViewById(R.id.recyclerViewFeedback);
+        txtMoreFeedback = findViewById(R.id.txtMoreFeedback);
         recyclerViewLecture = findViewById(R.id.recyclerViewLecture);
         llCourseIncludes = findViewById(R.id.llCourseIncludes);
         llLearn = findViewById(R.id.llLearn);
@@ -143,14 +146,19 @@ public class CourseDetailsActivity extends AppCompatActivity implements GestureD
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                    //fetch("onScrollStateChanged");
-
             }
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                    fetch("onScrolled");
+        /*        int visibleItemCount = mLayoutManagerStudentFeedback.getChildCount();
+                int totalItemCount = mLayoutManagerStudentFeedback.getItemCount();
+                int pastVisibleItems = mLayoutManagerStudentFeedback.findFirstVisibleItemPosition();
+                if (pastVisibleItems + visibleItemCount >= totalItemCount) {
+                    //End of list*/
+                fetch("onScrolled");
+
+                // }
 
             }
         });
@@ -170,15 +178,20 @@ public class CourseDetailsActivity extends AppCompatActivity implements GestureD
         textViewMore(tC, llm, typeface, arrCat, arrCat.length, llLearn);
     }
 
+
     private void fetch(String msg) {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                //H.showMessage(context,msg);
-                studentsFeedbackAdapter = new StudentsFeedbackAdapter(context, 20);
-                recyclerViewFeedback.setAdapter(studentsFeedbackAdapter);
-                studentsFeedbackAdapter.notifyDataSetChanged();
-            }
+                    studentsFeedbackAdapter = new StudentsFeedbackAdapter(context, 3);
+                    txtMoreFeedback.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            recyclerViewFeedback.setAdapter(studentsFeedbackAdapter);
+                            studentsFeedbackAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
         }, 3000);
     }
 
@@ -204,7 +217,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements GestureD
 
     private void setupRecyclerViewStudenrFeedback() {
         recyclerViewFeedback.setLayoutManager(mLayoutManagerStudentFeedback);
-        studentsFeedbackAdapter = new StudentsFeedbackAdapter(context, 10);
+        studentsFeedbackAdapter = new StudentsFeedbackAdapter(context, 1);
         recyclerViewFeedback.setItemAnimator(new DefaultItemAnimator());
         recyclerViewFeedback.setAdapter(studentsFeedbackAdapter);
         studentsFeedbackAdapter.notifyDataSetChanged();

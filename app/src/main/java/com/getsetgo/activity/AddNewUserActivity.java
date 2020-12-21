@@ -1,20 +1,29 @@
 package com.getsetgo.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.adoisstudio.helper.H;
+import com.getsetgo.Adapter.CountryCodeAdapter;
+import com.getsetgo.Model.CountryCode;
 import com.getsetgo.R;
 import com.getsetgo.databinding.ActivityAddNewUserBinding;
 import com.getsetgo.databinding.ActivitySignUpBinding;
 import com.getsetgo.util.Click;
 import com.getsetgo.util.Validation;
 import com.getsetgo.util.WindowView;
+
+import java.util.ArrayList;
 
 public class AddNewUserActivity extends AppCompatActivity {
 
@@ -31,6 +40,25 @@ public class AddNewUserActivity extends AppCompatActivity {
 
     private void initView() {
         onClick();
+
+        binding.actvIsdCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().isEmpty()) {
+                    binding.actvIsdCode.append("+");
+                }
+            }
+        });
+        populateIsdCode(activity,binding.actvIsdCode);
     }
 
     private void onClick() {
@@ -57,6 +85,33 @@ public class AddNewUserActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void populateIsdCode(Context context, AutoCompleteTextView autoCompleteTextView) {
+        final ArrayList<CountryCode> country = new ArrayList<>();
+            CountryCode code = new CountryCode();
+            code.setCode("+91");
+            CountryCode codes = new CountryCode();
+            codes.setCode("+92");
+            CountryCode codess = new CountryCode();
+            codess.setCode("+93");
+            country.add(code);
+            country.add(codes);
+            country.add(codess);
+            CountryCodeAdapter countryFlagAdapter = new CountryCodeAdapter(context,
+                    R.layout.activity_add_new_user, R.id.lbl_name, country);
+            autoCompleteTextView.setThreshold(2);         //will start working from first character
+            autoCompleteTextView.setAdapter(countryFlagAdapter);
+            autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if (view != null) {
+                        CountryCode county = (CountryCode) view.getTag();
+                        binding.actvIsdCode.setText(county.getCode());
+                    }
+                }
+            });
+
 
     }
 
@@ -74,7 +129,7 @@ public class AddNewUserActivity extends AppCompatActivity {
         } else if (!Validation.validEmail(binding.etEmail.getText().toString().trim())) {
             H.showMessage(activity, "Enter valid email");
             value = false;
-        } else if (TextUtils.isEmpty(binding.etIsdCode.getText().toString().trim())) {
+        } else if (TextUtils.isEmpty(binding.actvIsdCode.getText().toString().trim())) {
             H.showMessage(activity, "Enter Isd Code");
             value = false;
         }else if (TextUtils.isEmpty(binding.etPassword.getText().toString().trim())) {
