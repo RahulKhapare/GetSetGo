@@ -36,13 +36,24 @@ import com.getsetgo.util.WindowView;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.credentials.Credential;
 import com.google.android.gms.auth.api.credentials.HintRequest;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,9 +68,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private ActivityLoginBinding binding;
     private CallbackManager callbackManager;
     private static final String EMAIL = "email";
+    private static final int RC_SIGN_IN = 31;
     private static final String PROFILE_PUBLIC = "public_profile";
     private GoogleApiClient mGoogleApiClient;
-
+    private GoogleSignInClient mGoogleSignInClient;
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,17 +85,30 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         onClick();
         setUpFaceBookLogIn();
-        setUpGoogle();
     }
 
     private void setUpGoogle() {
 
-        GoogleSignInOptions sign = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, sign)
+        GoogleApiClient googleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Auth.CREDENTIALS_API)
                 .build();
+
+        HintRequest hintRequest = new HintRequest.Builder()
+                .setEmailAddressIdentifierSupported(true)
+                .build();
+
+        PendingIntent intent = Auth.CredentialsApi.getHintPickerIntent(googleApiClient, hintRequest);
+
+        try {
+            startIntentSenderForResult(intent.getIntentSender(), 31, null, 0, 0, 0);
+        } catch (IntentSender.SendIntentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     private void onClick() {
@@ -127,7 +153,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
-                signIn();
+                setUpGoogle();
             }
         });
     }
@@ -213,38 +239,48 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         callbackManager.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 31) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleIntent(result);
-        }
+        if (resultCode == RESULT_OK && requestCode == 31) {
+            Log.e("dataIs", data + "");
+            Log.e("resultCodeIs", requestCode + "");
 
-    }
+            Credential credential = data.getParcelableExtra(Credential.EXTRA_KEY);
+            credential.getId();  // will need to process phone number string
 
-    private void handleIntent(GoogleSignInResult signInResult) {
-        Log.d("TAG", "handleSignInResult:" + signInResult.isSuccess());
-        if (signInResult.isSuccess()) {
-            GoogleSignInAccount signInAccount = signInResult.getSignInAccount();
-            Log.e("TAG", "display name: " + signInAccount.getDisplayName());
-            Log.e("givenNameIs", "" + signInAccount.getGivenName());
-            Log.e("profileUriIs", "" + signInAccount.getPhotoUrl());
-            Log.e("idIs", "" + signInAccount.getId());
+            Log.e("givenNameIs", "" + credential.getGivenName());
+            Log.e("nameIs", "" + credential.getName());
+            Log.e("profileUriIs", "" + credential.getProfilePictureUri());
+            Log.e("idIs", "" + credential.getId());
+
             Session session = new Session(this);
-            session.addString(P.full_name, signInAccount.getGivenName() + "");
-            session.addString(P.profile_url, signInAccount.getPhotoUrl() + "");
-            session.addString(P.email_id, signInAccount.getId() + "");
+            session.addString(P.full_name, credential.getName() + "");
+            session.addString(P.profile_url, credential.getProfilePictureUri() + "");
+            session.addString(P.email_id, credential.getId() + "");
 
-            if (signInAccount.getId() != null) {
-                //hitSocialLoginApi(session, 2);
-            } else
+            if (credential.getId() != null){
+
+            }
+               // hitSocialLoginApi(session, 2);
+            else
                 H.showMessage(this, "Could not login. Please try another login methods");
-        } else {
+
         }
 
     }
 
-    private void signIn() {
-        Intent signIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(signIntent, 31);
+    private void handleIntent(FirebaseUser signInResult) {
+        Log.e("TAG", "display name: " + signInResult.getEmail());
+        Log.e("givenNameIs", "" + signInResult.getDisplayName());
+        Log.e("profileUriIs", "" + signInResult.getPhotoUrl());
+        Log.e("idIs", "" + signInResult.getUid());
+        Session session = new Session(this);
+        session.addString(P.full_name, signInResult.getDisplayName() + "");
+        session.addString(P.profile_url, signInResult.getPhotoUrl() + "");
+        session.addString(P.email_id, signInResult.getEmail() + "");
+
+        if (signInResult.getUid() != null) {
+            //hitSocialLoginApi(session, 2);
+        } else
+            H.showMessage(this, "Could not login. Please try another login methods");
     }
 
     @Override
