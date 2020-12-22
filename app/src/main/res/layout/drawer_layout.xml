@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteColor">
+
+
+    <include
+        android:id="@+id/rlHeader"
+        layout="@layout/view_header_layout" />
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rlHeader"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/whiteColor"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_nav_dashboard" />
+
+                    <TextView
+                        android:id="@+id/txtDashboard"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="25dp"
+                        android:clickable="true"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:gravity="start|center"
+                        android:onClick="onDrawerItemClick"
+                        android:text="Dashboard"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_nav_account" />
+
+                    <TextView
+                        android:id="@+id/txtAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="25dp"
+                        android:clickable="true"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:gravity="start|center"
+                        android:onClick="onDrawerItemClick"
+                        android:text="Account"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_notify" />
+
+                    <TextView
+                        android:id="@+id/txtNotifications"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="25dp"
+                        android:clickable="true"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:gravity="start|center"
+                        android:onClick="onDrawerItemClick"
+                        android:text="Notifications"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.7"
+                        android:src="@drawable/ic_nav_myearning" />
+
+                    <TextView
+                        android:id="@+id/txtEarning"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_weight="8"
+                        android:clickable="true"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:gravity="start|center"
+                        android:onClick="onDrawerItemClick"
+                        android:text="MyEarnings"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.3"
+                        android:button="@drawable/chekcbox_up_down" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.7"
+                        android:src="@drawable/ic_nav_businessprofile" />
+
+                    <TextView
+                        android:id="@+id/txtBusProf"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_weight="8"
+                        android:clickable="true"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:gravity="start|center"
+                        android:onClick="onDrawerItemClick"
+                        android:text="Business Profile"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.3"
+                        android:button="@drawable/chekcbox_up_down" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.7"
+                        android:src="@drawable/ic_nav_transaction" />
+
+                    <TextView
+                        android:id="@+id/txtTransactions"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_weight="8"
+                        android:clickable="true"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:gravity="start|center"
+                        android:onClick="onDrawerItemClick"
+                        android:text="Transactions"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.3"
+                        android:button="@drawable/chekcbox_up_down" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.7"
+                        android:src="@drawable/ic_nav_userincentive" />
+
+                    <TextView
+                        android:id="@+id/txtincentive"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_weight="8"
+                        android:clickable="true"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:gravity="start|center"
+                        android:onClick="onDrawerItemClick"
+                        android:text="User Incentives"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.3"
+                        android:button="@drawable/chekcbox_up_down" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.7"
+                        android:src="@drawable/ic_nav_mypoints" />
+
+                    <TextView
+                        android:id="@+id/txtMyPoints"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_weight="8"
+                        android:clickable="true"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:gravity="start|center"
+                        android:onClick="onDrawerItemClick"
+                        android:text="My Points"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.3"
+                        android:button="@drawable/chekcbox_up_down" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_nav_helpsupport" />
+
+                    <TextView
+                        android:id="@+id/txtHelpSupport"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="25dp"
+                        android:clickable="true"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:gravity="start|center"
+                        android:onClick="onDrawerItemClick"
+                        android:text="Help &amp; Support"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_nav_termandcondition" />
+
+                    <TextView
+                        android:id="@+id/txttermCondition"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="25dp"
+                        android:clickable="true"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:gravity="start|center"
+                        android:onClick="onDrawerItemClick"
+                        android:text="Terms &amp; Condition"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_nav_settng" />
+
+                    <TextView
+                        android:id="@+id/txtsettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="25dp"
+                        android:clickable="true"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:gravity="start|center"
+                        android:onClick="onDrawerItemClick"
+                        android:text="Settings"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/scrollview"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorStrokeView" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_nav_logout" />
+
+            <TextView
+                android:id="@+id/txtLogout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="25dp"
+                android:clickable="true"
+                android:fontFamily="@font/nunito_sans_regular"
+                android:gravity="start|center"
+                android:onClick="onDrawerItemClick"
+                android:text="Logout"
+                android:textColor="@color/colorTextDark"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

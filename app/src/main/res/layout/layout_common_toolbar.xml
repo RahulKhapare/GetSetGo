@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_backgound"
+        android:fitsSystemWindows="true"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/ivHamMenu"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="10dp"
+                android:onClick="onHamClick"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_ham_menu" />
+
+
+
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="97dp"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_splash_logo" />
+
+            <ImageView
+                android:id="@+id/ivNotify"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="end"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_notification"
+                android:visibility="visible" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</layout>

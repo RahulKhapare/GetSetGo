@@ -4,24 +4,36 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/main_layout_bg"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+        android:background="@color/toolbar_backgound">
 
 
-        <LinearLayout
+        <include
+            android:id="@+id/icFavouritesToolbar"
+            layout="@layout/layout_fragment_toolbar" />
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp">
+            android:layout_below="@id/icFavouritesToolbar"
+            android:background="@drawable/main_layout_bg"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
 
-            <androidx.recyclerview.widget.RecyclerView
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/recyclerViewWishlist"/>
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp">
 
-        </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewWishlist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
 
 
+        </RelativeLayout>
     </RelativeLayout>
 </layout>
 
