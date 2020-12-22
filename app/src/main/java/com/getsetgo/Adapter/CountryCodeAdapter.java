@@ -47,9 +47,6 @@ public class CountryCodeAdapter extends ArrayAdapter<CountryCode> {
             }
             CountryCode country = suggestions.get(position);
             if (country != null) {
-            /*    TextView tvName = (TextView) view.findViewById(R.id.country_name_tv);
-                String name = country.getDialCode();
-                tvName.setText(name);*/
                 TextView tvCode = (TextView) view.findViewById(R.id.lbl_name);
                 tvCode.setText(country.getCode());
             }
@@ -83,8 +80,8 @@ public class CountryCodeAdapter extends ArrayAdapter<CountryCode> {
             if (constraint != null) {
                 suggestions.clear();
                 for (CountryCode country : tempItems) {
-                    String temp = country.getDialCode();
-                    if (country.getDialCode().toLowerCase().startsWith(constraint.toString().toLowerCase())) {
+                    String temp = country.getCode();
+                    if (temp.toLowerCase().startsWith(constraint.toString().toLowerCase())) {
                         if(suggestions.size() <= 9){
                             suggestions.add(country);
                         }

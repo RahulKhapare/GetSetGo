@@ -208,6 +208,7 @@
                                 android:backgroundTint="@color/colorTextDark"
                                 android:fontFamily="@font/nunito_sans_regular"
                                 android:hint="Eg. +91"
+                                android:maxLength="4"
                                 android:drawableRight="@drawable/ic_down_arrow"
                                 android:imeOptions="actionNext"
                                 android:textColor="@color/colorTextDark"
