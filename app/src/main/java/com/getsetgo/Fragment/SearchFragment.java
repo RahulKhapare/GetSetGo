@@ -24,6 +24,15 @@ public class SearchFragment extends Fragment {
     TextView t[];
     TextView tC[];
 
+    public SearchFragment() {
+        // Required empty public constructor
+    }
+
+    public static SearchFragment newInstance() {
+        SearchFragment fragment = new SearchFragment();
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

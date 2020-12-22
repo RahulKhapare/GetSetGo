@@ -38,6 +38,11 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".activity.BaseScreenActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".activity.MyCourseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"

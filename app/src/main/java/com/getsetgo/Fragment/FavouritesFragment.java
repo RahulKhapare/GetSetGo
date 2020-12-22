@@ -22,6 +22,16 @@ public class FavouritesFragment extends Fragment {
     FragmentFavoritesBinding binding;
     WishlistCourseAdapter wishlistCourseAdapter;
 
+
+    public FavouritesFragment() {
+        // Required empty public constructor
+    }
+
+    public static FavouritesFragment newInstance() {
+        FavouritesFragment fragment = new FavouritesFragment();
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

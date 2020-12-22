@@ -30,6 +30,14 @@ public class HomeFragment extends Fragment {
     OtherCategoriesAdapter otherCategoriesAdapter;
     BestSellingCourseAdapter bestSellingCourseAdapter;
 
+    public HomeFragment() {
+        // Required empty public constructor
+    }
+
+    public static HomeFragment newInstance() {
+        HomeFragment fragment = new HomeFragment();
+        return fragment;
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

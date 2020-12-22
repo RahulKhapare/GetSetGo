@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -119,6 +121,20 @@ public class HomeScreenActivity extends AppCompatActivity {
         return false;
     }
 
+    public void onDrawerItemClick(View view) {
+        int i = view.getId();
+        Intent intent;
+
+        switch (i) {
+            case R.id.txtDashboard:
+                intent = new Intent(this, DashBoardActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                break;
+        }
+        ((DrawerLayout) findViewById(R.id.drawerLayout)).closeDrawer(GravityCompat.START);
+    }
+
     private void setupMenu() {
         FragmentManager fm = getSupportFragmentManager();
         mMenuFragment = (NavDrawerFragment) fm.findFragmentById(R.id.id_container_menu);
@@ -160,6 +176,11 @@ public class HomeScreenActivity extends AppCompatActivity {
 
     public void Cancel(View view) {
         binding.drawerLayout.closeMenu();
+    }
+
+    public void onHamClick(View view) {
+        ((DrawerLayout) findViewById(R.id.drawerLayout)).openDrawer(GravityCompat.START);
+
     }
 
 

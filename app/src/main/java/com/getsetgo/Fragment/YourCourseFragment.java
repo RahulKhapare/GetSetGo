@@ -21,6 +21,14 @@ public class YourCourseFragment extends Fragment {
     FragmentYourCourseBinding binding;
     MyCourseAdapter myCourseAdapter;
 
+    public YourCourseFragment() {
+        // Required empty public constructor
+    }
+
+    public static YourCourseFragment newInstance() {
+        YourCourseFragment fragment = new YourCourseFragment();
+        return fragment;
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
