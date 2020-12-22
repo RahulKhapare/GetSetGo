@@ -61,9 +61,10 @@ public class FirebaseMessageReceiver
                 if (title == null || description == null)
                     return;
 
+
                 if (action != null) {
                     if (action.toString().equalsIgnoreCase("CATEGORY")) {
-                        showNotification(title.toString(), description.toString(),s);
+                        showNotification(title.toString(), description.toString(), s);
                     }
                 }
             }
@@ -91,7 +92,7 @@ public class FirebaseMessageReceiver
 
         if (Build.VERSION.SDK_INT
                 >= Build.VERSION_CODES.JELLY_BEAN) {
-            builder = builder.setContent(getCustomDesign(title, message, imageUrl));
+                builder = builder.setContent(getCustomDesign(title, message, imageUrl));
         } else {
             builder = builder.setContentTitle(title)
                     .setContentText(message)
@@ -105,19 +106,34 @@ public class FirebaseMessageReceiver
         notificationManager.notify(0, builder.build());
     }
 
-    private RemoteViews getCustomDesign(String title,
-                                        String message, Uri imageUrl) {
+    private RemoteViews getCustomDesign(String title,String message,Uri imageUrl) {
         RemoteViews remoteViews = new RemoteViews(
                 getApplicationContext().getPackageName(),
                 R.layout.layout_notification_row);
         remoteViews.setTextViewText(R.id.txtNotifyTitle, title);
         remoteViews.setTextViewText(R.id.txtNotifyDetails, message);
-        bitmap = getBitmapfromUrl(imageUrl.toString());
-        remoteViews.setImageViewBitmap(R.id.imvNotification,bitmap);
+        if (imageUrl != null) {
+            bitmap = getBitmapfromUrl(imageUrl.toString());
+        }
+        remoteViews.setImageViewBitmap(R.id.imvNotification, bitmap);
 
         return remoteViews;
     }
 
+    private RemoteViews getSpecialDesign(String title,
+                                        String message, Uri imageUrl) {
+        RemoteViews remoteViews = new RemoteViews(
+                getApplicationContext().getPackageName(),
+                R.layout.layout_special_notification_row);
+        remoteViews.setTextViewText(R.id.txtSpecialTitle, title);
+        remoteViews.setTextViewText(R.id.txtSpecialDetails, message);
+        if (imageUrl != null) {
+            bitmap = getBitmapfromUrl(imageUrl.toString());
+        }
+        remoteViews.setImageViewBitmap(R.id.imvSpecial, bitmap);
+
+        return remoteViews;
+    }
 
 
     public Bitmap getBitmapfromUrl(String imageUrl) {
