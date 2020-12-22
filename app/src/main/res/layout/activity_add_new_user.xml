@@ -230,7 +230,7 @@
                                 android:fontFamily="@font/nunito_sans_regular"
                                 android:hint="Contact Number"
                                 android:imeOptions="actionNext"
-                                android:inputType="textPassword"
+                                android:inputType="phone"
                                 android:textColor="@color/colorTextDark"
                                 android:textColorHint="@color/colorTextHint" />
 
@@ -258,7 +258,7 @@
                             android:fontFamily="@font/nunito_sans_regular"
                             android:hint="Contact Number"
                             android:imeOptions="actionNext"
-                            android:inputType="textPassword"
+                            android:inputType="phone"
                             android:textColor="@color/colorTextDark"
                             android:textColorHint="@color/colorTextHint" />
 
@@ -278,7 +278,7 @@
                             android:backgroundTint="@color/colorTextDark"
                             android:fontFamily="@font/nunito_sans_regular"
                             android:hint="Password"
-                            android:imeOptions="actionNext"
+                            android:imeOptions="actionDone"
                             android:inputType="textPassword"
                             android:textColor="@color/colorTextDark"
                             android:textColorHint="@color/colorTextHint" />

@@ -12,6 +12,7 @@ import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
 import com.getsetgo.Others.VideoActivity;
 import com.getsetgo.activity.CourseDetailsActivity;
+import com.getsetgo.activity.HomeScreenActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,11 +40,11 @@ public class App extends Application {
         context.startActivity(intent);
     }
 
-   /* public static void startHomeActivity(Context context) {
-        Intent intent = new Intent(context, BaseActivity.class);
+    public static void startHomeActivity(Context context) {
+        Intent intent = new Intent(context, HomeScreenActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(intent);
-    }*/
+    }
 
     public static Map<String, String> getHeaders() {
 

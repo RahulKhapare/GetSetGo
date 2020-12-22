@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#374451</color>
     <color name="colorAccent">#374451</color>
     <color name="colorWhite">#FFFF</color>
+    <color name="colorWhiteTrans">#70FFFFFF</color>
     <color name="colorBlack">#000</color>
     <color name="colorTrans">#00000000</color>
     <color name="colorBlackHighlight">#80000000</color>

@@ -3,9 +3,7 @@ package com.getsetgo.activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
+
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -17,7 +15,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.Json;
+import com.adoisstudio.helper.LoadingDialog;
+import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -29,6 +31,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.getsetgo.R;
 import com.getsetgo.databinding.ActivityLoginBinding;
+import com.getsetgo.util.App;
 import com.getsetgo.util.Click;
 import com.getsetgo.util.P;
 import com.getsetgo.util.Validation;
@@ -36,30 +39,13 @@ import com.getsetgo.util.WindowView;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.credentials.Credential;
 import com.google.android.gms.auth.api.credentials.HintRequest;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.ApiException;
+
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.OptionalPendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
@@ -70,6 +56,8 @@ public class LoginActivity extends AppCompatActivity {
     private static final String EMAIL = "email";
     private static final int RC_SIGN_IN = 31;
     private static final String PROFILE_PUBLIC = "public_profile";
+    private LoadingDialog loadingDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -245,17 +233,48 @@ public class LoginActivity extends AppCompatActivity {
 
             Session session = new Session(this);
             session.addString(P.full_name, credential.getName() + "");
-            session.addString(P.profile_url, credential.getProfilePictureUri() + "");
             session.addString(P.email_id, credential.getId() + "");
 
-            if (credential.getId() != null){
+            if (credential.getId() != null) {
 
             }
-               // hitSocialLoginApi(session, 2);
+            // hitSocialLoginApi(session, 2);
             else
                 H.showMessage(this, "Could not login. Please try another login methods");
 
         }
 
+    }
+
+    private void callLoginApi() {
+        loadingDialog = new LoadingDialog(activity);
+        Json json = new Json();
+        Api.newApi(activity, P.baseUrl + "login").addJson(json).setMethod(Api.POST)
+                .onLoading(isLoading -> {
+                    if (!isDestroyed()) {
+                        if (isLoading)
+                            loadingDialog.show("loading...");
+                        else
+                            loadingDialog.hide();
+                    }
+                })
+                .onError(() ->
+                        MessageBox.showOkMessage(this, "Message", "Failed to login. Please try again", () -> {
+                        }))
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        if (Json1.getInt(P.status) == 0) {
+                            H.showMessage(activity, Json1.getString(P.err));
+                        } else {
+                            Json1 = Json1.getJson(P.data);
+                            String token = Json1.getString(P.token);
+                            new Session(activity).addString(P.token, "");
+                            App.authToken = token;
+                            App.startHomeActivity(activity);
+                            finish();
+                        }
+                    }
+
+                }).run("login");
     }
 }
