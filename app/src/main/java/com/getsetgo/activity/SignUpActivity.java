@@ -66,11 +66,7 @@ public class SignUpActivity extends AppCompatActivity {
         binding.lnrLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Click.preventTwoClick(v);
-                Intent intent = new Intent(activity,LoginActivity.class);
-                startActivity(intent);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                finish();
+                onBackPressed();
             }
         });
     }
