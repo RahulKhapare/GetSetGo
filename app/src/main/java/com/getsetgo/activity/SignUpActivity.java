@@ -66,6 +66,7 @@ public class SignUpActivity extends AppCompatActivity {
         binding.lnrLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Click.preventTwoClick(v);
                 onBackPressed();
             }
         });

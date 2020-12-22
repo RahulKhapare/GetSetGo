@@ -111,9 +111,9 @@
                         android:paddingRight="16dp"
                         android:textColor="@color/colorTextHint60"
                         android:textSize="14sp"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         app:colorClickableText="@color/viewall_text_color"
-                        app:trimCollapsedText="Show less"
+                        app:trimCollapsedText="Read less"
                         app:trimExpandedText="Read more"
                         app:trimLines="5" />
 
