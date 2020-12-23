@@ -24,10 +24,13 @@ import com.getsetgo.Fragment.AccountFragment;
 import com.getsetgo.Fragment.DashBoardFragment;
 import com.getsetgo.Fragment.EarningsFragment;
 import com.getsetgo.Fragment.FavouritesFragment;
+import com.getsetgo.Fragment.HelpAndSupportFragment;
 import com.getsetgo.Fragment.HomeFragment;
+import com.getsetgo.Fragment.IncentivesFragment;
 import com.getsetgo.Fragment.NavDrawerFragment;
 import com.getsetgo.Fragment.NotificationsFragment;
 import com.getsetgo.Fragment.SearchFragment;
+import com.getsetgo.Fragment.TermsAndConditionFragment;
 import com.getsetgo.Fragment.TransactionsHistoryDetailsFragment;
 import com.getsetgo.Fragment.TransactionsHistoryFragment;
 import com.getsetgo.Fragment.YourCourseFragment;
@@ -53,6 +56,9 @@ public class BaseScreenActivity extends AppCompatActivity {
     NotificationsFragment notificationsFragment;
     EarningsFragment earningsFragment;
     TransactionsHistoryFragment transactionsHistoryFragment;
+    IncentivesFragment incentivesFragment;
+    HelpAndSupportFragment helpAndSupportFragment;
+    TermsAndConditionFragment termsAndConditionFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,6 +168,24 @@ public class BaseScreenActivity extends AppCompatActivity {
                 fragmentLoader(transactionsHistoryFragment, true);
                 break;
 
+            case R.id.txtincentive:
+                if (incentivesFragment == null)
+                    incentivesFragment = IncentivesFragment.newInstance();
+                fragmentLoader(incentivesFragment, true);
+                break;
+
+            case R.id.txtHelpSupport:
+                if (helpAndSupportFragment == null)
+                    helpAndSupportFragment = HelpAndSupportFragment.newInstance();
+                fragmentLoader(helpAndSupportFragment, true);
+                break;
+
+            case R.id.txttermCondition:
+                if (termsAndConditionFragment == null)
+                    termsAndConditionFragment = TermsAndConditionFragment.newInstance();
+                fragmentLoader(termsAndConditionFragment, true);
+                break;
+
         }
         ((DrawerLayout) findViewById(R.id.drawerLayout)).closeDrawer(GravityCompat.START);
     }
@@ -225,7 +249,6 @@ public class BaseScreenActivity extends AppCompatActivity {
     public void onBackClick(View view) {
         loadHomeFragment();
     }
-
 
 
 }
