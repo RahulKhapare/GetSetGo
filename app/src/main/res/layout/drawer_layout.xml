@@ -11,18 +11,18 @@
         android:id="@+id/rlHeader"
         layout="@layout/view_header_layout" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_below="@id/rlHeader"
-        android:fillViewport="true"
+        android:layout_above="@+id/llLogout"
         android:scrollbars="none">
 
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
 
@@ -38,18 +38,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="10">
 
                     <ImageView
-                        android:layout_width="24dp"
+                        android:layout_width="0dp"
                         android:layout_height="24dp"
+                        android:layout_weight="1"
                         android:src="@drawable/ic_nav_dashboard" />
 
                     <TextView
                         android:id="@+id/txtDashboard"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="25dp"
+                        android:layout_weight="9"
                         android:clickable="true"
                         android:fontFamily="@font/nunito_sans_regular"
                         android:gravity="start|center"
@@ -65,18 +68,21 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="10">
 
                     <ImageView
-                        android:layout_width="24dp"
+                        android:layout_width="0dp"
                         android:layout_height="24dp"
+                        android:layout_weight="1"
                         android:src="@drawable/ic_nav_account" />
 
                     <TextView
                         android:id="@+id/txtAccount"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="25dp"
+                        android:layout_weight="9"
                         android:clickable="true"
                         android:fontFamily="@font/nunito_sans_regular"
                         android:gravity="start|center"
@@ -92,18 +98,22 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="10">
 
                     <ImageView
-                        android:layout_width="24dp"
+                        android:layout_width="0dp"
                         android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
                         android:src="@drawable/ic_notify" />
 
                     <TextView
                         android:id="@+id/txtNotifications"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="25dp"
+                        android:layout_weight="9"
                         android:clickable="true"
                         android:fontFamily="@font/nunito_sans_regular"
                         android:gravity="start|center"
@@ -125,7 +135,7 @@
                         android:layout_width="0dp"
                         android:layout_height="24dp"
                         android:layout_gravity="center"
-                        android:layout_weight="0.7"
+                        android:layout_weight="1"
                         android:src="@drawable/ic_nav_myearning" />
 
                     <TextView
@@ -133,7 +143,7 @@
                         android:layout_width="0dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="25dp"
-                        android:layout_weight="8"
+                        android:layout_weight="7.5"
                         android:clickable="true"
                         android:fontFamily="@font/nunito_sans_regular"
                         android:gravity="start|center"
@@ -143,12 +153,110 @@
                         android:textSize="16sp" />
 
                     <CheckBox
+                        android:id="@+id/cbMyEarning"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.3"
+                        android:layout_weight="1.5"
                         android:button="@drawable/chekcbox_up_down" />
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llCbMyEarningExpand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/txtCourseEarning"
+                            android:layout_width="0dp"
+                            android:layout_height="35dp"
+                            android:layout_marginLeft="25dp"
+                            android:layout_weight="7.5"
+                            android:clickable="true"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:gravity="start|center"
+                            android:onClick="onDrawerItemClick"
+                            android:text="Course Earning"
+                            android:textColor="@color/colorTextHighLight"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/txtCrashCourseEarning"
+                            android:layout_width="0dp"
+                            android:layout_height="35dp"
+                            android:layout_marginLeft="25dp"
+                            android:layout_weight="7.5"
+                            android:clickable="true"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:gravity="start|center"
+                            android:onClick="onDrawerItemClick"
+                            android:text="Crash Course Earning"
+                            android:textColor="@color/colorTextHighLight"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/txtTotalEaring"
+                            android:layout_width="0dp"
+                            android:layout_height="35dp"
+                            android:layout_marginLeft="25dp"
+                            android:layout_weight="7.5"
+                            android:clickable="true"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:gravity="start|center"
+                            android:onClick="onDrawerItemClick"
+                            android:text="Total Earning"
+                            android:textColor="@color/colorTextHighLight"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -161,7 +269,7 @@
                         android:layout_width="0dp"
                         android:layout_height="24dp"
                         android:layout_gravity="center"
-                        android:layout_weight="0.7"
+                        android:layout_weight="1"
                         android:src="@drawable/ic_nav_businessprofile" />
 
                     <TextView
@@ -169,7 +277,7 @@
                         android:layout_width="0dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="25dp"
-                        android:layout_weight="8"
+                        android:layout_weight="7.5"
                         android:clickable="true"
                         android:fontFamily="@font/nunito_sans_regular"
                         android:gravity="start|center"
@@ -181,7 +289,7 @@
                     <CheckBox
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.3"
+                        android:layout_weight="1.5"
                         android:button="@drawable/chekcbox_up_down" />
 
 
@@ -198,7 +306,7 @@
                         android:layout_width="0dp"
                         android:layout_height="24dp"
                         android:layout_gravity="center"
-                        android:layout_weight="0.7"
+                        android:layout_weight="1"
                         android:src="@drawable/ic_nav_transaction" />
 
                     <TextView
@@ -206,7 +314,7 @@
                         android:layout_width="0dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="25dp"
-                        android:layout_weight="8"
+                        android:layout_weight="7.5"
                         android:clickable="true"
                         android:fontFamily="@font/nunito_sans_regular"
                         android:gravity="start|center"
@@ -218,7 +326,7 @@
                     <CheckBox
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.3"
+                        android:layout_weight="1.5"
                         android:button="@drawable/chekcbox_up_down" />
 
 
@@ -235,7 +343,7 @@
                         android:layout_width="0dp"
                         android:layout_height="24dp"
                         android:layout_gravity="center"
-                        android:layout_weight="0.7"
+                        android:layout_weight="1"
                         android:src="@drawable/ic_nav_userincentive" />
 
                     <TextView
@@ -243,7 +351,7 @@
                         android:layout_width="0dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="25dp"
-                        android:layout_weight="8"
+                        android:layout_weight="7.5"
                         android:clickable="true"
                         android:fontFamily="@font/nunito_sans_regular"
                         android:gravity="start|center"
@@ -255,7 +363,7 @@
                     <CheckBox
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.3"
+                        android:layout_weight="1.5"
                         android:button="@drawable/chekcbox_up_down" />
 
 
@@ -272,7 +380,7 @@
                         android:layout_width="0dp"
                         android:layout_height="24dp"
                         android:layout_gravity="center"
-                        android:layout_weight="0.7"
+                        android:layout_weight="1"
                         android:src="@drawable/ic_nav_mypoints" />
 
                     <TextView
@@ -280,7 +388,7 @@
                         android:layout_width="0dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="25dp"
-                        android:layout_weight="8"
+                        android:layout_weight="7.5"
                         android:clickable="true"
                         android:fontFamily="@font/nunito_sans_regular"
                         android:gravity="start|center"
@@ -292,7 +400,7 @@
                     <CheckBox
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.3"
+                        android:layout_weight="1.5"
                         android:button="@drawable/chekcbox_up_down" />
 
 
@@ -303,18 +411,22 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="10">
 
                     <ImageView
-                        android:layout_width="24dp"
+                        android:layout_width="0dp"
                         android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
                         android:src="@drawable/ic_nav_helpsupport" />
 
                     <TextView
                         android:id="@+id/txtHelpSupport"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="25dp"
+                        android:layout_weight="9"
                         android:clickable="true"
                         android:fontFamily="@font/nunito_sans_regular"
                         android:gravity="start|center"
@@ -330,18 +442,22 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="10">
 
                     <ImageView
-                        android:layout_width="24dp"
+                        android:layout_width="0dp"
                         android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
                         android:src="@drawable/ic_nav_termandcondition" />
 
                     <TextView
                         android:id="@+id/txttermCondition"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="25dp"
+                        android:layout_weight="9"
                         android:clickable="true"
                         android:fontFamily="@font/nunito_sans_regular"
                         android:gravity="start|center"
@@ -357,18 +473,22 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="10">
 
                     <ImageView
-                        android:layout_width="24dp"
+                        android:layout_width="0dp"
                         android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
                         android:src="@drawable/ic_nav_settng" />
 
                     <TextView
                         android:id="@+id/txtsettings"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="25dp"
+                        android:layout_weight="9"
                         android:clickable="true"
                         android:fontFamily="@font/nunito_sans_regular"
                         android:gravity="start|center"
@@ -384,12 +504,12 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
+        android:id="@+id/llLogout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/scrollview"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:gravity="bottom"
         android:orientation="vertical">
@@ -397,27 +517,31 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:background="@color/colorStrokeView" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="7dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="10">
 
             <ImageView
-                android:layout_width="24dp"
+                android:layout_width="0dp"
                 android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
                 android:src="@drawable/ic_nav_logout" />
 
             <TextView
                 android:id="@+id/txtLogout"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="25dp"
+                android:layout_weight="9"
                 android:clickable="true"
                 android:fontFamily="@font/nunito_sans_regular"
                 android:gravity="start|center"

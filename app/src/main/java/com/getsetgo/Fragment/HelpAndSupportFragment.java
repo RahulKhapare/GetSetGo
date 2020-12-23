@@ -8,16 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.getsetgo.Adapter.IncentivesAdapter;
 import com.getsetgo.Adapter.SupportHelpViewPagerAdapter;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
-import com.getsetgo.activity.SupportHelpActivity;
-import com.getsetgo.databinding.ActivityIncentiveBinding;
-import com.getsetgo.databinding.ActivitySupportHelpBinding;
 import com.getsetgo.databinding.FragmentHelpandsupportBinding;
 
 public class HelpAndSupportFragment extends Fragment {

@@ -17,7 +17,7 @@ import com.getsetgo.util.WindowView;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private SignUpActivity activity = this;
+    private final SignUpActivity activity = this;
     private ActivitySignUpBinding binding;
 
     @Override
@@ -55,7 +55,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Click.preventTwoClick(v);
                 if (checkValidation()){
-                    Intent intent = new Intent(activity,MainActivity.class);
+                    Intent intent = new Intent(activity,BaseScreenActivity.class);
                     startActivity(intent);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     finish();

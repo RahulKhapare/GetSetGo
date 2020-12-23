@@ -8,10 +8,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -19,16 +17,11 @@ import androidx.core.app.NotificationCompat;
 
 import com.adoisstudio.helper.H;
 import com.getsetgo.R;
-import com.getsetgo.activity.NotificationsActivity;
-import com.getsetgo.util.LoadImage;
+import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.util.P;
-import com.google.android.datatransport.Priority;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -39,7 +32,7 @@ public class FirebaseMessageReceiver
         extends FirebaseMessagingService {
     private static final String TAG = "FirebaseMessageReceiver";
     private Bitmap bitmap;
-    private static ArrayList<Map<String, String>> arrayList = new ArrayList<>();
+    private static final ArrayList<Map<String, String>> arrayList = new ArrayList<>();
 
     @Override
     public void
@@ -76,7 +69,7 @@ public class FirebaseMessageReceiver
     }
 
     public void showNotification(String title, String message, Uri imageUrl) {
-        Intent intent = new Intent(this, NotificationsActivity.class);
+        Intent intent = new Intent(this, BaseScreenActivity.class);
         String channel_id = "notification_channel";
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);

@@ -1,25 +1,24 @@
 package com.getsetgo.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
+
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+
 
 import com.adoisstudio.helper.H;
-import com.adoisstudio.helper.Json;
+
 import com.getsetgo.Fragment.AccountFragment;
 import com.getsetgo.Fragment.DashBoardFragment;
 import com.getsetgo.Fragment.EarningsFragment;
@@ -27,27 +26,25 @@ import com.getsetgo.Fragment.FavouritesFragment;
 import com.getsetgo.Fragment.HelpAndSupportFragment;
 import com.getsetgo.Fragment.HomeFragment;
 import com.getsetgo.Fragment.IncentivesFragment;
-import com.getsetgo.Fragment.NavDrawerFragment;
+
 import com.getsetgo.Fragment.NotificationsFragment;
 import com.getsetgo.Fragment.SearchFragment;
 import com.getsetgo.Fragment.TermsAndConditionFragment;
-import com.getsetgo.Fragment.TransactionsHistoryDetailsFragment;
+
 import com.getsetgo.Fragment.TransactionsHistoryFragment;
 import com.getsetgo.Fragment.YourCourseFragment;
 import com.getsetgo.R;
 import com.getsetgo.databinding.ActivityBaseScreenBinding;
-import com.getsetgo.databinding.ActivityHomeScreenBinding;
-import com.getsetgo.util.App;
-import com.getsetgo.util.P;
+
+
 import com.getsetgo.util.WindowView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.zxing.oned.EAN8Reader;
-import com.mxn.soul.flowingdrawer_core.ElasticDrawer;
+
 
 public class BaseScreenActivity extends AppCompatActivity {
 
 
-    private BaseScreenActivity activity = this;
+    private final BaseScreenActivity activity = this;
     public static ActivityBaseScreenBinding binding;
 
     private HomeFragment homeFragment;
@@ -59,6 +56,7 @@ public class BaseScreenActivity extends AppCompatActivity {
     IncentivesFragment incentivesFragment;
     HelpAndSupportFragment helpAndSupportFragment;
     TermsAndConditionFragment termsAndConditionFragment;
+    CheckBox cbMyEarning;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +106,23 @@ public class BaseScreenActivity extends AppCompatActivity {
             }
         });
 
+
+        checkBoxMyEarning();
+
+    }
+    private void checkBoxMyEarning(){
+        cbMyEarning = findViewById(R.id.cbMyEarning);
+        LinearLayout llCbMyEarningExpand = findViewById(R.id.llCbMyEarningExpand);
+        cbMyEarning.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(isChecked){
+                    llCbMyEarningExpand.setVisibility(View.VISIBLE);
+                }else{
+                    llCbMyEarningExpand.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
 
