@@ -8,8 +8,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.getsetgo.Fragment.TransactionsHistoryDetailsFragment;
 import com.getsetgo.R;
 import com.getsetgo.activity.TransactionHistoryDetails;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -36,7 +39,9 @@ public class AllTransactionsAdapter extends RecyclerView.Adapter<AllTransactions
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, TransactionHistoryDetails.class));
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                TransactionsHistoryDetailsFragment myFragment = new TransactionsHistoryDetailsFragment();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, myFragment).addToBackStack(null).commit();
             }
         });
     }
@@ -59,5 +64,6 @@ public class AllTransactionsAdapter extends RecyclerView.Adapter<AllTransactions
 
         }
     }
+
 }
 

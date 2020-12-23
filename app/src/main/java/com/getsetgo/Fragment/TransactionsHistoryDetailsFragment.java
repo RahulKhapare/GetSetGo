@@ -45,15 +45,16 @@ public class TransactionsHistoryDetailsFragment extends Fragment {
     }
 
     private void init() {
-        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Transaction History");
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Transactions History");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
 
         binding.btnGoBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().popBackStack();
+                getFragmentManager().popBackStackImmediate();
             }
         });
+
     }
 
 

@@ -42,6 +42,7 @@ public class EarningsFragment extends Fragment {
         View rootView = binding.getRoot();
 
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("My Earnings");
+        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
 
         init();
         return rootView;

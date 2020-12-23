@@ -42,6 +42,7 @@ public class AccountFragment extends Fragment {
         View rootView = binding.getRoot();
 
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("My Account");
+        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         onClick();
         return rootView;
     }

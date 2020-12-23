@@ -46,6 +46,7 @@ public class NotificationsFragment extends Fragment {
         View rootView = binding.getRoot();
 
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Notifications");
+        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
 
         init();
         return rootView;

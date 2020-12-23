@@ -36,6 +36,7 @@ public class TermsAndConditionFragment extends Fragment {
         View rootView = binding.getRoot();
 
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Terms & Condition");
+        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
 
         initView();
         return rootView;

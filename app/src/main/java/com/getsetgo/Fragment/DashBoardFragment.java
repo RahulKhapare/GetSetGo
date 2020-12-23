@@ -44,6 +44,7 @@ public class DashBoardFragment extends Fragment {
         View rootView = binding.getRoot();
 
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Dashboard");
+        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         onClick();
         return rootView;
     }

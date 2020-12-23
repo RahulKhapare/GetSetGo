@@ -110,15 +110,16 @@ public class BaseScreenActivity extends AppCompatActivity {
         checkBoxMyEarning();
 
     }
-    private void checkBoxMyEarning(){
+
+    private void checkBoxMyEarning() {
         cbMyEarning = findViewById(R.id.cbMyEarning);
         LinearLayout llCbMyEarningExpand = findViewById(R.id.llCbMyEarningExpand);
         cbMyEarning.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     llCbMyEarningExpand.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     llCbMyEarningExpand.setVisibility(View.GONE);
                 }
             }
@@ -250,13 +251,16 @@ public class BaseScreenActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        ((DrawerLayout) findViewById(R.id.drawerLayout)).closeDrawer(GravityCompat.START);
-        if (!homeFragment.isVisible()) {
+
+
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START);
+        } else if (!homeFragment.isVisible()) {
             onBackClick(findViewById(R.id.ivBack));
         } else if (binding.bottomNavigation.getSelectedItemId() != R.id.menu_home) {
             loadHomeFragment();
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
             finish();
         }
     }
