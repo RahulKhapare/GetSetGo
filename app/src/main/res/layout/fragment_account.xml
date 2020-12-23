@@ -7,15 +7,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/icTToolbar"
-            layout="@layout/layout_fragment_toolbar" />
 
         <RelativeLayout
             android:id="@+id/rlMainAccount"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/icTToolbar">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:id="@+id/rlProfile"

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.getsetgo.Adapter.MyCourseAdapter;
 import com.getsetgo.R;
+import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentComposeBinding;
 import com.getsetgo.databinding.FragmentYourCourseBinding;
 
@@ -35,7 +36,7 @@ public class YourCourseFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_your_course, container, false);
         View rootView = binding.getRoot();
 
-        binding.icYourCourseToolbar.txtTittle.setText("Your Course");
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Your Course");
         setupRecyclerViewForYourCourse();
         return rootView;
     }

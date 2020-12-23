@@ -14,9 +14,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rlTool">
+
             <include
-                android:id="@+id/inc_tool"
+                android:id="@+id/incBasetool"
                 layout="@layout/layout_common_toolbar" />
+            <include
+                android:id="@+id/incFragmenttool"
+                android:visibility="gone"
+                layout="@layout/layout_fragment_toolbar" />
+
+            </RelativeLayout>
 
             <FrameLayout
                 android:id="@+id/fragment_container"
@@ -24,7 +36,7 @@
                 android:layout_height="match_parent"
                 android:layout_above="@+id/bottom_navigation"
 
-                android:layout_below="@+id/inc_tool" />
+                android:layout_below="@+id/rlTool" />
 
 
             <com.google.android.material.bottomnavigation.BottomNavigationView

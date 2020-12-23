@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.getsetgo.R;
 import com.getsetgo.activity.BankDetailsActivity;
+import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.activity.TotalUserActivity;
 import com.getsetgo.databinding.FragmentAccountBinding;
 import com.getsetgo.databinding.FragmentDashboardBinding;
@@ -40,7 +41,7 @@ public class AccountFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_account, container, false);
         View rootView = binding.getRoot();
 
-        binding.icTToolbar.txtTittle.setText("My Account");
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("My Account");
         onClick();
         return rootView;
     }

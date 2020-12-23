@@ -15,6 +15,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.getsetgo.R;
+import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentComposeBinding;
 import com.getsetgo.databinding.FragmentSearchBinding;
 
@@ -39,7 +40,7 @@ public class SearchFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false);
         View rootView = binding.getRoot();
 
-        binding.icSearchToolbar.txtTittle.setText("Search");
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Search");
         dynamicTextView();
 
 

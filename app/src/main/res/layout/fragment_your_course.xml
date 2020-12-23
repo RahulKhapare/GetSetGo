@@ -7,14 +7,9 @@
         android:background="@color/toolbar_backgound">
 
 
-        <include
-            android:id="@+id/icYourCourseToolbar"
-            layout="@layout/layout_fragment_toolbar" />
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/icYourCourseToolbar"
             android:background="@drawable/main_layout_bg"
             android:paddingLeft="16dp"
             android:paddingRight="16dp">

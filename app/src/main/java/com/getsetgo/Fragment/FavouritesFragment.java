@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.getsetgo.Adapter.MyCourseAdapter;
 import com.getsetgo.Adapter.WishlistCourseAdapter;
 import com.getsetgo.R;
+import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentFavoritesBinding;
 import com.getsetgo.databinding.FragmentYourCourseBinding;
 
@@ -39,7 +40,7 @@ public class FavouritesFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_favorites, container, false);
         View rootView = binding.getRoot();
 
-        binding.icFavouritesToolbar.txtTittle.setText("Favourites");
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Favourites");
         setupRecyclerViewFavoutites();
         return rootView;
     }

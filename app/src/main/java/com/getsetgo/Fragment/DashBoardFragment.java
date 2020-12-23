@@ -18,6 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.getsetgo.R;
+import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.activity.TotalUserActivity;
 import com.getsetgo.databinding.FragmentDashboardBinding;
 import com.getsetgo.databinding.FragmentTotalearningBinding;
@@ -42,7 +43,7 @@ public class DashBoardFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dashboard, container, false);
         View rootView = binding.getRoot();
 
-        binding.icToolbar.txtTittle.setText("Dashboard");
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Dashboard");
         onClick();
         return rootView;
     }

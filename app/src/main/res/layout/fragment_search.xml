@@ -6,17 +6,11 @@
         android:layout_height="match_parent"
         android:background="@color/toolbar_backgound">
 
-
-        <include
-            android:id="@+id/icSearchToolbar"
-            layout="@layout/layout_fragment_toolbar" />
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/main_layout_bg"
             android:paddingLeft="12dp"
-            android:layout_below="@+id/icSearchToolbar"
             android:paddingRight="12dp">
 
 

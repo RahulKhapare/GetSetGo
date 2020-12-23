@@ -98,13 +98,6 @@ public class BaseScreenActivity extends AppCompatActivity {
             }
         });
 
-        binding.incTool.ivNotify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
     }
 
 
@@ -116,7 +109,11 @@ public class BaseScreenActivity extends AppCompatActivity {
 
     private boolean loadFragment(Fragment fragment ,boolean isHideToolbar) {
         if (isHideToolbar) {
-            binding.incTool.content.setVisibility(View.GONE);
+            binding.incBasetool.content.setVisibility(View.GONE);
+            binding.incFragmenttool.content.setVisibility(View.VISIBLE);
+        }else{
+            binding.incBasetool.content.setVisibility(View.VISIBLE);
+            binding.incFragmenttool.content.setVisibility(View.GONE);
         }
         if (fragment != null) {
             getSupportFragmentManager()
@@ -154,15 +151,17 @@ public class BaseScreenActivity extends AppCompatActivity {
     private void fragmentLoader(Fragment fragment, boolean isHideToolbar) {
 
         if (isHideToolbar) {
-            binding.incTool.content.setVisibility(View.GONE);
             binding.bottomNavigation.setVisibility(View.GONE);
+            binding.incBasetool.content.setVisibility(View.GONE);
+            binding.incFragmenttool.content.setVisibility(View.VISIBLE);
         }
 
         if (fragment instanceof HomeFragment) {
-            binding.incTool.content.setVisibility(View.VISIBLE);
-            binding.incTool.ivHamMenu.setTag("0");
+            binding.incBasetool.content.setVisibility(View.VISIBLE);
+            binding.incBasetool.ivHamMenu.setTag("0");
             binding.bottomNavigation.setVisibility(View.VISIBLE);
             binding.bottomNavigation.setSelectedItemId(R.id.menu_home);
+            binding.incFragmenttool.content.setVisibility(View.GONE);
         }
 
         if (System.currentTimeMillis() - l > 321)
