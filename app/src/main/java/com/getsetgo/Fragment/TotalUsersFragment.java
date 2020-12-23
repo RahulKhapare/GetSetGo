@@ -1,6 +1,7 @@
 package com.getsetgo.Fragment;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ public class TotalUsersFragment extends Fragment {
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText(myValue);
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
 
-        init();
+        init(rootView);
         return rootView;
     }
 
@@ -41,8 +42,22 @@ public class TotalUsersFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void init() {
+    private void init(View view) {
         setupRecyclerViewForTotalUser();
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener( new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey( View v, int keyCode, KeyEvent event )
+            {
+                if( keyCode == KeyEvent.KEYCODE_BACK )
+                {
+                    return getFragmentManager().popBackStackImmediate();
+                }
+                return false;
+            }
+        } );
     }
 
     private void onClick() {

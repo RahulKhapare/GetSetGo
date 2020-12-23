@@ -14,7 +14,9 @@ import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Base64;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -74,13 +76,9 @@ public class BankDetailsFragment extends Fragment {
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Enter Bank Details");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
 
-        init();
+        init(rootView);
         return rootView;
     }
-
-
-
-
 
 
     @Override
@@ -88,17 +86,18 @@ public class BankDetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void init(){
+    private void init(View view) {
         onClick();
         try {
             StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
             StrictMode.setVmPolicy(builder.build());
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
+
     }
 
-    private void onClick(){
+    private void onClick() {
         binding.txtSaveNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

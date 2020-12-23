@@ -116,6 +116,14 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
     private ProgressBar brightnessProgressBar, volumeProgressBar;
     View v;
 
+    public CourseDetailFragment() {
+    }
+
+    public static CourseDetailFragment newInstance() {
+        CourseDetailFragment fragment = new CourseDetailFragment();
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -290,6 +298,14 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
             }
         });
 
+        ImageView imageView = v.findViewById(R.id.imageView);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                  onPlayIconClick();
+            }
+        });
+
     }
 
    /* private void hitSeriesApi() {
@@ -427,7 +443,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
                 }).run("hitAddOrRemoveFavouriteApi");*//*
     }
 */
-    public void onPlayIconClick(View view) {
+    public void onPlayIconClick() {
        /* Api.newApi(this, checkUrl).addJson(new Json())
                 .setMethod(Api.GET)
                 .onHeaderRequest(this)
@@ -442,7 +458,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
                         if (json.getInt(P.is_purchased) == 1) {*/
                             /*if (!startFromPreviousPosition)
                                 videoProgress = 0;*/
-        ((FrameLayout) view.getParent()).setVisibility(View.GONE);
+        ((FrameLayout) v.getParent()).setVisibility(View.GONE);
 
         v.findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
                             /*customMediaController = new CustomMediaController(this);
@@ -569,7 +585,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
                         customVideoView.stopPlayback();
                         if (mediaPlayer != null)
                             mediaPlayer.release();
-                        onPlayIconClick(v.findViewById(R.id.imageView));
+                        onPlayIconClick();
                     }
 
                     count++;
@@ -761,7 +777,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
             v.findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
 
             videoProgress = 0;
-            onPlayIconClick(v.findViewById(R.id.imageView));
+            onPlayIconClick();
 
             if (videoController != null)
                 videoController.handlePlayPause(true);
