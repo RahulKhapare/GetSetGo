@@ -11,15 +11,16 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.getsetgo.R;
-import com.getsetgo.activity.BankDetailsActivity;
+
 import com.getsetgo.activity.BaseScreenActivity;
-import com.getsetgo.activity.TotalUserActivity;
+
 import com.getsetgo.databinding.FragmentAccountBinding;
-import com.getsetgo.databinding.FragmentDashboardBinding;
+
 
 public class AccountFragment extends Fragment {
 
@@ -59,7 +60,9 @@ public class AccountFragment extends Fragment {
         binding.llBankDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), BankDetailsActivity.class));
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                BankDetailsFragment myFragment = new BankDetailsFragment();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, myFragment).addToBackStack(null).commit();
             }
         });
     }

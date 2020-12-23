@@ -2,61 +2,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/toolbar_backgound">
 
         <RelativeLayout
-            android:id="@+id/ll_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
-
-
-            <ImageView
-                android:id="@+id/ivBack"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="start"
-                android:src="@drawable/ic_back" />
-
-            <ImageView
-                android:id="@+id/ivMenu"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_centerVertical="true"
-                android:layout_gravity="start"
-                android:layout_marginLeft="20dp"
-                android:layout_toEndOf="@+id/ivBack"
-                android:src="@drawable/ic_ham_menu"
-                app:tint="@color/colorWhite" />
-
-
-            <TextView
-                android:id="@+id/ivLogo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center"
-                android:fontFamily="@font/nunit_sans_bold"
-                android:text="Upload Documents"
-                android:textColor="@color/colorWhite"
-                android:textSize="18sp" />
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ll_toolbar"
             android:background="@drawable/main_layout_bg">
 
             <androidx.core.widget.NestedScrollView
@@ -216,7 +169,6 @@
             </androidx.core.widget.NestedScrollView>
 
         </RelativeLayout>
-
-
     </RelativeLayout>
 </layout>
+

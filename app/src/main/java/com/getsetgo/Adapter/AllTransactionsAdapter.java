@@ -14,9 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.getsetgo.Fragment.TransactionsHistoryDetailsFragment;
 import com.getsetgo.R;
-import com.getsetgo.activity.TransactionHistoryDetails;
-import com.makeramen.roundedimageview.RoundedImageView;
-import com.sasank.roundedhorizontalprogress.RoundedHorizontalProgressBar;
+
 
 public class AllTransactionsAdapter extends RecyclerView.Adapter<AllTransactionsAdapter.AllTransactionsViewHolder> {
 

@@ -1,40 +1,49 @@
-package com.getsetgo.activity;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
+package com.getsetgo.Fragment;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 
 import com.getsetgo.R;
-import com.getsetgo.databinding.ActivitySearchIncentivesBinding;
-import com.getsetgo.util.WindowView;
-import com.google.android.material.textfield.TextInputEditText;
+import com.getsetgo.activity.BaseScreenActivity;
+import com.getsetgo.databinding.FragmentSearchEarningsBinding;
+import com.getsetgo.databinding.FragmentSearchIncentivesBinding;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
-public class SearchIncentivesActivity extends AppCompatActivity {
+public class SearchIncentivesFragment extends Fragment {
 
-    SearchIncentivesActivity activity = this;
-    ActivitySearchIncentivesBinding binding;
+    FragmentSearchIncentivesBinding binding;
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        WindowView.getWindow(activity);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_search_incentives);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_search_incentives, container, false);
+        View rootView = binding.getRoot();
         init();
+        return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
     private void init(){
-
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Search Incentives");
         bindStatus();
         initCalendar();
 
@@ -48,7 +57,7 @@ public class SearchIncentivesActivity extends AppCompatActivity {
         binding.etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         month = month+1;
@@ -73,7 +82,7 @@ public class SearchIncentivesActivity extends AppCompatActivity {
         stringArrayList.add("Transferred");
 
 
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(activity,
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.spinner_display_text, stringArrayList);
         binding.spnStatus.setAdapter(stringArrayAdapter);
         binding.spnStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -91,4 +100,6 @@ public class SearchIncentivesActivity extends AppCompatActivity {
         });
 
     }
+
+
 }

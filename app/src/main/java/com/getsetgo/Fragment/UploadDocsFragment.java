@@ -1,13 +1,8 @@
-package com.getsetgo.activity;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.databinding.DataBindingUtil;
+package com.getsetgo.Fragment;
 
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -19,68 +14,75 @@ import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 
 import com.adoisstudio.helper.H;
 import com.getsetgo.R;
-import com.getsetgo.databinding.ActivityBankDetailsBinding;
-import com.getsetgo.databinding.ActivityLoginBinding;
+import com.getsetgo.activity.BaseScreenActivity;
+import com.getsetgo.activity.UploadDocumentsActivity;
+import com.getsetgo.databinding.FragmentBankDetailsBinding;
+import com.getsetgo.databinding.FragmentUploadDocsBinding;
 import com.getsetgo.util.Click;
-import com.getsetgo.util.WindowView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-public class BankDetailsActivity extends AppCompatActivity {
+public class UploadDocsFragment extends Fragment {
 
-    private BankDetailsActivity activity = this;
-    private ActivityBankDetailsBinding binding;
+    FragmentUploadDocsBinding binding;
+
 
     private static final int REQUEST_GALLARY = 19;
     private static final int REQUEST_CAMERA = 110;
     private static final int READ_WRIRE = 111;
     private Uri cameraURI;
     private int click;
-    private int cameraClick = 0;
-    private int galleryClick = 1;
+    private final int cameraClick = 0;
+    private final int galleryClick = 1;
     private String imgString = "";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        WindowView.getWindow(activity);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_bank_details);
-        init();
-    }
-    private void init(){
-        onClick();
-        try {
-            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-            StrictMode.setVmPolicy(builder.build());
-        }catch (Exception e){
 
-        }
+    public UploadDocsFragment() {
     }
-    private void onClick(){
-        binding.txtSaveNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(activity,UploadDocumentsActivity.class));
-            }
-        });
-        binding.llUploadDocs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onUploadClick();
-            }
-        });
+
+    public static UploadDocsFragment newInstance() {
+        UploadDocsFragment fragment = new UploadDocsFragment();
+        return fragment;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_upload_docs, container, false);
+        View rootView = binding.getRoot();
+
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Upload Documents");
+        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
+
+        init();
+        return rootView;
+    }
+
+
+
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     private void onUploadClick() {
-        Dialog dialog = new Dialog(this);
+        Dialog dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.upload_dialog);
         dialog.findViewById(R.id.txtCamera).setOnClickListener(new View.OnClickListener() {
@@ -106,19 +108,45 @@ public class BankDetailsActivity extends AppCompatActivity {
     }
 
     private void getPermission() {
-        ActivityCompat.requestPermissions(activity,
+        ActivityCompat.requestPermissions(getActivity(),
                 new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 READ_WRIRE);
     }
 
+    private void init() {
+        try {
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+            StrictMode.setVmPolicy(builder.build());
+        }catch (Exception e){
+
+        }
+        onClick();
+    }
+
+    private void onClick() {
+        binding.txtSaveNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        binding.llUploadPan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onUploadClick();
+            }
+        });
+    }
+
     private void jumpToSetting() {
-        H.showMessage(activity, "Please allow permission from setting.");
+        H.showMessage(getActivity(), "Please allow permission from setting.");
         try {
             Intent intent = new Intent();
             intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
+            Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
             intent.setData(uri);
-            activity.startActivity(intent);
+            getActivity().startActivity(intent);
         } catch (Exception e) {
         }
     }
@@ -148,7 +176,7 @@ public class BankDetailsActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+                                           String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case READ_WRIRE: {
                 if (grantResults.length > 0
@@ -194,12 +222,12 @@ public class BankDetailsActivity extends AppCompatActivity {
     private void setImageData(Uri uri) {
         imgString = "";
         try {
-            final InputStream imageStream = getContentResolver().openInputStream(uri);
+            final InputStream imageStream = getActivity().getContentResolver().openInputStream(uri);
             final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
             imgString = encodeImage(selectedImage);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            H.showMessage(activity, "Unable to get image, try again.");
+            H.showMessage(getActivity(), "Unable to get image, try again.");
         }
     }
 
@@ -210,4 +238,6 @@ public class BankDetailsActivity extends AppCompatActivity {
         String encImage = Base64.encodeToString(b, Base64.DEFAULT);
         return encImage;
     }
+
+
 }

@@ -1,36 +1,43 @@
-package com.getsetgo.activity;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
+package com.getsetgo.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+
 import com.getsetgo.R;
-import com.getsetgo.databinding.ActivityBankDetailsBinding;
-import com.getsetgo.databinding.ActivitySearchUserBinding;
-import com.getsetgo.util.WindowView;
+import com.getsetgo.activity.BaseScreenActivity;
+import com.getsetgo.databinding.FragmentSearchUserBinding;
 
 import java.util.ArrayList;
 
-public class SearchUserActivity extends AppCompatActivity {
+public class SearchUserFragment extends Fragment {
 
-    private SearchUserActivity activity = this;
-    private ActivitySearchUserBinding binding;
+    FragmentSearchUserBinding binding;
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_search_user, container, false);
+        View rootView = binding.getRoot();
+        init();
+        return rootView;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        WindowView.getWindow(activity);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_search_user);
-        init();
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     private void init() {
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Search User");
         bindColorType();
         onClick();
     }
@@ -38,7 +45,7 @@ public class SearchUserActivity extends AppCompatActivity {
         binding.txtSaveNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(activity,SearchUserIdActivity.class));
+                startActivity(new Intent(getActivity(), SearchUserIdActivity.class));
             }
         });
     }
@@ -53,7 +60,7 @@ public class SearchUserActivity extends AppCompatActivity {
         stringArrayList.add("White");
 
 
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(activity,
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.spinner_display_text, stringArrayList);
         binding.spnColorType.setAdapter(stringArrayAdapter);
         binding.spnColorType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -71,4 +78,6 @@ public class SearchUserActivity extends AppCompatActivity {
         });
 
     }
+
+
 }

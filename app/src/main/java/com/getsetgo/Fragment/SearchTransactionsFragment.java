@@ -1,47 +1,49 @@
-package com.getsetgo.activity;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
+package com.getsetgo.Fragment;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+
 import com.getsetgo.R;
-import com.getsetgo.databinding.ActivitySearchTransactionBinding;
-import com.getsetgo.util.WindowView;
-import com.google.android.material.textfield.TextInputEditText;
+import com.getsetgo.activity.BaseScreenActivity;
+import com.getsetgo.databinding.FragmentSearchIncentivesBinding;
+import com.getsetgo.databinding.FragmentSearchTransactionBinding;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 
-public class SearchTransactionActivity extends AppCompatActivity {
+public class SearchTransactionsFragment extends Fragment {
 
-    SearchTransactionActivity activity = this;
-    ActivitySearchTransactionBinding binding;
-
-
+    FragmentSearchTransactionBinding binding;
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        WindowView.getWindow(activity);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_search_transaction);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_search_transaction, container, false);
+        View rootView = binding.getRoot();
         init();
+        return rootView;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
     private void init() {
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Search Transaction");
         bindActionType();
         bindIncomeType();
         initCalendar();
@@ -82,7 +84,7 @@ public class SearchTransactionActivity extends AppCompatActivity {
 
         if (d1.after(d2)) {
             value = false;
-            Toast.makeText(activity, "End Date can't be smaller than Start Date", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "End Date can't be smaller than Start Date", Toast.LENGTH_SHORT).show();
         }
         return value;
     }
@@ -101,7 +103,7 @@ public class SearchTransactionActivity extends AppCompatActivity {
         binding.etStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         month = month + 1;
@@ -118,7 +120,7 @@ public class SearchTransactionActivity extends AppCompatActivity {
         binding.etEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         month = month + 1;
@@ -137,10 +139,10 @@ public class SearchTransactionActivity extends AppCompatActivity {
 
     public boolean isFormValidation() {
         if (binding.etStartDate.getText().toString().isEmpty()) {
-            Toast.makeText(activity, "Start Date should not be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Start Date should not be empty", Toast.LENGTH_SHORT).show();
             return false;
         } else if (binding.etEndDate.getText().toString().isEmpty()) {
-            Toast.makeText(activity, "End Date should not be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "End Date should not be empty", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -167,7 +169,7 @@ public class SearchTransactionActivity extends AppCompatActivity {
         stringArrayList.add("Normal Type");
 
 
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(activity,
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.spinner_display_text, stringArrayList);
         binding.spnActionType.setAdapter(stringArrayAdapter);
         binding.spnActionType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -195,7 +197,7 @@ public class SearchTransactionActivity extends AppCompatActivity {
         stringArrayList.add("Normal Type");
 
 
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(activity,
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.spinner_display_text, stringArrayList);
         binding.spnIncomeType.setAdapter(stringArrayAdapter);
         binding.spnIncomeType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -213,4 +215,6 @@ public class SearchTransactionActivity extends AppCompatActivity {
         });
 
     }
+
+
 }
