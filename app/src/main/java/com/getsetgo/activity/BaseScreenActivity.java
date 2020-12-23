@@ -204,7 +204,7 @@ public class BaseScreenActivity extends AppCompatActivity {
                 fragmentLoader(termsAndConditionFragment, true);
                 break;
 
-                case R.id.txtBusProf:
+            case R.id.txtBusProf:
                 if (courseDetailFragment == null)
                     courseDetailFragment = CourseDetailFragment.newInstance();
                 fragmentLoader(courseDetailFragment, true);
@@ -260,7 +260,6 @@ public class BaseScreenActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             binding.drawerLayout.closeDrawer(GravityCompat.START);
         } else if (!homeFragment.isVisible()) {
@@ -274,7 +273,9 @@ public class BaseScreenActivity extends AppCompatActivity {
     }
 
     public void onBackClick(View view) {
+
         loadHomeFragment();
+
     }
 
 

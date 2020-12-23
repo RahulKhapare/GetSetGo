@@ -45,6 +45,8 @@ public class AccountFragment extends Fragment {
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("My Account");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         onClick();
+
+
         return rootView;
     }
 
@@ -60,9 +62,8 @@ public class AccountFragment extends Fragment {
         binding.llBankDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 BankDetailsFragment myFragment = new BankDetailsFragment();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, myFragment).addToBackStack(null).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, myFragment).commit();
             }
         });
     }

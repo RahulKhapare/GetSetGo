@@ -60,7 +60,6 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="end"
                 android:visibility="gone"
-                android:onClick="onFilterClick"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="20dp"
                 android:src="@drawable/ic_filter"

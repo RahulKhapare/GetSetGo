@@ -116,7 +116,7 @@ public class AddNewUserFragment extends Fragment {
         country.add(codeess);
         country.add(codess);
         CountryCodeAdapter countryFlagAdapter = new CountryCodeAdapter(context,
-                R.layout.activity_add_new_user, R.id.lbl_name, country);
+                R.layout.fragment_add_new_user, R.id.lbl_name, country);
         autoCompleteTextView.setThreshold(2);         //will start working from first character
         autoCompleteTextView.setAdapter(countryFlagAdapter);
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
