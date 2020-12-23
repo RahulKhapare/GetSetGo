@@ -22,10 +22,14 @@ import com.adoisstudio.helper.H;
 import com.adoisstudio.helper.Json;
 import com.getsetgo.Fragment.AccountFragment;
 import com.getsetgo.Fragment.DashBoardFragment;
+import com.getsetgo.Fragment.EarningsFragment;
 import com.getsetgo.Fragment.FavouritesFragment;
 import com.getsetgo.Fragment.HomeFragment;
 import com.getsetgo.Fragment.NavDrawerFragment;
+import com.getsetgo.Fragment.NotificationsFragment;
 import com.getsetgo.Fragment.SearchFragment;
+import com.getsetgo.Fragment.TransactionsHistoryDetailsFragment;
+import com.getsetgo.Fragment.TransactionsHistoryFragment;
 import com.getsetgo.Fragment.YourCourseFragment;
 import com.getsetgo.R;
 import com.getsetgo.databinding.ActivityBaseScreenBinding;
@@ -34,6 +38,7 @@ import com.getsetgo.util.App;
 import com.getsetgo.util.P;
 import com.getsetgo.util.WindowView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.zxing.oned.EAN8Reader;
 import com.mxn.soul.flowingdrawer_core.ElasticDrawer;
 
 public class BaseScreenActivity extends AppCompatActivity {
@@ -45,6 +50,9 @@ public class BaseScreenActivity extends AppCompatActivity {
     private HomeFragment homeFragment;
     DashBoardFragment dashBoardFragment;
     AccountFragment accountFragment;
+    NotificationsFragment notificationsFragment;
+    EarningsFragment earningsFragment;
+    TransactionsHistoryFragment transactionsHistoryFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,15 +94,11 @@ public class BaseScreenActivity extends AppCompatActivity {
                         break;
 
                     case R.id.menu_Account:
-                        Json json = new Json();
-                        String string = P.baseUrl + "series_check/" + json.getString(P.series_slug) + "/" + json.getString(P.video_slug);
-                        int i = json.getInt(P.time);
-                        i *= 1000;
-
-                        App.app.startMyCourseActivity(activity, string, i);
+                        fragment = new AccountFragment();
+                        isHide = true;
                         break;
                 }
-                return loadFragment(fragment,isHide);
+                return loadFragment(fragment, isHide);
             }
         });
 
@@ -107,13 +111,14 @@ public class BaseScreenActivity extends AppCompatActivity {
         fragmentLoader(homeFragment, false);
     }
 
-    private boolean loadFragment(Fragment fragment ,boolean isHideToolbar) {
+    private boolean loadFragment(Fragment fragment, boolean isHideToolbar) {
         if (isHideToolbar) {
             binding.incBasetool.content.setVisibility(View.GONE);
             binding.incFragmenttool.content.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             binding.incBasetool.content.setVisibility(View.VISIBLE);
             binding.incFragmenttool.content.setVisibility(View.GONE);
+            binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         }
         if (fragment != null) {
             getSupportFragmentManager()
@@ -127,7 +132,6 @@ public class BaseScreenActivity extends AppCompatActivity {
 
     public void onDrawerItemClick(View view) {
         int i = view.getId();
-        Intent intent;
 
         switch (i) {
             case R.id.txtDashboard:
@@ -140,6 +144,23 @@ public class BaseScreenActivity extends AppCompatActivity {
                     accountFragment = AccountFragment.newInstance();
                 fragmentLoader(accountFragment, true);
                 break;
+            case R.id.txtNotifications:
+                if (notificationsFragment == null)
+                    notificationsFragment = NotificationsFragment.newInstance();
+                fragmentLoader(notificationsFragment, true);
+                break;
+
+            case R.id.txtEarning:
+                if (earningsFragment == null)
+                    earningsFragment = EarningsFragment.newInstance();
+                fragmentLoader(earningsFragment, true);
+                break;
+
+            case R.id.txtTransactions:
+                if (transactionsHistoryFragment == null)
+                    transactionsHistoryFragment = TransactionsHistoryFragment.newInstance();
+                fragmentLoader(transactionsHistoryFragment, true);
+                break;
 
         }
         ((DrawerLayout) findViewById(R.id.drawerLayout)).closeDrawer(GravityCompat.START);
@@ -148,7 +169,7 @@ public class BaseScreenActivity extends AppCompatActivity {
 
     private long l;
 
-    private void fragmentLoader(Fragment fragment, boolean isHideToolbar) {
+    public void fragmentLoader(Fragment fragment, boolean isHideToolbar) {
 
         if (isHideToolbar) {
             binding.bottomNavigation.setVisibility(View.GONE);
@@ -162,6 +183,7 @@ public class BaseScreenActivity extends AppCompatActivity {
             binding.bottomNavigation.setVisibility(View.VISIBLE);
             binding.bottomNavigation.setSelectedItemId(R.id.menu_home);
             binding.incFragmenttool.content.setVisibility(View.GONE);
+            binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         }
 
         if (System.currentTimeMillis() - l > 321)
@@ -180,13 +202,19 @@ public class BaseScreenActivity extends AppCompatActivity {
         ((DrawerLayout) findViewById(R.id.drawerLayout)).openDrawer(GravityCompat.START);
     }
 
+    public void OnNotifications(View view) {
+        if (notificationsFragment == null)
+            notificationsFragment = NotificationsFragment.newInstance();
+        fragmentLoader(notificationsFragment, true);
+    }
+
 
     @Override
     public void onBackPressed() {
-        ((DrawerLayout)findViewById(R.id.drawerLayout)).closeDrawer(GravityCompat.START);
-        if(!homeFragment.isVisible()){
+        ((DrawerLayout) findViewById(R.id.drawerLayout)).closeDrawer(GravityCompat.START);
+        if (!homeFragment.isVisible()) {
             onBackClick(findViewById(R.id.ivBack));
-        }else if (binding.bottomNavigation.getSelectedItemId() != R.id.menu_home) {
+        } else if (binding.bottomNavigation.getSelectedItemId() != R.id.menu_home) {
             loadHomeFragment();
         } else {
             super.onBackPressed();
@@ -197,6 +225,7 @@ public class BaseScreenActivity extends AppCompatActivity {
     public void onBackClick(View view) {
         loadHomeFragment();
     }
+
 
 
 }

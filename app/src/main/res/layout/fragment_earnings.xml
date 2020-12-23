@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/toolbar_backgound">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_layout_bg">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tablayoutEarnings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?actionBarSize"
+                app:tabIndicatorColor="@color/viewall_text_color"
+                app:tabIndicatorHeight="1.5dp"
+                app:tabInlineLabel="true"
+                app:tabSelectedTextColor="@color/viewall_text_color"
+                app:tabTextAppearance="@style/TextAppearanceForTabLayout"
+                app:tabTextColor="@color/colorTextDark" />
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPagerEarning"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@id/tablayoutEarnings" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</layout>
+

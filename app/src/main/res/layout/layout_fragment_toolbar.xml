@@ -52,6 +52,20 @@
                 android:fontFamily="@font/nunit_sans_bold"
                 android:textColor="@color/colorWhite"
                 android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/ivFilter"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_gravity="end"
+                android:visibility="gone"
+                android:onClick="onFilterClick"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_filter"
+                app:tint="@color/colorWhite" />
+
         </RelativeLayout>
 
     </RelativeLayout>

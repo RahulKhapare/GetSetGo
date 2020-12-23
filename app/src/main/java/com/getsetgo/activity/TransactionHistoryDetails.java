@@ -29,6 +29,10 @@ public class TransactionHistoryDetails extends AppCompatActivity {
 
     private void init() {
 
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Transaction History");
+        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
+
+
 
         binding.btnGoBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,5 +40,9 @@ public class TransactionHistoryDetails extends AppCompatActivity {
                 onBackPressed();
             }
         });
+    }
+
+    public static void onFilterClick(View view){
+
     }
 }
