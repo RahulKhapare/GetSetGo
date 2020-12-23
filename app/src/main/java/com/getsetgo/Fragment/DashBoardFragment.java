@@ -3,29 +3,25 @@ package com.getsetgo.Fragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.core.view.GravityCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
-import com.getsetgo.activity.TotalUserActivity;
 import com.getsetgo.databinding.FragmentDashboardBinding;
-import com.getsetgo.databinding.FragmentTotalearningBinding;
 
 public class DashBoardFragment extends Fragment {
 
     FragmentDashboardBinding binding;
+    TotalUsersFragment totalUsersFragment;
 
 
     public DashBoardFragment() {
@@ -84,19 +80,29 @@ public class DashBoardFragment extends Fragment {
         binding.rlTotalUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), TotalUserActivity.class);
-                intent.putExtra("titleText", "Total User");  // pass your values and retrieve them in the other Activity using keyName
-                startActivity(intent);
+                loadTotalFragment("Total User",v);
             }
         });
 
         binding.rlTotalDirectUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), TotalUserActivity.class);
-                intent.putExtra("titleText", "Total Direct User");  // pass your values and retrieve them in the other Activity using keyName
-                startActivity(intent);
+                loadTotalFragment("Total Direct User",v);
             }
         });
+    }
+
+    private void loadTotalFragment(String title,View v){
+        Bundle bundle = new Bundle();
+        bundle.putString("titleText", title);
+        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        totalUsersFragment = new TotalUsersFragment();
+        totalUsersFragment.setArguments(bundle);
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, totalUsersFragment)
+                .addToBackStack(null)
+                .commit();
+
     }
 }

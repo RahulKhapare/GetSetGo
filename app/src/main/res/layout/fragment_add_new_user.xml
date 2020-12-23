@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/toolbar_backgound">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/main_layout_bg">
+            <!---->
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nestedScroll"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_above="@+id/rlSave"
+                android:layout_marginTop="30dp"
+                android:fillViewport="true"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_sans_semibold"
+                            android:text="Register As"
+                            android:textColor="@color/colorTextDark"
+                            android:textSize="18sp">
+
+                        </TextView>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radioIndividual"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorTextDark"
+                                android:checked="true"
+                                android:fontFamily="@font/nunito_sans_semibold"
+                                android:text="Individual"
+                                android:textSize="18sp">
+
+                            </RadioButton>
+
+                            <RadioButton
+                                android:id="@+id/radioCompany"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:backgroundTint="@color/colorTextDark"
+                                android:fontFamily="@font/nunito_sans_semibold"
+                                android:text="Company"
+                                android:textSize="18sp">
+
+                            </RadioButton>
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="?actionBarSize"
+                        android:layout_marginTop="20dp"
+                        android:textColorHint="@color/colorTextHint">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etFirstName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorTextDark"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:hint="First Name"
+                            android:imeOptions="actionNext"
+                            android:inputType="textCapWords"
+                            android:textColor="@color/colorTextDark"
+                            android:textColorHint="@color/colorTextHint" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="?actionBarSize"
+                        android:layout_marginTop="20dp"
+                        android:textColorHint="@color/colorTextHint">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etLastName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorTextDark"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:hint="Last Name"
+                            android:imeOptions="actionNext"
+                            android:inputType="textCapWords"
+                            android:textColor="@color/colorTextDark"
+                            android:textColorHint="@color/colorTextHint" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="?actionBarSize"
+                        android:layout_marginTop="20dp"
+                        android:textColorHint="@color/colorTextHint">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorTextDark"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:hint="Email"
+                            android:imeOptions="actionNext"
+                            android:inputType="textEmailAddress"
+                            android:textColor="@color/colorTextDark"
+                            android:textColorHint="@color/colorTextHint" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="20dp"
+                        android:weightSum="10">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="2.8"
+                            android:layout_height="?actionBarSize"
+                            android:textColorHint="@color/colorTextHint">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/actvIsdCode"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorTextDark"
+                                android:fontFamily="@font/nunito_sans_regular"
+                                android:hint="Eg. +91"
+                                android:maxLength="4"
+                                android:drawableRight="@drawable/ic_down_arrow"
+                                android:imeOptions="actionNext"
+                                android:textColor="@color/colorTextDark"
+                                android:textColorHint="@color/colorTextHint" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="7"
+                            android:layout_marginLeft="10dp"
+                            android:layout_height="?actionBarSize"
+                            android:textColorHint="@color/colorTextHint">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etPhone"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorTextDark"
+                                android:fontFamily="@font/nunito_sans_regular"
+                                android:hint="Contact Number"
+                                android:imeOptions="actionNext"
+                                android:inputType="phone"
+                                android:textColor="@color/colorTextDark"
+                                android:textColorHint="@color/colorTextHint" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+                    </LinearLayout>
+
+
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="?actionBarSize"
+                        android:layout_marginTop="20dp"
+                        android:textColorHint="@color/colorTextHint">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etContactNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorTextDark"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:hint="Contact Number"
+                            android:imeOptions="actionNext"
+                            android:inputType="phone"
+                            android:textColor="@color/colorTextDark"
+                            android:textColorHint="@color/colorTextHint" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="?actionBarSize"
+                        android:layout_marginTop="20dp"
+                        android:textColorHint="@color/colorTextHint"
+                        app:passwordToggleEnabled="true">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorTextDark"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:hint="Password"
+                            android:imeOptions="actionDone"
+                            android:inputType="textPassword"
+                            android:textColor="@color/colorTextDark"
+                            android:textColorHint="@color/colorTextHint" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+            <RelativeLayout
+                android:id="@+id/rlSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/bg_button_corner"
+                android:elevation="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:id="@+id/txtSave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/button_dark_bg"
+                    android:fontFamily="@font/nunit_sans_bold"
+                    android:gravity="center"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:text="Save"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>
+

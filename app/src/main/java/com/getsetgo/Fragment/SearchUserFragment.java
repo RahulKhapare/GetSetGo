@@ -45,7 +45,7 @@ public class SearchUserFragment extends Fragment {
         binding.txtSaveNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), SearchUserIdActivity.class));
+                //startActivity(new Intent(getActivity(), SearchUserIdActivity.class));
             }
         });
     }

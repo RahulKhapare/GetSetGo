@@ -36,16 +36,6 @@
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name=".activity.CategoriesActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.ViewAllCategoriesActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
             android:name=".activity.CourseDetailsActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -67,11 +57,6 @@
 
         <activity
             android:name=".activity.UploadDocumentsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.TotalUserActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />

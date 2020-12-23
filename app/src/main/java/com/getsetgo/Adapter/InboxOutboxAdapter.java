@@ -2,16 +2,20 @@ package com.getsetgo.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.getsetgo.Fragment.ChatScreenFragment;
+import com.getsetgo.Fragment.TotalUsersFragment;
 import com.getsetgo.R;
 import com.getsetgo.activity.ChatScreenActivity;
 import com.getsetgo.databinding.FragmentInboxOutboxBinding;
@@ -22,6 +26,7 @@ public class InboxOutboxAdapter extends RecyclerView.Adapter<InboxOutboxAdapter.
 
     LayoutInboxOutboxRowBinding binding;
     Context context;
+    ChatScreenFragment chatScreenFragment;
 
     public InboxOutboxAdapter(Context context) {
         this.context = context;
@@ -41,7 +46,7 @@ public class InboxOutboxAdapter extends RecyclerView.Adapter<InboxOutboxAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, ChatScreenActivity.class));
+                loadTotalFragment(v);
             }
         });
 
@@ -60,6 +65,18 @@ public class InboxOutboxAdapter extends RecyclerView.Adapter<InboxOutboxAdapter.
 
 
         }
+    }
+
+    private void loadTotalFragment(View v){
+
+        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        chatScreenFragment = new ChatScreenFragment();
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, chatScreenFragment)
+                .addToBackStack(null)
+                .commit();
+
     }
 }
 

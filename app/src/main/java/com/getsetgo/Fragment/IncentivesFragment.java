@@ -37,7 +37,7 @@ public class IncentivesFragment extends Fragment {
         View rootView = binding.getRoot();
 
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Incentives");
-        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
+        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
 
         init();
         return rootView;

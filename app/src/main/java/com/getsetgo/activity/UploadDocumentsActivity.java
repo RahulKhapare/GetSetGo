@@ -23,7 +23,6 @@ import androidx.databinding.DataBindingUtil;
 
 import com.adoisstudio.helper.H;
 import com.getsetgo.R;
-import com.getsetgo.databinding.ActivityBankDetailsBinding;
 import com.getsetgo.databinding.ActivityUploadDocsBinding;
 import com.getsetgo.util.Click;
 import com.getsetgo.util.LoadImage;
@@ -37,7 +36,7 @@ import java.io.InputStream;
 
 public class UploadDocumentsActivity extends AppCompatActivity {
 
-    private UploadDocumentsActivity activity = this;
+    private final UploadDocumentsActivity activity = this;
     private ActivityUploadDocsBinding binding;
 
     private static final int REQUEST_GALLARY = 19;
@@ -45,8 +44,8 @@ public class UploadDocumentsActivity extends AppCompatActivity {
     private static final int READ_WRIRE = 111;
     private Uri cameraURI;
     private int click;
-    private int cameraClick = 0;
-    private int galleryClick = 1;
+    private final int cameraClick = 0;
+    private final int galleryClick = 1;
     private String imgString;
 
     @Override
@@ -152,7 +151,7 @@ public class UploadDocumentsActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+                                           String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case READ_WRIRE: {
                 if (grantResults.length > 0
