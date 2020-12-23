@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.adoisstudio.helper.H;
 
 import com.getsetgo.Fragment.AccountFragment;
+import com.getsetgo.Fragment.CourseDetailFragment;
 import com.getsetgo.Fragment.DashBoardFragment;
 import com.getsetgo.Fragment.EarningsFragment;
 import com.getsetgo.Fragment.FavouritesFragment;
@@ -56,6 +57,7 @@ public class BaseScreenActivity extends AppCompatActivity {
     IncentivesFragment incentivesFragment;
     HelpAndSupportFragment helpAndSupportFragment;
     TermsAndConditionFragment termsAndConditionFragment;
+    CourseDetailFragment courseDetailFragment;
     CheckBox cbMyEarning;
 
     @Override
@@ -200,6 +202,12 @@ public class BaseScreenActivity extends AppCompatActivity {
                 if (termsAndConditionFragment == null)
                     termsAndConditionFragment = TermsAndConditionFragment.newInstance();
                 fragmentLoader(termsAndConditionFragment, true);
+                break;
+
+                case R.id.txtBusProf:
+                if (courseDetailFragment == null)
+                    courseDetailFragment = CourseDetailFragment.newInstance();
+                fragmentLoader(courseDetailFragment, true);
                 break;
 
         }
