@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -21,6 +22,7 @@ import com.getsetgo.Adapter.ActiveCourseAdapter;
 import com.getsetgo.Adapter.BestSellingCourseAdapter;
 import com.getsetgo.Adapter.OtherCategoriesAdapter;
 import com.getsetgo.R;
+import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
@@ -29,6 +31,7 @@ public class HomeFragment extends Fragment {
     ActiveCourseAdapter activeCourseAdapter;
     OtherCategoriesAdapter otherCategoriesAdapter;
     BestSellingCourseAdapter bestSellingCourseAdapter;
+    CategoriesFragment categoriesFragment;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -38,16 +41,22 @@ public class HomeFragment extends Fragment {
         HomeFragment fragment = new HomeFragment();
         return fragment;
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         View rootView = binding.getRoot();
 
+        init();
         setupRecyclerViewForActiveCourse();
         setupRecyclerViewForOthersCategories();
         setupRecyclerViewForBestSellingCourse();
         return rootView;
+    }
+
+    private void init() {
+
     }
 
     @Override
@@ -78,6 +87,4 @@ public class HomeFragment extends Fragment {
         binding.recyclerBestSellingCources.setAdapter(bestSellingCourseAdapter);
         bestSellingCourseAdapter.notifyDataSetChanged();
     }
-
-
 }

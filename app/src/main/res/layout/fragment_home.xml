@@ -174,21 +174,42 @@
                     android:layout_marginTop="15dp" />
 
 
-                <TextView
-                    android:id="@+id/titleCategories"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:fontFamily="@font/nunit_sans_bold"
-                    android:text="Explore Other Categories"
-                    android:textColor="@color/colorTextDark"
-                    android:textSize="16sp" />
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <TextView
+                        android:id="@+id/titleCategories"
+                        android:layout_width="0dp"
+                        android:layout_weight="8"
+                        android:layout_height="22dp"
+                        android:fontFamily="@font/nunit_sans_bold"
+                        android:text="Explore Other Categories"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/txtViewAllCategories"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:gravity="end|center"
+                        android:text="View All"
+                        android:onClick="onDrawerItemClick"
+                        android:textColor="@color/viewall_text_color"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewOtherCategories"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp" />
+                    android:layout_marginTop="15dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

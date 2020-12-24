@@ -21,6 +21,7 @@ import com.adoisstudio.helper.H;
 
 import com.adoisstudio.helper.Json;
 import com.getsetgo.Fragment.AccountFragment;
+import com.getsetgo.Fragment.AddNewUserFragment;
 import com.getsetgo.Fragment.CategoriesFragment;
 import com.getsetgo.Fragment.CourseDetailFragment;
 import com.getsetgo.Fragment.DashBoardFragment;
@@ -32,6 +33,7 @@ import com.getsetgo.Fragment.IncentivesFragment;
 
 import com.getsetgo.Fragment.NotificationsFragment;
 import com.getsetgo.Fragment.SearchFragment;
+import com.getsetgo.Fragment.SearchUserIdFragment;
 import com.getsetgo.Fragment.TermsAndConditionFragment;
 
 import com.getsetgo.Fragment.TotalUsersFragment;
@@ -63,8 +65,9 @@ public class BaseScreenActivity extends AppCompatActivity {
     HelpAndSupportFragment helpAndSupportFragment;
     TermsAndConditionFragment termsAndConditionFragment;
     CategoriesFragment categoriesFragment;
-    CourseDetailFragment courseDetailFragment;
-    CheckBox cbMyEarning;
+    AddNewUserFragment addNewUserFragment;
+    SearchUserIdFragment searchUserIdFragment;
+    CheckBox cbMyEarning, cbUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +119,7 @@ public class BaseScreenActivity extends AppCompatActivity {
 
 
         checkBoxMyEarning();
-
+        checkBoxUsers();
     }
 
     private void checkBoxMyEarning() {
@@ -129,6 +132,21 @@ public class BaseScreenActivity extends AppCompatActivity {
                     llCbMyEarningExpand.setVisibility(View.VISIBLE);
                 } else {
                     llCbMyEarningExpand.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    private void checkBoxUsers() {
+        cbUsers = findViewById(R.id.cbUsers);
+        LinearLayout llCbUsers = findViewById(R.id.llCbUsersExpand);
+        cbUsers.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    llCbUsers.setVisibility(View.VISIBLE);
+                } else {
+                    llCbUsers.setVisibility(View.GONE);
                 }
             }
         });
@@ -162,11 +180,6 @@ public class BaseScreenActivity extends AppCompatActivity {
 
     public void onDrawerItemClick(View view) {
         int i = view.getId();
-
-        Bundle bundle = new Bundle();
-        Json json = new Json();
-        String string = null;
-        int it;
         switch (i) {
             case R.id.txtDashboard:
                 if (dashBoardFragment == null)
@@ -214,24 +227,22 @@ public class BaseScreenActivity extends AppCompatActivity {
                 fragmentLoader(termsAndConditionFragment, true);
                 break;
 
-            case R.id.txtsettings:
+            case R.id.txtViewAllCategories:
                 if (categoriesFragment == null)
                     categoriesFragment = CategoriesFragment.newInstance();
                 fragmentLoader(categoriesFragment, true);
                 break;
 
-            case R.id.txtBusProf:
-                if (courseDetailFragment == null)
-                    string = P.baseUrl + "series_check/" + json.getString(P.series_slug) + "/" + json.getString(P.video_slug);
-                it = json.getInt(P.time);
-                it *= 1000;
+            case R.id.txtAddUser:
+                if (addNewUserFragment == null)
+                    addNewUserFragment = AddNewUserFragment.newInstance();
+                fragmentLoader(addNewUserFragment, true);
+                break;
 
-                bundle.putString(P.url, string);
-                bundle.putInt("videoProgress", it);
-
-                courseDetailFragment = CourseDetailFragment.newInstance();
-                courseDetailFragment.setArguments(bundle);
-                fragmentLoader(courseDetailFragment, true);
+            case R.id.txtOrganizationChart:
+                if (searchUserIdFragment == null)
+                    searchUserIdFragment = SearchUserIdFragment.newInstance();
+                fragmentLoader(searchUserIdFragment, true);
                 break;
 
         }

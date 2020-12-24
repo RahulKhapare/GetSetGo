@@ -2,6 +2,7 @@ package com.getsetgo.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,7 @@ public class CategoriesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_categories, container, false);
         View rootView = binding.getRoot();
-        init();
+        init(rootView);
         BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
         return rootView;
     }
@@ -49,8 +50,9 @@ public class CategoriesFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
-    private void init() {
+    private void init(View view) {
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Categories");
+
         binding.txtSmartSchoolViewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,6 +92,25 @@ public class CategoriesFragment extends Fragment {
         setupRecyclerViewForCategories(binding.recyclerViewArt);
         setupRecyclerViewForCategories(binding.recyclerViewTechnology);
         setupRecyclerViewForCategories(binding.recyclerViewCreInn);
+
+
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener( new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey( View v, int keyCode, KeyEvent event )
+            {
+                if( keyCode == KeyEvent.KEYCODE_BACK )
+                {
+                    return getFragmentManager().popBackStackImmediate();
+                }
+                return false;
+            }
+        });
+
+
+
     }
 
     private void setupRecyclerViewForCategories(RecyclerView recyclerView) {

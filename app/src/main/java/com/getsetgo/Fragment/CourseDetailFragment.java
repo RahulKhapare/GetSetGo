@@ -149,6 +149,9 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
     private void init(View view) {
 
 
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Course Details");
+        BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
+
         recyclerViewFeedback = view.findViewById(R.id.recyclerViewFeedback);
         txtMoreFeedback = view.findViewById(R.id.txtMoreFeedback);
         recyclerViewLecture = view.findViewById(R.id.recyclerViewLecture);

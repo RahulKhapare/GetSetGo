@@ -49,21 +49,6 @@ public class ViewAllCategoriesFragment extends Fragment {
 
         setupRecyclerViewForViewAllCategories(binding.recyclerViewAllCategory);
 
-        view.setFocusableInTouchMode(true);
-        view.requestFocus();
-        view.setOnKeyListener( new View.OnKeyListener()
-        {
-            @Override
-            public boolean onKey( View v, int keyCode, KeyEvent event )
-            {
-                if( keyCode == KeyEvent.KEYCODE_BACK )
-                {
-                    return getFragmentManager().popBackStackImmediate();
-                }
-                return false;
-            }
-        } );
-
     }
 
     private void setupRecyclerViewForViewAllCategories(RecyclerView recyclerView) {

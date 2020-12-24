@@ -16,6 +16,14 @@ import com.getsetgo.databinding.FragmentSearchUseridBinding;
 public class SearchUserIdFragment extends Fragment {
 
     FragmentSearchUseridBinding binding;
+
+    public SearchUserIdFragment() {
+    }
+
+    public static SearchUserIdFragment newInstance() {
+        SearchUserIdFragment fragment = new SearchUserIdFragment();
+        return fragment;
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

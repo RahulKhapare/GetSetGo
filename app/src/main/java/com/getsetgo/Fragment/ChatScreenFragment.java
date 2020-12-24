@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -89,6 +90,18 @@ public class ChatScreenFragment extends Fragment {
                 }
             }
         });
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(
+                false // default to enabled
+        ) {
+            @Override
+            public void handleOnBackPressed() {
+                getFragmentManager().popBackStackImmediate();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(
+                this, // LifecycleOwner
+                callback);
     }
 
     private void setupRecyclerViewForChats() {

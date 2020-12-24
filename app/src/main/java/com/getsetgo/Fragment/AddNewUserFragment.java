@@ -36,6 +36,14 @@ import java.util.ArrayList;
 public class AddNewUserFragment extends Fragment {
 
     FragmentAddNewUserBinding binding;
+
+    public AddNewUserFragment() {
+    }
+
+    public static AddNewUserFragment newInstance() {
+        AddNewUserFragment fragment = new AddNewUserFragment();
+        return fragment;
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

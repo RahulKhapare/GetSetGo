@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunito_sans_semibold"
             android:gravity="center"
-            android:text="Categories"
+            android:text="Smart School"
             android:textColor="@color/programme_text_color"
             android:textSize="12sp" />
 

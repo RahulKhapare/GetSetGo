@@ -1,6 +1,7 @@
 package com.getsetgo.Adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,15 +9,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.getsetgo.Fragment.ViewAllCategoriesFragment;
 import com.getsetgo.R;
+import com.getsetgo.activity.BaseScreenActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.sasank.roundedhorizontalprogress.RoundedHorizontalProgressBar;
 
 public class OtherCategoriesAdapter extends RecyclerView.Adapter<OtherCategoriesAdapter.OtherCategoriesViewHolder> {
 
     Context context;
+    ViewAllCategoriesFragment viewAllCategoriesFragment;
 
     public OtherCategoriesAdapter(Context context) {
         this.context = context;
@@ -31,6 +36,13 @@ public class OtherCategoriesAdapter extends RecyclerView.Adapter<OtherCategories
 
     @Override
     public void onBindViewHolder(@NonNull OtherCategoriesAdapter.OtherCategoriesViewHolder holder, int position) {
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadFragment(view,"Smart School");
+            }
+        });
 
     }
 
@@ -51,6 +63,22 @@ public class OtherCategoriesAdapter extends RecyclerView.Adapter<OtherCategories
             txtOtherCategories = itemView.findViewById(R.id.txtOtherCategories);
             imvOtherCategories = itemView.findViewById(R.id.imvOtherCategories);
         }
+    }
+    private void loadFragment(View v,String title){
+        Bundle bundle = new Bundle();
+        BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
+        BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);
+        BaseScreenActivity.binding.incFragmenttool.content.setVisibility(View.VISIBLE);
+        BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
+        bundle.putString("subTitle", title);
+        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        viewAllCategoriesFragment = new ViewAllCategoriesFragment();
+        viewAllCategoriesFragment.setArguments(bundle);
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, viewAllCategoriesFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
 
