@@ -80,6 +80,7 @@
                                 android:layout_height="match_parent"
                                 android:background="#99000000"
                                 android:clickable="true"
+                                android:onClick="onPlayClick"
                                 android:padding="100dp"
                                 android:src="@drawable/ic_play" />
 

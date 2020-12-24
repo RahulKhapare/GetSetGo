@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -17,6 +18,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,11 +27,15 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -54,12 +60,11 @@ import com.getsetgo.Adapter.CurriculumLectureAdapter;
 import com.getsetgo.Adapter.StudentsFeedbackAdapter;
 import com.getsetgo.Model.CountryCode;
 import com.getsetgo.Others.CustomVideoView;
-import com.getsetgo.Others.VideoControllerForCourse;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
+
 import com.getsetgo.activity.CourseDetailsActivity;
 import com.getsetgo.activity.SplashActivity;
-import com.getsetgo.databinding.FragmentAddNewUserBinding;
 import com.getsetgo.util.App;
 import com.getsetgo.util.Click;
 import com.getsetgo.util.P;
@@ -67,6 +72,7 @@ import com.getsetgo.util.Validation;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static android.content.Context.AUDIO_SERVICE;
 
@@ -83,6 +89,8 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
 
     TextView[] t;
     TextView[] tC;
+    ImageView imageView;
+    public static boolean videoIsRunning;
 
 
     //private CustomMediaController customMediaController;
@@ -129,6 +137,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_course_details, container, false);
         init(v);
+        videoInit(v);
         return v;
     }
 
@@ -136,6 +145,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
+
     private void init(View view) {
 
 
@@ -145,6 +155,8 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         llCourseIncludes = view.findViewById(R.id.llCourseIncludes);
         llLearn = view.findViewById(R.id.llLearn);
         TextView txtDesc = view.findViewById(R.id.txtDesc);
+
+        imageView = v.findViewById(R.id.imageView);
 
         txtDesc.setText(R.string.dummy_text);
 
@@ -175,6 +187,13 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
 
                 // }
 
+            }
+        });
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onPlayClick();
             }
         });
 
@@ -295,14 +314,6 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
 
 
                 return true;
-            }
-        });
-
-        ImageView imageView = v.findViewById(R.id.imageView);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                  onPlayIconClick();
             }
         });
 
@@ -443,7 +454,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
                 }).run("hitAddOrRemoveFavouriteApi");*//*
     }
 */
-    public void onPlayIconClick() {
+    public void onPlayClick() {
        /* Api.newApi(this, checkUrl).addJson(new Json())
                 .setMethod(Api.GET)
                 .onHeaderRequest(this)
@@ -458,7 +469,10 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
                         if (json.getInt(P.is_purchased) == 1) {*/
                             /*if (!startFromPreviousPosition)
                                 videoProgress = 0;*/
-        ((FrameLayout) v.getParent()).setVisibility(View.GONE);
+       // ((FrameLayout) v.getParent()).setVisibility(View.GONE);
+        FrameLayout fl = v.findViewById(R.id.fL);
+        fl.setVisibility(View.GONE);
+
 
         v.findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
                             /*customMediaController = new CustomMediaController(this);
@@ -478,7 +492,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
             v.findViewById(R.id.progressBar).setVisibility(View.GONE);
             H.log("onPrepared", "isExecuted");
 
-            videoController = new VideoControllerForCourse(getActivity());
+            videoController = new VideoControllerForCourse(getContext());
             videoController.setTotalTimeOfVideo();
             //hitVideoProgressApi(videoProgress);
         });
@@ -585,7 +599,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
                         customVideoView.stopPlayback();
                         if (mediaPlayer != null)
                             mediaPlayer.release();
-                        onPlayIconClick();
+                        onPlayClick();
                     }
 
                     count++;
@@ -754,7 +768,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
 
                 v.findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
 
-                if (VideoControllerForCourse.videoIsRunning)
+                if (videoIsRunning)
                     customVideoView.start();
             }
 
@@ -777,7 +791,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
             v.findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
 
             videoProgress = 0;
-            onPlayIconClick();
+            onPlayClick();
 
             if (videoController != null)
                 videoController.handlePlayPause(true);
@@ -988,7 +1002,289 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
     }
 
 
+    public class VideoControllerForCourse implements SeekBar.OnSeekBarChangeListener {
+        private final Context context;
+        private final CustomVideoView customVideoView;
+        private final FrameLayout parentLayout;
+        public ImageView setting, zoom, back, playPause, forward;
+        private final SeekBar seekBar;
+        private final TextView time;
+        private final TextView totalTime;
+        private final LinearLayout videoControllerLayout;
+
+        public VideoControllerForCourse(Context context) {
+            this.context = context;
+            customVideoView = v.findViewById(R.id.customVideoView);
+            parentLayout = v.findViewById(R.id.videoParentLayout);
+
+            videoControllerLayout = v.findViewById(R.id.videoControllerLayout);
+            handleVisibilityOfVideoController();
+
+            setting = videoControllerLayout.findViewById(R.id.settingImageView);
+            zoom = videoControllerLayout.findViewById(R.id.zoomImageView);
+            zoom.setVisibility(View.GONE);
+            back = videoControllerLayout.findViewById(R.id.backImageView);
+            playPause = videoControllerLayout.findViewById(R.id.ppImageView);
+            forward = videoControllerLayout.findViewById(R.id.forwardImageView);
+            seekBar = videoControllerLayout.findViewById(R.id.seekBar);
+            time = videoControllerLayout.findViewById(R.id.timeTextView);
+            totalTime = videoControllerLayout.findViewById(R.id.totalTimeTextView);
+
+            RelativeLayout relativeLayout = videoControllerLayout.findViewById(R.id.imageViewContainer);
+            for (int i = 0; i < relativeLayout.getChildCount(); i++)
+                relativeLayout.getChildAt(i).setOnClickListener(this::onClick);
+
+            seekBar.setOnSeekBarChangeListener(this);
+            //customVideoView.setOnClickListener(this::onClick);
+        }
 
 
+        public void setTotalTimeOfVideo() {
+            int i = customVideoView.getDuration();
 
+            seekBar.setMax(i);
+
+            String string = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(i),
+                    TimeUnit.MILLISECONDS.toMinutes(i) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(i)),
+                    TimeUnit.MILLISECONDS.toSeconds(i) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(i)));
+
+            string = string.substring(string.indexOf(":") + 1);
+
+            totalTime.setText(string);
+        }
+
+        public void setBufferedVideoProgress() {
+            int i = customVideoView.getBufferPercentage();
+            i = i * customVideoView.getDuration();
+            i /= 100;
+            seekBar.setSecondaryProgress(i);
+        }
+
+        public void setSeekBarProgress() {
+            seekBar.setProgress(customVideoView.getCurrentPosition());
+        }
+
+        public void onClick(View view) {
+            int i = view.getId();
+
+            switch (i) {
+                case R.id.settingImageView:
+                    onSettingIconClick();
+                    break;
+
+                case R.id.zoomImageView:
+                    handleZoomInAndOut(view);
+                    break;
+
+                case R.id.backImageView:
+                    forwardBy10sec(false);
+                    break;
+
+                case R.id.ppImageView:
+                    handlePlayPause(false);
+                    handleVisibilityOfVideoController();
+                    break;
+
+                case R.id.forwardImageView:
+                    forwardBy10sec(true);
+                    break;
+
+           /* case R.id.customVideoView:
+                handleVisibilityOfVideoController();
+                break;*/
+            }
+        }
+
+        public void handleVisibilityOfVideoController() {
+            videoControllerLayout.setVisibility(View.VISIBLE);
+
+            videoControllerLayout.postDelayed(() -> {
+                if (customVideoView.isPlaying())
+                    videoControllerLayout.setVisibility(View.GONE);
+            }, 3210);
+        }
+
+        private void handleZoomInAndOut(View view) {
+            String string = view.getTag().toString();
+
+            if (string.equalsIgnoreCase("zoomIn")) {
+                ((BaseScreenActivity) context).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                view.setTag("zoomOut");
+
+            } else {
+                ((BaseScreenActivity) context).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                view.setTag("zoomIn");
+            }
+        }
+
+        private void onSettingIconClick() {
+            if (isTrailer) {
+                showPopUp(trailerVideoResolutionList,trailerVideoUrlList);
+                H.log("isTrailer", "true");
+            } else {
+                showPopUp(fullVideoResolutionList,fullVideoUrlList);
+                H.log("isTrailer", "false");
+            }
+        }
+
+        private void forwardBy10sec(boolean bool) {
+            int i = customVideoView.getCurrentPosition();
+            if (bool) {
+                i += 10000;
+                customVideoView.seekTo(i);
+                seekBar.setProgress(i);
+            } else {
+                i -= 10000;
+                customVideoView.seekTo(i);
+                seekBar.setProgress(i);
+            }
+        }
+
+        public void handlePlayPause(boolean isVideoChanged) {
+            if (customVideoView.isPlaying() && !isVideoChanged) {
+                customVideoView.pause();
+                playPause.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_play_arrow_black_24dp));
+                videoIsRunning = false;
+            } else {
+                customVideoView.start();
+                playPause.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_pause_black_24dp));
+                videoIsRunning = true;
+            }
+
+        }
+
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            //H.log("fromUserIs", fromUser + "");
+
+            if (fromUser) {
+                customVideoView.seekTo(progress);
+                //((CourseDetailsActivity)context).hitVideoProgressApi(customVideoView.getCurrentPosition() / 1000.0f);
+
+                if (videoControllerLayout.getVisibility() != View.VISIBLE)
+                    handleVisibilityOfVideoController();
+            }
+        /*else if (progress>0 && progress<1230)
+            ((CourseDetailsActivity)context).hitVideoProgressApi(customVideoView.getCurrentPosition() / 1000.0f);*/
+
+            String string = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(progress),
+                    TimeUnit.MILLISECONDS.toMinutes(progress) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(progress)),
+                    TimeUnit.MILLISECONDS.toSeconds(progress) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(progress)));
+
+            string = string.substring(string.indexOf(":") + 1);
+
+            // if (string.contains(":00"))
+            //((CourseDetailsActivity)context).hitVideoProgressApi(customVideoView.getCurrentPosition() / 1000.0f);
+
+            time.setText(string);
+
+            string = string.substring(string.lastIndexOf(":") + 1);
+            H.log("stringIs", string);
+            progress = Integer.parseInt(string);
+       /* if (progress%10 == 0)
+            ((CourseDetailsActivity)context).hitVideoProgressApi(customVideoView.getCurrentPosition() / 1000.0f);*/
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            //((CourseDetailsActivity)context).hitVideoProgressApi(customVideoView.getCurrentPosition() / 1000.0f);
+            H.log("onStopTrackingTouch", "isCalled");
+        }
+    }
+
+    public class CustomMediaControllerForCourse extends MediaController implements View.OnClickListener {
+        public ImageButton imageButton;
+        private final Context context;
+
+        public CustomMediaControllerForCourse(Context context) {
+            super(context);
+            this.context = context;
+        }
+
+        @Override
+        public void setAnchorView(View view) {
+       /* ViewParent viewParent = view.getParent();
+        if (viewParent instanceof LinearLayout)
+        {
+
+            LinearLayout.LayoutParams  layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            view.setLayoutParams(layoutParams);
+            H.log("parentIs",""+((LinearLayout) viewParent).getChildCount());
+        }
+        else if (viewParent instanceof FrameLayout)
+        {
+            FrameLayout.LayoutParams  layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            view.setLayoutParams(layoutParams);
+            H.log("parentIs",""+((FrameLayout) viewParent).getChildCount());
+        }*/
+
+            super.setAnchorView(view);
+
+            ImageButton imageButton = setUpImageButton("fullScreen", context.getResources().getDrawable(R.drawable.ic_fullscreen_black_24dp));
+            this.imageButton = imageButton;
+
+            int i = (int) H.convertDpToPixel(30, context);
+            //int marginButton = (int)H.convertDpToPixel(30,context);
+
+            LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+            layoutParams.gravity = Gravity.END;
+
+            layoutParams.setMargins(0, 0, i, i);
+            addView(imageButton, layoutParams);
+            imageButton.setOnClickListener(this);
+
+            layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+            ImageButton settingButton = setUpImageButton("setting", context.getResources().getDrawable(R.drawable.ic_settings_black_24dp));
+            layoutParams.gravity = Gravity.START;
+            layoutParams.setMargins(i, 0, 0, i);
+            addView(settingButton, layoutParams);
+            settingButton.setOnClickListener(this);
+        }
+
+        private ImageButton setUpImageButton(String tag, Drawable drawable) {
+            ImageButton imageButton;
+
+            imageButton = new ImageButton(context);
+            imageButton.setTag(tag);
+
+            imageButton.setImageDrawable(drawable);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                imageButton.setForegroundGravity(Gravity.CENTER_VERTICAL);
+            }
+            imageButton.setBackgroundColor(context.getResources().getColor(R.color.transparent));
+
+            return imageButton;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (v.getTag().equals("fullScreen")) {
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+                   getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                else {
+                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                }
+
+                //((CourseDetailsActivity) context).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+            } else if (v.getTag().equals("setting")) {
+                try {
+                    if (isTrailer)
+                        showPopUp(CourseDetailsActivity.trailerVideoResolutionList, CourseDetailsActivity.trailerVideoUrlList);
+                    else
+                        showPopUp(CourseDetailsActivity.fullVideoResolutionList, CourseDetailsActivity.fullVideoUrlList);
+
+                } catch (Exception e) {
+                    H.log("ErrorIs", e.toString());
+                    e.printStackTrace();
+                }
+
+            }
+        }
+    }
 }

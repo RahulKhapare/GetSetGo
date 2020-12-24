@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import com.adoisstudio.helper.H;
 
+import com.adoisstudio.helper.Json;
 import com.getsetgo.Fragment.AccountFragment;
 import com.getsetgo.Fragment.CourseDetailFragment;
 import com.getsetgo.Fragment.DashBoardFragment;
@@ -32,12 +33,15 @@ import com.getsetgo.Fragment.NotificationsFragment;
 import com.getsetgo.Fragment.SearchFragment;
 import com.getsetgo.Fragment.TermsAndConditionFragment;
 
+import com.getsetgo.Fragment.TotalUsersFragment;
 import com.getsetgo.Fragment.TransactionsHistoryFragment;
 import com.getsetgo.Fragment.YourCourseFragment;
 import com.getsetgo.R;
 import com.getsetgo.databinding.ActivityBaseScreenBinding;
 
 
+import com.getsetgo.util.App;
+import com.getsetgo.util.P;
 import com.getsetgo.util.WindowView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -157,6 +161,10 @@ public class BaseScreenActivity extends AppCompatActivity {
     public void onDrawerItemClick(View view) {
         int i = view.getId();
 
+        Bundle bundle = new Bundle();
+        Json json = new Json();
+        String string = null;
+        int it;
         switch (i) {
             case R.id.txtDashboard:
                 if (dashBoardFragment == null)
@@ -206,7 +214,15 @@ public class BaseScreenActivity extends AppCompatActivity {
 
             case R.id.txtBusProf:
                 if (courseDetailFragment == null)
-                    courseDetailFragment = CourseDetailFragment.newInstance();
+                    string = P.baseUrl + "series_check/" + json.getString(P.series_slug) + "/" + json.getString(P.video_slug);
+                it = json.getInt(P.time);
+                it *= 1000;
+
+                bundle.putString(P.url, string);
+                bundle.putInt("videoProgress", it);
+
+                courseDetailFragment = CourseDetailFragment.newInstance();
+                courseDetailFragment.setArguments(bundle);
                 fragmentLoader(courseDetailFragment, true);
                 break;
 
@@ -259,6 +275,7 @@ public class BaseScreenActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
 
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             binding.drawerLayout.closeDrawer(GravityCompat.START);
