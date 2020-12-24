@@ -214,7 +214,7 @@ public class BaseScreenActivity extends AppCompatActivity {
                 fragmentLoader(termsAndConditionFragment, true);
                 break;
 
-                case R.id.txtsettings:
+            case R.id.txtsettings:
                 if (categoriesFragment == null)
                     categoriesFragment = CategoriesFragment.newInstance();
                 fragmentLoader(categoriesFragment, true);
