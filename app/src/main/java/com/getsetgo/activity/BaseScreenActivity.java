@@ -21,6 +21,7 @@ import com.adoisstudio.helper.H;
 
 import com.adoisstudio.helper.Json;
 import com.getsetgo.Fragment.AccountFragment;
+import com.getsetgo.Fragment.CategoriesFragment;
 import com.getsetgo.Fragment.CourseDetailFragment;
 import com.getsetgo.Fragment.DashBoardFragment;
 import com.getsetgo.Fragment.EarningsFragment;
@@ -61,6 +62,7 @@ public class BaseScreenActivity extends AppCompatActivity {
     IncentivesFragment incentivesFragment;
     HelpAndSupportFragment helpAndSupportFragment;
     TermsAndConditionFragment termsAndConditionFragment;
+    CategoriesFragment categoriesFragment;
     CourseDetailFragment courseDetailFragment;
     CheckBox cbMyEarning;
 
@@ -212,6 +214,12 @@ public class BaseScreenActivity extends AppCompatActivity {
                 fragmentLoader(termsAndConditionFragment, true);
                 break;
 
+                case R.id.txtsettings:
+                if (categoriesFragment == null)
+                    categoriesFragment = CategoriesFragment.newInstance();
+                fragmentLoader(categoriesFragment, true);
+                break;
+
             case R.id.txtBusProf:
                 if (courseDetailFragment == null)
                     string = P.baseUrl + "series_check/" + json.getString(P.series_slug) + "/" + json.getString(P.video_slug);
@@ -239,6 +247,7 @@ public class BaseScreenActivity extends AppCompatActivity {
             binding.bottomNavigation.setVisibility(View.GONE);
             binding.incBasetool.content.setVisibility(View.GONE);
             binding.incFragmenttool.content.setVisibility(View.VISIBLE);
+            BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
         }
 
         if (fragment instanceof HomeFragment) {
@@ -248,6 +257,7 @@ public class BaseScreenActivity extends AppCompatActivity {
             binding.bottomNavigation.setSelectedItemId(R.id.menu_home);
             binding.incFragmenttool.content.setVisibility(View.GONE);
             binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
+            BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
         }
 
         if (System.currentTimeMillis() - l > 321)

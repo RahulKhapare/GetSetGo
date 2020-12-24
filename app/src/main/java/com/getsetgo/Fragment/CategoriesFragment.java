@@ -23,12 +23,25 @@ public class CategoriesFragment extends Fragment {
 
     ViewAllCategoriesFragment viewAllCategoriesFragment;
     FragmentCategoriesBinding binding;
+
+
+    public CategoriesFragment() {
+    }
+
+    public static CategoriesFragment newInstance() {
+        CategoriesFragment fragment = new CategoriesFragment();
+        return fragment;
+    }
+
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_categories, container, false);
         View rootView = binding.getRoot();
         init();
+        BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
         return rootView;
     }
 
@@ -41,7 +54,35 @@ public class CategoriesFragment extends Fragment {
         binding.txtSmartSchoolViewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadFragment(view);
+                loadFragment(view,binding.txtSmartSchool.getText().toString());
+            }
+        });
+
+        binding.txtArtViewAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadFragment(view,binding.txtArt.getText().toString());
+            }
+        });
+
+        binding.txtCreInnViewAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadFragment(view,binding.txtCreInn.getText().toString());
+            }
+        });
+
+        binding.txtProfessionalViewAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadFragment(view,binding.txtProfessional.getText().toString());
+            }
+        });
+
+        binding.txtTechnologyViewAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadFragment(view,binding.txtTechnology.getText().toString());
             }
         });
         setupRecyclerViewForCategories(binding.recyclerViewSmartSchool);
@@ -59,9 +100,12 @@ public class CategoriesFragment extends Fragment {
         commonAdapter.notifyDataSetChanged();
     }
 
-    private void loadFragment(View v){
+    private void loadFragment(View v,String title){
+        Bundle bundle = new Bundle();
+        bundle.putString("subTitle", title);
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
         viewAllCategoriesFragment = new ViewAllCategoriesFragment();
+        viewAllCategoriesFragment.setArguments(bundle);
         activity.getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, viewAllCategoriesFragment)

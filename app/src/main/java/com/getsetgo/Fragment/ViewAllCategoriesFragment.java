@@ -2,6 +2,7 @@ package com.getsetgo.Fragment;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,7 @@ public class ViewAllCategoriesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_view_all_categories, container, false);
         View rootView = binding.getRoot();
-        init();
+        init(rootView);
         return rootView;
     }
 
@@ -40,9 +41,28 @@ public class ViewAllCategoriesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void init() {
+    private void init(View view) {
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Categories");
+        String myTitle = this.getArguments().getString("subTitle");
+        BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.VISIBLE);
+        BaseScreenActivity.binding.incFragmenttool.txtSubCat.setText(myTitle);
+
         setupRecyclerViewForViewAllCategories(binding.recyclerViewAllCategory);
+
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener( new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey( View v, int keyCode, KeyEvent event )
+            {
+                if( keyCode == KeyEvent.KEYCODE_BACK )
+                {
+                    return getFragmentManager().popBackStackImmediate();
+                }
+                return false;
+            }
+        } );
 
     }
 
