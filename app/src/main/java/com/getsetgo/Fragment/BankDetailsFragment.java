@@ -102,7 +102,8 @@ public class BankDetailsFragment extends Fragment {
         binding.txtSaveNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), UploadDocumentsActivity.class));
+                UploadDocsFragment myFragment = new UploadDocsFragment();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, myFragment).commit();
             }
         });
         binding.llUploadDocs.setOnClickListener(new View.OnClickListener() {

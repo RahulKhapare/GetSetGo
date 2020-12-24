@@ -18,8 +18,10 @@ import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentNotificationsBinding;
 import com.getsetgo.databinding.FragmentTransactionsBinding;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class TransactionsHistoryFragment extends Fragment {
 
@@ -58,8 +60,11 @@ public class TransactionsHistoryFragment extends Fragment {
 
     private void init() {
         transactionViewPagerAdapter = new TransactionViewPagerAdapter(getChildFragmentManager());
+        binding.viewPager.setCurrentItem(2);
         binding.viewPager.setAdapter(transactionViewPagerAdapter);
+        binding.viewPager.setCurrentItem(2);
         binding.tablayout.setupWithViewPager(binding.viewPager);
+        binding.viewPager.setCurrentItem(2);
     }
 
 
