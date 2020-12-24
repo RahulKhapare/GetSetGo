@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -20,6 +21,7 @@ public class IncentivesFragment extends Fragment {
 
     IncentivesAdapter incentivesAdapter;
     private FragmentUserincentiveBinding binding;
+    SearchIncentivesFragment searchIncentivesFragment;
 
 
     public IncentivesFragment() {
@@ -39,7 +41,7 @@ public class IncentivesFragment extends Fragment {
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Incentives");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
 
-        init();
+        init(rootView);
         return rootView;
     }
 
@@ -50,8 +52,14 @@ public class IncentivesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void init(){
+    private void init(View view){
         setupRecyclerViewForIncentives();
+        BaseScreenActivity.binding.incFragmenttool.ivFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadFragment(view);
+            }
+        });
     }
     private void setupRecyclerViewForIncentives() {
         binding.recyclerViewIncentive.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
@@ -59,6 +67,17 @@ public class IncentivesFragment extends Fragment {
         binding.recyclerViewIncentive.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerViewIncentive.setAdapter(incentivesAdapter);
         incentivesAdapter.notifyDataSetChanged();
+    }
+
+    private void loadFragment(View v){
+        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        searchIncentivesFragment = new SearchIncentivesFragment();
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, searchIncentivesFragment)
+                .addToBackStack(null)
+                .commit();
+
     }
 
 

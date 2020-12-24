@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -27,6 +28,7 @@ public class TransactionsHistoryFragment extends Fragment {
 
     FragmentTransactionsBinding binding;
     TransactionViewPagerAdapter transactionViewPagerAdapter;
+    SearchTransactionsFragment searchTransactionsFragment;
 
 
 
@@ -60,11 +62,26 @@ public class TransactionsHistoryFragment extends Fragment {
 
     private void init() {
         transactionViewPagerAdapter = new TransactionViewPagerAdapter(getChildFragmentManager());
-        binding.viewPager.setCurrentItem(2);
         binding.viewPager.setAdapter(transactionViewPagerAdapter);
-        binding.viewPager.setCurrentItem(2);
         binding.tablayout.setupWithViewPager(binding.viewPager);
-        binding.viewPager.setCurrentItem(2);
+
+        BaseScreenActivity.binding.incFragmenttool.ivFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadFragment(view);
+            }
+        });
+    }
+
+    private void loadFragment(View v){
+        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        searchTransactionsFragment = new SearchTransactionsFragment();
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, searchTransactionsFragment)
+                .addToBackStack(null)
+                .commit();
+
     }
 
 

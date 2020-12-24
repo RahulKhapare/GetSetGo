@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -25,7 +26,7 @@ public class EarningsFragment extends Fragment {
 
     FragmentEarningsBinding binding;
     MyEarningsViewPagerAdapter myEarningsViewPagerAdapter;
-
+    SearchEarningsFragment searchEarningsFragment;
 
     public EarningsFragment() {
     }
@@ -42,22 +43,48 @@ public class EarningsFragment extends Fragment {
         View rootView = binding.getRoot();
 
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("My Earnings");
-        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
+        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
 
-        init();
+        init(rootView);
         return rootView;
     }
-
 
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
-    private void init() {
+
+    private void init(View view) {
+        String tab = this.getArguments().getString("tabItem");
         myEarningsViewPagerAdapter = new MyEarningsViewPagerAdapter(getChildFragmentManager());
         binding.viewPagerEarning.setAdapter(myEarningsViewPagerAdapter);
+        if (tab.equalsIgnoreCase("Crash Course Earnings")) {
+            binding.viewPagerEarning.setCurrentItem(1);
+        } else if (tab.equalsIgnoreCase("Total Earnings")) {
+            binding.viewPagerEarning.setCurrentItem(2);
+        } else {
+            binding.viewPagerEarning.setCurrentItem(0);
+        }
         binding.tablayoutEarnings.setupWithViewPager(binding.viewPagerEarning);
+
+        BaseScreenActivity.binding.incFragmenttool.ivFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadFragment(view);
+            }
+        });
+    }
+
+    private void loadFragment(View v) {
+        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        searchEarningsFragment = new SearchEarningsFragment();
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, searchEarningsFragment)
+                .addToBackStack(null)
+                .commit();
+
     }
 
 

@@ -25,7 +25,7 @@ import com.getsetgo.databinding.FragmentAccountBinding;
 public class AccountFragment extends Fragment {
 
     FragmentAccountBinding binding;
-
+    BankDetailsFragment bankDetailsFragment;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -62,9 +62,20 @@ public class AccountFragment extends Fragment {
         binding.llBankDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BankDetailsFragment myFragment = new BankDetailsFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, myFragment).commit();
+                BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
+               loadFragment(v);
             }
         });
+    }
+
+    private void loadFragment(View v){
+        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        bankDetailsFragment = new BankDetailsFragment();
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, bankDetailsFragment)
+                .addToBackStack(null)
+                .commit();
+
     }
 }

@@ -180,6 +180,7 @@ public class BaseScreenActivity extends AppCompatActivity {
 
     public void onDrawerItemClick(View view) {
         int i = view.getId();
+        Bundle bundle = new Bundle();
         switch (i) {
             case R.id.txtDashboard:
                 if (dashBoardFragment == null)
@@ -198,9 +199,27 @@ public class BaseScreenActivity extends AppCompatActivity {
                 break;
 
             case R.id.txtEarning:
-                if (earningsFragment == null)
-                    earningsFragment = EarningsFragment.newInstance();
+                EarningsFragment earningsFragment;
+                bundle.putString("tabItem", "My Earnings");
+                earningsFragment = EarningsFragment.newInstance();
+                earningsFragment.setArguments(bundle);
                 fragmentLoader(earningsFragment, true);
+                break;
+
+            case R.id.txtCrashCourseEarning:
+                EarningsFragment crashEarning;
+                bundle.putString("tabItem", "Crash Course Earnings");
+                crashEarning = EarningsFragment.newInstance();
+                crashEarning.setArguments(bundle);
+                fragmentLoader(crashEarning, true);
+                break;
+
+            case R.id.txtTotalEaring:
+                EarningsFragment totalEarning;
+                bundle.putString("tabItem", "Total Earnings");
+                totalEarning = EarningsFragment.newInstance();
+                totalEarning.setArguments(bundle);
+                fragmentLoader(totalEarning, true);
                 break;
 
             case R.id.txtTransactions:

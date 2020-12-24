@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -22,6 +23,7 @@ public class TotalUsersFragment extends Fragment {
 
     FragmentTotalUsersBinding binding;
     TotalUserAdapter totalUserAdapter;
+    SearchUserFragment searchUserFragment;
 
     @Nullable
     @Override
@@ -44,7 +46,7 @@ public class TotalUsersFragment extends Fragment {
 
     private void init(View view) {
         setupRecyclerViewForTotalUser();
-        view.setFocusableInTouchMode(true);
+       /* view.setFocusableInTouchMode(true);
         view.requestFocus();
         view.setOnKeyListener( new View.OnKeyListener()
         {
@@ -57,7 +59,15 @@ public class TotalUsersFragment extends Fragment {
                 }
                 return false;
             }
-        } );
+        } );*/
+
+
+        BaseScreenActivity.binding.incFragmenttool.ivFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadFragment(view);
+            }
+        });
     }
 
     private void onClick() {
@@ -72,5 +82,15 @@ public class TotalUsersFragment extends Fragment {
         totalUserAdapter.notifyDataSetChanged();
     }
 
+    private void loadFragment(View v) {
+        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        searchUserFragment = new SearchUserFragment();
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, searchUserFragment)
+                .addToBackStack(null)
+                .commit();
 
+
+    }
 }
