@@ -288,6 +288,7 @@ public class BaseScreenActivity extends AppCompatActivity {
     }
 
     public void OnNotifications(View view) {
+        BaseScreenActivity.binding.incBasetool.count.setText("99");
         if (notificationsFragment == null)
             notificationsFragment = NotificationsFragment.newInstance();
         fragmentLoader(notificationsFragment, true);

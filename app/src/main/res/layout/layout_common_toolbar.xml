@@ -20,11 +20,10 @@
                 android:id="@+id/ivHamMenu"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:onClick="onHamClick"
-                android:layout_centerVertical="true"
                 android:src="@drawable/ic_ham_menu" />
-
 
 
             <ImageView
@@ -35,17 +34,41 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_splash_logo" />
 
-            <ImageView
-                android:id="@+id/ivNotify"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="OnNotifications"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="end"
-                android:onClick="OnNotifications"
-                android:layout_marginRight="20dp"
-                android:src="@drawable/ic_notification"
-                android:visibility="visible" />
+                android:layout_marginRight="12dp">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_marginRight="-15dp"
+                    android:paddingTop="2dp"
+                    app:srcCompat="@drawable/ic_notify" />
+
+                <TextView
+                    android:id="@+id/count"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="end"
+                    android:layout_toRightOf="@+id/imageView"
+                    android:background="@drawable/back_notification_count"
+                    android:gravity="center"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
+                    android:text="5"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="8sp" />
+            </RelativeLayout>
+
+
 
         </RelativeLayout>
 
