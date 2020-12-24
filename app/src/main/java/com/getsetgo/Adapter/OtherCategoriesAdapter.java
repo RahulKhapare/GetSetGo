@@ -71,6 +71,7 @@ public class OtherCategoriesAdapter extends RecyclerView.Adapter<OtherCategories
         BaseScreenActivity.binding.incFragmenttool.content.setVisibility(View.VISIBLE);
         BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
         bundle.putString("subTitle", title);
+        bundle.putBoolean("isFromHome", true);
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
         viewAllCategoriesFragment = new ViewAllCategoriesFragment();
         viewAllCategoriesFragment.setArguments(bundle);

@@ -90,18 +90,22 @@ public class ChatScreenFragment extends Fragment {
                 }
             }
         });
+    }
 
-        OnBackPressedCallback callback = new OnBackPressedCallback(
-                false // default to enabled
-        ) {
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                getFragmentManager().popBackStackImmediate();
+                // Handle the back button event
+
+                if(getFragmentManager().getBackStackEntryCount() > 0){
+                    getFragmentManager().popBackStackImmediate();
+                }
             }
         };
-        requireActivity().getOnBackPressedDispatcher().addCallback(
-                this, // LifecycleOwner
-                callback);
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+        super.onCreate(savedInstanceState);
     }
 
     private void setupRecyclerViewForChats() {

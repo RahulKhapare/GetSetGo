@@ -38,6 +38,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -139,6 +140,22 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         init(v);
         videoInit(v);
         return v;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+
+                if(getFragmentManager().getBackStackEntryCount() > 0){
+                    getFragmentManager().popBackStackImmediate();
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+        super.onCreate(savedInstanceState);
     }
 
     @Override

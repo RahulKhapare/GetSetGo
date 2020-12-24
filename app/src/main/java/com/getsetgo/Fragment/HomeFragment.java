@@ -31,7 +31,6 @@ public class HomeFragment extends Fragment {
     ActiveCourseAdapter activeCourseAdapter;
     OtherCategoriesAdapter otherCategoriesAdapter;
     BestSellingCourseAdapter bestSellingCourseAdapter;
-    CategoriesFragment categoriesFragment;
 
     public HomeFragment() {
         // Required empty public constructor

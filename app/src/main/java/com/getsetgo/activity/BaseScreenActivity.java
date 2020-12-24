@@ -2,12 +2,14 @@ package com.getsetgo.activity;
 
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -68,6 +70,7 @@ public class BaseScreenActivity extends AppCompatActivity {
     AddNewUserFragment addNewUserFragment;
     SearchUserIdFragment searchUserIdFragment;
     CheckBox cbMyEarning, cbUsers;
+    OnBackPressedCallback onBackPressedCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +79,25 @@ public class BaseScreenActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_base_screen);
         init();
     }
-
     private void init() {
+
+        onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    binding.drawerLayout.closeDrawer(GravityCompat.START);
+                } else/* if (!homeFragment.isVisible()) {
+                    onBackClick(findViewById(R.id.ivBack));
+                } else*/ if (binding.bottomNavigation.getSelectedItemId() != R.id.menu_home) {
+                    loadHomeFragment();
+                } else {
+                    //super.onBackPressed();
+                    finish();
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback( this, onBackPressedCallback);
+
         if (SplashActivity.deviceHeight == 0)
             SplashActivity.deviceHeight = H.getDeviceHeight(this);
         if (SplashActivity.deviceWidth == 0)
@@ -172,6 +192,7 @@ public class BaseScreenActivity extends AppCompatActivity {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
                     .commit();
             return true;
         }
@@ -294,7 +315,7 @@ public class BaseScreenActivity extends AppCompatActivity {
             l = System.currentTimeMillis();
         else
             return;
-        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.anim_enter, R.anim.anim_exit).replace(R.id.fragment_container, fragment).commit();
+        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.anim_enter, R.anim.anim_exit).addToBackStack(null).replace(R.id.fragment_container, fragment).commit();
     }
 
 
@@ -314,7 +335,7 @@ public class BaseScreenActivity extends AppCompatActivity {
     }
 
 
-    @Override
+   /* @Override
     public void onBackPressed() {
 
 
@@ -328,12 +349,23 @@ public class BaseScreenActivity extends AppCompatActivity {
             //super.onBackPressed();
             finish();
         }
-    }
+    }*/
 
     public void onBackClick(View view) {
 
         loadHomeFragment();
 
+    }
+
+
+    public static void callBack(){
+        binding.incBasetool.content.setVisibility(View.VISIBLE);
+        binding.incBasetool.ivHamMenu.setTag("0");
+        binding.bottomNavigation.setVisibility(View.VISIBLE);
+        binding.bottomNavigation.setSelectedItemId(R.id.menu_home);
+        binding.incFragmenttool.content.setVisibility(View.GONE);
+        binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
+        BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
     }
 
 
