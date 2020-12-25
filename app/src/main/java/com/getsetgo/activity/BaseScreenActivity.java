@@ -79,7 +79,11 @@ public class BaseScreenActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_base_screen);
         init();
     }
+
     private void init() {
+
+        cbUsers = findViewById(R.id.cbUsers);
+        cbMyEarning = findViewById(R.id.cbMyEarning);
 
         onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
@@ -96,7 +100,7 @@ public class BaseScreenActivity extends AppCompatActivity {
                 }
             }
         };
-        getOnBackPressedDispatcher().addCallback( this, onBackPressedCallback);
+        getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
 
         if (SplashActivity.deviceHeight == 0)
             SplashActivity.deviceHeight = H.getDeviceHeight(this);
@@ -143,13 +147,13 @@ public class BaseScreenActivity extends AppCompatActivity {
     }
 
     private void checkBoxMyEarning() {
-        cbMyEarning = findViewById(R.id.cbMyEarning);
         LinearLayout llCbMyEarningExpand = findViewById(R.id.llCbMyEarningExpand);
         cbMyEarning.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     llCbMyEarningExpand.setVisibility(View.VISIBLE);
+                    isCollapse(cbUsers);
                 } else {
                     llCbMyEarningExpand.setVisibility(View.GONE);
                 }
@@ -158,18 +162,30 @@ public class BaseScreenActivity extends AppCompatActivity {
     }
 
     private void checkBoxUsers() {
-        cbUsers = findViewById(R.id.cbUsers);
         LinearLayout llCbUsers = findViewById(R.id.llCbUsersExpand);
         cbUsers.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     llCbUsers.setVisibility(View.VISIBLE);
+                    isCollapse(cbMyEarning);
                 } else {
                     llCbUsers.setVisibility(View.GONE);
                 }
             }
         });
+    }
+
+    public void onFavouriteClick(View view){
+        int i = view.getId();
+        switch (i){
+            case R.id.llFavourite:
+                FavouritesFragment fragment = new FavouritesFragment();
+                binding.bottomNavigation.setSelectedItemId(R.id.menu_favourites);
+                loadFragment(fragment, true);
+                break;
+        }
+
     }
 
 
@@ -214,6 +230,12 @@ public class BaseScreenActivity extends AppCompatActivity {
                 fragmentLoader(accountFragment, true);
                 break;
             case R.id.txtNotifications:
+                if (notificationsFragment == null)
+                    notificationsFragment = NotificationsFragment.newInstance();
+                fragmentLoader(notificationsFragment, true);
+                break;
+
+            case R.id.llNotification:
                 if (notificationsFragment == null)
                     notificationsFragment = NotificationsFragment.newInstance();
                 fragmentLoader(notificationsFragment, true);
@@ -302,13 +324,7 @@ public class BaseScreenActivity extends AppCompatActivity {
         }
 
         if (fragment instanceof HomeFragment) {
-            binding.incBasetool.content.setVisibility(View.VISIBLE);
-            binding.incBasetool.ivHamMenu.setTag("0");
-            binding.bottomNavigation.setVisibility(View.VISIBLE);
-            binding.bottomNavigation.setSelectedItemId(R.id.menu_home);
-            binding.incFragmenttool.content.setVisibility(View.GONE);
-            binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
-            BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
+            callBack();
         }
 
         if (System.currentTimeMillis() - l > 321)
@@ -358,7 +374,7 @@ public class BaseScreenActivity extends AppCompatActivity {
     }
 
 
-    public static void callBack(){
+    public static void callBack() {
         binding.incBasetool.content.setVisibility(View.VISIBLE);
         binding.incBasetool.ivHamMenu.setTag("0");
         binding.bottomNavigation.setVisibility(View.VISIBLE);
@@ -366,6 +382,10 @@ public class BaseScreenActivity extends AppCompatActivity {
         binding.incFragmenttool.content.setVisibility(View.GONE);
         binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
+    }
+
+    private void isCollapse(CheckBox checkBox) {
+        checkBox.setChecked(false);
     }
 
 

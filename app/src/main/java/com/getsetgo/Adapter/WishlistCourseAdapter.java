@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.daimajia.swipe.SwipeLayout;
 import com.getsetgo.R;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.sasank.roundedhorizontalprogress.RoundedHorizontalProgressBar;
 
 public class WishlistCourseAdapter extends RecyclerView.Adapter<WishlistCourseAdapter.WishlistCourseViewHolder> {
 

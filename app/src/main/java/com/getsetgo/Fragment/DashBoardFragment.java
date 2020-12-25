@@ -16,15 +16,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
-import com.adoisstudio.helper.H;
-import com.getsetgo.IOnBackPressed;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentDashboardBinding;
-
-import java.util.List;
-
 public class DashBoardFragment extends Fragment {
 
     FragmentDashboardBinding binding;

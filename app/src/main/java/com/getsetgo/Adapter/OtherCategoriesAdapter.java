@@ -16,7 +16,6 @@ import com.getsetgo.Fragment.ViewAllCategoriesFragment;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.sasank.roundedhorizontalprogress.RoundedHorizontalProgressBar;
 
 public class OtherCategoriesAdapter extends RecyclerView.Adapter<OtherCategoriesAdapter.OtherCategoriesViewHolder> {
 

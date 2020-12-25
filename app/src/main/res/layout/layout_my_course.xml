@@ -68,7 +68,7 @@
                     android:textColor="@color/colorTextDark"
                     android:textSize="12sp" />
 
-                <com.sasank.roundedhorizontalprogress.RoundedHorizontalProgressBar
+                <ProgressBar
                     android:id="@+id/progress_barCourse"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="194dp"
@@ -78,8 +78,7 @@
                     android:maxHeight="12dp"
                     android:minHeight="12dp"
                     android:progress="30"
-                    app:backgroundColor="@color/progress_back_color"
-                    app:progressColor="@color/progress_color"/>
+                    android:progressDrawable="@drawable/progress_bar_rounded"/>
 
 
                 <TextView

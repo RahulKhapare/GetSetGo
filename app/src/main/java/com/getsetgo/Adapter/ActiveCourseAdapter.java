@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -14,8 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.getsetgo.R;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.sasank.roundedhorizontalprogress.ProgressBarAnimation;
-import com.sasank.roundedhorizontalprogress.RoundedHorizontalProgressBar;
 
 public class ActiveCourseAdapter extends RecyclerView.Adapter<ActiveCourseAdapter.ActiveCourseViewHolder> {
 
@@ -46,7 +45,7 @@ public class ActiveCourseAdapter extends RecyclerView.Adapter<ActiveCourseAdapte
 
         TextView txtStatus,txtActiveProgram,txtCountStudents,txtTech;
         RoundedImageView imvActiveCourse;
-        RoundedHorizontalProgressBar progressActiveCourse;
+        ProgressBar progressActiveCourse;
 
 
         public ActiveCourseViewHolder(@NonNull View itemView) {

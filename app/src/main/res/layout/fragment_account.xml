@@ -32,12 +32,13 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginTop="12dp">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
+                        <com.makeramen.roundedimageview.RoundedImageView
                             android:id="@+id/cvProfile"
                             android:layout_width="74dp"
                             android:layout_height="74dp"
+                            app:riv_corner_radius="35dp"
                             android:layout_centerInParent="true"
                             android:src="@drawable/ic_profile_holder" />
 
@@ -136,6 +137,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_weight="3.33"
                                     android:gravity="center"
+                                    android:onClick="onFavouriteClick"
                                     android:orientation="vertical">
 
                                     <ImageView
@@ -169,6 +171,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_weight="3.33"
                                     android:gravity="center"
+                                    android:onClick="onDrawerItemClick"
                                     android:orientation="vertical">
 
                                     <ImageView
