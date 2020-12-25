@@ -14,9 +14,7 @@ import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Base64;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -27,24 +25,17 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.adoisstudio.helper.H;
-import com.getsetgo.Adapter.NotificationAdapter;
-import com.getsetgo.Model.NotificationModel;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
-import com.getsetgo.activity.UploadDocumentsActivity;
 import com.getsetgo.databinding.FragmentBankDetailsBinding;
-import com.getsetgo.databinding.FragmentNotificationsBinding;
 import com.getsetgo.util.Click;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
 
 public class BankDetailsFragment extends Fragment {
 

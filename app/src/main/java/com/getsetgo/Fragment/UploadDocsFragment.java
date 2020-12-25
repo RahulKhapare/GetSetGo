@@ -22,14 +22,13 @@ import android.view.Window;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.adoisstudio.helper.H;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
-import com.getsetgo.activity.UploadDocumentsActivity;
-import com.getsetgo.databinding.FragmentBankDetailsBinding;
 import com.getsetgo.databinding.FragmentUploadDocsBinding;
 import com.getsetgo.util.Click;
 
@@ -125,9 +124,19 @@ public class UploadDocsFragment extends Fragment {
     }
 
     private void getPermission() {
-        ActivityCompat.requestPermissions(getActivity(),
-                new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                READ_WRIRE);
+        int permissionCheck = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    READ_WRIRE);
+        } else {
+            //Do your work
+            if (click == cameraClick) {
+                openCamera();
+            } else if (click == galleryClick) {
+                openGallery();
+            }
+        }
     }
 
     private void init() {

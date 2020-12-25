@@ -14,9 +14,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,8 +21,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -44,7 +39,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GestureDetectorCompat;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -53,23 +47,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
-import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.Session;
-import com.getsetgo.Adapter.CountryCodeAdapter;
 import com.getsetgo.Adapter.CurriculumLectureAdapter;
 import com.getsetgo.Adapter.StudentsFeedbackAdapter;
-import com.getsetgo.Model.CountryCode;
 import com.getsetgo.Others.CustomVideoView;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 
-import com.getsetgo.activity.CourseDetailsActivity;
 import com.getsetgo.activity.SplashActivity;
 import com.getsetgo.util.App;
-import com.getsetgo.util.Click;
 import com.getsetgo.util.P;
-import com.getsetgo.util.Validation;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -1295,9 +1283,9 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
             } else if (v.getTag().equals("setting")) {
                 try {
                     if (isTrailer)
-                        showPopUp(CourseDetailsActivity.trailerVideoResolutionList, CourseDetailsActivity.trailerVideoUrlList);
+                        showPopUp(trailerVideoResolutionList,trailerVideoUrlList);
                     else
-                        showPopUp(CourseDetailsActivity.fullVideoResolutionList, CourseDetailsActivity.fullVideoUrlList);
+                        showPopUp(fullVideoResolutionList,fullVideoUrlList);
 
                 } catch (Exception e) {
                     H.log("ErrorIs", e.toString());

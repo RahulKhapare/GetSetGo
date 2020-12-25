@@ -8,7 +8,6 @@ import com.adoisstudio.helper.H;
 import com.adoisstudio.helper.JsonList;
 import com.getsetgo.Others.VideoActivity;
 import com.getsetgo.activity.BaseScreenActivity;
-import com.getsetgo.activity.CourseDetailsActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,13 +27,13 @@ public class App extends Application {
         context.startActivity(intent);
     }
 
-    public void startMyCourseActivity(Context context, String string, int videoProgress) {
+   /* public void startMyCourseActivity(Context context, String string, int videoProgress) {
         Intent intent = new Intent(context, CourseDetailsActivity.class);
         intent.putExtra(P.url, string);
         intent.putExtra("videoProgress", videoProgress);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(intent);
-    }
+    }*/
 
     public static void startHomeActivity(Context context) {
         Intent intent = new Intent(context, BaseScreenActivity.class);

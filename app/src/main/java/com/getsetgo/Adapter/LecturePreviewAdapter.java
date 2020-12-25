@@ -42,12 +42,12 @@ public class LecturePreviewAdapter extends RecyclerView.Adapter<LecturePreviewAd
         holder.txtPreview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Json json = new Json();
+              /*Json json = new Json();
                 String string = P.baseUrl + "series_check/" + json.getString(P.series_slug) + "/" + json.getString(P.video_slug);
                 int i = json.getInt(P.time);
                 i *= 1000;
 
-                App.app.startVideoActivity(context, string, i);
+                App.app.startVideoActivity(context, string, i);*/
             }
         });
 

@@ -1,42 +1,25 @@
 package com.getsetgo.Fragment;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.adoisstudio.helper.H;
 import com.getsetgo.Adapter.ChatAdapter;
-import com.getsetgo.Adapter.CountryCodeAdapter;
-import com.getsetgo.Model.CountryCode;
 import com.getsetgo.Model.ResponseMessage;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
-import com.getsetgo.activity.ChatScreenActivity;
-import com.getsetgo.databinding.ActivityChatScreenBinding;
-import com.getsetgo.databinding.FragmentAddNewUserBinding;
+
 import com.getsetgo.databinding.FragmentChatScreenrBinding;
-import com.getsetgo.util.Click;
 import com.getsetgo.util.Utilities;
-import com.getsetgo.util.Validation;
 
 import java.util.ArrayList;
 import java.util.List;

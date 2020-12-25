@@ -1,26 +1,18 @@
 package com.getsetgo.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.getsetgo.Fragment.ChatScreenFragment;
-import com.getsetgo.Fragment.TotalUsersFragment;
 import com.getsetgo.R;
-import com.getsetgo.activity.ChatScreenActivity;
-import com.getsetgo.databinding.FragmentInboxOutboxBinding;
 import com.getsetgo.databinding.LayoutInboxOutboxRowBinding;
-import com.makeramen.roundedimageview.RoundedImageView;
 
 public class InboxOutboxAdapter extends RecyclerView.Adapter<InboxOutboxAdapter.InboxOutViewHolder> {
 
