@@ -1,5 +1,10 @@
 package com.getsetgo.activity;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -7,23 +12,32 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 
+import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
 
 import com.adoisstudio.helper.Json;
+import com.adoisstudio.helper.LoadingDialog;
+import com.adoisstudio.helper.MessageBox;
+import com.adoisstudio.helper.Session;
 import com.getsetgo.Fragment.AccountFragment;
 import com.getsetgo.Fragment.AddNewUserFragment;
+import com.getsetgo.Fragment.BankDetailsFragment;
 import com.getsetgo.Fragment.CategoriesFragment;
 import com.getsetgo.Fragment.CourseDetailFragment;
 import com.getsetgo.Fragment.DashBoardFragment;
@@ -71,6 +85,7 @@ public class BaseScreenActivity extends AppCompatActivity {
     SearchUserIdFragment searchUserIdFragment;
     CheckBox cbMyEarning, cbUsers;
     OnBackPressedCallback onBackPressedCallback;
+    private LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +128,7 @@ public class BaseScreenActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment fragment = null;
+                Bundle bundle = null;
                 boolean isHide = false;
                 switch (item.getItemId()) {
                     case R.id.menu_home:
@@ -133,7 +149,10 @@ public class BaseScreenActivity extends AppCompatActivity {
                         break;
 
                     case R.id.menu_Account:
+                        bundle = new Bundle();
+                        bundle.putBoolean("isFromBottom", true);
                         fragment = new AccountFragment();
+                        fragment.setArguments(bundle);
                         isHide = true;
                         break;
                 }
@@ -176,9 +195,10 @@ public class BaseScreenActivity extends AppCompatActivity {
         });
     }
 
-    public void onFavouriteClick(View view){
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void onFavouriteClick(View view) {
         int i = view.getId();
-        switch (i){
+        switch (i) {
             case R.id.llFavourite:
                 FavouritesFragment fragment = new FavouritesFragment();
                 binding.bottomNavigation.setSelectedItemId(R.id.menu_favourites);
@@ -204,6 +224,7 @@ public class BaseScreenActivity extends AppCompatActivity {
             binding.incFragmenttool.content.setVisibility(View.GONE);
             binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         }
+
         if (fragment != null) {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -226,7 +247,9 @@ public class BaseScreenActivity extends AppCompatActivity {
                 break;
             case R.id.txtAccount:
                 if (accountFragment == null)
-                    accountFragment = AccountFragment.newInstance();
+                    bundle.putBoolean("isFromBottom", false);
+                accountFragment = AccountFragment.newInstance();
+                accountFragment.setArguments(bundle);
                 fragmentLoader(accountFragment, true);
                 break;
             case R.id.txtNotifications:
@@ -307,6 +330,10 @@ public class BaseScreenActivity extends AppCompatActivity {
                 fragmentLoader(searchUserIdFragment, true);
                 break;
 
+            case R.id.txtLogout:
+                onLogout();
+                break;
+
         }
         ((DrawerLayout) findViewById(R.id.drawerLayout)).closeDrawer(GravityCompat.START);
     }
@@ -321,6 +348,7 @@ public class BaseScreenActivity extends AppCompatActivity {
             binding.incBasetool.content.setVisibility(View.GONE);
             binding.incFragmenttool.content.setVisibility(View.VISIBLE);
             BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
+            BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         }
 
         if (fragment instanceof HomeFragment) {
@@ -386,6 +414,59 @@ public class BaseScreenActivity extends AppCompatActivity {
 
     private void isCollapse(CheckBox checkBox) {
         checkBox.setChecked(false);
+    }
+
+    private void callLogOutApi() {
+        loadingDialog = new LoadingDialog(activity);
+        Json json = new Json();
+
+        Api.newApi(activity, P.baseUrl + "logout").setMethod(Api.POST)
+                .onLoading(isLoading -> {
+                    if (!isDestroyed()) {
+                        if (isLoading)
+                            loadingDialog.show("loading...");
+                        else
+                            loadingDialog.hide();
+                    }
+                })
+                .onError(() ->
+                        MessageBox.showOkMessage(this, "Message", "Failed to login. Please try again", () -> {
+                        }))
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        loadingDialog.dismiss();
+                        if (Json1.getInt(P.status) == 0) {
+                            H.showMessage(activity, Json1.getString(P.err));
+                        } else {
+                            String message = Json1.getString(P.msg);
+                            Json1 = Json1.getJson(P.userdata);
+
+                            App.BackToLogin(activity);
+                            finish();
+                        }
+                    }
+
+                }).run("logout");
+    }
+
+    public void onLogout() {
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        adb.setMessage("Do you really want to log out?");
+        adb.setTitle("Alert");
+        adb.setPositiveButton("Yes", (dialog, which) ->
+        {
+           /* Session session = new Session(this);
+            boolean bool = session.getBool("isViewed");// for intro of video player
+
+            session.clear();
+
+            if (bool)
+                session.addBool("isViewed",true);*/
+
+            callLogOutApi();
+        });
+        adb.setNegativeButton("No", null);
+        adb.show();
     }
 
 

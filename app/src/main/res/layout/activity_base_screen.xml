@@ -39,6 +39,14 @@
                 android:layout_below="@+id/rlTool" />
 
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorBlueGetSetGo"
+                android:layout_below="@id/fragment_container"
+                android:layout_above="@id/bottom_navigation"/>
+
+
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottom_navigation"
                 android:layout_width="match_parent"
@@ -49,7 +57,12 @@
                 app:itemTextColor="@drawable/item_selector"
                 app:itemIconSize="22dp"
                 app:labelVisibilityMode="labeled"
-                app:menu="@menu/navigation" />
+                app:menu="@menu/navigation"/>
+
+          <!--  <include android:id="@+id/bottom_navigation"
+                layout="@layout/layout_common"/>-->
+
+
 
         </RelativeLayout>
 

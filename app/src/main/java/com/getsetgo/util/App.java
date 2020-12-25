@@ -8,6 +8,7 @@ import com.adoisstudio.helper.H;
 import com.adoisstudio.helper.JsonList;
 import com.getsetgo.Others.VideoActivity;
 import com.getsetgo.activity.BaseScreenActivity;
+import com.getsetgo.activity.LoginActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +38,12 @@ public class App extends Application {
 
     public static void startHomeActivity(Context context) {
         Intent intent = new Intent(context, BaseScreenActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        context.startActivity(intent);
+    }
+
+    public static void BackToLogin(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(intent);
     }

@@ -50,7 +50,7 @@ import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private LoginActivity activity = this;
+    private final LoginActivity activity = this;
     private ActivityLoginBinding binding;
     private CallbackManager callbackManager;
     private static final String EMAIL = "email";
@@ -103,12 +103,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
-                //if (checkValidation()){
-                Intent intent = new Intent(activity, BaseScreenActivity.class);
+                if (checkValidation()){
+                    callLoginApi();
+               /* Intent intent = new Intent(activity, BaseScreenActivity.class);
                 startActivity(intent);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                finish();
-                //}
+                finish();*/
+                }
             }
         });
         binding.txtSignUp.setOnClickListener(new View.OnClickListener() {
@@ -136,6 +137,12 @@ public class LoginActivity extends AppCompatActivity {
                 setUpGoogle();
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //loadingDialog.dismiss();
     }
 
     private void setUpFaceBookLogIn() {
@@ -249,6 +256,9 @@ public class LoginActivity extends AppCompatActivity {
     private void callLoginApi() {
         loadingDialog = new LoadingDialog(activity);
         Json json = new Json();
+        json.addString(P.email, binding.etxEmailAddress.getText().toString());
+        json.addString(P.password, binding.etxPassword.getText().toString());
+
         Api.newApi(activity, P.baseUrl + "login").addJson(json).setMethod(Api.POST)
                 .onLoading(isLoading -> {
                     if (!isDestroyed()) {
@@ -263,10 +273,12 @@ public class LoginActivity extends AppCompatActivity {
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
+                        loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(activity, Json1.getString(P.err));
                         } else {
                             Json1 = Json1.getJson(P.data);
+                            Json1 = Json1.getJson(P.userdata);
                             String token = Json1.getString(P.token);
                             new Session(activity).addString(P.token, "");
                             App.authToken = token;

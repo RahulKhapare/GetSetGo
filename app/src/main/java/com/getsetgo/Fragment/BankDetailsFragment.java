@@ -50,7 +50,7 @@ public class BankDetailsFragment extends Fragment {
     private final int cameraClick = 0;
     private final int galleryClick = 1;
     private String imgString = "";
-
+boolean isFromBottom;
 
     public BankDetailsFragment() {
     }
@@ -68,7 +68,7 @@ public class BankDetailsFragment extends Fragment {
 
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Enter Bank Details");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
-
+        isFromBottom = getArguments().getBoolean("isFromBottom");
         init(rootView);
         return rootView;
     }
@@ -81,7 +81,11 @@ public class BankDetailsFragment extends Fragment {
                 // Handle the back button event
 
                 if(getFragmentManager().getBackStackEntryCount() > 0){
-                    getFragmentManager().popBackStackImmediate();
+                    if(isFromBottom){
+                        getFragmentManager().popBackStackImmediate();
+                        BaseScreenActivity.binding.bottomNavigation.setVisibility(View.VISIBLE);
+                        BaseScreenActivity.binding.bottomNavigation.setSelectedItemId(R.id.menu_Account);
+                    }
                 }
             }
         };

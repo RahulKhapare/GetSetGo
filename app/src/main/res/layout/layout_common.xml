@@ -1,14 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rlProfile"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/rlCur"
-    android:layout_marginTop="10dp"
-    android:gravity="center">
+    xmlns:tools="http://schemas.android.com/tools">
 
-</RelativeLayout>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bottomCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        app:cardElevation="3dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/lL1"
+                android:layout_width="wrap_content"
+                android:layout_height="?actionBarSize"
+                android:orientation="horizontal"
+                android:weightSum="5">
+
+                <LinearLayout
+                    android:id="@+id/llHome"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:tag="1"
+                    android:onClick="onBottomIconClick"
+                    android:orientation="vertical">
+
+                    <View
+                        android:id="@+id/viewHome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="2dp"
+                        android:background="@color/colorBlueGetSetGo"
+                        android:visibility="visible" />
+
+
+                    <ImageView
+                        android:id="@+id/homeIv"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/ic_home_menu"
+                        app:tint="@color/colorBlueGetSetGo" />
+
+                    <TextView
+                        android:id="@+id/txtHome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/nunit_sans_bold"
+                        android:text="Home"
+                        android:textColor="@color/colorBlueGetSetGo"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:tag="2"
+                    android:onClick="onBottomIconClick"
+                    android:orientation="vertical">
+
+                    <View
+                        android:id="@+id/viewSearch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="2dp"
+                        android:background="@color/colorBlueGetSetGo" />
+
+
+                    <ImageView
+                        android:id="@+id/searchIv"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/ic_search_menu" />
+
+                    <TextView
+                        android:id="@+id/txtSearch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/nunit_sans_bold"
+                        android:text="Search"
+                        android:textColor="@color/colorTextHint"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llCourse"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:tag="3"
+                    android:onClick="onBottomIconClick"
+
+                    android:orientation="vertical">
+
+                    <View
+                        android:id="@+id/viewCourse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="2dp"
+                        android:background="@color/colorBlueGetSetGo" />
+
+
+                    <ImageView
+                        android:id="@+id/courseIv"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/ic_your_course_menu" />
+
+                    <TextView
+                        android:id="@+id/txtYourCourse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/nunit_sans_bold"
+                        android:text="Your Course"
+                        android:textColor="@color/colorTextHint"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llFav"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:tag="4"
+                    android:onClick="onBottomIconClick"
+                    android:orientation="vertical">
+
+                    <View
+                        android:id="@+id/viewFav"
+                        android:layout_width="wrap_content"
+                        android:layout_height="2dp"
+                        android:background="@color/colorBlueGetSetGo" />
+
+
+                    <ImageView
+                        android:id="@+id/favouriteIv"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/ic_favourites_menu" />
+
+                    <TextView
+                        android:id="@+id/txtFavourites"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/nunit_sans_bold"
+                        android:text="Favourites"
+                        android:textColor="@color/colorTextHint"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llAccount"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:tag="5"
+                    android:onClick="onBottomIconClick"
+                    android:orientation="vertical">
+
+                    <View
+                        android:id="@+id/viewAcc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="2dp"
+                        android:background="@color/colorBlueGetSetGo" />
+
+
+                    <ImageView
+                        android:id="@+id/accountIv"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/ic_account" />
+
+                    <TextView
+                        android:id="@+id/txtAccount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/nunit_sans_bold"
+                        android:text="Account"
+                        android:textColor="@color/colorTextHint"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</layout>

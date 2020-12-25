@@ -28,6 +28,7 @@ public class AccountFragment extends Fragment {
 
     FragmentAccountBinding binding;
     BankDetailsFragment bankDetailsFragment;
+    boolean isFromBottom;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -47,8 +48,7 @@ public class AccountFragment extends Fragment {
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("My Account");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         onClick();
-
-
+        isFromBottom = getArguments().getBoolean("isFromBottom");
         return rootView;
     }
 
@@ -89,7 +89,10 @@ public class AccountFragment extends Fragment {
 
     private void loadFragment(View v){
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isFromBottom",isFromBottom);
         bankDetailsFragment = new BankDetailsFragment();
+        bankDetailsFragment.setArguments(bundle);
         activity.getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, bankDetailsFragment)
