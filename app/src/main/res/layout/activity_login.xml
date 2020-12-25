@@ -82,8 +82,7 @@
                     android:layout_height="?actionBarSize"
                     android:textColorHint="@color/colorTextHint"
                     android:layout_marginTop="15dp"
-                    app:passwordToggleEnabled="true"
-                    >
+                    app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etxPassword"

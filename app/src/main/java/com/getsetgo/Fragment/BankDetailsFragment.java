@@ -85,6 +85,8 @@ boolean isFromBottom;
                         getFragmentManager().popBackStackImmediate();
                         BaseScreenActivity.binding.bottomNavigation.setVisibility(View.VISIBLE);
                         BaseScreenActivity.binding.bottomNavigation.setSelectedItemId(R.id.menu_Account);
+                    }else{
+                        getFragmentManager().popBackStackImmediate();
                     }
                 }
             }
