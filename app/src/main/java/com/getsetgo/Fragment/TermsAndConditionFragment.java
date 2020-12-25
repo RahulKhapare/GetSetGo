@@ -51,7 +51,7 @@ public class TermsAndConditionFragment extends Fragment {
             public void handleOnBackPressed() {
                 // Handle the back button event
 
-                if(getFragmentManager().getBackStackEntryCount() > 0){
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
                     getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     BaseScreenActivity.callBack();
                 }
@@ -69,7 +69,18 @@ public class TermsAndConditionFragment extends Fragment {
 
 
     private void initView() {
-        binding.txtExpandTerms.setText(getString(R.string.dummy_text));
+        binding.txtReadMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (binding.txtReadMore.getText().toString().equalsIgnoreCase(getString(R.string.read_more))) {
+                    binding.txtExpandTerms.setMaxLines(Integer.MAX_VALUE);
+                    binding.txtReadMore.setText(R.string.read_less);
+                } else {
+                    binding.txtExpandTerms.setMaxLines(5);
+                    binding.txtReadMore.setText(R.string.read_more);
+                }
+            }
+        });
         onClick();
     }
 
@@ -80,11 +91,13 @@ public class TermsAndConditionFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     binding.txtExpandTerms.setVisibility(View.VISIBLE);
+                    binding.txtReadMore.setVisibility(View.VISIBLE);
                     isCollapse(binding.cbCancellation);
                     isCollapse(binding.cbPrivacy);
                     isCollapse(binding.cbAboutUs);
                 } else {
                     binding.txtExpandTerms.setVisibility(View.GONE);
+                    binding.txtReadMore.setVisibility(View.GONE);
                 }
             }
         });

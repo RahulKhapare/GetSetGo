@@ -51,11 +51,12 @@
                                 android:layout_marginTop="13dp"
                                 android:gravity="center_vertical">
 
-                                <de.hdodenhof.circleimageview.CircleImageView
+                                <com.makeramen.roundedimageview.RoundedImageView
                                     android:id="@+id/imvViewProfile"
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
-                                    android:src="@drawable/download" />
+                                    app:riv_corner_radius="35dp"
+                                    android:src="@drawable/ic_profile_holder"/>
 
                                 <LinearLayout
                                     android:layout_width="match_parent"

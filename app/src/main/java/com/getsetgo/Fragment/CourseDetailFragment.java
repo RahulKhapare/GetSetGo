@@ -112,6 +112,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
     // following is for brightness and volume
     private ProgressBar brightnessProgressBar, volumeProgressBar;
     View v;
+    TextView txtShowMore, txtViewMore, txtDesc;
 
     public CourseDetailFragment() {
     }
@@ -137,7 +138,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
             public void handleOnBackPressed() {
                 // Handle the back button event
 
-                if(getFragmentManager().getBackStackEntryCount() > 0){
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
                     getFragmentManager().popBackStackImmediate();
                 }
             }
@@ -162,11 +163,12 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         recyclerViewLecture = view.findViewById(R.id.recyclerViewLecture);
         llCourseIncludes = view.findViewById(R.id.llCourseIncludes);
         llLearn = view.findViewById(R.id.llLearn);
-        TextView txtDesc = view.findViewById(R.id.txtDesc);
+        txtShowMore = view.findViewById(R.id.txtShowMore);
+        txtViewMore = view.findViewById(R.id.txtViewMore);
+        txtDesc = view.findViewById(R.id.txtDesc);
 
         imageView = v.findViewById(R.id.imageView);
 
-        txtDesc.setText(R.string.dummy_text);
 
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mLayoutManagerStudentFeedback = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
@@ -198,6 +200,19 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
             }
         });
 
+        txtShowMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (txtShowMore.getText().toString().equalsIgnoreCase(getString(R.string.show_more))) {
+                    txtDesc.setMaxLines(Integer.MAX_VALUE);
+                    txtShowMore.setText(R.string.show_less);
+                } else {
+                    txtDesc.setMaxLines(5);
+                    txtShowMore.setText(R.string.show_more);
+                }
+            }
+        });
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -217,6 +232,26 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         LinearLayout.LayoutParams llm = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         String[] arrCat = context.getResources().getStringArray(R.array.categoryArray);
         tC = new TextView[arrCat.length];
+
+       /*txtViewMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (txtViewMore.getText().toString().equalsIgnoreCase(getString(R.string.view_more))) {
+                    LinearLayout.LayoutParams llm = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    String[] arrCat = context.getResources().getStringArray(R.array.categoryArray);
+                    tC = new TextView[arrCat.length];
+                    textViewMore(tC, llm, typeface, arrCat, arrCat.length, llLearn,Integer.MAX_VALUE);
+                    txtViewMore.setText(R.string.view_less);
+                } else {
+                    LinearLayout.LayoutParams llm = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    String[] arrCat = context.getResources().getStringArray(R.array.categoryArray);
+                    tC = new TextView[arrCat.length];
+                    textViewMore(tC, llm, typeface, arrCat, arrCat.length, llLearn,5);
+                    txtViewMore.setText(R.string.view_more);
+                }
+            }
+        });*/
+
         textViewMore(tC, llm, typeface, arrCat, arrCat.length, llLearn);
     }
 
@@ -477,7 +512,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
                         if (json.getInt(P.is_purchased) == 1) {*/
                             /*if (!startFromPreviousPosition)
                                 videoProgress = 0;*/
-       // ((FrameLayout) v.getParent()).setVisibility(View.GONE);
+        // ((FrameLayout) v.getParent()).setVisibility(View.GONE);
         FrameLayout fl = v.findViewById(R.id.fL);
         fl.setVisibility(View.GONE);
 
@@ -1127,10 +1162,10 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
 
         private void onSettingIconClick() {
             if (isTrailer) {
-                showPopUp(trailerVideoResolutionList,trailerVideoUrlList);
+                showPopUp(trailerVideoResolutionList, trailerVideoUrlList);
                 H.log("isTrailer", "true");
             } else {
-                showPopUp(fullVideoResolutionList,fullVideoUrlList);
+                showPopUp(fullVideoResolutionList, fullVideoUrlList);
                 H.log("isTrailer", "false");
             }
         }
@@ -1274,7 +1309,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         public void onClick(View v) {
             if (v.getTag().equals("fullScreen")) {
                 if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
-                   getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 else {
                     getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 }
@@ -1283,9 +1318,9 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
             } else if (v.getTag().equals("setting")) {
                 try {
                     if (isTrailer)
-                        showPopUp(trailerVideoResolutionList,trailerVideoUrlList);
+                        showPopUp(trailerVideoResolutionList, trailerVideoUrlList);
                     else
-                        showPopUp(fullVideoResolutionList,fullVideoUrlList);
+                        showPopUp(fullVideoResolutionList, fullVideoUrlList);
 
                 } catch (Exception e) {
                     H.log("ErrorIs", e.toString());

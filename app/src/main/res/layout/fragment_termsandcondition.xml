@@ -53,21 +53,32 @@
 
                     </LinearLayout>
 
-                    <com.borjabravo.readmoretextview.ReadMoreTextView
+                    <TextView
                         android:id="@+id/txtExpandTerms"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="15dp"
+                        android:layout_marginBottom="7dp"
                         android:fontFamily="@font/nunito_sans_regular"
                         android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
+                        android:paddingRight="30dp"
+                        android:maxLines="5"
                         android:textColor="@color/colorTextHint60"
                         android:textSize="14sp"
                         android:visibility="gone"
-                        app:colorClickableText="@color/viewall_text_color"
-                        app:trimCollapsedText="Read less"
-                        app:trimExpandedText="Read more"
-                        app:trimLines="5" />
+                        android:text="@string/dummy_text"/>
+
+                    <TextView
+                        android:id="@+id/txtReadMore"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:textColor="@color/viewall_text_color"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        android:text="@string/read_more"/>
 
                     <View
                         android:layout_width="match_parent"

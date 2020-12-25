@@ -441,13 +441,14 @@
                             android:id="@+id/txtViewMore"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/llLearn"
+                            android:layout_below="@id/llLearn"
+                            android:fontFamily="@font/nunito_sans_semibold"
                             android:layout_marginLeft="5dp"
                             android:layout_marginTop="5dp"
-                            android:fontFamily="@font/nunit_sans_bold"
-                            android:text="View more"
                             android:textColor="@color/viewall_text_color"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:visibility="visible"
+                            android:text="@string/view_more"/>
 
                     </RelativeLayout>
 
@@ -483,7 +484,7 @@
                             android:textColor="@color/colorTextDark"
                             android:textSize="16sp" />
 
-                        <com.borjabravo.readmoretextview.ReadMoreTextView
+                        <TextView
                             android:id="@+id/txtDesc"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -493,10 +494,22 @@
                             android:fontFamily="@font/nunito_sans_regular"
                             android:textColor="@color/main_highlighttext_color"
                             android:textSize="14sp"
-                            app:colorClickableText="@color/viewall_text_color"
-                            app:trimCollapsedText="Show less"
-                            app:trimExpandedText="Show more"
-                            app:trimLines="5" />
+                            android:maxLines="5"
+                            android:text="@string/dummy_text"/>
+
+                        <TextView
+                            android:id="@+id/txtShowMore"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/txtDesc"
+                            android:fontFamily="@font/nunito_sans_semibold"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/viewall_text_color"
+                            android:textSize="12sp"
+                            android:visibility="visible"
+                            android:text="@string/show_more"/>
+
 
                     </RelativeLayout>
 
