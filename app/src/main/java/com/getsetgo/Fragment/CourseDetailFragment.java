@@ -47,6 +47,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.Session;
 import com.getsetgo.Adapter.CurriculumLectureAdapter;
@@ -127,7 +128,6 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_course_details, container, false);
         init(v);
-        videoInit(v);
         return v;
     }
 
@@ -220,6 +220,8 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
             }
         });
 
+        videoInit(view);
+
     }
 
     private void dynamicTextView(FragmentActivity context) {
@@ -299,6 +301,15 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         recyclerViewFeedback.setAdapter(studentsFeedbackAdapter);
         studentsFeedbackAdapter.notifyDataSetChanged();
     }
+
+ /*   public void PlayOnActivity(View v){
+         Json json = new Json();
+                String string = P.baseUrl + "series_check/" + json.getString(P.series_slug) + "/" + json.getString(P.video_slug);
+                int i = json.getInt(P.time);
+                i *= 1000;
+
+                App.app.startVideoActivity(getContext(), string, i);
+    }*/
 
     @SuppressLint("ClickableViewAccessibility")
     private void videoInit(View view) {

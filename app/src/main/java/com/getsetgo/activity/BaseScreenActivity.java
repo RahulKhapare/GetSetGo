@@ -63,6 +63,7 @@ import com.getsetgo.util.App;
 import com.getsetgo.util.P;
 import com.getsetgo.util.WindowView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.squareup.picasso.Picasso;
 
 
 public class BaseScreenActivity extends AppCompatActivity {
@@ -163,6 +164,26 @@ public class BaseScreenActivity extends AppCompatActivity {
 
         checkBoxMyEarning();
         checkBoxUsers();
+        try {
+            setDrawerData();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setDrawerData() throws Exception {
+        Session session = new Session(this);
+        String name = session.getString(P.name);
+        String lastName = session.getString(P.lastname);
+
+        if (name == null || name.isEmpty())
+            return;
+
+        TextView txtName = findViewById(R.id.txtName);
+        TextView txtEmail = findViewById(R.id.txtEmail);
+        txtName.setText(name + " " + lastName);
+        String email = session.getString(P.email);
+        txtEmail.setText(email);
     }
 
     private void checkBoxMyEarning() {
