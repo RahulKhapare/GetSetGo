@@ -108,6 +108,7 @@ public class SearchEarningsFragment extends Fragment {
         });
     }
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {

@@ -61,12 +61,14 @@ public class EarningsFragment extends Fragment {
         String tab = this.getArguments().getString("tabItem");
         myEarningsViewPagerAdapter = new MyEarningsViewPagerAdapter(getChildFragmentManager());
         binding.viewPagerEarning.setAdapter(myEarningsViewPagerAdapter);
+        if (tab.equalsIgnoreCase("Course Earnings")) {
+            binding.viewPagerEarning.setCurrentItem(0);
+        }
         if (tab.equalsIgnoreCase("Crash Course Earnings")) {
             binding.viewPagerEarning.setCurrentItem(1);
-        } else if (tab.equalsIgnoreCase("Total Earnings")) {
+        }
+        if (tab.equalsIgnoreCase("Total Earnings")) {
             binding.viewPagerEarning.setCurrentItem(2);
-        } else {
-            binding.viewPagerEarning.setCurrentItem(0);
         }
         binding.tablayoutEarnings.setupWithViewPager(binding.viewPagerEarning);
 

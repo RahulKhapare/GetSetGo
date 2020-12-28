@@ -1,15 +1,18 @@
 package com.getsetgo.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,7 +22,7 @@ import com.adoisstudio.helper.H;
 import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
-import com.getsetgo.Adapter.MyEarningsCommonAdapter;
+import com.getsetgo.Adapter.MyCrashCourseEarningsCommonAdapter;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentCrashCourseEarningBinding;
@@ -29,15 +32,13 @@ import com.getsetgo.util.P;
 public class MyEarnCrashCourseFragment extends Fragment {
 
     FragmentCrashCourseEarningBinding binding;
-    private LoadingDialog loadingDialog;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_crash_course_earning, container, false);
         View rootView = binding.getRoot();
-
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
-        init(rootView);
+        init();
         return rootView;
     }
 
@@ -46,13 +47,9 @@ public class MyEarnCrashCourseFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-
-    private void init(View view){
+    private void init(){
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
-        //setupRecyclerViewCrashCourse();
         callCrashCourseEarningApi();
-
-
         binding.recyclerViewCrashCourseEarning.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -68,31 +65,21 @@ public class MyEarnCrashCourseFragment extends Fragment {
 
     private void setupRecyclerViewCrashCourse() {
         binding.recyclerViewCrashCourseEarning.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        MyEarningsCommonAdapter myEarningsCommonAdapter = new MyEarningsCommonAdapter(getActivity());
+        MyCrashCourseEarningsCommonAdapter myCrashCourseEarningsCommonAdapter = new MyCrashCourseEarningsCommonAdapter(getActivity());
         binding.recyclerViewCrashCourseEarning.setItemAnimator(new DefaultItemAnimator());
-        binding.recyclerViewCrashCourseEarning.setAdapter(myEarningsCommonAdapter);
+        binding.recyclerViewCrashCourseEarning.setAdapter(myCrashCourseEarningsCommonAdapter);
     }
 
     private void callCrashCourseEarningApi() {
-        loadingDialog = new LoadingDialog(getActivity());
 
         String apiParam = "?create_date_start=" + "&create_date_end=" + "&page=" + "&per_page=" ;
 
         Api.newApi(getActivity(), P.baseUrl + "crash_course_earning" + apiParam ).setMethod(Api.GET)
-                .onLoading(isLoading -> {
-                    if (!getActivity().isDestroyed()) {
-                        if (isLoading)
-                            loadingDialog.show("loading...");
-                        else
-                            loadingDialog.hide();
-                    }
-                })
                 .onError(() ->
                         MessageBox.showOkMessage(getActivity(), "Message", "Failed to login. Please try again", () -> {
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
-                        loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(getActivity(), Json1.getString(P.err));
                         } else {
@@ -103,6 +90,23 @@ public class MyEarnCrashCourseFragment extends Fragment {
                     }
 
                 }).run("crash_course_earning");
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+
+                if(getFragmentManager().getBackStackEntryCount() > 0){
+                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    BaseScreenActivity.callBack();
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+        super.onCreate(savedInstanceState);
     }
 
 }
