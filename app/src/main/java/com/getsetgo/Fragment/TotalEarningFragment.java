@@ -33,8 +33,8 @@ public class TotalEarningFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (binding == null)
-            binding = DataBindingUtil.inflate(inflater, R.layout.fragment_totalearning, container, false);
+
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_totalearning, container, false);
         View rootView = binding.getRoot();
         init(rootView);
         return rootView;
@@ -42,16 +42,15 @@ public class TotalEarningFragment extends Fragment {
     }
 
     private void init(View view) {
-        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
-        callTotalEarningApi();
-
+        boolean isHide = this.getArguments().getBoolean("isHide");
+        if (isHide) {
+            BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        callTotalEarningApi();
-        init(view);
     }
 
     private void callTotalEarningApi() {
@@ -75,20 +74,4 @@ public class TotalEarningFragment extends Fragment {
                 }).run("total_earning");
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
-            @Override
-            public void handleOnBackPressed() {
-                // Handle the back button event
-
-                if (getFragmentManager().getBackStackEntryCount() > 0) {
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    BaseScreenActivity.callBack();
-                }
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-        super.onCreate(savedInstanceState);
-    }
 }

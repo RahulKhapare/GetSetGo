@@ -50,7 +50,7 @@ public class MyEarningFragment extends Fragment {
 
     private void init() {
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
-        callCourseEarningApi();
+
         binding.recyclerViewMyEarning.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -62,6 +62,7 @@ public class MyEarningFragment extends Fragment {
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
+        setupRecyclerViewMyEarnings();
     }
 
     private void setupRecyclerViewMyEarnings() {
@@ -93,21 +94,5 @@ public class MyEarningFragment extends Fragment {
                 }).run("course_earning");
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
-            @Override
-            public void handleOnBackPressed() {
-                // Handle the back button event
-
-                if(getFragmentManager().getBackStackEntryCount() > 0){
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    BaseScreenActivity.callBack();
-                }
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-        super.onCreate(savedInstanceState);
-    }
 
 }

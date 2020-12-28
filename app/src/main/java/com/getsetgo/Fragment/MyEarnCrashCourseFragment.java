@@ -1,32 +1,28 @@
 package com.getsetgo.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import androidx.activity.OnBackPressedCallback;
+
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
-import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
 import com.getsetgo.Adapter.MyCrashCourseEarningsCommonAdapter;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentCrashCourseEarningBinding;
-import com.getsetgo.databinding.FragmentMyearningBinding;
 import com.getsetgo.util.P;
 
 public class MyEarnCrashCourseFragment extends Fragment {
@@ -37,7 +33,6 @@ public class MyEarnCrashCourseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_crash_course_earning, container, false);
         View rootView = binding.getRoot();
-        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
         init();
         return rootView;
     }
@@ -48,8 +43,10 @@ public class MyEarnCrashCourseFragment extends Fragment {
     }
 
     private void init(){
+
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
-        callCrashCourseEarningApi();
+
+        setupRecyclerViewCrashCourse();
         binding.recyclerViewCrashCourseEarning.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -90,23 +87,6 @@ public class MyEarnCrashCourseFragment extends Fragment {
                     }
 
                 }).run("crash_course_earning");
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
-            @Override
-            public void handleOnBackPressed() {
-                // Handle the back button event
-
-                if(getFragmentManager().getBackStackEntryCount() > 0){
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    BaseScreenActivity.callBack();
-                }
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-        super.onCreate(savedInstanceState);
     }
 
 }

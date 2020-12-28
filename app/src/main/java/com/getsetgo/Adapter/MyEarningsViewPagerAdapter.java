@@ -1,5 +1,7 @@
 package com.getsetgo.Adapter;
 
+import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -18,6 +20,7 @@ public class MyEarningsViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Fragment fragment = null;
+        Bundle bundle = null;
         if (position == 0)
         {
             fragment = new MyEarningFragment();
@@ -28,7 +31,10 @@ public class MyEarningsViewPagerAdapter extends FragmentPagerAdapter {
         }
         else if (position == 2)
         {
+            bundle = new Bundle();
+            bundle.putBoolean("isHide" ,true);
             fragment = new TotalEarningFragment();
+            fragment.setArguments(bundle);
         }
         return fragment;
     }

@@ -26,10 +26,11 @@ import java.util.Date;
 public class SearchEarningsFragment extends Fragment {
 
     FragmentSearchEarningsBinding binding;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_search_earnings, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_earnings, container, false);
         View rootView = binding.getRoot();
         init();
         return rootView;
@@ -39,14 +40,31 @@ public class SearchEarningsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
-    private void init(){
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+
+                if(getFragmentManager().getBackStackEntryCount() > 0){
+                    getFragmentManager().popBackStackImmediate();
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+        super.onCreate(savedInstanceState);
+    }
+
+    private void init() {
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Search Earnings");
         initCalendar();
         binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isFormValidation()) {
-                    if(checkDateValidation()){
+                    if (checkDateValidation()) {
 
                     }
                 }
@@ -60,7 +78,8 @@ public class SearchEarningsFragment extends Fragment {
             }
         });
     }
-    private void initCalendar(){
+
+    private void initCalendar() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -77,12 +96,12 @@ public class SearchEarningsFragment extends Fragment {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        month = month+1;
+                        month = month + 1;
                         String sDate = year + "-" + month + "-" + dayOfMonth;
                         binding.etStartDate.setText(sDate);
                     }
                 }
-                        ,year,month,day);
+                        , year, month, day);
 
                 datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 datePickerDialog.show();
@@ -95,34 +114,17 @@ public class SearchEarningsFragment extends Fragment {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        month = month+1;
+                        month = month + 1;
                         String sDate = year + "-" + month + "-" + dayOfMonth;
                         binding.etEndDate.setText(formatedDate(sDate));
                     }
                 }
-                        ,eyear,emonth,eday);
+                        , eyear, emonth, eday);
 
                 datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 datePickerDialog.show();
             }
         });
-    }
-
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
-            @Override
-            public void handleOnBackPressed() {
-                // Handle the back button event
-
-                if(getFragmentManager().getBackStackEntryCount() > 0){
-                    getFragmentManager().popBackStackImmediate();
-                }
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-        super.onCreate(savedInstanceState);
     }
 
     private boolean checkDateValidation() {
@@ -144,13 +146,13 @@ public class SearchEarningsFragment extends Fragment {
         return value;
     }
 
-    private String formatedDate(String stringDate){
+    private String formatedDate(String stringDate) {
         String orderDate = stringDate;
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
             Date date = dateFormat.parse(orderDate);
             orderDate = dateFormat.format(date);
-        }catch (Exception e){
+        } catch (Exception e) {
         }
         return orderDate;
     }

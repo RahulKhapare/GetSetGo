@@ -47,7 +47,7 @@ public class EarningsFragment extends Fragment {
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("My Earnings");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
 
-        init(rootView);
+        init();
         return rootView;
     }
 
@@ -57,7 +57,7 @@ public class EarningsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void init(View view) {
+    private void init() {
         String tab = this.getArguments().getString("tabItem");
         myEarningsViewPagerAdapter = new MyEarningsViewPagerAdapter(getChildFragmentManager());
         binding.viewPagerEarning.setAdapter(myEarningsViewPagerAdapter);
@@ -80,22 +80,6 @@ public class EarningsFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
-            @Override
-            public void handleOnBackPressed() {
-                // Handle the back button event
-
-                if(getFragmentManager().getBackStackEntryCount() > 0){
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    BaseScreenActivity.callBack();
-                }
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-        super.onCreate(savedInstanceState);
-    }
 
     private void loadFragment(View v) {
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
@@ -106,6 +90,23 @@ public class EarningsFragment extends Fragment {
                 .addToBackStack(null)
                 .commit();
 
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
+                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    BaseScreenActivity.callBack();
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+        super.onCreate(savedInstanceState);
     }
 
 
