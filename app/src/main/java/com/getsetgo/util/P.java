@@ -18,7 +18,9 @@ public class P {
     public static String name = "name";
     public static String lastname = "lastname";
     public static String email = "email";
+    public static String contact = "contact";
     public static String password = "password";
+    public static String confirm_password = "confirm_password";
     public static String token = "token";
     public static String user_id = "user_id";
 
@@ -30,7 +32,6 @@ public class P {
     public static String profile_url = "profile_url";
     public static String email_id = "email_id";
     public static String mobile_no = "mobile_no";
-    public static String confirm_password = "confirm_password";
     public static String status_code = "status_code";
     public static String issue_id = "issue_id";
     public static String old_password = "old_password";

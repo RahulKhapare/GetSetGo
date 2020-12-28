@@ -287,10 +287,18 @@ public class BaseScreenActivity extends AppCompatActivity {
 
             case R.id.txtEarning:
                 EarningsFragment earningsFragment;
-                bundle.putString("tabItem", "My Earnings");
+                bundle.putString("tabItem", "Course Earnings");
                 earningsFragment = EarningsFragment.newInstance();
                 earningsFragment.setArguments(bundle);
                 fragmentLoader(earningsFragment, true);
+                break;
+
+            case R.id.txtCourseEarning:
+                EarningsFragment coursEarning;
+                bundle.putString("tabItem", "Course Earnings");
+                coursEarning = EarningsFragment.newInstance();
+                coursEarning.setArguments(bundle);
+                fragmentLoader(coursEarning, true);
                 break;
 
             case R.id.txtCrashCourseEarning:

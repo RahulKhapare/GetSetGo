@@ -1,9 +1,14 @@
 package com.getsetgo.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -14,6 +19,8 @@ import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
+import com.getsetgo.Adapter.CountryCodeAdapter;
+import com.getsetgo.Model.CountryCode;
 import com.getsetgo.R;
 import com.getsetgo.databinding.ActivitySignUpBinding;
 import com.getsetgo.util.App;
@@ -21,6 +28,8 @@ import com.getsetgo.util.Click;
 import com.getsetgo.util.P;
 import com.getsetgo.util.Validation;
 import com.getsetgo.util.WindowView;
+
+import java.util.ArrayList;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -43,6 +52,27 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void onClick() {
+
+        binding.actvIsdCode.setText("+91");
+
+        binding.actvIsdCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().isEmpty()) {
+                    binding.actvIsdCode.append("+");
+                }
+            }
+        });
+        populateIsdCode(activity, binding.actvIsdCode);
 
         binding.radioIndividual.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,13 +99,13 @@ public class SignUpActivity extends AppCompatActivity {
                     finish();
 
                     Json json = new Json();
-                    json.addString(P.name,binding.etxFirstName.getText().toString() + "");
-                    json.addString(P.lastname,binding.etxLastName.getText().toString() + "");
-                    json.addString(P.email,binding.etxEmailAddress.getText().toString() + "");
-                    json.addString(P.password,binding.etxPassword.getText().toString() + "");
-                    json.addString(P.confirm_password,binding.etxConfirmPassword.getText().toString() + "");
+                    json.addString(P.name, binding.etxFirstName.getText().toString() + "");
+                    json.addString(P.lastname, binding.etxLastName.getText().toString() + "");
+                    json.addString(P.contact, binding.etxPhone.getText().toString() + "");
+                    json.addString(P.email, binding.etxEmailAddress.getText().toString() + "");
+                    json.addString(P.password, binding.etxPassword.getText().toString() + "");
+                    json.addString(P.confirm_password, binding.etxConfirmPassword.getText().toString() + "");
                     callSignUpApi(json);
-
 
 
                 }
@@ -91,6 +121,37 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+    public void populateIsdCode(Context context, AutoCompleteTextView autoCompleteTextView) {
+        final ArrayList<CountryCode> country = new ArrayList<>();
+        CountryCode codes = new CountryCode();
+        codes.setCode("+92");
+        CountryCode codess = new CountryCode();
+        codess.setCode("+93");
+        CountryCode codeess = new CountryCode();
+        codeess.setCode("+94");
+        CountryCode coddess = new CountryCode();
+        coddess.setCode("+95");
+        country.add(codes);
+        country.add(coddess);
+        country.add(codeess);
+        country.add(codess);
+        CountryCodeAdapter countryFlagAdapter = new CountryCodeAdapter(context,
+                R.layout.activity_sign_up, R.id.lbl_name, country);
+        autoCompleteTextView.setThreshold(2);         //will start working from first character
+        autoCompleteTextView.setAdapter(countryFlagAdapter);
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (view != null) {
+                    CountryCode county = (CountryCode) view.getTag();
+                    if (county.getCode() != null) {
+                        binding.actvIsdCode.setText(county.getCode());
+                    }
+                }
+            }
+        });
+    }
+
     private boolean checkValidation() {
         boolean value = true;
         if (TextUtils.isEmpty(binding.etxFirstName.getText().toString().trim())) {
@@ -101,6 +162,15 @@ public class SignUpActivity extends AppCompatActivity {
             value = false;
         } else if (TextUtils.isEmpty(binding.etxEmailAddress.getText().toString().trim())) {
             H.showMessage(activity, "Enter email id");
+            value = false;
+        } else if (binding.actvIsdCode.getText().toString().length() < 2) {
+            H.showMessage(activity, "Enter your isd code");
+            value = false;
+        } else if (TextUtils.isEmpty(binding.etxPhone.getText().toString().trim())) {
+            H.showMessage(activity, "Enter your phone number");
+            value = false;
+        } else if (binding.etxPhone.getText().toString().length() < 10) {
+            H.showMessage(activity, "Enter valid phone number");
             value = false;
         } else if (!Validation.validEmail(binding.etxEmailAddress.getText().toString().trim())) {
             H.showMessage(activity, "Enter valid email");
@@ -148,7 +218,6 @@ public class SignUpActivity extends AppCompatActivity {
                         H.showMessage(activity, json1.getString(P.err));
                     else {
                         json1 = json1.getJson(P.data);
-                        String string = json1.getString(P.token);
                         Session session = new Session(this);
                         String token = json1.getString(P.token);
                         String user_id = json1.getString(P.user_id);
@@ -157,6 +226,7 @@ public class SignUpActivity extends AppCompatActivity {
                         session.addString(P.name, json1.getString(P.name) + "");
                         session.addString(P.lastname, json1.getString(P.lastname) + "");
                         session.addString(P.email, json1.getString(P.email) + "");
+                        session.addString(P.contact, json1.getString(P.contact) + "");
                         App.authToken = token;
                         App.user_id = user_id;
                         App.startHomeActivity(activity);

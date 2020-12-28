@@ -43,7 +43,7 @@ public class MyEarningsViewPagerAdapter extends FragmentPagerAdapter {
         String title = null;
         if (position == 0)
         {
-            title = "My Earnings";
+            title = "Course Earnings";
         }
         else if (position == 1)
         {
