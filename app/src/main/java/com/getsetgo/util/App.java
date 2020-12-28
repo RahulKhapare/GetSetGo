@@ -17,6 +17,7 @@ public class App extends Application {
 
     public static App app = new App();
     public static String authToken = "";
+    public static String user_id = "";
     public static JsonList jsonList;
 
 

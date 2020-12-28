@@ -476,12 +476,12 @@ public class BaseScreenActivity extends AppCompatActivity {
         adb.setTitle("Alert");
         adb.setPositiveButton("Yes", (dialog, which) ->
         {
-           /* Session session = new Session(this);
+            Session session = new Session(this);
             boolean bool = session.getBool("isViewed");// for intro of video player
 
             session.clear();
 
-            if (bool)
+           /* if (bool)
                 session.addBool("isViewed",true);*/
 
             callLogOutApi();

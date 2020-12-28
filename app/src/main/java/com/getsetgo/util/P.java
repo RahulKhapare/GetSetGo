@@ -13,6 +13,8 @@ public class P {
     public static String lastname = "lastname";
     public static String email = "email";
     public static String password = "password";
+    public static String token = "token";
+    public static String user_id = "user_id";
 
 
 
@@ -29,7 +31,6 @@ public class P {
     public static String data = "data";
     public static String msg = "msg";
     public static String userdata = "userdata";
-    public static String token = "token";
     public static String issue_id = "issue_id";
     public static String old_password = "old_password";
     public static String issue_master = "issue_master";

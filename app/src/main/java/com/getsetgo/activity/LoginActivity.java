@@ -281,11 +281,14 @@ public class LoginActivity extends AppCompatActivity {
                             Json1 = Json1.getJson(P.userdata);
                             Session session = new Session(this);
                             String token = Json1.getString(P.token);
-                            session.addString(P.token, "");
+                            String user_id = Json1.getString(P.user_id);
+                            session.addString(P.token, token + "");
+                            session.addString(P.user_id, user_id + "");
                             session.addString(P.name, Json1.getString(P.name) + "");
                             session.addString(P.lastname, Json1.getString(P.lastname) + "");
                             session.addString(P.email, Json1.getString(P.email) + "");
                             App.authToken = token;
+                            App.user_id = user_id;
                             App.startHomeActivity(activity);
                             finish();
                         }
