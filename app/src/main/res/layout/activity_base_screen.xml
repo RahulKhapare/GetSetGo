@@ -35,16 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/bottom_navigation"
-
                 android:layout_below="@+id/rlTool" />
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/colorBlueGetSetGo"
-                android:layout_below="@id/fragment_container"
-                android:layout_above="@id/bottom_navigation"/>
 
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -52,10 +43,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:background="@color/colorWhite"
                 app:itemIconTint="@drawable/item_selector"
+                android:background="@color/colorWhite"
                 app:itemTextColor="@drawable/item_selector"
-                app:itemIconSize="22dp"
+                app:itemIconSize="21dp"
+                app:itemBackground="@drawable/select_item_back"
                 app:labelVisibilityMode="labeled"
                 app:menu="@menu/navigation"/>
 
