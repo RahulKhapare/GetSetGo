@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+            android:id="@+id/rlEarn"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <RelativeLayout
+                android:layout_width="326dp"
+                android:layout_height="90dp"
+                android:background="@drawable/bg_dash_elevation"
+
+                android:elevation="4dp">
+
+                <ImageView
+                    android:id="@+id/imgIncome"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="25dp"
+                    android:src="@drawable/ic_income" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="25dp"
+                    android:layout_toRightOf="@+id/imgIncome">
+
+                    <TextView
+                        android:id="@+id/txtIncome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:text="5900"
+                        android:textColor="@color/colorGreen"
+                        android:textSize="26sp" />
+
+                    <TextView
+                        android:id="@+id/txtCrashCourseIncome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtIncome"
+                        android:layout_marginTop="3dp"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:text="Crash Course Income"
+                        android:textColor="@color/colorGreen"
+                        android:textSize="14sp" />
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewCrashCourseEarning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rlEarn"
+            android:layout_marginTop="15dp" />
+    </RelativeLayout>
+</layout>
+
