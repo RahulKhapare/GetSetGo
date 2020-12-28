@@ -9,6 +9,12 @@ public class P {
 
     public static String baseUrl = "https://getsetgoworld.com/dev_env/api/";
 
+
+    public static String status = "status";
+    public static String err = "err";
+    public static String data = "data";
+    public static String msg = "msg";
+    public static String userdata = "userdata";
     public static String name = "name";
     public static String lastname = "lastname";
     public static String email = "email";
@@ -25,12 +31,7 @@ public class P {
     public static String email_id = "email_id";
     public static String mobile_no = "mobile_no";
     public static String confirm_password = "confirm_password";
-    public static String status = "status";
     public static String status_code = "status_code";
-    public static String err = "err";
-    public static String data = "data";
-    public static String msg = "msg";
-    public static String userdata = "userdata";
     public static String issue_id = "issue_id";
     public static String old_password = "old_password";
     public static String issue_master = "issue_master";
