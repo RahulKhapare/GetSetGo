@@ -44,7 +44,7 @@ public class EarningsFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_earnings, container, false);
         View rootView = binding.getRoot();
 
-        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Course Earnings");
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("My Earnings");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
 
         init(rootView);
