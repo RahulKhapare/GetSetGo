@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -46,6 +47,7 @@ public class TotalEarningFragment extends Fragment {
         if (isHide) {
             BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         }
+        callTotalEarningApi();
     }
 
     @Override
@@ -67,6 +69,7 @@ public class TotalEarningFragment extends Fragment {
                         } else {
                             Json1 = Json1.getJson(P.data);
                             Session session = new Session(getActivity());
+                            Toast.makeText(getActivity(),"Total",Toast.LENGTH_SHORT).show();
 
                         }
                     }

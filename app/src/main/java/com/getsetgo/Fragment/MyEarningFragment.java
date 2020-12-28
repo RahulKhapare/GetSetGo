@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -50,7 +51,7 @@ public class MyEarningFragment extends Fragment {
 
     private void init() {
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
-
+callCourseEarningApi();
         binding.recyclerViewMyEarning.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -62,7 +63,6 @@ public class MyEarningFragment extends Fragment {
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
-        setupRecyclerViewMyEarnings();
     }
 
     private void setupRecyclerViewMyEarnings() {
@@ -88,6 +88,7 @@ public class MyEarningFragment extends Fragment {
                             Json1 = Json1.getJson(P.data);
                             Session session = new Session(getActivity());
                             setupRecyclerViewMyEarnings();
+                            Toast.makeText(getActivity(),"Course",Toast.LENGTH_SHORT).show();
                         }
                     }
 

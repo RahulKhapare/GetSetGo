@@ -29,19 +29,19 @@ public class MyEarningsViewPagerAdapter extends FragmentPagerAdapter {
         {
             fragment = new MyEarnCrashCourseFragment();
         }
-        else if (position == 2)
+      /*  else if (position == 2)
         {
             bundle = new Bundle();
             bundle.putBoolean("isHide" ,true);
             fragment = new TotalEarningFragment();
             fragment.setArguments(bundle);
-        }
+        }*/
         return fragment;
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 
     @Override
@@ -55,10 +55,10 @@ public class MyEarningsViewPagerAdapter extends FragmentPagerAdapter {
         {
             title = "Crash Course";
         }
-        else if (position == 2)
+       /* else if (position == 2)
         {
             title = "Total Earnings";
-        }
+        }*/
         return title;
     }
 }

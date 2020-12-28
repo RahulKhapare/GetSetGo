@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -46,7 +46,7 @@ public class MyEarnCrashCourseFragment extends Fragment {
 
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
 
-        setupRecyclerViewCrashCourse();
+        callCrashCourseEarningApi();
         binding.recyclerViewCrashCourseEarning.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -83,6 +83,7 @@ public class MyEarnCrashCourseFragment extends Fragment {
                             Json1 = Json1.getJson(P.data);
                             Session session = new Session(getActivity());
                             setupRecyclerViewCrashCourse();
+                            Toast.makeText(getActivity(),"Crash",Toast.LENGTH_SHORT).show();
                         }
                     }
 
