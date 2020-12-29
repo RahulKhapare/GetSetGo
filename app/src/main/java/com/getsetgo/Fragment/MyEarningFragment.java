@@ -50,7 +50,6 @@ public class MyEarningFragment extends Fragment {
     }
 
     private void init() {
-        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
 
         setupRecyclerViewMyEarnings();
         binding.recyclerViewMyEarning.addOnScrollListener(new RecyclerView.OnScrollListener() {

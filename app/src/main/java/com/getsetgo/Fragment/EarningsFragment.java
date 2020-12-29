@@ -73,16 +73,18 @@ public class EarningsFragment extends Fragment {
         binding.viewPagerEarning.setAdapter(myEarningsViewPagerAdapter);
         if (tab.equalsIgnoreCase("Course Earnings")) {
             binding.viewPagerEarning.setCurrentItem(0);
-            callCourseEarningApi(context);
+            BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
+            //callCourseEarningApi(context);
         }
         if (tab.equalsIgnoreCase("Crash Course Earnings")) {
             binding.viewPagerEarning.setCurrentItem(1);
-            callCrashCourseEarningApi(context);
+            BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
+            //callCrashCourseEarningApi(context);
         }
         if (tab.equalsIgnoreCase("Total Earnings")) {
             binding.viewPagerEarning.setCurrentItem(2);
             BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
-            callTotalEarningApi(context);
+            //callTotalEarningApi(context);
         }
         binding.tablayoutEarnings.setupWithViewPager(binding.viewPagerEarning);
 
@@ -98,12 +100,14 @@ public class EarningsFragment extends Fragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 int pos = tab.getPosition();
                 if (pos == 0) {
-                    callCourseEarningApi(context);
+                    BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
+                   // callCourseEarningApi(context);
                 } else if (pos == 1) {
-                    callCrashCourseEarningApi(context);
+                    BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
+                    //callCrashCourseEarningApi(context);
                 } else {
                     BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
-                    callTotalEarningApi(context);
+                    //callTotalEarningApi(context);
                 }
             }
 
