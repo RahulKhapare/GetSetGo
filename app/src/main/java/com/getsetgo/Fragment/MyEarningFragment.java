@@ -51,7 +51,8 @@ public class MyEarningFragment extends Fragment {
 
     private void init() {
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
-callCourseEarningApi();
+
+        setupRecyclerViewMyEarnings();
         binding.recyclerViewMyEarning.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -63,6 +64,7 @@ callCourseEarningApi();
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
+
     }
 
     private void setupRecyclerViewMyEarnings() {
@@ -72,28 +74,6 @@ callCourseEarningApi();
         binding.recyclerViewMyEarning.setAdapter(myEarningsCommonAdapter);
     }
 
-    private void callCourseEarningApi() {
-
-        String apiParam = "?create_date_start=" + "&create_date_end=" + "&page=" + "&per_page=";
-
-        Api.newApi(getActivity(), P.baseUrl + "course_earning" + apiParam).setMethod(Api.GET)
-                .onError(() ->
-                        MessageBox.showOkMessage(getActivity(), "Message", "Failed to login. Please try again", () -> {
-                        }))
-                .onSuccess(Json1 -> {
-                    if (Json1 != null) {
-                        if (Json1.getInt(P.status) == 0) {
-                            H.showMessage(getActivity(), Json1.getString(P.err));
-                        } else {
-                            Json1 = Json1.getJson(P.data);
-                            Session session = new Session(getActivity());
-                            setupRecyclerViewMyEarnings();
-                            Toast.makeText(getActivity(),"Course",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                }).run("course_earning");
-    }
 
 
 }

@@ -1,5 +1,6 @@
 package com.getsetgo.Fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
 import com.getsetgo.Adapter.MyEarningsViewPagerAdapter;
@@ -36,6 +38,7 @@ public class EarningsFragment extends Fragment {
     FragmentEarningsBinding binding;
     MyEarningsViewPagerAdapter myEarningsViewPagerAdapter;
     SearchEarningsFragment searchEarningsFragment;
+    Context context;
 
     public EarningsFragment() {
     }
@@ -50,7 +53,7 @@ public class EarningsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_earnings, container, false);
         View rootView = binding.getRoot();
-
+        context = inflater.getContext();
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("My Earnings");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
 
@@ -66,17 +69,21 @@ public class EarningsFragment extends Fragment {
 
     private void init() {
         String tab = this.getArguments().getString("tabItem");
-        myEarningsViewPagerAdapter = new MyEarningsViewPagerAdapter(getChildFragmentManager());
+        myEarningsViewPagerAdapter = new MyEarningsViewPagerAdapter(getChildFragmentManager(), context);
         binding.viewPagerEarning.setAdapter(myEarningsViewPagerAdapter);
         if (tab.equalsIgnoreCase("Course Earnings")) {
             binding.viewPagerEarning.setCurrentItem(0);
+            callCourseEarningApi(context);
         }
         if (tab.equalsIgnoreCase("Crash Course Earnings")) {
             binding.viewPagerEarning.setCurrentItem(1);
+            callCrashCourseEarningApi(context);
         }
-       /* if (tab.equalsIgnoreCase("Total Earnings")) {
+        if (tab.equalsIgnoreCase("Total Earnings")) {
             binding.viewPagerEarning.setCurrentItem(2);
-        }*/
+            BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
+            callTotalEarningApi(context);
+        }
         binding.tablayoutEarnings.setupWithViewPager(binding.viewPagerEarning);
 
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setOnClickListener(new View.OnClickListener() {
@@ -91,11 +98,12 @@ public class EarningsFragment extends Fragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 int pos = tab.getPosition();
                 if (pos == 0) {
-                    callCourseEarningApi();
+                    callCourseEarningApi(context);
                 } else if (pos == 1) {
-                    callCrashCourseEarningApi();
+                    callCrashCourseEarningApi(context);
                 } else {
-                    callTotalEarningApi();
+                    BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
+                    callTotalEarningApi(context);
                 }
             }
 
@@ -140,21 +148,31 @@ public class EarningsFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    private void callTotalEarningApi() {
+    public static void callTotalEarningApi(Context context) {
+        LoadingDialog loadingDialog = new LoadingDialog(context);
         String apiParam = "?create_date_start=" + "&create_date_end=" + "&page=" + "&per_page=";
 
-        Api.newApi(getActivity(), P.baseUrl + "total_earning" + apiParam).setMethod(Api.GET)
+        Api.newApi(context, P.baseUrl + "total_earning" + apiParam).setMethod(Api.GET)
+                .onLoading(isLoading -> {
+                    if (isLoading)
+                        loadingDialog.show("loading...");
+                    else
+                        loadingDialog.hide();
+
+                })
                 .onError(() ->
-                        MessageBox.showOkMessage(getActivity(), "Message", "Failed to login. Please try again", () -> {
+                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
+                        loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
-                            H.showMessage(getActivity(), Json1.getString(P.err));
+                            H.showMessage(context, Json1.getString(P.err));
                         } else {
-                            Json1 = Json1.getJson(P.data);
-                            Session session = new Session(getActivity());
-                            Toast.makeText(getActivity(), "Total", Toast.LENGTH_SHORT).show();
+                            //Json1 = Json1.getJson(P.data);
+                            String msg = Json1.getString(P.msg);
+                            Session session = new Session(context);
+                            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -162,45 +180,47 @@ public class EarningsFragment extends Fragment {
                 }).run("total_earning");
     }
 
-    private void callCourseEarningApi() {
+    public static void callCourseEarningApi(Context context) {
 
         String apiParam = "?create_date_start=" + "&create_date_end=" + "&page=" + "&per_page=";
 
-        Api.newApi(getActivity(), P.baseUrl + "course_earning" + apiParam).setMethod(Api.GET)
+        Api.newApi(context, P.baseUrl + "course_earning" + apiParam).setMethod(Api.GET)
                 .onError(() ->
-                        MessageBox.showOkMessage(getActivity(), "Message", "Failed to login. Please try again", () -> {
+                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
                         if (Json1.getInt(P.status) == 0) {
-                            H.showMessage(getActivity(), Json1.getString(P.err));
+                            H.showMessage(context, Json1.getString(P.err));
                         } else {
-                            Json1 = Json1.getJson(P.data);
-                            Session session = new Session(getActivity());
+                            //Json1 = Json1.getJson(P.data);
+                            String msg = Json1.getString(P.msg);
+                            Session session = new Session(context);
                             //setupRecyclerViewMyEarnings();
-                            Toast.makeText(getActivity(), "Course", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                         }
                     }
 
                 }).run("course_earning");
     }
 
-    private void callCrashCourseEarningApi() {
+    public static void callCrashCourseEarningApi(Context context) {
 
         String apiParam = "?create_date_start=" + "&create_date_end=" + "&page=" + "&per_page=";
 
-        Api.newApi(getActivity(), P.baseUrl + "crash_course_earning" + apiParam).setMethod(Api.GET)
+        Api.newApi(context, P.baseUrl + "crash_course_earning" + apiParam).setMethod(Api.GET)
                 .onError(() ->
-                        MessageBox.showOkMessage(getActivity(), "Message", "Failed to login. Please try again", () -> {
+                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
                         if (Json1.getInt(P.status) == 0) {
-                            H.showMessage(getActivity(), Json1.getString(P.err));
+                            H.showMessage(context, Json1.getString(P.err));
                         } else {
-                            Json1 = Json1.getJson(P.data);
-                            Session session = new Session(getActivity());
-                            Toast.makeText(getActivity(), "Crash", Toast.LENGTH_SHORT).show();
+                            //Json1 = Json1.getJson(P.data);
+                            String msg = Json1.getString(P.msg);
+                            Session session = new Session(context);
+                            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                         }
                     }
 

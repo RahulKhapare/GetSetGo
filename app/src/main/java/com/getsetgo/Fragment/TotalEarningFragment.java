@@ -43,11 +43,6 @@ public class TotalEarningFragment extends Fragment {
     }
 
     private void init(View view) {
-        boolean isHide = this.getArguments().getBoolean("isHide");
-        if (isHide) {
-            BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
-        }
-        callTotalEarningApi();
     }
 
     @Override
@@ -55,26 +50,5 @@ public class TotalEarningFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void callTotalEarningApi() {
-        String apiParam = "?create_date_start=" + "&create_date_end=" + "&page=" + "&per_page=";
-
-        Api.newApi(getActivity(), P.baseUrl + "total_earning" + apiParam).setMethod(Api.GET)
-                .onError(() ->
-                        MessageBox.showOkMessage(getActivity(), "Message", "Failed to login. Please try again", () -> {
-                        }))
-                .onSuccess(Json1 -> {
-                    if (Json1 != null) {
-                        if (Json1.getInt(P.status) == 0) {
-                            H.showMessage(getActivity(), Json1.getString(P.err));
-                        } else {
-                            Json1 = Json1.getJson(P.data);
-                            Session session = new Session(getActivity());
-                            Toast.makeText(getActivity(),"Total",Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-
-                }).run("total_earning");
-    }
 
 }
