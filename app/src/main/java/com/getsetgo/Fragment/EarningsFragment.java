@@ -78,18 +78,18 @@ public class EarningsFragment extends Fragment {
         if (tab.equalsIgnoreCase("Course Earnings")) {
             binding.viewPagerEarning.setCurrentItem(0);
             BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
-            callCourseEarningApi(context);
+            //callCourseEarningApi(context);
         }
         if (tab.equalsIgnoreCase("Crash Course Earnings")) {
             binding.viewPagerEarning.setCurrentItem(1);
             BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
             CrashCoursePage=1;
-            callCrashCourseEarningApi(context);
+            //callCrashCourseEarningApi(context);
         }
         if (tab.equalsIgnoreCase("Total Earnings")) {
             binding.viewPagerEarning.setCurrentItem(2);
             BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
-            callTotalEarningApi(context);
+            //callTotalEarningApi(context);
         }
         binding.tablayoutEarnings.setupWithViewPager(binding.viewPagerEarning);
 
@@ -107,13 +107,13 @@ public class EarningsFragment extends Fragment {
                 if (pos == 0) {
                     BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
                     CoursePage = 1;
-                    callCourseEarningApi(context);
+                    //callCourseEarningApi(context);
                 } else if (pos == 1) {
                     BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
-                    callCrashCourseEarningApi(context);
+                    //callCrashCourseEarningApi(context);
                 } else {
                     BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
-                    callTotalEarningApi(context);
+                    //callTotalEarningApi(context);
                 }
             }
 

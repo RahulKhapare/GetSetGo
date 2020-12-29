@@ -59,7 +59,7 @@ public class MyEarnCrashCourseFragment extends Fragment {
                 if(EarningsFragment.pos == 1) {
                     LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == 15 - 1) {
-                        EarningsFragment.callCrashCourseEarningApi(getContext());
+                       // EarningsFragment.callCrashCourseEarningApi(getContext());
                     }
                 }
             }

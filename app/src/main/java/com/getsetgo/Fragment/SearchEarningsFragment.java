@@ -77,9 +77,9 @@ public class SearchEarningsFragment extends Fragment {
                 if (isFormValidation()) {
                     if (checkDateValidation()) {
                         if (EarningsFragment.pos == 0) {
-                            callCourseEarningApi(getActivity());
+                            //callCourseEarningApi(getActivity());
                         } else if (EarningsFragment.pos == 1) {
-                            callCrashCourseEarningApi(getActivity());
+                            //callCrashCourseEarningApi(getActivity());
                         } else {
 
                         }

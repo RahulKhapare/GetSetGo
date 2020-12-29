@@ -64,7 +64,7 @@ public class MyEarningFragment extends Fragment {
                 if(EarningsFragment.pos == 0) {
                     LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == 15 - 1) {
-                        EarningsFragment.callCourseEarningApi(getContext());
+                        //EarningsFragment.callCourseEarningApi(getContext());
                     }
                 }
 
