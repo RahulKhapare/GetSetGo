@@ -59,6 +59,7 @@ public class SearchEarningsFragment extends Fragment {
 
     private void init() {
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Search Earnings");
+        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         initCalendar();
         binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override

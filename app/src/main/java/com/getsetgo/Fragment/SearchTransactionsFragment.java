@@ -61,6 +61,7 @@ public class SearchTransactionsFragment extends Fragment {
     }
     private void init() {
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Search Transaction");
+        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         bindActionType();
         bindIncomeType();
         initCalendar();

@@ -61,6 +61,7 @@ public class SearchIncentivesFragment extends Fragment {
     }
     private void init(){
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Search Incentives");
+        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         bindStatus();
         initCalendar();
 

@@ -39,6 +39,7 @@ public class SearchUserFragment extends Fragment {
 
     private void init() {
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Search User");
+        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         bindColorType();
         onClick();
     }
