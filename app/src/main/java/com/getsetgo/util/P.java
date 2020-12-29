@@ -23,6 +23,12 @@ public class P {
     public static String confirm_password = "confirm_password";
     public static String token = "token";
     public static String user_id = "user_id";
+    public static String list = "list";
+    public static String referral_income = "referral_income";
+    public static String event_income = "event_income";
+    public static String date = "date";
+    public static String num_rows = "num_rows";
+    public static String income = "income";
 
 
 

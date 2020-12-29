@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.Json;
+import com.adoisstudio.helper.JsonList;
 import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
@@ -28,11 +30,15 @@ import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentEarningsBinding;
 import com.getsetgo.databinding.FragmentNotificationsBinding;
+import com.getsetgo.util.App;
 import com.getsetgo.util.P;
 import com.getsetgo.util.Utilities;
 import com.google.android.material.tabs.TabLayout;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
+import java.util.Map;
 
 public class EarningsFragment extends Fragment {
 
@@ -40,9 +46,21 @@ public class EarningsFragment extends Fragment {
     MyEarningsViewPagerAdapter myEarningsViewPagerAdapter;
     SearchEarningsFragment searchEarningsFragment;
     Context context;
-    public static int CoursePage=1;
-    public static int CrashCoursePage=1;
+    public static int CoursePage = 1;
+    public static int CrashCoursePage = 1;
+    public static int totalEarnPage = 1;
     public static int pos;
+
+    public static JsonList courseJsonList = new JsonList();
+    public static Json courseJson = new Json();
+    public static JsonList crashcourseJsonList = new JsonList();
+    public static Json crashcourseJson = new Json();
+    public static JsonList totalEarnJsonList = new JsonList();
+    public static Json totalEarnJson = new Json();
+
+    public static boolean nextPageForCourse = true;
+    public static boolean nextPageForCrashCourse = true;
+    public static boolean nextPageForTotalEarn = true;
 
     public EarningsFragment() {
     }
@@ -72,24 +90,32 @@ public class EarningsFragment extends Fragment {
     }
 
     private void init() {
+        CoursePage = 1;
+        CrashCoursePage = 1;
+        totalEarnPage = 1;
+        nextPageForCourse = true;
+        nextPageForCrashCourse = true;
+        nextPageForTotalEarn = true;
+        courseJsonList.clear();
+        crashcourseJsonList.clear();
+        totalEarnJsonList.clear();
         String tab = this.getArguments().getString("tabItem");
         myEarningsViewPagerAdapter = new MyEarningsViewPagerAdapter(getChildFragmentManager(), context);
         binding.viewPagerEarning.setAdapter(myEarningsViewPagerAdapter);
         if (tab.equalsIgnoreCase("Course Earnings")) {
             binding.viewPagerEarning.setCurrentItem(0);
             BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
-            //callCourseEarningApi(context);
+            callCourseEarningApi(context);
         }
         if (tab.equalsIgnoreCase("Crash Course Earnings")) {
             binding.viewPagerEarning.setCurrentItem(1);
             BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
-            CrashCoursePage=1;
-            //callCrashCourseEarningApi(context);
+            callCrashCourseEarningApi(context);
         }
         if (tab.equalsIgnoreCase("Total Earnings")) {
             binding.viewPagerEarning.setCurrentItem(2);
             BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
-            //callTotalEarningApi(context);
+            callTotalEarningApi(context);
         }
         binding.tablayoutEarnings.setupWithViewPager(binding.viewPagerEarning);
 
@@ -106,14 +132,27 @@ public class EarningsFragment extends Fragment {
                 pos = tab.getPosition();
                 if (pos == 0) {
                     BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
-                    CoursePage = 1;
-                    //callCourseEarningApi(context);
+                    if (courseJsonList.size() <= 0) {
+                        callCourseEarningApi(context);
+                    } else {
+                        MyEarningFragment.setupRecyclerViewMyEarnings(getActivity(), courseJsonList);
+                        MyEarningFragment.setUpRefIncome(courseJson);
+                    }
                 } else if (pos == 1) {
                     BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
-                    //callCrashCourseEarningApi(context);
+                    if (crashcourseJsonList.size() <= 0) {
+                        callCrashCourseEarningApi(context);
+                    } else {
+                        MyEarnCrashCourseFragment.setupRecyclerViewCrashCourse(context, crashcourseJsonList);
+                        MyEarnCrashCourseFragment.setUpCrashIncome(crashcourseJson);
+                    }
                 } else {
                     BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
-                    //callTotalEarningApi(context);
+                    if (totalEarnJson != null) {
+                        callTotalEarningApi(context);
+                    } else {
+                        TotalEarningFragment.setUpTotalIncome(totalEarnJson);
+                    }
                 }
             }
 
@@ -163,18 +202,37 @@ public class EarningsFragment extends Fragment {
         String apiParam = "?create_date_start=" + "&create_date_end=" + "&page=" + "&per_page=";
 
         Api.newApi(context, P.baseUrl + "total_earning" + apiParam).setMethod(Api.GET)
+                .onHeaderRequest(App::getHeaders)
+                .onLoading(isLoading -> {
+                    if (isLoading)
+                        loadingDialog.show("loading...");
+                    else
+                        loadingDialog.hide();
+                })
                 .onError(() ->
                         MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
+                        loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(context, Json1.getString(P.err));
                         } else {
-                            //Json1 = Json1.getJson(P.data);
-                            String msg = Json1.getString(P.msg);
-                            Session session = new Session(context);
-                            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                            Json1 = Json1.getJson(P.data);
+                            int numRows = Json1.getInt(P.num_rows);
+                            JsonList jsonList = Json1.getJsonList(P.list);
+                            if (jsonList != null && !jsonList.isEmpty()) {
+                                totalEarnJsonList.addAll(jsonList);
+                                totalEarnJson = Json1;
+                                TotalEarningFragment.setUpTotalIncome(Json1);
+                                if (totalEarnJsonList.size() < numRows) {
+                                    totalEarnPage++;
+                                    nextPageForTotalEarn = true;
+                                } else {
+                                    nextPageForTotalEarn = false;
+                                }
+                            }
 
                         }
                     }
@@ -183,24 +241,44 @@ public class EarningsFragment extends Fragment {
     }
 
     public static void callCourseEarningApi(Context context) {
+        LoadingDialog loadingDialog = new LoadingDialog(context);
+        String apiParam = "?create_date_start=" + "&create_date_end=" + "&page=" + CoursePage + "&per_page=10";
 
-        String apiParam = "?create_date_start="+Utilities.getFormatDate() + "&create_date_end="+Utilities.getFormatDate() + "&page="+CoursePage + "&per_page=10";
-
-        Api.newApi(context, P.baseUrl + "course_earning" + apiParam).setMethod(Api.GET)
+        Api.newApi(context, P.baseUrl + "course_earning" + apiParam)
+                .setMethod(Api.GET)
+                .onHeaderRequest(App::getHeaders)
+                .onLoading(isLoading -> {
+                    if (isLoading)
+                        loadingDialog.show("loading...");
+                    else
+                        loadingDialog.hide();
+                })
                 .onError(() ->
                         MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
+                        loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(context, Json1.getString(P.err));
                         } else {
-                            //Json1 = Json1.getJson(P.data);
-                            String msg = Json1.getString(P.msg);
-                            Session session = new Session(context);
-                            //setupRecyclerViewMyEarnings();
-                            CoursePage++;
-                            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                            Json1 = Json1.getJson(P.data);
+                            int numRows = Json1.getInt(P.num_rows);
+                            JsonList jsonList = Json1.getJsonList(P.list);
+                            if (jsonList != null && !jsonList.isEmpty()) {
+                                courseJsonList.addAll(jsonList);
+                                courseJson = Json1;
+                                MyEarningFragment.setupRecyclerViewMyEarnings(context, courseJsonList);
+                                MyEarningFragment.setUpRefIncome(Json1);
+                                if (courseJsonList.size() < numRows) {
+                                    CoursePage++;
+                                    nextPageForCourse = true;
+                                } else {
+                                    nextPageForCourse = false;
+                                }
+                            }
+
                         }
                     }
 
@@ -210,26 +288,54 @@ public class EarningsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        CoursePage = 1;
+        CrashCoursePage = 1;
+        totalEarnPage = 1;
+
+        nextPageForCourse = true;
+        nextPageForCrashCourse = true;
+        nextPageForTotalEarn = true;
     }
 
     public static void callCrashCourseEarningApi(Context context) {
-
-        String apiParam = "?create_date_start=" + "&create_date_end=" + "&page="+CrashCoursePage + "&per_page=10";
+        LoadingDialog loadingDialog = new LoadingDialog(context);
+        String apiParam = "?create_date_start=" + "&create_date_end=" + "&page=" + CrashCoursePage + "&per_page=10";
 
         Api.newApi(context, P.baseUrl + "crash_course_earning" + apiParam).setMethod(Api.GET)
+                .onHeaderRequest(App::getHeaders)
+                .onLoading(isLoading -> {
+                    if (isLoading)
+                        loadingDialog.show("loading...");
+                    else
+                        loadingDialog.hide();
+                    loadingDialog.dismiss();
+                })
                 .onError(() ->
+
                         MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
+                        loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(context, Json1.getString(P.err));
                         } else {
-                            //Json1 = Json1.getJson(P.data);
-                            CrashCoursePage++;
-                            String msg = Json1.getString(P.msg);
-                            Session session = new Session(context);
-                            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                            Json1 = Json1.getJson(P.data);
+                            int numRows = Json1.getInt(P.num_rows);
+                            JsonList jsonList = Json1.getJsonList(P.list);
+                            if (jsonList != null && !jsonList.isEmpty()) {
+                                crashcourseJsonList.addAll(jsonList);
+                                crashcourseJson = Json1;
+                                MyEarnCrashCourseFragment.setupRecyclerViewCrashCourse(context, crashcourseJsonList);
+                                MyEarnCrashCourseFragment.setUpCrashIncome(Json1);
+                                if (crashcourseJsonList.size() < numRows) {
+                                    CrashCoursePage++;
+                                    nextPageForCrashCourse = true;
+                                } else {
+                                    nextPageForCrashCourse = false;
+                                }
+                            }
                         }
                     }
 

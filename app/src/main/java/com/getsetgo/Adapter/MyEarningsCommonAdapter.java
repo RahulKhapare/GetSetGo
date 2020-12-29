@@ -10,14 +10,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adoisstudio.helper.Json;
+import com.adoisstudio.helper.JsonList;
 import com.getsetgo.R;
+import com.getsetgo.util.P;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MyEarningsCommonAdapter extends RecyclerView.Adapter<MyEarningsCommonAdapter.MyEarningsCommonViewHolder> {
 
     Context context;
+    JsonList jsonList;
 
-    public MyEarningsCommonAdapter(Context context) {
+    public MyEarningsCommonAdapter(Context context, JsonList jsonList) {
         this.context = context;
+        this.jsonList = jsonList;
     }
 
     @NonNull
@@ -30,16 +39,22 @@ public class MyEarningsCommonAdapter extends RecyclerView.Adapter<MyEarningsComm
     @Override
     public void onBindViewHolder(@NonNull MyEarningsCommonAdapter.MyEarningsCommonViewHolder holder, int position) {
 
+
+        Json json = jsonList.get(position);
+        holder.txtAmount.setText(json.getString(P.referral_income));
+        holder.txtDate.setText(json.getString(P.date));
+
+
     }
 
     @Override
     public int getItemCount() {
-        return 15;
+        return jsonList.size();
     }
 
     public class MyEarningsCommonViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtDate,txtAmount;
+        TextView txtDate, txtAmount;
 
         public MyEarningsCommonViewHolder(@NonNull View itemView) {
             super(itemView);

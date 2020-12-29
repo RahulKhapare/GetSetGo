@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
@@ -29,7 +30,7 @@ import com.getsetgo.util.P;
 
 public class TotalEarningFragment extends Fragment {
 
-    FragmentTotalearningBinding binding;
+    public static FragmentTotalearningBinding binding;
 
     @Nullable
     @Override
@@ -48,6 +49,13 @@ public class TotalEarningFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    public static void setUpTotalIncome(Json json){
+        int refIncome = json.getInt(P.referral_income);
+        int eventIncome = json.getInt(P.event_income);
+        binding.txtIncome.setText(String.valueOf(refIncome));
+        binding.txtCrash.setText(String.valueOf(eventIncome));
     }
 
 

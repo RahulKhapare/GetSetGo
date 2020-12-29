@@ -53,10 +53,9 @@ public class App extends Application {
 
         Map<String, String> headers = new HashMap<>();
 
-        //headers.put("Authorization",  "Basic YWRtaW46MTIzNEBhZG1pbg==");
-        //headers.put("x-api-key", "123456");
         headers.put("Content-Type", "application/json");
-        headers.put("X-Auth-Token", authToken);
+        headers.put("x-api-key", "123456");
+        headers.put("token", user_id);
 
         H.log("headersAre", headers + "");
         return headers;

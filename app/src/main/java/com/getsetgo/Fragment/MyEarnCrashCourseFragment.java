@@ -1,5 +1,6 @@
 package com.getsetgo.Fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,17 +18,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.Json;
+import com.adoisstudio.helper.JsonList;
 import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
 import com.getsetgo.Adapter.MyCrashCourseEarningsCommonAdapter;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentCrashCourseEarningBinding;
+import com.getsetgo.util.Config;
 import com.getsetgo.util.P;
 
 public class MyEarnCrashCourseFragment extends Fragment {
 
-    FragmentCrashCourseEarningBinding binding;
+    public static FragmentCrashCourseEarningBinding binding;
+    public static LinearLayoutManager mLayoutManager;
+    public static MyCrashCourseEarningsCommonAdapter myCrashCourseEarningsCommonAdapter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,10 +49,11 @@ public class MyEarnCrashCourseFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void init(){
-
+    private void init() {
+        mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
-        setupRecyclerViewCrashCourse();
+        binding.recyclerViewCrashCourseEarning.setLayoutManager(mLayoutManager);
+        binding.recyclerViewCrashCourseEarning.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerViewCrashCourseEarning.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -56,23 +64,27 @@ public class MyEarnCrashCourseFragment extends Fragment {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                if(EarningsFragment.pos == 1) {
+                if (EarningsFragment.pos == 1) {
                     LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == 15 - 1) {
-                       // EarningsFragment.callCrashCourseEarningApi(getContext());
+                         EarningsFragment.callCrashCourseEarningApi(getContext());
                     }
                 }
             }
         });
     }
-
-    private void setupRecyclerViewCrashCourse() {
-        binding.recyclerViewCrashCourseEarning.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        MyCrashCourseEarningsCommonAdapter myCrashCourseEarningsCommonAdapter = new MyCrashCourseEarningsCommonAdapter(getActivity());
-        binding.recyclerViewCrashCourseEarning.setItemAnimator(new DefaultItemAnimator());
-        binding.recyclerViewCrashCourseEarning.setAdapter(myCrashCourseEarningsCommonAdapter);
+    public static void setUpCrashIncome(Json json){
+        int income = json.getInt(P.income);
+        binding.txtIncome.setText(String.valueOf(income));
     }
 
+    public static void setupRecyclerViewCrashCourse(Context context,JsonList jsonList) {
+        if (jsonList != null) {
+            myCrashCourseEarningsCommonAdapter = new MyCrashCourseEarningsCommonAdapter(context,jsonList);
+            binding.recyclerViewCrashCourseEarning.setAdapter(myCrashCourseEarningsCommonAdapter);
+            myCrashCourseEarningsCommonAdapter.notifyDataSetChanged();
+        }
+    }
 
 
 }

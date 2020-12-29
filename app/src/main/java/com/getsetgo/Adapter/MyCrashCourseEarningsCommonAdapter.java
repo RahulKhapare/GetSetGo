@@ -9,14 +9,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adoisstudio.helper.Json;
+import com.adoisstudio.helper.JsonList;
 import com.getsetgo.R;
+import com.getsetgo.util.P;
 
 public class MyCrashCourseEarningsCommonAdapter extends RecyclerView.Adapter<MyCrashCourseEarningsCommonAdapter.MyCrashCourseEarningsViewHolder> {
 
     Context context;
+    JsonList jsonList;
 
-    public MyCrashCourseEarningsCommonAdapter(Context context) {
+    public MyCrashCourseEarningsCommonAdapter(Context context, JsonList jsonList) {
         this.context = context;
+        this.jsonList = jsonList;
     }
 
     @NonNull
@@ -28,17 +33,19 @@ public class MyCrashCourseEarningsCommonAdapter extends RecyclerView.Adapter<MyC
 
     @Override
     public void onBindViewHolder(@NonNull MyCrashCourseEarningsCommonAdapter.MyCrashCourseEarningsViewHolder holder, int position) {
-
+        Json json = jsonList.get(position);
+        holder.txtAmount.setText(json.getString(P.event_income));
+        holder.txtDate.setText(json.getString(P.date));
     }
 
     @Override
     public int getItemCount() {
-        return 15;
+        return jsonList.size();
     }
 
     public class MyCrashCourseEarningsViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtDate,txtAmount;
+        TextView txtDate, txtAmount;
 
         public MyCrashCourseEarningsViewHolder(@NonNull View itemView) {
             super(itemView);
