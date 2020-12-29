@@ -21,11 +21,17 @@
 
     </style>
 
-    <style name="TextAppearance" parent="Widget.AppCompat.TextView">
+    <style name="BottomTextAppearanceActive" parent="Widget.AppCompat.TextView">
         <!-- reference our hint & error styles -->
-        <item name="android:textColor">@color/colorTextDark</item>
-        <item name="android:textSize">16sp</item>
-        <item name="fontFamily">@font/nunito_sans_regular</item>
+        <item name="android:textColor">@color/nav_item_state_list</item>
+        <item name="android:textSize">10sp</item>
+        <item name="fontFamily">@font/nunit_sans_bold</item>
+    </style>
+    <style name="BottomTextAppearanceInActive" parent="Widget.AppCompat.TextView">
+        <!-- reference our hint & error styles -->
+        <item name="android:textColor">@color/colorTextHint</item>
+        <item name="android:textSize">10sp</item>
+        <item name="fontFamily">@font/nunit_sans_bold</item>
     </style>
 
     <style name="TextAppearanceForTabLayout" parent="Widget.AppCompat.TextView">

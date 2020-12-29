@@ -45,8 +45,9 @@
                 android:layout_alignParentBottom="true"
                 app:itemIconTint="@drawable/item_selector"
                 android:background="@color/colorWhite"
-                app:itemTextColor="@drawable/item_selector"
                 app:itemIconSize="21dp"
+                app:itemTextAppearanceActive="@style/BottomTextAppearanceActive"
+                app:itemTextAppearanceInactive="@style/BottomTextAppearanceInActive"
                 app:itemBackground="@drawable/select_item_back"
                 app:labelVisibilityMode="labeled"
                 app:menu="@menu/navigation"/>
