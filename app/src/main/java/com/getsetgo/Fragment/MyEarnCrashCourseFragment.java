@@ -55,6 +55,7 @@ public class MyEarnCrashCourseFragment extends Fragment {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                EarningsFragment.callCrashCourseEarningApi(getContext());
             }
         });
     }

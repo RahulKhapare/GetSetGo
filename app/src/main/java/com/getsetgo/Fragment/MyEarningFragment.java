@@ -61,6 +61,7 @@ public class MyEarningFragment extends Fragment {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                EarningsFragment.callCourseEarningApi(getContext());
             }
         });
 
@@ -72,7 +73,6 @@ public class MyEarningFragment extends Fragment {
         binding.recyclerViewMyEarning.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerViewMyEarning.setAdapter(myEarningsCommonAdapter);
     }
-
 
 
 }

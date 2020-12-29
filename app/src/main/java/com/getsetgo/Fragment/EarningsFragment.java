@@ -39,6 +39,8 @@ public class EarningsFragment extends Fragment {
     MyEarningsViewPagerAdapter myEarningsViewPagerAdapter;
     SearchEarningsFragment searchEarningsFragment;
     Context context;
+    public static int CoursePage=1;
+    public static int CrashCoursePage=1;
 
     public EarningsFragment() {
     }
@@ -74,11 +76,13 @@ public class EarningsFragment extends Fragment {
         if (tab.equalsIgnoreCase("Course Earnings")) {
             binding.viewPagerEarning.setCurrentItem(0);
             BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
+            CoursePage = 1;
             //callCourseEarningApi(context);
         }
         if (tab.equalsIgnoreCase("Crash Course Earnings")) {
             binding.viewPagerEarning.setCurrentItem(1);
             BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
+            CrashCoursePage=1;
             //callCrashCourseEarningApi(context);
         }
         if (tab.equalsIgnoreCase("Total Earnings")) {
@@ -101,7 +105,7 @@ public class EarningsFragment extends Fragment {
                 int pos = tab.getPosition();
                 if (pos == 0) {
                     BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
-                   // callCourseEarningApi(context);
+                    // callCourseEarningApi(context);
                 } else if (pos == 1) {
                     BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
                     //callCrashCourseEarningApi(context);
@@ -186,7 +190,7 @@ public class EarningsFragment extends Fragment {
 
     public static void callCourseEarningApi(Context context) {
 
-        String apiParam = "?create_date_start=" + "&create_date_end=" + "&page=" + "&per_page=";
+        String apiParam = "?create_date_start=" + "&create_date_end=" + "&page="+CoursePage + "&per_page=10";
 
         Api.newApi(context, P.baseUrl + "course_earning" + apiParam).setMethod(Api.GET)
                 .onError(() ->
@@ -201,6 +205,7 @@ public class EarningsFragment extends Fragment {
                             String msg = Json1.getString(P.msg);
                             Session session = new Session(context);
                             //setupRecyclerViewMyEarnings();
+                            CoursePage++;
                             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -208,9 +213,16 @@ public class EarningsFragment extends Fragment {
                 }).run("course_earning");
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        CoursePage=1;
+        CrashCoursePage=1;
+    }
+
     public static void callCrashCourseEarningApi(Context context) {
 
-        String apiParam = "?create_date_start=" + "&create_date_end=" + "&page=" + "&per_page=";
+        String apiParam = "?create_date_start=" + "&create_date_end=" + "&page="+CrashCoursePage + "&per_page=10";
 
         Api.newApi(context, P.baseUrl + "crash_course_earning" + apiParam).setMethod(Api.GET)
                 .onError(() ->
@@ -222,6 +234,7 @@ public class EarningsFragment extends Fragment {
                             H.showMessage(context, Json1.getString(P.err));
                         } else {
                             //Json1 = Json1.getJson(P.data);
+                            CrashCoursePage++;
                             String msg = Json1.getString(P.msg);
                             Session session = new Session(context);
                             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
