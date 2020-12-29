@@ -1,6 +1,7 @@
 package com.getsetgo.Fragment;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +14,16 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.adoisstudio.helper.Api;
+import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.MessageBox;
+import com.adoisstudio.helper.Session;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentComposeBinding;
 import com.getsetgo.databinding.FragmentSearchEarningsBinding;
+import com.getsetgo.util.P;
+import com.getsetgo.util.Utilities;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,6 +33,9 @@ import java.util.Date;
 public class SearchEarningsFragment extends Fragment {
 
     FragmentSearchEarningsBinding binding;
+
+    public static int CoursePage = 1;
+    public static int CrashCoursePage = 1;
 
     @Nullable
     @Override
@@ -48,7 +58,7 @@ public class SearchEarningsFragment extends Fragment {
             public void handleOnBackPressed() {
                 // Handle the back button event
 
-                if(getFragmentManager().getBackStackEntryCount() > 0){
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
                     getFragmentManager().popBackStackImmediate();
                 }
             }
@@ -66,7 +76,13 @@ public class SearchEarningsFragment extends Fragment {
             public void onClick(View v) {
                 if (isFormValidation()) {
                     if (checkDateValidation()) {
+                        if (EarningsFragment.pos == 0) {
+                            callCourseEarningApi(getActivity());
+                        } else if (EarningsFragment.pos == 1) {
+                            callCrashCourseEarningApi(getActivity());
+                        } else {
 
+                        }
                     }
                 }
             }
@@ -167,6 +183,61 @@ public class SearchEarningsFragment extends Fragment {
             return false;
         }
         return true;
+    }
+
+    private void callCourseEarningApi(Context context) {
+
+        String apiParam = "?create_date_start=" + Utilities.getFormatDate() + "&create_date_end=" + Utilities.getFormatDate() + "&page=" + CoursePage + "&per_page=10";
+
+        Api.newApi(context, P.baseUrl + "course_earning" + apiParam).setMethod(Api.GET)
+                .onError(() ->
+                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                        }))
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        if (Json1.getInt(P.status) == 0) {
+                            H.showMessage(context, Json1.getString(P.err));
+                        } else {
+                            //Json1 = Json1.getJson(P.data);
+                            String msg = Json1.getString(P.msg);
+                            Session session = new Session(context);
+                            //setupRecyclerViewMyEarnings();
+                            CoursePage++;
+                            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                            if (getFragmentManager().getBackStackEntryCount() > 0) {
+                                getFragmentManager().popBackStackImmediate();
+                            }
+                        }
+                    }
+
+                }).run("course_earning");
+    }
+
+    private void callCrashCourseEarningApi(Context context) {
+
+        String apiParam = "?create_date_start=" + "&create_date_end=" + "&page=" + CrashCoursePage + "&per_page=10";
+
+        Api.newApi(context, P.baseUrl + "crash_course_earning" + apiParam).setMethod(Api.GET)
+                .onError(() ->
+                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                        }))
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        if (Json1.getInt(P.status) == 0) {
+                            H.showMessage(context, Json1.getString(P.err));
+                        } else {
+                            //Json1 = Json1.getJson(P.data);
+                            CrashCoursePage++;
+                            String msg = Json1.getString(P.msg);
+                            Session session = new Session(context);
+                            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                            if (getFragmentManager().getBackStackEntryCount() > 0) {
+                                getFragmentManager().popBackStackImmediate();
+                            }
+                        }
+                    }
+
+                }).run("crash_course_earning");
     }
 
 

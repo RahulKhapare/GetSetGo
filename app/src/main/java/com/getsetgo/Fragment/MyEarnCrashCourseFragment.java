@@ -55,7 +55,13 @@ public class MyEarnCrashCourseFragment extends Fragment {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                EarningsFragment.callCrashCourseEarningApi(getContext());
+
+                if(EarningsFragment.pos == 1) {
+                    LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == 15 - 1) {
+                        EarningsFragment.callCrashCourseEarningApi(getContext());
+                    }
+                }
             }
         });
     }

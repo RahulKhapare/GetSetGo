@@ -2,6 +2,7 @@ package com.getsetgo.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class Utilities {
@@ -14,6 +15,11 @@ public class Utilities {
                 .getTime());
 
         return currDate;
+    }
+    public static String getFormatDate(){
+        Date dt = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormat.format(dt);
     }
 
     public static String getColoredSpanned(String text, String color) {

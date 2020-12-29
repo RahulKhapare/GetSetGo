@@ -29,6 +29,7 @@ import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentEarningsBinding;
 import com.getsetgo.databinding.FragmentNotificationsBinding;
 import com.getsetgo.util.P;
+import com.getsetgo.util.Utilities;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class EarningsFragment extends Fragment {
     Context context;
     public static int CoursePage=1;
     public static int CrashCoursePage=1;
+    public static int pos;
 
     public EarningsFragment() {
     }
@@ -59,7 +61,6 @@ public class EarningsFragment extends Fragment {
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("My Earnings");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
 
-        init();
         return rootView;
     }
 
@@ -67,6 +68,7 @@ public class EarningsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        init();
     }
 
     private void init() {
@@ -76,19 +78,18 @@ public class EarningsFragment extends Fragment {
         if (tab.equalsIgnoreCase("Course Earnings")) {
             binding.viewPagerEarning.setCurrentItem(0);
             BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
-            CoursePage = 1;
-            //callCourseEarningApi(context);
+            callCourseEarningApi(context);
         }
         if (tab.equalsIgnoreCase("Crash Course Earnings")) {
             binding.viewPagerEarning.setCurrentItem(1);
             BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
             CrashCoursePage=1;
-            //callCrashCourseEarningApi(context);
+            callCrashCourseEarningApi(context);
         }
         if (tab.equalsIgnoreCase("Total Earnings")) {
             binding.viewPagerEarning.setCurrentItem(2);
             BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
-            //callTotalEarningApi(context);
+            callTotalEarningApi(context);
         }
         binding.tablayoutEarnings.setupWithViewPager(binding.viewPagerEarning);
 
@@ -102,16 +103,17 @@ public class EarningsFragment extends Fragment {
         binding.tablayoutEarnings.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                int pos = tab.getPosition();
+                pos = tab.getPosition();
                 if (pos == 0) {
                     BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
-                    // callCourseEarningApi(context);
+                    CoursePage = 1;
+                    callCourseEarningApi(context);
                 } else if (pos == 1) {
                     BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
-                    //callCrashCourseEarningApi(context);
+                    callCrashCourseEarningApi(context);
                 } else {
                     BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
-                    //callTotalEarningApi(context);
+                    callTotalEarningApi(context);
                 }
             }
 
@@ -161,19 +163,11 @@ public class EarningsFragment extends Fragment {
         String apiParam = "?create_date_start=" + "&create_date_end=" + "&page=" + "&per_page=";
 
         Api.newApi(context, P.baseUrl + "total_earning" + apiParam).setMethod(Api.GET)
-                .onLoading(isLoading -> {
-                    if (isLoading)
-                        loadingDialog.show("loading...");
-                    else
-                        loadingDialog.hide();
-
-                })
                 .onError(() ->
                         MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
-                        loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(context, Json1.getString(P.err));
                         } else {
@@ -190,7 +184,7 @@ public class EarningsFragment extends Fragment {
 
     public static void callCourseEarningApi(Context context) {
 
-        String apiParam = "?create_date_start=" + "&create_date_end=" + "&page="+CoursePage + "&per_page=10";
+        String apiParam = "?create_date_start="+Utilities.getFormatDate() + "&create_date_end="+Utilities.getFormatDate() + "&page="+CoursePage + "&per_page=10";
 
         Api.newApi(context, P.baseUrl + "course_earning" + apiParam).setMethod(Api.GET)
                 .onError(() ->
@@ -216,8 +210,6 @@ public class EarningsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        CoursePage=1;
-        CrashCoursePage=1;
     }
 
     public static void callCrashCourseEarningApi(Context context) {
