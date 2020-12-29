@@ -47,8 +47,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center"
+                android:layout_toRightOf="@+id/ivMenu"
+                android:layout_marginLeft="45dp"
                 android:fontFamily="@font/nunit_sans_bold"
                 android:textColor="@color/colorWhite"
                 android:textSize="18sp" />
