@@ -60,6 +60,7 @@ import com.getsetgo.databinding.ActivityBaseScreenBinding;
 
 
 import com.getsetgo.util.App;
+import com.getsetgo.util.Click;
 import com.getsetgo.util.P;
 import com.getsetgo.util.WindowView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -258,6 +259,7 @@ public class BaseScreenActivity extends AppCompatActivity {
 
     public void onDrawerItemClick(View view) {
         int i = view.getId();
+        Click.preventTwoClick(view);
         Bundle bundle = new Bundle();
         switch (i) {
             case R.id.txtDashboard:

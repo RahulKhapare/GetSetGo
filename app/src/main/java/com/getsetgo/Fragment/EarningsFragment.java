@@ -330,6 +330,8 @@ public class EarningsFragment extends Fragment {
             crashstartDate = null;
             crashendDate = null;
 
+            isProgress = false;
+
             CoursePage = 1;
             CrashCoursePage = 1;
 
@@ -342,6 +344,7 @@ public class EarningsFragment extends Fragment {
             totalEarnJson.remove(P.referral_income);
         } else {
             courseJsonList.clear();
+            isProgress = false;
             crashcourseJsonList.clear();
         }
 
