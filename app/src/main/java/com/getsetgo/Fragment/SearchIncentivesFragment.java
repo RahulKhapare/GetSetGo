@@ -85,7 +85,7 @@ public class SearchIncentivesFragment extends Fragment {
                 }
                         ,year,month,day);
 
-                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                 datePickerDialog.show();
             }
         });
