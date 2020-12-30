@@ -1,11 +1,14 @@
 package com.getsetgo.Fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -13,17 +16,34 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.adoisstudio.helper.Api;
+import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.Json;
+import com.adoisstudio.helper.JsonList;
+import com.adoisstudio.helper.LoadingDialog;
+import com.adoisstudio.helper.MessageBox;
 import com.getsetgo.Adapter.IncentivesAdapter;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentUserincentiveBinding;
+import com.getsetgo.util.App;
+import com.getsetgo.util.P;
 
 public class IncentivesFragment extends Fragment {
 
     IncentivesAdapter incentivesAdapter;
     private FragmentUserincentiveBinding binding;
     SearchIncentivesFragment searchIncentivesFragment;
+
+    public JsonList incentiveList = null;
+    private boolean nextPage = false;
+    public int Page = 1;
+    private LinearLayoutManager mLayoutManager;
+    boolean isScrolling = false;
+    int currentItem, totalItems, scrollOutItems;
+    LoadingDialog loadingDialog;
 
 
     public IncentivesFragment() {
@@ -43,35 +63,66 @@ public class IncentivesFragment extends Fragment {
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Incentives");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
 
-        init(rootView);
         return rootView;
     }
-
 
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        init(view);
     }
 
-    private void init(View view){
-        setupRecyclerViewForIncentives();
+    private void init(View view) {
+        callUserIncentiveApi(getActivity());
+        mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        binding.recyclerViewIncentive.setLayoutManager(mLayoutManager);
+        binding.recyclerViewIncentive.setItemAnimator(new DefaultItemAnimator());
+        incentiveList = new JsonList();
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 loadFragment(view);
             }
         });
-    }
-    private void setupRecyclerViewForIncentives() {
-        binding.recyclerViewIncentive.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        incentivesAdapter = new IncentivesAdapter(getActivity());
-        binding.recyclerViewIncentive.setItemAnimator(new DefaultItemAnimator());
-        binding.recyclerViewIncentive.setAdapter(incentivesAdapter);
-        incentivesAdapter.notifyDataSetChanged();
+
+        binding.recyclerViewIncentive.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                    isScrolling = true;
+                }
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                currentItem = mLayoutManager.getChildCount();
+                totalItems = mLayoutManager.getItemCount();
+                scrollOutItems = mLayoutManager.findFirstVisibleItemPosition();
+                if (isScrolling && (currentItem + scrollOutItems == totalItems)) {
+                    if (nextPage) {
+                        isScrolling = false;
+                        callUserIncentiveApi(getActivity());
+                    }
+                }
+            }
+        });
     }
 
-    private void loadFragment(View v){
+    private void setupRecyclerViewForIncentives(JsonList jsonList) {
+        if(jsonList != null) {
+            binding.recyclerViewIncentive.setVisibility(View.VISIBLE);
+            incentivesAdapter = new IncentivesAdapter(getActivity(), jsonList);
+            binding.recyclerViewIncentive.setAdapter(incentivesAdapter);
+            incentivesAdapter.notifyDataSetChanged();
+        }else{
+            binding.recyclerViewIncentive.setVisibility(View.GONE);
+        }
+    }
+
+    private void loadFragment(View v) {
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
         searchIncentivesFragment = new SearchIncentivesFragment();
         activity.getSupportFragmentManager()
@@ -89,7 +140,7 @@ public class IncentivesFragment extends Fragment {
             public void handleOnBackPressed() {
                 // Handle the back button event
 
-                if(getFragmentManager().getBackStackEntryCount() > 0){
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
                     getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     BaseScreenActivity.callBack();
                 }
@@ -97,6 +148,51 @@ public class IncentivesFragment extends Fragment {
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
         super.onCreate(savedInstanceState);
+    }
+
+    private void callUserIncentiveApi(Context context) {
+
+        loadingDialog = new LoadingDialog(getActivity());
+        //String apiParam = "&page=" + 1 + "&per_page=10";
+
+        Api.newApi(context, P.baseUrl + "user_incentive").setMethod(Api.GET)
+                .onHeaderRequest(App::getHeaders)
+                .onLoading(isLoading -> {
+                    if (isLoading)
+                        loadingDialog.show("loading...");
+                    else
+                        loadingDialog.hide();
+                    loadingDialog.dismiss();
+                })
+                .onError(() ->
+
+                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
+                        }))
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        loadingDialog.dismiss();
+                        if (Json1.getInt(P.status) == 0) {
+                            H.showMessage(context, Json1.getString(P.err));
+                        } else {
+                            Json1 = Json1.getJson(P.data);
+                            int numRows = Json1.getInt(P.num_rows);
+                            JsonList jsonList = Json1.getJsonList(P.list);
+                            if (jsonList != null && !jsonList.isEmpty()) {
+                                incentiveList.addAll(jsonList);
+                                setupRecyclerViewForIncentives(incentiveList);
+                                if (incentiveList.size() < numRows) {
+                                    Page++;
+                                    nextPage = true;
+                                } else {
+                                    nextPage = false;
+                                    Page = 1;
+                                }
+                            }
+                        }
+                    }
+
+                }).run("user_incentive");
     }
 
 

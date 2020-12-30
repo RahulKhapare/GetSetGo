@@ -97,7 +97,7 @@ public class MyEarningFragment extends Fragment {
     }
 
     public static void setUpRefIncome(Json json) {
-        int income = json.getInt(P.income);
+        int income = json.getInt("income");
         binding.txtIncome.setText(String.valueOf(income));
     }
 

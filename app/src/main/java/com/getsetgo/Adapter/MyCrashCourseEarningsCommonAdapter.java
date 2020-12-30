@@ -35,7 +35,7 @@ public class MyCrashCourseEarningsCommonAdapter extends RecyclerView.Adapter<MyC
     public void onBindViewHolder(@NonNull MyCrashCourseEarningsCommonAdapter.MyCrashCourseEarningsViewHolder holder, int position) {
         Json json = jsonList.get(position);
         holder.txtAmount.setText(json.getString(P.event_income));
-        holder.txtDate.setText(json.getString(P.date));
+        holder.txtDate.setText(json.getString("date"));
     }
 
     @Override

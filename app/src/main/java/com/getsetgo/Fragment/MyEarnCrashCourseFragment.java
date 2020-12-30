@@ -84,7 +84,7 @@ public class MyEarnCrashCourseFragment extends Fragment {
         });
     }
     public static void setUpCrashIncome(Json json){
-        int income = json.getInt(P.income);
+        int income = json.getInt("income");
         binding.txtIncome.setText(String.valueOf(income));
     }
 

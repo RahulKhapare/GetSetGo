@@ -369,7 +369,7 @@ public class BaseScreenActivity extends AppCompatActivity {
                 break;
 
         }
-        ((DrawerLayout) findViewById(R.id.drawerLayout)).closeDrawer(GravityCompat.START);
+        binding.drawerLayout.closeDrawer(GravityCompat.START);
     }
 
 
