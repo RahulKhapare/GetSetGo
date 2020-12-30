@@ -43,7 +43,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_sans_semibold"
-                        android:text="5900"
+                        android:text="0"
                         android:textColor="@color/colorGreen"
                         android:textSize="26sp" />
 
@@ -65,12 +65,15 @@
 
         </RelativeLayout>
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewMyEarning"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/rlEarn"
             android:layout_marginTop="15dp" />
+
+
     </RelativeLayout>
 </layout>
 

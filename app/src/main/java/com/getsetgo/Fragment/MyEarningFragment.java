@@ -6,11 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -38,8 +40,9 @@ import org.json.JSONArray;
 public class MyEarningFragment extends Fragment {
 
     public static FragmentMyearningBinding binding;
-    public static MyEarningsCommonAdapter myEarningsCommonAdapter;
     public static LinearLayoutManager mLayoutManager;
+    boolean isScrolling = false;
+    int currentItem, totalItems, scrollOutItems;
 
 
     @Nullable
@@ -61,37 +64,46 @@ public class MyEarningFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         binding.recyclerViewMyEarning.setLayoutManager(mLayoutManager);
         binding.recyclerViewMyEarning.setItemAnimator(new DefaultItemAnimator());
+        setupRecyclerViewMyEarnings(getActivity(), EarningsFragment.courseJsonList);
+        setUpRefIncome(EarningsFragment.courseJson);
         binding.recyclerViewMyEarning.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                    isScrolling = true;
+                }
             }
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (EarningsFragment.pos == 0) {
-                    LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == EarningsFragment.courseJsonList.size() - 1) {
-                        if(EarningsFragment.nextPageForCourse){
-                            EarningsFragment.callCourseEarningApi(getContext());
-                        }
+                currentItem = mLayoutManager.getChildCount();
+                totalItems = mLayoutManager.getItemCount();
+                scrollOutItems = mLayoutManager.findFirstVisibleItemPosition();
+                //if (EarningsFragment.pos == 0) {
+
+                if (isScrolling && (currentItem + scrollOutItems) >= totalItems) {
+                    if (EarningsFragment.nextPageForCourse) {
+                        isScrolling = false;
+                        EarningsFragment.callCourseEarningApi(getContext());
                     }
                 }
+                //}
             }
         });
 
 
     }
 
-    public static void setUpRefIncome(Json json){
+    public static void setUpRefIncome(Json json) {
         int income = json.getInt(P.income);
         binding.txtIncome.setText(String.valueOf(income));
     }
 
     public static void setupRecyclerViewMyEarnings(Context context, JsonList jsonList) {
         if (jsonList != null) {
-            myEarningsCommonAdapter = new MyEarningsCommonAdapter(context, jsonList);
+            MyEarningsCommonAdapter myEarningsCommonAdapter = new MyEarningsCommonAdapter(context, jsonList);
             binding.recyclerViewMyEarning.setAdapter(myEarningsCommonAdapter);
             myEarningsCommonAdapter.notifyDataSetChanged();
         }

@@ -55,7 +55,9 @@ public class App extends Application {
 
         headers.put("Content-Type", "application/json");
         headers.put("x-api-key", "123456");
-        headers.put("token", user_id);
+        if(user_id != null && !user_id.isEmpty()){
+            headers.put("token", user_id);
+        }
 
         H.log("headersAre", headers + "");
         return headers;

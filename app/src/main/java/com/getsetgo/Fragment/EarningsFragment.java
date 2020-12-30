@@ -48,19 +48,26 @@ public class EarningsFragment extends Fragment {
     Context context;
     public static int CoursePage = 1;
     public static int CrashCoursePage = 1;
-    public static int totalEarnPage = 1;
     public static int pos;
 
     public static JsonList courseJsonList = new JsonList();
     public static Json courseJson = new Json();
     public static JsonList crashcourseJsonList = new JsonList();
     public static Json crashcourseJson = new Json();
-    public static JsonList totalEarnJsonList = new JsonList();
     public static Json totalEarnJson = new Json();
 
     public static boolean nextPageForCourse = true;
     public static boolean nextPageForCrashCourse = true;
     public static boolean nextPageForTotalEarn = true;
+    public static boolean isProgress = false;
+
+    static String startDate;
+    static String endDate;
+
+    static String crashstartDate;
+    static String crashendDate;
+    public static boolean isFromBack = false;
+
 
     public EarningsFragment() {
     }
@@ -90,33 +97,38 @@ public class EarningsFragment extends Fragment {
     }
 
     private void init() {
-        CoursePage = 1;
-        CrashCoursePage = 1;
-        totalEarnPage = 1;
-        nextPageForCourse = true;
-        nextPageForCrashCourse = true;
-        nextPageForTotalEarn = true;
+        initVariable();
         courseJsonList.clear();
         crashcourseJsonList.clear();
-        totalEarnJsonList.clear();
+        totalEarnJson.remove(P.referral_income);
+
+
         String tab = this.getArguments().getString("tabItem");
         myEarningsViewPagerAdapter = new MyEarningsViewPagerAdapter(getChildFragmentManager(), context);
         binding.viewPagerEarning.setAdapter(myEarningsViewPagerAdapter);
         if (tab.equalsIgnoreCase("Course Earnings")) {
             binding.viewPagerEarning.setCurrentItem(0);
             BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
-            callCourseEarningApi(context);
+            if (!isFromBack) {
+                callCourseEarningApi(context);
+            }
         }
         if (tab.equalsIgnoreCase("Crash Course Earnings")) {
             binding.viewPagerEarning.setCurrentItem(1);
             BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
-            callCrashCourseEarningApi(context);
+
+            if (!isFromBack) {
+                callCrashCourseEarningApi(context);
+            }
         }
         if (tab.equalsIgnoreCase("Total Earnings")) {
             binding.viewPagerEarning.setCurrentItem(2);
             BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
-            callTotalEarningApi(context);
+            if (!isFromBack) {
+                callTotalEarningApi(context);
+            }
         }
+
         binding.tablayoutEarnings.setupWithViewPager(binding.viewPagerEarning);
 
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +138,7 @@ public class EarningsFragment extends Fragment {
             }
         });
 
+
         binding.tablayoutEarnings.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -133,7 +146,10 @@ public class EarningsFragment extends Fragment {
                 if (pos == 0) {
                     BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
                     if (courseJsonList.size() <= 0) {
-                        callCourseEarningApi(context);
+                        if (!isFromBack) {
+                            CoursePage = 1;
+                            callCourseEarningApi(context);
+                        }
                     } else {
                         MyEarningFragment.setupRecyclerViewMyEarnings(getActivity(), courseJsonList);
                         MyEarningFragment.setUpRefIncome(courseJson);
@@ -141,15 +157,18 @@ public class EarningsFragment extends Fragment {
                 } else if (pos == 1) {
                     BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
                     if (crashcourseJsonList.size() <= 0) {
-                        callCrashCourseEarningApi(context);
+                        if (!isFromBack) {
+                            CrashCoursePage = 1;
+                            callCrashCourseEarningApi(context);
+                        }
                     } else {
                         MyEarnCrashCourseFragment.setupRecyclerViewCrashCourse(context, crashcourseJsonList);
                         MyEarnCrashCourseFragment.setUpCrashIncome(crashcourseJson);
                     }
                 } else {
                     BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
-                    if (totalEarnJson != null) {
-                        callTotalEarningApi(context);
+                    if (totalEarnJson.getString(P.referral_income).isEmpty()) {
+                            callTotalEarningApi(context);
                     } else {
                         TotalEarningFragment.setUpTotalIncome(totalEarnJson);
                     }
@@ -166,6 +185,7 @@ public class EarningsFragment extends Fragment {
 
             }
         });
+
     }
 
 
@@ -199,7 +219,7 @@ public class EarningsFragment extends Fragment {
 
     public static void callTotalEarningApi(Context context) {
         LoadingDialog loadingDialog = new LoadingDialog(context);
-        String apiParam = "?create_date_start=" + "&create_date_end=" + "&page=" + "&per_page=";
+        String apiParam = "?create_date_start=" + "&create_date_end=" + "&page=" + 1 + "&per_page=10";
 
         Api.newApi(context, P.baseUrl + "total_earning" + apiParam).setMethod(Api.GET)
                 .onHeaderRequest(App::getHeaders)
@@ -220,20 +240,8 @@ public class EarningsFragment extends Fragment {
                             H.showMessage(context, Json1.getString(P.err));
                         } else {
                             Json1 = Json1.getJson(P.data);
-                            int numRows = Json1.getInt(P.num_rows);
-                            JsonList jsonList = Json1.getJsonList(P.list);
-                            if (jsonList != null && !jsonList.isEmpty()) {
-                                totalEarnJsonList.addAll(jsonList);
-                                totalEarnJson = Json1;
-                                TotalEarningFragment.setUpTotalIncome(Json1);
-                                if (totalEarnJsonList.size() < numRows) {
-                                    totalEarnPage++;
-                                    nextPageForTotalEarn = true;
-                                } else {
-                                    nextPageForTotalEarn = false;
-                                }
-                            }
-
+                            totalEarnJson = Json1;
+                            TotalEarningFragment.setUpTotalIncome(Json1);
                         }
                     }
 
@@ -241,15 +249,30 @@ public class EarningsFragment extends Fragment {
     }
 
     public static void callCourseEarningApi(Context context) {
+        String sDate = "";
+        String eDate = "";
+        int coursePage = 1;
+        if (startDate != null) {
+            sDate = startDate;
+            coursePage = SearchEarningsFragment.CoursePage;
+        } else {
+            coursePage = CoursePage;
+        }
+        if (endDate != null) {
+            eDate = endDate;
+        }
+
         LoadingDialog loadingDialog = new LoadingDialog(context);
-        String apiParam = "?create_date_start=" + "&create_date_end=" + "&page=" + CoursePage + "&per_page=10";
+        String apiParam = "?create_date_start=" + sDate + "&create_date_end=" + eDate + "&page=" + coursePage + "&per_page=10";
 
         Api.newApi(context, P.baseUrl + "course_earning" + apiParam)
                 .setMethod(Api.GET)
                 .onHeaderRequest(App::getHeaders)
                 .onLoading(isLoading -> {
                     if (isLoading)
-                        loadingDialog.show("loading...");
+                        if(!isProgress){
+                            loadingDialog.show("loading...");
+                        }
                     else
                         loadingDialog.hide();
                 })
@@ -272,10 +295,18 @@ public class EarningsFragment extends Fragment {
                                 MyEarningFragment.setupRecyclerViewMyEarnings(context, courseJsonList);
                                 MyEarningFragment.setUpRefIncome(Json1);
                                 if (courseJsonList.size() < numRows) {
-                                    CoursePage++;
+                                    if (startDate != null) {
+                                        SearchEarningsFragment.CoursePage++;
+                                    } else {
+                                        CoursePage++;
+                                    }
                                     nextPageForCourse = true;
+                                    isProgress = true;
                                 } else {
                                     nextPageForCourse = false;
+                                    isProgress = false;
+                                    CoursePage = 1;
+                                    isFromBack = false;
                                 }
                             }
 
@@ -288,28 +319,59 @@ public class EarningsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        CoursePage = 1;
-        CrashCoursePage = 1;
-        totalEarnPage = 1;
+    }
 
-        nextPageForCourse = true;
-        nextPageForCrashCourse = true;
-        nextPageForTotalEarn = true;
+    private void initVariable() {
+
+        if (!isFromBack) {
+            startDate = null;
+            endDate = null;
+
+            crashstartDate = null;
+            crashendDate = null;
+
+            CoursePage = 1;
+            CrashCoursePage = 1;
+
+            nextPageForCourse = true;
+            nextPageForCrashCourse = true;
+            nextPageForTotalEarn = true;
+
+            crashcourseJsonList.clear();
+            courseJsonList.clear();
+            totalEarnJson.remove(P.referral_income);
+        } else {
+            courseJsonList.clear();
+            crashcourseJsonList.clear();
+        }
+
     }
 
     public static void callCrashCourseEarningApi(Context context) {
+        String sDate = "";
+        String eDate = "";
+        int crashCoursePage = 1;
+        if (crashstartDate != null) {
+            sDate = crashstartDate;
+            crashCoursePage = SearchEarningsFragment.CrashCoursePage;
+        } else {
+            crashCoursePage = CrashCoursePage;
+        }
+        if (crashendDate != null) {
+            eDate = crashendDate;
+        }
         LoadingDialog loadingDialog = new LoadingDialog(context);
-        String apiParam = "?create_date_start=" + "&create_date_end=" + "&page=" + CrashCoursePage + "&per_page=10";
+        String apiParam = "?create_date_start=" + sDate + "&create_date_end=" + eDate + "&page=" + crashCoursePage + "&per_page=10";
 
         Api.newApi(context, P.baseUrl + "crash_course_earning" + apiParam).setMethod(Api.GET)
                 .onHeaderRequest(App::getHeaders)
-                .onLoading(isLoading -> {
-                    if (isLoading)
-                        loadingDialog.show("loading...");
-                    else
-                        loadingDialog.hide();
-                    loadingDialog.dismiss();
-                })
+                 .onLoading(isLoading -> {
+                     if (isLoading)
+                         loadingDialog.show("loading...");
+                     else
+                         loadingDialog.hide();
+                     loadingDialog.dismiss();
+                 })
                 .onError(() ->
 
                         MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
@@ -330,10 +392,16 @@ public class EarningsFragment extends Fragment {
                                 MyEarnCrashCourseFragment.setupRecyclerViewCrashCourse(context, crashcourseJsonList);
                                 MyEarnCrashCourseFragment.setUpCrashIncome(Json1);
                                 if (crashcourseJsonList.size() < numRows) {
-                                    CrashCoursePage++;
+                                    if (crashstartDate != null) {
+                                        SearchEarningsFragment.CrashCoursePage++;
+                                    } else {
+                                        CrashCoursePage++;
+                                    }
                                     nextPageForCrashCourse = true;
                                 } else {
                                     nextPageForCrashCourse = false;
+                                    CrashCoursePage = 1;
+                                    isFromBack = false;
                                 }
                             }
                         }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Toast;
 
 
@@ -33,7 +34,8 @@ public class MyEarnCrashCourseFragment extends Fragment {
 
     public static FragmentCrashCourseEarningBinding binding;
     public static LinearLayoutManager mLayoutManager;
-    public static MyCrashCourseEarningsCommonAdapter myCrashCourseEarningsCommonAdapter;
+    boolean isScrolling = false;
+    int currentItem,totalItems,scrollOutItems;
 
     @Nullable
     @Override
@@ -50,26 +52,34 @@ public class MyEarnCrashCourseFragment extends Fragment {
     }
 
     private void init() {
-        mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
+        mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         binding.recyclerViewCrashCourseEarning.setLayoutManager(mLayoutManager);
         binding.recyclerViewCrashCourseEarning.setItemAnimator(new DefaultItemAnimator());
+
         binding.recyclerViewCrashCourseEarning.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+                if(newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
+                    isScrolling = true;
+                }
             }
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-
-                if (EarningsFragment.pos == 1) {
-                    LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == 15 - 1) {
-                         EarningsFragment.callCrashCourseEarningApi(getContext());
+                currentItem = mLayoutManager.getChildCount();
+                totalItems = mLayoutManager.getItemCount();
+                scrollOutItems = mLayoutManager.findFirstVisibleItemPosition();
+                //if (EarningsFragment.pos ==1 ) {
+                    if (isScrolling && (currentItem + scrollOutItems == totalItems)) {
+                        if(EarningsFragment.nextPageForCourse){
+                            isScrolling = false;
+                            EarningsFragment.callCrashCourseEarningApi(getContext());
+                        }
                     }
-                }
+               // }
             }
         });
     }
@@ -80,7 +90,7 @@ public class MyEarnCrashCourseFragment extends Fragment {
 
     public static void setupRecyclerViewCrashCourse(Context context,JsonList jsonList) {
         if (jsonList != null) {
-            myCrashCourseEarningsCommonAdapter = new MyCrashCourseEarningsCommonAdapter(context,jsonList);
+            MyCrashCourseEarningsCommonAdapter myCrashCourseEarningsCommonAdapter = new MyCrashCourseEarningsCommonAdapter(context,jsonList);
             binding.recyclerViewCrashCourseEarning.setAdapter(myCrashCourseEarningsCommonAdapter);
             myCrashCourseEarningsCommonAdapter.notifyDataSetChanged();
         }

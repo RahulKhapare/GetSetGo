@@ -259,7 +259,10 @@ public class LoginActivity extends AppCompatActivity {
         json.addString(P.email, binding.etxEmailAddress.getText().toString());
         json.addString(P.password, binding.etxPassword.getText().toString());
 
-        Api.newApi(activity, P.baseUrl + "login").addJson(json).setMethod(Api.POST)
+        Api.newApi(activity, P.baseUrl + "login")
+                .addJson(json)
+                .setMethod(Api.POST)
+                .onHeaderRequest(App::getHeaders)
                 .onLoading(isLoading -> {
                     if (!isDestroyed()) {
                         if (isLoading)

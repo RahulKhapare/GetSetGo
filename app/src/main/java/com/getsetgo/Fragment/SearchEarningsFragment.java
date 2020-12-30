@@ -11,8 +11,10 @@ import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
@@ -67,7 +69,15 @@ public class SearchEarningsFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
     private void init() {
+        CoursePage = 1;
+        CrashCoursePage = 1;
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Search Earnings");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         initCalendar();
@@ -77,11 +87,24 @@ public class SearchEarningsFragment extends Fragment {
                 if (isFormValidation()) {
                     if (checkDateValidation()) {
                         if (EarningsFragment.pos == 0) {
+                            EarningsFragment.isFromBack = true;
+                            EarningsFragment.startDate = binding.etStartDate.getText().toString();
+                            EarningsFragment.endDate = binding.etEndDate.getText().toString();
                             EarningsFragment.callCourseEarningApi(getActivity());
-                        } else if (EarningsFragment.pos == 1) {
-                            EarningsFragment.callCrashCourseEarningApi(getActivity());
-                        } else {
+                            if (getFragmentManager().getBackStackEntryCount() > 0) {
+                                getFragmentManager().popBackStackImmediate();
+                            }
 
+                        }
+
+                        if (EarningsFragment.pos == 1) {
+                            EarningsFragment.isFromBack = true;
+                            EarningsFragment.crashstartDate = binding.etStartDate.getText().toString();
+                            EarningsFragment.crashendDate = binding.etEndDate.getText().toString();
+                            EarningsFragment.callCrashCourseEarningApi(getActivity());
+                            if (getFragmentManager().getBackStackEntryCount() > 0) {
+                                getFragmentManager().popBackStackImmediate();
+                            }
                         }
                     }
                 }
@@ -120,7 +143,7 @@ public class SearchEarningsFragment extends Fragment {
                 }
                         , year, month, day);
 
-                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                 datePickerDialog.show();
             }
         });
@@ -138,7 +161,7 @@ public class SearchEarningsFragment extends Fragment {
                 }
                         , eyear, emonth, eday);
 
-                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                 datePickerDialog.show();
             }
         });

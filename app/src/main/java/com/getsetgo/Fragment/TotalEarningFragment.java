@@ -44,18 +44,22 @@ public class TotalEarningFragment extends Fragment {
     }
 
     private void init(View view) {
+        setUpTotalIncome(EarningsFragment.totalEarnJson);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
     }
 
     public static void setUpTotalIncome(Json json){
-        int refIncome = json.getInt(P.referral_income);
-        int eventIncome = json.getInt(P.event_income);
-        binding.txtIncome.setText(String.valueOf(refIncome));
-        binding.txtCrash.setText(String.valueOf(eventIncome));
+        if(json != null) {
+            int refIncome = json.getInt(P.referral_income);
+            int eventIncome = json.getInt(P.event_income);
+            binding.txtIncome.setText(String.valueOf(refIncome));
+            binding.txtCrash.setText(String.valueOf(eventIncome));
+        }
     }
 
 

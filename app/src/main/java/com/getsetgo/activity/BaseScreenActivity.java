@@ -76,7 +76,6 @@ public class BaseScreenActivity extends AppCompatActivity {
     DashBoardFragment dashBoardFragment;
     AccountFragment accountFragment;
     NotificationsFragment notificationsFragment;
-    EarningsFragment earningsFragment;
     TransactionsHistoryFragment transactionsHistoryFragment;
     IncentivesFragment incentivesFragment;
     HelpAndSupportFragment helpAndSupportFragment;
@@ -290,6 +289,7 @@ public class BaseScreenActivity extends AppCompatActivity {
                 bundle.putString("tabItem", "Course Earnings");
                 earningsFragment = EarningsFragment.newInstance();
                 earningsFragment.setArguments(bundle);
+                EarningsFragment.isFromBack = false;
                 fragmentLoader(earningsFragment, true);
                 break;
 
@@ -297,6 +297,7 @@ public class BaseScreenActivity extends AppCompatActivity {
                 EarningsFragment coursEarning;
                 bundle.putString("tabItem", "Course Earnings");
                 coursEarning = EarningsFragment.newInstance();
+                EarningsFragment.isFromBack = false;
                 coursEarning.setArguments(bundle);
                 fragmentLoader(coursEarning, true);
                 break;
@@ -305,6 +306,7 @@ public class BaseScreenActivity extends AppCompatActivity {
                 EarningsFragment crashEarning;
                 bundle.putString("tabItem", "Crash Course Earnings");
                 crashEarning = EarningsFragment.newInstance();
+                EarningsFragment.isFromBack = false;
                 crashEarning.setArguments(bundle);
                 fragmentLoader(crashEarning, true);
                 break;
@@ -313,6 +315,7 @@ public class BaseScreenActivity extends AppCompatActivity {
                 EarningsFragment totalEarning;
                 bundle.putString("tabItem", "Total Earnings");
                 totalEarning = EarningsFragment.newInstance();
+                EarningsFragment.isFromBack = false;
                 totalEarning.setArguments(bundle);
                 fragmentLoader(totalEarning, true);
                 break;
@@ -450,6 +453,7 @@ public class BaseScreenActivity extends AppCompatActivity {
         Json json = new Json();
 
         Api.newApi(activity, P.baseUrl + "logout").setMethod(Api.POST)
+                .onHeaderRequest(App::getHeaders)
                 .onLoading(isLoading -> {
                     if (!isDestroyed()) {
                         if (isLoading)
