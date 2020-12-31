@@ -77,7 +77,6 @@ public class BaseScreenActivity extends AppCompatActivity {
     DashBoardFragment dashBoardFragment;
     AccountFragment accountFragment;
     NotificationsFragment notificationsFragment;
-    TransactionsHistoryFragment transactionsHistoryFragment;
     IncentivesFragment incentivesFragment;
     HelpAndSupportFragment helpAndSupportFragment;
     TermsAndConditionFragment termsAndConditionFragment;
@@ -323,8 +322,11 @@ public class BaseScreenActivity extends AppCompatActivity {
                 break;
 
             case R.id.txtTransactions:
-                if (transactionsHistoryFragment == null)
-                    transactionsHistoryFragment = TransactionsHistoryFragment.newInstance();
+                bundle.putString("tabTCItem", "All Transations");
+                TransactionsHistoryFragment transactionsHistoryFragment;
+                transactionsHistoryFragment = TransactionsHistoryFragment.newInstance();
+                TransactionsHistoryFragment.isFromTransHistory = false;
+                transactionsHistoryFragment.setArguments(bundle);
                 fragmentLoader(transactionsHistoryFragment, true);
                 break;
 

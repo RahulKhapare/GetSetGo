@@ -36,6 +36,7 @@ public class MyEarnCrashCourseFragment extends Fragment {
     public static LinearLayoutManager mLayoutManager;
     boolean isScrolling = false;
     int currentItem,totalItems,scrollOutItems;
+    static MyCrashCourseEarningsCommonAdapter myCrashCourseEarningsCommonAdapter;
 
     @Nullable
     @Override
@@ -56,6 +57,8 @@ public class MyEarnCrashCourseFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         binding.recyclerViewCrashCourseEarning.setLayoutManager(mLayoutManager);
         binding.recyclerViewCrashCourseEarning.setItemAnimator(new DefaultItemAnimator());
+        myCrashCourseEarningsCommonAdapter = new MyCrashCourseEarningsCommonAdapter(getActivity(),EarningsFragment.crashcourseJsonList);
+        binding.recyclerViewCrashCourseEarning.setAdapter(myCrashCourseEarningsCommonAdapter);
 
         binding.recyclerViewCrashCourseEarning.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -88,12 +91,8 @@ public class MyEarnCrashCourseFragment extends Fragment {
         binding.txtIncome.setText(String.valueOf(income));
     }
 
-    public static void setupRecyclerViewCrashCourse(Context context,JsonList jsonList) {
-        if (jsonList != null) {
-            MyCrashCourseEarningsCommonAdapter myCrashCourseEarningsCommonAdapter = new MyCrashCourseEarningsCommonAdapter(context,jsonList);
-            binding.recyclerViewCrashCourseEarning.setAdapter(myCrashCourseEarningsCommonAdapter);
-            myCrashCourseEarningsCommonAdapter.notifyDataSetChanged();
-        }
+    public static void setupRecyclerViewCrashCourse() {
+        myCrashCourseEarningsCommonAdapter.notifyDataSetChanged();
     }
 
 

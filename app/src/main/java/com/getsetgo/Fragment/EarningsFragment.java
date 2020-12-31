@@ -151,7 +151,7 @@ public class EarningsFragment extends Fragment {
                             callCourseEarningApi(context);
                         }
                     } else {
-                        MyEarningFragment.setupRecyclerViewMyEarnings(getActivity(), courseJsonList);
+                        MyEarningFragment.setupRecyclerViewMyEarnings();
                         MyEarningFragment.setUpRefIncome(courseJson);
                     }
                 } else if (pos == 1) {
@@ -162,7 +162,7 @@ public class EarningsFragment extends Fragment {
                             callCrashCourseEarningApi(context);
                         }
                     } else {
-                        MyEarnCrashCourseFragment.setupRecyclerViewCrashCourse(context, crashcourseJsonList);
+                        MyEarnCrashCourseFragment.setupRecyclerViewCrashCourse();
                         MyEarnCrashCourseFragment.setUpCrashIncome(crashcourseJson);
                     }
                 } else {
@@ -292,7 +292,7 @@ public class EarningsFragment extends Fragment {
                             if (jsonList != null && !jsonList.isEmpty()) {
                                 courseJsonList.addAll(jsonList);
                                 courseJson = Json1;
-                                MyEarningFragment.setupRecyclerViewMyEarnings(context, courseJsonList);
+                                MyEarningFragment.setupRecyclerViewMyEarnings();
                                 MyEarningFragment.setUpRefIncome(Json1);
                                 if (courseJsonList.size() < numRows) {
                                     if (startDate != null) {
@@ -392,7 +392,7 @@ public class EarningsFragment extends Fragment {
                             if (jsonList != null && !jsonList.isEmpty()) {
                                 crashcourseJsonList.addAll(jsonList);
                                 crashcourseJson = Json1;
-                                MyEarnCrashCourseFragment.setupRecyclerViewCrashCourse(context, crashcourseJsonList);
+                                MyEarnCrashCourseFragment.setupRecyclerViewCrashCourse();
                                 MyEarnCrashCourseFragment.setUpCrashIncome(Json1);
                                 if (crashcourseJsonList.size() < numRows) {
                                     if (crashstartDate != null) {

@@ -20,22 +20,18 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.adoisstudio.helper.Api;
-import com.adoisstudio.helper.H;
+
+
 import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
-import com.adoisstudio.helper.LoadingDialog;
-import com.adoisstudio.helper.MessageBox;
-import com.adoisstudio.helper.Session;
-import com.getsetgo.Adapter.AllTransactionsAdapter;
+
+
+
 import com.getsetgo.Adapter.MyEarningsCommonAdapter;
 import com.getsetgo.R;
-import com.getsetgo.activity.BaseScreenActivity;
-import com.getsetgo.databinding.FragmentMyearningBinding;
-import com.getsetgo.util.App;
-import com.getsetgo.util.P;
 
-import org.json.JSONArray;
+import com.getsetgo.databinding.FragmentMyearningBinding;
+
 
 public class MyEarningFragment extends Fragment {
 
@@ -43,6 +39,7 @@ public class MyEarningFragment extends Fragment {
     public static LinearLayoutManager mLayoutManager;
     boolean isScrolling = false;
     int currentItem, totalItems, scrollOutItems;
+    static MyEarningsCommonAdapter myEarningsCommonAdapter;
 
 
     @Nullable
@@ -64,8 +61,9 @@ public class MyEarningFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         binding.recyclerViewMyEarning.setLayoutManager(mLayoutManager);
         binding.recyclerViewMyEarning.setItemAnimator(new DefaultItemAnimator());
-        setupRecyclerViewMyEarnings(getActivity(), EarningsFragment.courseJsonList);
-        setUpRefIncome(EarningsFragment.courseJson);
+        myEarningsCommonAdapter = new MyEarningsCommonAdapter(getActivity(), EarningsFragment.courseJsonList);
+        binding.recyclerViewMyEarning.setAdapter(myEarningsCommonAdapter);
+
         binding.recyclerViewMyEarning.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -101,12 +99,8 @@ public class MyEarningFragment extends Fragment {
         binding.txtIncome.setText(String.valueOf(income));
     }
 
-    public static void setupRecyclerViewMyEarnings(Context context, JsonList jsonList) {
-        if (jsonList != null) {
-            MyEarningsCommonAdapter myEarningsCommonAdapter = new MyEarningsCommonAdapter(context, jsonList);
-            binding.recyclerViewMyEarning.setAdapter(myEarningsCommonAdapter);
+    public static void setupRecyclerViewMyEarnings() {
             myEarningsCommonAdapter.notifyDataSetChanged();
-        }
     }
 
 

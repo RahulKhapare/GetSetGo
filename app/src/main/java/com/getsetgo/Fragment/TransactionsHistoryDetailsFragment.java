@@ -10,11 +10,14 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.adoisstudio.helper.Json;
 import com.getsetgo.Adapter.TransactionViewPagerAdapter;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentTransactionsBinding;
 import com.getsetgo.databinding.FragmentTransactionsHistoryDetailsBinding;
+
+import org.json.JSONException;
 
 public class TransactionsHistoryDetailsFragment extends Fragment {
 
@@ -46,12 +49,31 @@ public class TransactionsHistoryDetailsFragment extends Fragment {
     }
 
     private void init() {
+
+        String jsonData = getArguments().getString("jsonObj");
+        try {
+            Json json = new Json(jsonData);
+            binding.txtTitleName.setText(json.getString("username"));
+            binding.txtAmount.setText(json.getString("amount"));
+            binding.txtAction.setText(json.getString("action_type"));
+            binding.txtParent.setText(json.getString("parent_username"));
+            binding.txtCourse.setText(json.getString("courses"));
+            binding.txtIncomeType.setText(json.getString("income_type"));
+            binding.txtDescription.setText(json.getString("description"));
+            binding.txtDateTime.setText(json.getString("create_date_text"));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Transactions History");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
+
+
 
         binding.btnGoBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TransactionsHistoryFragment.isFromTransHistory = true;
                 getFragmentManager().popBackStackImmediate();
             }
         });
@@ -66,7 +88,9 @@ public class TransactionsHistoryDetailsFragment extends Fragment {
                 // Handle the back button event
 
                 if(getFragmentManager().getBackStackEntryCount() > 0){
+                    TransactionsHistoryFragment.isFromTransHistory = true;
                     getFragmentManager().popBackStackImmediate();
+
                 }
             }
         };

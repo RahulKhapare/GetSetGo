@@ -8,11 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.getsetgo.Adapter.AllTransactionsAdapter;
+
+
+
 import com.getsetgo.R;
 import com.getsetgo.databinding.FragmentComposeBinding;
 

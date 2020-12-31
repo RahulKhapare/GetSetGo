@@ -65,6 +65,25 @@ public class SearchIncentivesFragment extends Fragment {
         bindStatus();
         initCalendar();
 
+        binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isFormValidation()){
+
+                }
+            }
+        });
+
+    }
+
+    public boolean isFormValidation() {
+        if (binding.etDate.getText().toString().isEmpty()) {
+            Toast.makeText(getActivity(), "Date should not be empty", Toast.LENGTH_SHORT).show();
+            return false;
+        }else if(binding.spnStatus.getSelectedItem().toString().equalsIgnoreCase("Select")){
+            Toast.makeText(getActivity(), "Please select status", Toast.LENGTH_SHORT).show();
+        }
+        return true;
     }
     private void initCalendar(){
         Calendar calendar = Calendar.getInstance();

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
 import com.getsetgo.R;
+import com.getsetgo.util.Utilities;
 
 public class IncentivesAdapter extends RecyclerView.Adapter<IncentivesAdapter.IncentivesViewHolder> {
 
@@ -42,10 +43,12 @@ public class IncentivesAdapter extends RecyclerView.Adapter<IncentivesAdapter.In
         holder.txtTDSAmount.setText(json.getString("tds_amount"));
         holder.txtTransactionId.setText("Transaction Id - " +json.getString("transaction_id") );
         holder.txtRemark.setText("Remark - " + json.getString("remark"));
-        holder.txtDate.setText(json.getString("date"));
+        String date = Utilities.getShortMonthNames(json.getString("date"));
+        holder.txtDate.setText(date);
         holder.txtNetPayAmount.setText(json.getString("recive_amount"));
-        holder.txtStatusDate.setText(json.getString("update_date") != null ? json.getString("update_date") : "");
-        holder.txtApproveDate.setText("Approved Date - "+json.getString("date"));
+        String updateDate = json.getString("update_date") != null ? json.getString("update_date") : "";
+        holder.txtStatusDate.setText(Utilities.getShortMonthNames(updateDate));
+        holder.txtApproveDate.setText("Approved Date - "+ Utilities.getShortMonthNames(json.getString("date")));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
