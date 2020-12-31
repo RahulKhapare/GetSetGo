@@ -17,6 +17,7 @@ import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
 import com.getsetgo.Fragment.TransactionsHistoryDetailsFragment;
 import com.getsetgo.R;
+import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.util.Utilities;
 
 
@@ -51,6 +52,7 @@ public class AllTransactionsAdapter extends RecyclerView.Adapter<AllTransactions
                 bundle.putString("jsonObj",dataJson);
 
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
                 TransactionsHistoryDetailsFragment myFragment = new TransactionsHistoryDetailsFragment();
                 myFragment.setArguments(bundle);
                 activity.getSupportFragmentManager()

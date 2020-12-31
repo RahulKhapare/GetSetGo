@@ -24,6 +24,7 @@ import com.adoisstudio.helper.MessageBox;
 import com.getsetgo.Adapter.AllTransactionsAdapter;
 import com.getsetgo.Adapter.CurriculumLectureAdapter;
 import com.getsetgo.R;
+import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentAllTransactionsBinding;
 import com.getsetgo.util.App;
 import com.getsetgo.util.P;
@@ -32,19 +33,23 @@ public class AllTransactionsFragment extends Fragment {
 
     private FragmentAllTransactionsBinding binding;
     private LinearLayoutManager mLayoutManager;
-    AllTransactionsAdapter transactionsAdapter;
+    static AllTransactionsAdapter transactionsAdapter;
     boolean isScrolling = false;
     int currentItem, totalItems, scrollOutItems;
 
 
-    int transactionPage = 1;
-    JsonList transactionJsonList = new JsonList();
-    boolean nextPageForTransaction = true;
+    static int transactionPage = 1;
+    static JsonList transactionJsonList = new JsonList();
+    static boolean nextPageForTransaction = true;
 
-    boolean isProgress = false;
+    static boolean isProgress = false;
 
     static String startDate;
     static String endDate;
+
+    static String actionType;
+    static String incomeType;
+
 
     @Nullable
     @Override
@@ -62,19 +67,23 @@ public class AllTransactionsFragment extends Fragment {
     }
 
     public void init(View view) {
+        initVariable();
+        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
 
+        if (!TransactionsHistoryFragment.isFromSearch) {
+            if (!TransactionsHistoryFragment.isFromTransHistory) {
+                transactionJsonList.clear();
+                callTransactionHistoryApi(getActivity());
+            } else {
+                transactionsAdapter.notifyDataSetChanged();
+            }
+        }
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         binding.recyclerViewAllTransactions.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerViewAllTransactions.setLayoutManager(mLayoutManager);
         transactionsAdapter = new AllTransactionsAdapter(getActivity(), transactionJsonList);
         binding.recyclerViewAllTransactions.setAdapter(transactionsAdapter);
 
-        if (!TransactionsHistoryFragment.isFromTransHistory) {
-            initVariable();
-            callTransactionHistoryApi(getActivity());
-        } else {
-            transactionsAdapter.notifyDataSetChanged();
-        }
 
         binding.recyclerViewAllTransactions.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -101,14 +110,18 @@ public class AllTransactionsFragment extends Fragment {
         });
     }
 
-    private void callTransactionHistoryApi(Context context) {
+    public static void callTransactionHistoryApi(Context context) {
 
         String sDate = "";
         String eDate = "";
+        String action = "";
+        String income = "";
         int Page = 1;
         if (startDate != null) {
             sDate = startDate;
-            // coursePage = SearchEarningsFragment.CoursePage;
+            action = actionType;
+            income = incomeType;
+            Page = SearchTransactionsFragment.transPage;
         } else {
             Page = transactionPage;
         }
@@ -117,7 +130,7 @@ public class AllTransactionsFragment extends Fragment {
         }
 
         LoadingDialog loadingDialog = new LoadingDialog(context);
-        String apiParam = "?create_date_start=" + sDate + "&create_date_end=" + eDate + "&page=" + Page + "&per_page=10";
+        String apiParam = "?create_date_start=" + sDate + "&create_date_end=" + eDate + "&action_type="+action + "&income_type="+income +"&page=" + Page + "&per_page=10";
 
         Api.newApi(context, P.baseUrl + "all_transaction" + apiParam)
                 .setMethod(Api.GET)
@@ -147,8 +160,11 @@ public class AllTransactionsFragment extends Fragment {
                                 //courseJson = Json1;
                                 transactionsAdapter.notifyDataSetChanged();
                                 if (transactionJsonList.size() < numRows) {
-
-                                    transactionPage++;
+                                    if (startDate != null) {
+                                        SearchTransactionsFragment.transPage++;
+                                    } else {
+                                        transactionPage++;
+                                    }
                                     nextPageForTransaction = true;
                                     isProgress = true;
                                 } else {
@@ -165,12 +181,17 @@ public class AllTransactionsFragment extends Fragment {
     }
 
     private void initVariable() {
-        startDate = null;
-        endDate = null;
-        isProgress = false;
-        transactionPage = 1;
-        nextPageForTransaction = true;
-        transactionJsonList.clear();
+
+        if (TransactionsHistoryFragment.isFromSearch) {
+            isProgress = false;
+            transactionPage = 1;
+            nextPageForTransaction = true;
+            transactionJsonList.clear();
+        } else {
+            startDate = null;
+            endDate = null;
+        }
+
     }
 
 

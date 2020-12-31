@@ -50,8 +50,11 @@ public class TransactionsHistoryFragment extends Fragment {
 
     static String crashstartDate;
     static String crashendDate;
+    static String actionType;
+    static String incomeType;
 
     public static boolean isFromTransHistory = false;
+    public static boolean isFromSearch = false;
     public static int pos;
 
 
@@ -95,11 +98,14 @@ public class TransactionsHistoryFragment extends Fragment {
         if (tab.equalsIgnoreCase("Crash Course")) {
             binding.viewPager.setCurrentItem(1);
 
-            if (!isFromTransHistory) {
-                initVariable();
-                callCrashTransactionApi(context);
-            } else {
-                CrashCourseFragment.setupRecyclerViewCrash();
+            if (!isFromSearch) {
+                if (!isFromTransHistory) {
+                    initVariable();
+                    crashJsonList.clear();
+                    callCrashTransactionApi(context);
+                } else {
+                    CrashCourseFragment.setupRecyclerViewCrash();
+                }
             }
         }
 
@@ -126,9 +132,12 @@ public class TransactionsHistoryFragment extends Fragment {
                     }
                 } else*/
                 if (pos == 1) {
+
                     if (crashJsonList.size() <= 0) {
-                        initVariable();
-                        callCrashTransactionApi(context);
+                        if (!isFromSearch) {
+                            initVariable();
+                            callCrashTransactionApi(context);
+                        }
                     } else {
                         CrashCourseFragment.setupRecyclerViewCrash();
                     }
@@ -175,14 +184,19 @@ public class TransactionsHistoryFragment extends Fragment {
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
         super.onCreate(savedInstanceState);
     }
+
     public static void callCrashTransactionApi(Context context) {
 
         String sDate = "";
         String eDate = "";
+        String action = "";
+        String income = "";
         int Page = 1;
         if (crashstartDate != null) {
             sDate = crashstartDate;
-            // coursePage = SearchEarningsFragment.CoursePage;
+            action = actionType;
+            income = incomeType;
+            Page = SearchTransactionsFragment.transPage;
         } else {
             Page = CrashPage;
         }
@@ -191,7 +205,7 @@ public class TransactionsHistoryFragment extends Fragment {
         }
 
         LoadingDialog loadingDialog = new LoadingDialog(context);
-        String apiParam = "?create_date_start=" + sDate + "&create_date_end=" + eDate + "&page=" + Page + "&per_page=10";
+        String apiParam = "?create_date_start=" + sDate + "&create_date_end=" + eDate + "&action_type=" + action + "&income_type=" + income + "&page=" + Page + "&per_page=10";
 
         Api.newApi(context, P.baseUrl + "crash_course_transaction" + apiParam)
                 .setMethod(Api.GET)
@@ -239,11 +253,19 @@ public class TransactionsHistoryFragment extends Fragment {
     }
 
     private void initVariable() {
-        crashstartDate = null;
-        crashendDate = null;
-        CrashPage = 1;
-        nextPageForCrash = true;
-        crashJsonList.clear();
+
+        if (isFromSearch) {
+            isCrashProgress = false;
+            CrashPage = 1;
+            nextPageForCrash = true;
+            crashJsonList.clear();
+        } else {
+            crashstartDate = null;
+            crashendDate = null;
+            actionType = "";
+            incomeType = "";
+
+        }
     }
 
 

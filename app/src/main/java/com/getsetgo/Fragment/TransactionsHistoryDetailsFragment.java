@@ -36,7 +36,7 @@ public class TransactionsHistoryDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_transactions_history_details, container, false);
         View rootView = binding.getRoot();
-
+        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         init();
         return rootView;
     }
@@ -49,6 +49,8 @@ public class TransactionsHistoryDetailsFragment extends Fragment {
     }
 
     private void init() {
+        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
+        TransactionsHistoryFragment.isFromSearch = false;
 
         String jsonData = getArguments().getString("jsonObj");
         try {

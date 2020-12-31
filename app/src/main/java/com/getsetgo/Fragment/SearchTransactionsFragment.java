@@ -30,10 +30,14 @@ import java.util.Date;
 public class SearchTransactionsFragment extends Fragment {
 
     FragmentSearchTransactionBinding binding;
+
+    public static int transPage = 1;
+    public static int CrashPage = 1;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_search_transaction, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_transaction, container, false);
         View rootView = binding.getRoot();
         init();
         return rootView;
@@ -51,7 +55,7 @@ public class SearchTransactionsFragment extends Fragment {
             public void handleOnBackPressed() {
                 // Handle the back button event
 
-                if(getFragmentManager().getBackStackEntryCount() > 0){
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
                     getFragmentManager().popBackStackImmediate();
                 }
             }
@@ -59,7 +63,10 @@ public class SearchTransactionsFragment extends Fragment {
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
         super.onCreate(savedInstanceState);
     }
+
     private void init() {
+        transPage = 1;
+        CrashPage = 1;
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Search Transaction");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         bindActionType();
@@ -69,11 +76,25 @@ public class SearchTransactionsFragment extends Fragment {
         binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isFormValidation()) {
-                    if (checkDateValidation()) {
 
+                if (checkDateValidation()) {
+                    if (TransactionsHistoryFragment.pos == 1) {
+                        TransactionsHistoryFragment.isFromSearch = true;
+                        getCrashData();
+                        TransactionsHistoryFragment.callCrashTransactionApi(getActivity());
+                        if (getFragmentManager().getBackStackEntryCount() > 0) {
+                            getFragmentManager().popBackStackImmediate();
+                        }
+                    } else {
+                        getTransData();
+                        TransactionsHistoryFragment.isFromSearch = true;
+                        AllTransactionsFragment.callTransactionHistoryApi(getActivity());
+                        if (getFragmentManager().getBackStackEntryCount() > 0) {
+                            getFragmentManager().popBackStackImmediate();
+                        }
                     }
                 }
+
             }
         });
 
@@ -88,21 +109,58 @@ public class SearchTransactionsFragment extends Fragment {
         });
     }
 
-    private boolean checkDateValidation() {
-        boolean value = true;
-        SimpleDateFormat dfDate = new SimpleDateFormat("yyyy-MM-dd");
-        Date d1 = null;
-        Date d2 = null;
-        try {
-            d1 = dfDate.parse(binding.etStartDate.getText().toString());
-            d2 = dfDate.parse(binding.etEndDate.getText().toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
+    private void getTransData() {
+        AllTransactionsFragment.startDate = binding.etStartDate.getText().toString();
+        AllTransactionsFragment.endDate = binding.etEndDate.getText().toString();
+        if (binding.spnActionType.getSelectedItem().toString().equalsIgnoreCase("Select")) {
+            AllTransactionsFragment.actionType = "";
+        } else {
+            AllTransactionsFragment.actionType = binding.spnActionType.getSelectedItem().toString();
         }
 
-        if (d1.after(d2)) {
-            value = false;
-            Toast.makeText(getActivity(), "End Date can't be smaller than Start Date", Toast.LENGTH_SHORT).show();
+        if (binding.spnIncomeType.getSelectedItem().toString().equalsIgnoreCase("Select")) {
+            AllTransactionsFragment.incomeType = "";
+        } else {
+            AllTransactionsFragment.incomeType = binding.spnIncomeType.getSelectedItem().toString();
+        }
+    }
+
+    private void getCrashData() {
+        TransactionsHistoryFragment.crashstartDate = binding.etStartDate.getText().toString();
+        TransactionsHistoryFragment.crashendDate = binding.etEndDate.getText().toString();
+        if (binding.spnActionType.getSelectedItem().toString().equalsIgnoreCase("Select")) {
+            TransactionsHistoryFragment.actionType = "";
+        } else {
+            TransactionsHistoryFragment.actionType = binding.spnActionType.getSelectedItem().toString();
+        }
+
+        if (binding.spnIncomeType.getSelectedItem().toString().equalsIgnoreCase("Select")) {
+            TransactionsHistoryFragment.incomeType = "";
+        } else {
+            TransactionsHistoryFragment.incomeType = binding.spnIncomeType.getSelectedItem().toString();
+        }
+    }
+
+    private boolean checkDateValidation() {
+        boolean value = true;
+
+        if (!binding.etStartDate.getText().toString().isEmpty()
+                || !binding.etEndDate.getText().toString().isEmpty()) {
+
+            SimpleDateFormat dfDate = new SimpleDateFormat("yyyy-MM-dd");
+            Date d1 = null;
+            Date d2 = null;
+            try {
+                d1 = dfDate.parse(binding.etStartDate.getText().toString());
+                d2 = dfDate.parse(binding.etEndDate.getText().toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            if (d1.after(d2)) {
+                value = false;
+                Toast.makeText(getActivity(), "End Date can't be smaller than Start Date", Toast.LENGTH_SHORT).show();
+            }
         }
         return value;
     }
@@ -130,7 +188,7 @@ public class SearchTransactionsFragment extends Fragment {
                     }
                 }, year, month, day);
 
-                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                 datePickerDialog.show();
             }
         });
@@ -147,13 +205,12 @@ public class SearchTransactionsFragment extends Fragment {
                     }
                 }, eyear, emonth, eday);
 
-                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                 datePickerDialog.show();
             }
         });
 
     }
-
 
     public boolean isFormValidation() {
         if (binding.etStartDate.getText().toString().isEmpty()) {
@@ -166,25 +223,13 @@ public class SearchTransactionsFragment extends Fragment {
         return true;
     }
 
-    private String formatedDate(String stringDate) {
-        String orderDate = stringDate;
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-            Date date = dateFormat.parse(orderDate);
-            orderDate = dateFormat.format(date);
-        } catch (Exception e) {
-        }
-        return orderDate;
-    }
 
     private void bindActionType() {
 
         ArrayList<String> stringArrayList = new ArrayList<String>();
-        stringArrayList.add("Action Type");
-        stringArrayList.add("Income Type");
-        stringArrayList.add("Text Type");
-        stringArrayList.add("Dummy Type");
-        stringArrayList.add("Normal Type");
+        stringArrayList.add("Select");
+        stringArrayList.add("D");
+        stringArrayList.add("A");
 
 
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getActivity(),
@@ -209,10 +254,10 @@ public class SearchTransactionsFragment extends Fragment {
     private void bindIncomeType() {
 
         ArrayList<String> stringArrayList = new ArrayList<String>();
-        stringArrayList.add("Income Type");
-        stringArrayList.add("Text Type");
-        stringArrayList.add("Dummy Type");
-        stringArrayList.add("Normal Type");
+        stringArrayList.add("Select");
+        stringArrayList.add("T");
+        stringArrayList.add("RF");
+        stringArrayList.add("MF");
 
 
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getActivity(),

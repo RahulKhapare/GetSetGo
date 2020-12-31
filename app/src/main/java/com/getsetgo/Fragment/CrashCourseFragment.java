@@ -24,6 +24,7 @@ import com.adoisstudio.helper.JsonList;
 import com.getsetgo.Adapter.CrashTransactionsAdapter;
 import com.getsetgo.R;
 
+import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentCrashCourseTransBinding;
 
 
@@ -52,6 +53,7 @@ public class CrashCourseFragment extends Fragment {
     }
 
     public void init() {
+        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         binding.recyclerViewCrashTans.setLayoutManager(layoutManager);
         binding.recyclerViewCrashTans.setItemAnimator(new DefaultItemAnimator());

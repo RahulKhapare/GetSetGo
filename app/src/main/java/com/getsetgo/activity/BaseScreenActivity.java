@@ -326,6 +326,7 @@ public class BaseScreenActivity extends AppCompatActivity {
                 TransactionsHistoryFragment transactionsHistoryFragment;
                 transactionsHistoryFragment = TransactionsHistoryFragment.newInstance();
                 TransactionsHistoryFragment.isFromTransHistory = false;
+                TransactionsHistoryFragment.isFromSearch = false;
                 transactionsHistoryFragment.setArguments(bundle);
                 fragmentLoader(transactionsHistoryFragment, true);
                 break;
