@@ -110,6 +110,7 @@ public class DashBoardFragment extends Fragment {
     }
 
     private void loadTotalFragment(String title,View v){
+        TotalUsersFragment.isSearch = false;
         Bundle bundle = new Bundle();
         bundle.putString("titleText", title);
         AppCompatActivity activity = (AppCompatActivity) v.getContext();

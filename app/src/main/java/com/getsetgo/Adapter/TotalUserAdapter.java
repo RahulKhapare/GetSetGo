@@ -11,14 +11,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adoisstudio.helper.Json;
+import com.adoisstudio.helper.JsonList;
 import com.getsetgo.R;
 
 public class TotalUserAdapter extends RecyclerView.Adapter<TotalUserAdapter.TotalUserViewHolder> {
 
     Context context;
+    JsonList jsonList;
 
-    public TotalUserAdapter(Context context) {
+    public TotalUserAdapter(Context context,JsonList jsonList) {
         this.context = context;
+        this.jsonList = jsonList;
     }
 
     @NonNull
@@ -31,6 +35,17 @@ public class TotalUserAdapter extends RecyclerView.Adapter<TotalUserAdapter.Tota
     @Override
     public void onBindViewHolder(@NonNull TotalUserAdapter.TotalUserViewHolder holder, int position) {
 
+        Json json = jsonList.get(position);
+
+        holder.txtName.setText(json.getString("name") +" " + json.getString("lastname"));
+        holder.txtDate.setText(json.getString("update_timestamp"));
+        holder.txtPhone.setText(json.getString("contact"));
+        holder.txtEmail.setText(json.getString("email"));
+        holder.txtParent.setText(json.getString("franchise_parent"));
+        holder.txtPEmail.setText(json.getString("fp_email"));
+        holder.txtPPhone.setText(json.getString("fp_contact"));
+        holder.txtAddDate.setText(json.getString("add_timestamp"));
+        holder.txtStatus.setText(json.getString("status"));
 
         holder.chkShowHide.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,12 +61,13 @@ public class TotalUserAdapter extends RecyclerView.Adapter<TotalUserAdapter.Tota
 
     @Override
     public int getItemCount() {
-        return 15;
+        return jsonList.size();
     }
 
     public class TotalUserViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtDate,txtName,txtColor,txtAddDate;
+        TextView txtDate,txtName,txtColor,txtUserAddDate,txtAddDate,
+        txtPhone,txtEmail,txtParent,txtPEmail,txtPPhone,txtStatus;
         CheckBox chkShowHide;
         RelativeLayout rlDetails;
 
@@ -60,15 +76,16 @@ public class TotalUserAdapter extends RecyclerView.Adapter<TotalUserAdapter.Tota
 
             txtName = itemView.findViewById(R.id.txtUserName);
             txtColor = itemView.findViewById(R.id.txtUserColor);
-            txtAddDate = itemView.findViewById(R.id.txtUserAddDate);
+            txtUserAddDate = itemView.findViewById(R.id.txtUserAddDate);
             txtDate = itemView.findViewById(R.id.txtUserDate);
+            txtPhone = itemView.findViewById(R.id.txtPhone);
+            txtEmail = itemView.findViewById(R.id.txtEmail);
+            txtParent = itemView.findViewById(R.id.txtParent);
+            txtPEmail = itemView.findViewById(R.id.txtPEmail);
+            txtPPhone = itemView.findViewById(R.id.txtPPhone);
+            txtAddDate = itemView.findViewById(R.id.txtAddDate);
+            txtStatus = itemView.findViewById(R.id.txtStatus);
             chkShowHide = itemView.findViewById(R.id.chcShowHide);
-         /*   txtStatus = itemView.findViewById(R.id.txtStatusTitle);
-            txtStatusDate = itemView.findViewById(R.id.txtStatusDate);
-            txtTransactionId = itemView.findViewById(R.id.txtTransactionId);
-            txtApproveDate = itemView.findViewById(R.id.txtApproveDate);
-            txtSlipDetails = itemView.findViewById(R.id.txtSlipDetails);
-            txtRemark = itemView.findViewById(R.id.txtRemark);*/
             rlDetails = itemView.findViewById(R.id.rlDetails);
 
         }

@@ -95,8 +95,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:layout_marginTop="20dp"
+                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <FrameLayout
@@ -105,15 +105,15 @@
 
                                 <Spinner
                                     android:id="@+id/spnColorType"
+                                    style="@style/SpinnerTextViewItem"
                                     android:layout_width="match_parent"
                                     android:layout_height="50dp"
                                     android:layout_gravity="end|center"
                                     android:background="@null"
-                                    android:gravity="start|center_vertical"
-                                    style="@style/SpinnerTextViewItem"
-                                    android:spinnerMode="dropdown"
                                     android:dropDownVerticalOffset="40dp"
-                                    android:singleLine="true" />
+                                    android:gravity="start|center_vertical"
+                                    android:singleLine="true"
+                                    android:spinnerMode="dropdown" />
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
@@ -125,8 +125,8 @@
                                         android:layout_height="33dp"
                                         android:layout_alignParentEnd="true"
                                         android:layout_alignParentBottom="true"
-                                        app:tint="#90232323"
-                                        android:src="@drawable/ic_down_spiner" />
+                                        android:src="@drawable/ic_down_spiner"
+                                        app:tint="#90232323" />
                                 </RelativeLayout>
                             </FrameLayout>
 
@@ -143,8 +143,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:layout_marginTop="20dp"
+                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <FrameLayout
@@ -153,15 +153,15 @@
 
                                 <Spinner
                                     android:id="@+id/spnAffUser"
+                                    style="@style/SpinnerTextViewItem"
                                     android:layout_width="match_parent"
                                     android:layout_height="50dp"
                                     android:layout_gravity="end|center"
                                     android:background="@null"
-                                    android:gravity="start|center_vertical"
-                                    style="@style/SpinnerTextViewItem"
-                                    android:spinnerMode="dropdown"
                                     android:dropDownVerticalOffset="40dp"
-                                    android:singleLine="true" />
+                                    android:gravity="start|center_vertical"
+                                    android:singleLine="true"
+                                    android:spinnerMode="dropdown" />
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
@@ -173,8 +173,8 @@
                                         android:layout_height="33dp"
                                         android:layout_alignParentEnd="true"
                                         android:layout_alignParentBottom="true"
-                                        app:tint="#90232323"
-                                        android:src="@drawable/ic_down_spiner" />
+                                        android:src="@drawable/ic_down_spiner"
+                                        app:tint="#90232323" />
                                 </RelativeLayout>
                             </FrameLayout>
 
@@ -199,8 +199,11 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:backgroundTint="@color/colorTextDark"
+                                android:drawableRight="@drawable/ic_ddate"
                                 android:fontFamily="@font/nunito_sans_semibold"
                                 android:hint="Registration from"
+                                android:editable="false"
+                                android:focusableInTouchMode="false"
                                 android:imeOptions="actionNext"
                                 android:inputType="textCapWords"
                                 android:textColor="@color/colorTextDark"
@@ -208,6 +211,7 @@
                                 android:textSize="16sp" />
 
                         </com.google.android.material.textfield.TextInputLayout>
+
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="?actionBarSize"
@@ -219,8 +223,11 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:backgroundTint="@color/colorTextDark"
+                                android:drawableRight="@drawable/ic_ddate"
                                 android:fontFamily="@font/nunito_sans_semibold"
                                 android:hint="Registration to"
+                                android:editable="false"
+                                android:focusableInTouchMode="false"
                                 android:imeOptions="actionNext"
                                 android:inputType="textCapWords"
                                 android:textColor="@color/colorTextDark"
@@ -232,8 +239,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:layout_marginTop="20dp"
+                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <FrameLayout
@@ -242,15 +249,15 @@
 
                                 <Spinner
                                     android:id="@+id/spnCrashCourse"
+                                    style="@style/SpinnerTextViewItem"
                                     android:layout_width="match_parent"
                                     android:layout_height="50dp"
                                     android:layout_gravity="end|center"
                                     android:background="@null"
-                                    android:gravity="start|center_vertical"
-                                    style="@style/SpinnerTextViewItem"
-                                    android:spinnerMode="dropdown"
                                     android:dropDownVerticalOffset="40dp"
-                                    android:singleLine="true" />
+                                    android:gravity="start|center_vertical"
+                                    android:singleLine="true"
+                                    android:spinnerMode="dropdown" />
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
@@ -262,8 +269,8 @@
                                         android:layout_height="33dp"
                                         android:layout_alignParentEnd="true"
                                         android:layout_alignParentBottom="true"
-                                        app:tint="#90232323"
-                                        android:src="@drawable/ic_down_spiner" />
+                                        android:src="@drawable/ic_down_spiner"
+                                        app:tint="#90232323" />
                                 </RelativeLayout>
                             </FrameLayout>
 
@@ -280,8 +287,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:layout_marginTop="20dp"
+                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <FrameLayout
@@ -290,15 +297,15 @@
 
                                 <Spinner
                                     android:id="@+id/spnCourse"
+                                    style="@style/SpinnerTextViewItem"
                                     android:layout_width="match_parent"
                                     android:layout_height="50dp"
                                     android:layout_gravity="end|center"
                                     android:background="@null"
-                                    android:gravity="start|center_vertical"
-                                    style="@style/SpinnerTextViewItem"
-                                    android:spinnerMode="dropdown"
                                     android:dropDownVerticalOffset="40dp"
-                                    android:singleLine="true" />
+                                    android:gravity="start|center_vertical"
+                                    android:singleLine="true"
+                                    android:spinnerMode="dropdown" />
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
@@ -310,8 +317,8 @@
                                         android:layout_height="33dp"
                                         android:layout_alignParentEnd="true"
                                         android:layout_alignParentBottom="true"
-                                        app:tint="#90232323"
-                                        android:src="@drawable/ic_down_spiner" />
+                                        android:src="@drawable/ic_down_spiner"
+                                        app:tint="#90232323" />
                                 </RelativeLayout>
                             </FrameLayout>
 
@@ -324,6 +331,7 @@
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="2dp"
                             android:src="@drawable/underline" />
+
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="?actionBarSize"
@@ -335,6 +343,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:backgroundTint="@color/colorTextDark"
+                                android:editable="false"
+                                android:focusableInTouchMode="false"
+                                android:drawableRight="@drawable/ic_ddate"
                                 android:fontFamily="@font/nunito_sans_semibold"
                                 android:hint="Purchased From"
                                 android:imeOptions="actionNext"
@@ -344,6 +355,7 @@
                                 android:textSize="16sp" />
 
                         </com.google.android.material.textfield.TextInputLayout>
+
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="?actionBarSize"
@@ -355,6 +367,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:backgroundTint="@color/colorTextDark"
+                                android:drawableRight="@drawable/ic_ddate"
+                                android:editable="false"
+                                android:focusableInTouchMode="false"
                                 android:fontFamily="@font/nunito_sans_semibold"
                                 android:hint="Purchased To"
                                 android:imeOptions="actionNext"
@@ -364,6 +379,7 @@
                                 android:textSize="16sp" />
 
                         </com.google.android.material.textfield.TextInputLayout>
+
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="?actionBarSize"
@@ -384,11 +400,12 @@
                                 android:textSize="16sp" />
 
                         </com.google.android.material.textfield.TextInputLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:layout_marginTop="20dp"
+                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <FrameLayout
@@ -397,15 +414,15 @@
 
                                 <Spinner
                                     android:id="@+id/spnRegdPurpose"
+                                    style="@style/SpinnerTextViewItem"
                                     android:layout_width="match_parent"
                                     android:layout_height="50dp"
                                     android:layout_gravity="end|center"
                                     android:background="@null"
-                                    android:gravity="start|center_vertical"
-                                    style="@style/SpinnerTextViewItem"
-                                    android:spinnerMode="dropdown"
                                     android:dropDownVerticalOffset="40dp"
-                                    android:singleLine="true" />
+                                    android:gravity="start|center_vertical"
+                                    android:singleLine="true"
+                                    android:spinnerMode="dropdown" />
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
@@ -417,8 +434,8 @@
                                         android:layout_height="33dp"
                                         android:layout_alignParentEnd="true"
                                         android:layout_alignParentBottom="true"
-                                        app:tint="#90232323"
-                                        android:src="@drawable/ic_down_spiner" />
+                                        android:src="@drawable/ic_down_spiner"
+                                        app:tint="#90232323" />
                                 </RelativeLayout>
                             </FrameLayout>
 
