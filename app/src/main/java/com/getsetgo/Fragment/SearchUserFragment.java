@@ -1,7 +1,6 @@
 package com.getsetgo.Fragment;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,7 +18,6 @@ import androidx.fragment.app.Fragment;
 
 import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
-import com.getsetgo.Model.CourseListModel;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentSearchUserBinding;
