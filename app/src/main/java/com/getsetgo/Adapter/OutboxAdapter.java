@@ -14,26 +14,26 @@ import com.getsetgo.Fragment.ChatScreenFragment;
 import com.getsetgo.R;
 import com.getsetgo.databinding.LayoutInboxOutboxRowBinding;
 
-public class InboxOutboxAdapter extends RecyclerView.Adapter<InboxOutboxAdapter.InboxOutViewHolder> {
+public class OutboxAdapter extends RecyclerView.Adapter<OutboxAdapter.InboxOutViewHolder> {
 
     LayoutInboxOutboxRowBinding binding;
     Context context;
     ChatScreenFragment chatScreenFragment;
 
-    public InboxOutboxAdapter(Context context) {
+    public OutboxAdapter(Context context) {
         this.context = context;
 
     }
 
     @NonNull
     @Override
-    public InboxOutboxAdapter.InboxOutViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public OutboxAdapter.InboxOutViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),R.layout.layout_inbox_outbox_row,parent,false);
         return new InboxOutViewHolder(binding.getRoot());
     }
 
     @Override
-    public void onBindViewHolder(@NonNull InboxOutboxAdapter.InboxOutViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull OutboxAdapter.InboxOutViewHolder holder, int position) {
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

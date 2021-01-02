@@ -36,6 +36,7 @@ public class IncentivesFragment extends Fragment {
     static IncentivesAdapter incentivesAdapter;
     static FragmentUserincentiveBinding binding;
     SearchIncentivesFragment searchIncentivesFragment;
+    Context context;
 
     static JsonList incentiveList = new JsonList();
     static boolean nextPage = false;
@@ -63,6 +64,7 @@ public class IncentivesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_userincentive, container, false);
         View rootView = binding.getRoot();
+        context = inflater.getContext();
 
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Incentives");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
@@ -87,7 +89,7 @@ public class IncentivesFragment extends Fragment {
     private void init(View view) {
         if (!isSearch) {
             initVariable();
-            callUserIncentiveApi(getActivity());
+            callUserIncentiveApi(context);
         }
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         binding.recyclerViewIncentive.setLayoutManager(mLayoutManager);
@@ -119,7 +121,7 @@ public class IncentivesFragment extends Fragment {
                 if (isScrolling && (currentItem + scrollOutItems == totalItems)) {
                     if (nextPage) {
                         isScrolling = false;
-                        callUserIncentiveApi(getActivity());
+                        callUserIncentiveApi(context);
                     }
                 }
             }
