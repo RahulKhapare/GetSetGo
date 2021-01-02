@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,7 +40,10 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxOutView
     @Override
     public void onBindViewHolder(@NonNull InboxAdapter.InboxOutViewHolder holder, int position) {
 
-//        Json json = jsonList.get(position);
+        Json json = jsonList.get(position);
+
+        holder.txtMessage.setText(json.getString("message"));
+        holder.txtDate.setText(json.getString("create_date"));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,16 +56,19 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxOutView
 
     @Override
     public int getItemCount() {
-        return 15;
+        return jsonList.size();
     }
 
     public class InboxOutViewHolder extends RecyclerView.ViewHolder {
 
+        TextView txtTitle,txtMessage,txtDate;
 
         public InboxOutViewHolder(View view) {
             super(view);
 
-
+            txtTitle = itemView.findViewById(R.id.txtSupportTitle);
+            txtDate = itemView.findViewById(R.id.txtDate);
+            txtMessage = itemView.findViewById(R.id.txtMessage);
         }
     }
 
