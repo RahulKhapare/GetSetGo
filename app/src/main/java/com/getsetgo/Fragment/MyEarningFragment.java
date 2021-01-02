@@ -91,12 +91,13 @@ public class MyEarningFragment extends Fragment {
             }
         });
 
+        setUpRefIncome(EarningsFragment.courseJson);
 
     }
 
     public static void setUpRefIncome(Json json) {
-        int income = json.getInt("income");
-        binding.txtIncome.setText(String.valueOf(income));
+        String income = json.getString("income");
+        binding.txtIncome.setText(income);
     }
 
     public static void setupRecyclerViewMyEarnings() {

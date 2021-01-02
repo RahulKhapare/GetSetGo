@@ -151,8 +151,8 @@ public class EarningsFragment extends Fragment {
                             callCourseEarningApi(context);
                         }
                     } else {
-                        MyEarningFragment.setupRecyclerViewMyEarnings();
                         MyEarningFragment.setUpRefIncome(courseJson);
+                        MyEarningFragment.setupRecyclerViewMyEarnings();
                     }
                 } else if (pos == 1) {
                     BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
@@ -162,8 +162,8 @@ public class EarningsFragment extends Fragment {
                             callCrashCourseEarningApi(context);
                         }
                     } else {
-                        MyEarnCrashCourseFragment.setupRecyclerViewCrashCourse();
                         MyEarnCrashCourseFragment.setUpCrashIncome(crashcourseJson);
+                        MyEarnCrashCourseFragment.setupRecyclerViewCrashCourse();
                     }
                 } else {
                     BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);

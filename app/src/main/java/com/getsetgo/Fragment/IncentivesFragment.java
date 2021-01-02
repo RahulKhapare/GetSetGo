@@ -33,17 +33,21 @@ import com.getsetgo.util.P;
 
 public class IncentivesFragment extends Fragment {
 
-    IncentivesAdapter incentivesAdapter;
-    private FragmentUserincentiveBinding binding;
+    static IncentivesAdapter incentivesAdapter;
+    static FragmentUserincentiveBinding binding;
     SearchIncentivesFragment searchIncentivesFragment;
 
-    public JsonList incentiveList = null;
-    private boolean nextPage = false;
-    public int Page = 1;
+    static JsonList incentiveList = new JsonList();
+    static boolean nextPage = false;
+    static int page = 1;
     private LinearLayoutManager mLayoutManager;
     boolean isScrolling = false;
     int currentItem, totalItems, scrollOutItems;
-    LoadingDialog loadingDialog;
+
+    public static boolean isSearch = false;
+
+    static String startDate;
+    static String actionType;
 
 
     public IncentivesFragment() {
@@ -73,12 +77,23 @@ public class IncentivesFragment extends Fragment {
         init(view);
     }
 
+    public static void initVariable() {
+        startDate = null;
+        actionType = "";
+        incentiveList.clear();
+    }
+
+
     private void init(View view) {
-        callUserIncentiveApi(getActivity());
+        if (!isSearch) {
+            initVariable();
+            callUserIncentiveApi(getActivity());
+        }
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         binding.recyclerViewIncentive.setLayoutManager(mLayoutManager);
         binding.recyclerViewIncentive.setItemAnimator(new DefaultItemAnimator());
-        incentiveList = new JsonList();
+        incentivesAdapter = new IncentivesAdapter(getActivity(), incentiveList);
+        binding.recyclerViewIncentive.setAdapter(incentivesAdapter);
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,15 +126,8 @@ public class IncentivesFragment extends Fragment {
         });
     }
 
-    private void setupRecyclerViewForIncentives(JsonList jsonList) {
-        if(jsonList != null) {
-            binding.recyclerViewIncentive.setVisibility(View.VISIBLE);
-            incentivesAdapter = new IncentivesAdapter(getActivity(), jsonList);
-            binding.recyclerViewIncentive.setAdapter(incentivesAdapter);
-            incentivesAdapter.notifyDataSetChanged();
-        }else{
-            binding.recyclerViewIncentive.setVisibility(View.GONE);
-        }
+    public static void setupRecyclerViewForIncentives() {
+        incentivesAdapter.notifyDataSetChanged();
     }
 
     private void loadFragment(View v) {
@@ -150,10 +158,24 @@ public class IncentivesFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    private void callUserIncentiveApi(Context context) {
+    public static void callUserIncentiveApi(Context context) {
+        LoadingDialog loadingDialog = new LoadingDialog(context);
+        String sDate = "";
+        String action = "";
+        int Page = 1;
+        Page = page;
+        if (isSearch) {
+            if (startDate != null) {
+                sDate = startDate;
+            }
+            if (actionType != null && !actionType.isEmpty()) {
+                action = actionType;
+            }
 
-        loadingDialog = new LoadingDialog(getActivity());
-        //String apiParam = "&page=" + 1 + "&per_page=10";
+            Page = SearchIncentivesFragment.page;
+        }
+
+        String apiParam = "?create_date_start=" + sDate + "&action_type=" + action + "&page=" + Page + "&per_page=10";
 
         Api.newApi(context, P.baseUrl + "user_incentive").setMethod(Api.GET)
                 .onHeaderRequest(App::getHeaders)
@@ -180,13 +202,17 @@ public class IncentivesFragment extends Fragment {
                             JsonList jsonList = Json1.getJsonList(P.list);
                             if (jsonList != null && !jsonList.isEmpty()) {
                                 incentiveList.addAll(jsonList);
-                                setupRecyclerViewForIncentives(incentiveList);
+                                setupRecyclerViewForIncentives();
                                 if (incentiveList.size() < numRows) {
-                                    Page++;
+                                    if (isSearch) {
+                                        SearchIncentivesFragment.page++;
+                                    } else {
+                                        page++;
+                                    }
                                     nextPage = true;
                                 } else {
                                     nextPage = false;
-                                    Page = 1;
+                                    page = 1;
                                 }
                             }
                         }

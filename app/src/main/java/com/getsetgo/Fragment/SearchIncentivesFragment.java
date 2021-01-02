@@ -30,10 +30,12 @@ import java.util.Date;
 public class SearchIncentivesFragment extends Fragment {
 
     FragmentSearchIncentivesBinding binding;
+    public static int page = 1;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_search_incentives, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_incentives, container, false);
         View rootView = binding.getRoot();
         init();
         return rootView;
@@ -46,7 +48,7 @@ public class SearchIncentivesFragment extends Fragment {
             public void handleOnBackPressed() {
                 // Handle the back button event
 
-                if(getFragmentManager().getBackStackEntryCount() > 0){
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
                     getFragmentManager().popBackStackImmediate();
                 }
             }
@@ -59,7 +61,9 @@ public class SearchIncentivesFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
-    private void init(){
+
+    private void init() {
+        page = 1;
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Search Incentives");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         bindStatus();
@@ -68,24 +72,38 @@ public class SearchIncentivesFragment extends Fragment {
         binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isFormValidation()){
-
+                getData();
+                IncentivesFragment.isSearch = true;
+                IncentivesFragment.incentiveList.clear();
+                IncentivesFragment.callUserIncentiveApi(getActivity());
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
+                    getFragmentManager().popBackStackImmediate();
                 }
+                //}
             }
         });
+    }
 
+    private void getData() {
+        IncentivesFragment.startDate = binding.etDate.getText().toString();
+        if (binding.spnStatus.getSelectedItem().toString().equalsIgnoreCase("Select")) {
+            IncentivesFragment.actionType = "";
+        } else {
+            IncentivesFragment.actionType = binding.spnStatus.getSelectedItem().toString();
+        }
     }
 
     public boolean isFormValidation() {
         if (binding.etDate.getText().toString().isEmpty()) {
             Toast.makeText(getActivity(), "Date should not be empty", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(binding.spnStatus.getSelectedItem().toString().equalsIgnoreCase("Select")){
+        } else if (binding.spnStatus.getSelectedItem().toString().equalsIgnoreCase("Select")) {
             Toast.makeText(getActivity(), "Please select status", Toast.LENGTH_SHORT).show();
         }
         return true;
     }
-    private void initCalendar(){
+
+    private void initCalendar() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -97,12 +115,12 @@ public class SearchIncentivesFragment extends Fragment {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        month = month+1;
-                        String sDate = dayOfMonth + "/" + month+ "/"+ year;
+                        month = month + 1;
+                        String sDate = year + "-" + month + "-" + dayOfMonth;
                         binding.etDate.setText(sDate);
                     }
                 }
-                        ,year,month,day);
+                        , year, month, day);
 
                 datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                 datePickerDialog.show();

@@ -334,6 +334,7 @@ public class BaseScreenActivity extends AppCompatActivity {
 
             case R.id.txtincentive:
                 if (incentivesFragment == null)
+                    IncentivesFragment.isSearch = false;
                     incentivesFragment = IncentivesFragment.newInstance();
                 fragmentLoader(incentivesFragment, true);
                 break;
