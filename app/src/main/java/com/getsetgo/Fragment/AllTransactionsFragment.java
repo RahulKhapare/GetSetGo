@@ -38,17 +38,17 @@ public class AllTransactionsFragment extends Fragment {
     int currentItem, totalItems, scrollOutItems;
 
 
-    static int transactionPage = 1;
+ /*   static int transactionPage = 1;
     static JsonList transactionJsonList = new JsonList();
     static boolean nextPageForTransaction = true;
-
+    public static boolean isFromSearch = false;
     static boolean isProgress = false;
 
     static String startDate;
     static String endDate;
 
     static String actionType;
-    static String incomeType;
+    static String incomeType;*/
 
 
     @Nullable
@@ -67,21 +67,21 @@ public class AllTransactionsFragment extends Fragment {
     }
 
     public void init(View view) {
-        initVariable();
+      //  initVariable();
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
 
-        if (!TransactionsHistoryFragment.isFromSearch) {
+       /* if (!AllTransactionsFragment.isFromSearch) {
             if (!TransactionsHistoryFragment.isFromTransHistory) {
                 transactionJsonList.clear();
                 callTransactionHistoryApi(getActivity());
             } else {
                 transactionsAdapter.notifyDataSetChanged();
             }
-        }
+        }*/
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         binding.recyclerViewAllTransactions.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerViewAllTransactions.setLayoutManager(mLayoutManager);
-        transactionsAdapter = new AllTransactionsAdapter(getActivity(), transactionJsonList);
+        transactionsAdapter = new AllTransactionsAdapter(getActivity(), TransactionsHistoryFragment.transactionJsonList);
         binding.recyclerViewAllTransactions.setAdapter(transactionsAdapter);
 
 
@@ -101,14 +101,19 @@ public class AllTransactionsFragment extends Fragment {
                 totalItems = mLayoutManager.getItemCount();
                 scrollOutItems = mLayoutManager.findFirstVisibleItemPosition();
                 if (isScrolling && (currentItem + scrollOutItems) >= totalItems) {
-                    if (nextPageForTransaction) {
+                    if (TransactionsHistoryFragment.nextPageForTransaction) {
                         isScrolling = false;
-                        callTransactionHistoryApi(getContext());
+                        TransactionsHistoryFragment.callTransactionHistoryApi(getContext());
                     }
                 }
             }
         });
     }
+
+    public static void setUpRecuclerviewAllTransactions(){
+        transactionsAdapter.notifyDataSetChanged();
+    }
+/*
 
     public static void callTransactionHistoryApi(Context context) {
 
@@ -182,7 +187,7 @@ public class AllTransactionsFragment extends Fragment {
 
     private void initVariable() {
 
-        if (TransactionsHistoryFragment.isFromSearch) {
+        if (AllTransactionsFragment.isFromSearch) {
             isProgress = false;
             transactionPage = 1;
             nextPageForTransaction = true;
@@ -193,6 +198,7 @@ public class AllTransactionsFragment extends Fragment {
         }
 
     }
+*/
 
 
 }

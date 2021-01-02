@@ -37,6 +37,7 @@ import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
 import com.getsetgo.Fragment.AccountFragment;
 import com.getsetgo.Fragment.AddNewUserFragment;
+import com.getsetgo.Fragment.AllTransactionsFragment;
 import com.getsetgo.Fragment.BankDetailsFragment;
 import com.getsetgo.Fragment.CategoriesFragment;
 import com.getsetgo.Fragment.CourseDetailFragment;

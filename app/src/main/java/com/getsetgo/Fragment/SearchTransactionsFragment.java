@@ -81,6 +81,7 @@ public class SearchTransactionsFragment extends Fragment {
                     if (TransactionsHistoryFragment.pos == 1) {
                         TransactionsHistoryFragment.isFromSearch = true;
                         getCrashData();
+                        TransactionsHistoryFragment.crashJsonList.clear();
                         TransactionsHistoryFragment.callCrashTransactionApi(getActivity());
                         if (getFragmentManager().getBackStackEntryCount() > 0) {
                             getFragmentManager().popBackStackImmediate();
@@ -88,7 +89,8 @@ public class SearchTransactionsFragment extends Fragment {
                     } else {
                         getTransData();
                         TransactionsHistoryFragment.isFromSearch = true;
-                        AllTransactionsFragment.callTransactionHistoryApi(getActivity());
+                        TransactionsHistoryFragment.transactionJsonList.clear();
+                        TransactionsHistoryFragment.callTransactionHistoryApi(getActivity());
                         if (getFragmentManager().getBackStackEntryCount() > 0) {
                             getFragmentManager().popBackStackImmediate();
                         }
@@ -110,18 +112,18 @@ public class SearchTransactionsFragment extends Fragment {
     }
 
     private void getTransData() {
-        AllTransactionsFragment.startDate = binding.etStartDate.getText().toString();
-        AllTransactionsFragment.endDate = binding.etEndDate.getText().toString();
+        TransactionsHistoryFragment.startDate = binding.etStartDate.getText().toString();
+        TransactionsHistoryFragment.endDate = binding.etEndDate.getText().toString();
         if (binding.spnActionType.getSelectedItem().toString().equalsIgnoreCase("Select")) {
-            AllTransactionsFragment.actionType = "";
+            TransactionsHistoryFragment.actionTransType = "";
         } else {
-            AllTransactionsFragment.actionType = binding.spnActionType.getSelectedItem().toString();
+            TransactionsHistoryFragment.actionTransType = binding.spnActionType.getSelectedItem().toString();
         }
 
         if (binding.spnIncomeType.getSelectedItem().toString().equalsIgnoreCase("Select")) {
-            AllTransactionsFragment.incomeType = "";
+            TransactionsHistoryFragment.incomeTransType = "";
         } else {
-            AllTransactionsFragment.incomeType = binding.spnIncomeType.getSelectedItem().toString();
+            TransactionsHistoryFragment.incomeTransType = binding.spnIncomeType.getSelectedItem().toString();
         }
     }
 

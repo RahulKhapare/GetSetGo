@@ -53,6 +53,18 @@ public class TransactionsHistoryFragment extends Fragment {
     static String actionType;
     static String incomeType;
 
+
+    static int transactionPage = 1;
+    static JsonList transactionJsonList = new JsonList();
+    static boolean nextPageForTransaction = true;
+    static boolean isProgress = false;
+
+    static String startDate;
+    static String endDate;
+
+    static String actionTransType;
+    static String incomeTransType;
+
     public static boolean isFromTransHistory = false;
     public static boolean isFromSearch = false;
     public static int pos;
@@ -86,22 +98,27 @@ public class TransactionsHistoryFragment extends Fragment {
     }
 
     private void init() {
+        initVariable();
         String tab = this.getArguments().getString("tabTCItem");
         transactionViewPagerAdapter = new TransactionViewPagerAdapter(getChildFragmentManager());
         binding.viewPager.setAdapter(transactionViewPagerAdapter);
-        /*if (tab.equalsIgnoreCase("All Transations")) {
+        if (tab.equalsIgnoreCase("All Transations")) {
             binding.viewPager.setCurrentItem(0);
-            callTransactionHistoryApi(context);
-
-        } else */
-
-        if (tab.equalsIgnoreCase("Crash Course")) {
-            binding.viewPager.setCurrentItem(1);
 
             if (!isFromSearch) {
                 if (!isFromTransHistory) {
-                    initVariable();
-                    crashJsonList.clear();
+                    callTransactionHistoryApi(context);
+                } else {
+                    AllTransactionsFragment.setUpRecuclerviewAllTransactions();
+                }
+            }
+
+        }
+
+        if (tab.equalsIgnoreCase("Crash Course")) {
+            binding.viewPager.setCurrentItem(1);
+            if (!isFromSearch) {
+                if (!isFromTransHistory) {
                     callCrashTransactionApi(context);
                 } else {
                     CrashCourseFragment.setupRecyclerViewCrash();
@@ -124,18 +141,18 @@ public class TransactionsHistoryFragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 pos = tab.getPosition();
-              /*  if (pos == 0) {
+                if (pos == 0) {
                     if (transactionJsonList.size() <= 0) {
-                        callTransactionHistoryApi(context);
+                        if(!isFromSearch){
+                            callTransactionHistoryApi(context);
+                        }
                     } else {
-                        AllTransactionsFragment.setupRecyclerViewTransactions(context, transactionJsonList);
+                        AllTransactionsFragment.setUpRecuclerviewAllTransactions();
                     }
-                } else*/
+                }
                 if (pos == 1) {
-
                     if (crashJsonList.size() <= 0) {
-                        if (!isFromSearch) {
-                            initVariable();
+                        if(!isFromSearch){
                             callCrashTransactionApi(context);
                         }
                     } else {
@@ -175,7 +192,6 @@ public class TransactionsHistoryFragment extends Fragment {
                 // Handle the back button event
 
                 if (getFragmentManager().getBackStackEntryCount() > 0) {
-                    initVariable();
                     getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     BaseScreenActivity.callBack();
                 }
@@ -192,16 +208,23 @@ public class TransactionsHistoryFragment extends Fragment {
         String action = "";
         String income = "";
         int Page = 1;
-        if (crashstartDate != null) {
-            sDate = crashstartDate;
-            action = actionType;
-            income = incomeType;
-            Page = SearchTransactionsFragment.transPage;
-        } else {
-            Page = CrashPage;
-        }
-        if (crashendDate != null) {
-            eDate = crashendDate;
+        Page = CrashPage;
+
+        if(isFromSearch){
+            if (crashstartDate != null) {
+                sDate = crashstartDate;
+            }
+            if (crashendDate != null) {
+                eDate = crashendDate;
+
+            }
+            if(actionType != null && !actionType.isEmpty()){
+                action = actionType;
+            }
+            if(incomeType != null && !incomeType.isEmpty()){
+                income = incomeType;
+            }
+            Page = SearchTransactionsFragment.CrashPage;
         }
 
         LoadingDialog loadingDialog = new LoadingDialog(context);
@@ -252,18 +275,108 @@ public class TransactionsHistoryFragment extends Fragment {
                 }).run("crash_course_transaction");
     }
 
+    public static void callTransactionHistoryApi(Context context) {
+
+        String sDate = "";
+        String eDate = "";
+        String action = "";
+        String income = "";
+        int Page = 1;
+        Page = transactionPage;
+
+        if(isFromSearch){
+            if (startDate != null) {
+                sDate = startDate;
+            }
+            if (endDate != null) {
+                eDate = endDate;
+
+            }
+            if(actionTransType != null && !actionTransType.isEmpty()){
+                action = actionTransType;
+            }
+            if(incomeTransType != null && !incomeTransType.isEmpty()){
+                income = incomeTransType;
+            }
+            Page = SearchTransactionsFragment.transPage;
+        }
+
+
+        LoadingDialog loadingDialog = new LoadingDialog(context);
+        String apiParam = "?create_date_start=" + sDate + "&create_date_end=" + eDate + "&action_type=" + action + "&income_type=" + income + "&page=" + Page + "&per_page=10";
+
+        Api.newApi(context, P.baseUrl + "all_transaction" + apiParam)
+                .setMethod(Api.GET)
+                .onHeaderRequest(App::getHeaders)
+                .onLoading(isLoading -> {
+                    if (isLoading)
+                        if (!isProgress) {
+                            loadingDialog.show("loading...");
+                        } else
+                            loadingDialog.hide();
+                })
+                .onError(() ->
+                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
+                        }))
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        loadingDialog.dismiss();
+                        if (Json1.getInt(P.status) == 0) {
+                            H.showMessage(context, Json1.getString(P.err));
+                        } else {
+                            Json1 = Json1.getJson(P.data);
+                            int numRows = Json1.getInt(P.num_rows);
+                            JsonList jsonList = Json1.getJsonList(P.list);
+                            if (jsonList != null && !jsonList.isEmpty()) {
+                                transactionJsonList.addAll(jsonList);
+                                //courseJson = Json1;
+                                AllTransactionsFragment.setUpRecuclerviewAllTransactions();
+                                if (transactionJsonList.size() < numRows) {
+                                    if (isFromSearch) {
+                                        SearchTransactionsFragment.transPage++;
+                                    } else {
+                                        transactionPage++;
+                                    }
+                                    nextPageForTransaction = true;
+                                    isProgress = true;
+                                } else {
+                                    nextPageForTransaction = false;
+                                    isProgress = false;
+                                    transactionPage = 1;
+                                }
+                            }
+
+                        }
+                    }
+
+                }).run("all_transaction");
+    }
+
+
     private void initVariable() {
 
         if (isFromSearch) {
-            isCrashProgress = false;
-            CrashPage = 1;
-            nextPageForCrash = true;
-            crashJsonList.clear();
+        } else if (isFromTransHistory) {
         } else {
             crashstartDate = null;
             crashendDate = null;
             actionType = "";
             incomeType = "";
+
+            startDate = null;
+            endDate = null;
+            actionTransType = "";
+            incomeTransType = "";
+
+            isCrashProgress = false;
+            isProgress = false;
+            transactionPage = 1;
+            CrashPage = 1;
+            nextPageForTransaction = true;
+            nextPageForCrash = true;
+            crashJsonList.clear();
+            transactionJsonList.clear();
 
         }
     }
