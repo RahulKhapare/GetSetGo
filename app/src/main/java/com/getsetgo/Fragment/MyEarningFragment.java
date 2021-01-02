@@ -91,7 +91,11 @@ public class MyEarningFragment extends Fragment {
             }
         });
 
-        setUpRefIncome(EarningsFragment.courseJson);
+        try {
+            setUpRefIncome(EarningsFragment.courseJson);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

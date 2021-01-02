@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adoisstudio.helper.Json;
+import com.adoisstudio.helper.JsonList;
 import com.getsetgo.Fragment.ChatScreenFragment;
 import com.getsetgo.R;
 import com.getsetgo.databinding.LayoutInboxOutboxRowBinding;
@@ -19,9 +21,11 @@ public class OutboxAdapter extends RecyclerView.Adapter<OutboxAdapter.InboxOutVi
     LayoutInboxOutboxRowBinding binding;
     Context context;
     ChatScreenFragment chatScreenFragment;
+    JsonList jsonList;
 
-    public OutboxAdapter(Context context) {
+    public OutboxAdapter(Context context,JsonList jsonList) {
         this.context = context;
+        this.jsonList = jsonList;
 
     }
 
@@ -35,6 +39,7 @@ public class OutboxAdapter extends RecyclerView.Adapter<OutboxAdapter.InboxOutVi
     @Override
     public void onBindViewHolder(@NonNull OutboxAdapter.InboxOutViewHolder holder, int position) {
 
+        //Json json = jsonList.get(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

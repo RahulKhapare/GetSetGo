@@ -47,7 +47,7 @@ public class OutboxFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         binding.recyclerViewInboxOutbox.setLayoutManager(layoutManager);
         binding.recyclerViewInboxOutbox.setItemAnimator(new DefaultItemAnimator());
-        outboxAdapter = new OutboxAdapter(context);
+        outboxAdapter = new OutboxAdapter(context,HelpAndSupportFragment.outboxJsonList);
         binding.recyclerViewInboxOutbox.setAdapter(outboxAdapter);
 
         binding.recyclerViewInboxOutbox.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -68,7 +68,7 @@ public class OutboxFragment extends Fragment {
                 if (isScrolling && (currentItem + scrollOutItems) >= totalItems) {
                     if (HelpAndSupportFragment.nextPageForOutbox) {
                         isScrolling = false;
-                        HelpAndSupportFragment.callSupportOutboxApi(context);
+                        //HelpAndSupportFragment.callSupportOutboxApi(context);
                     }
                 }
             }

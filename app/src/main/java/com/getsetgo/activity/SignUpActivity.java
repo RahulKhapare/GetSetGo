@@ -46,9 +46,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void initView() {
-
         onClick();
-        //
     }
 
     private void onClick() {
@@ -101,13 +99,11 @@ public class SignUpActivity extends AppCompatActivity {
                     Json json = new Json();
                     json.addString(P.name, binding.etxFirstName.getText().toString() + "");
                     json.addString(P.lastname, binding.etxLastName.getText().toString() + "");
-                    json.addString(P.contact, binding.etxPhone.getText().toString() + "");
                     json.addString(P.email, binding.etxEmailAddress.getText().toString() + "");
+                    json.addString(P.contact, binding.etxPhone.getText().toString() + "");
                     json.addString(P.password, binding.etxPassword.getText().toString() + "");
                     json.addString(P.confirm_password, binding.etxConfirmPassword.getText().toString() + "");
                     callSignUpApi(json);
-
-
                 }
             }
         });
@@ -232,7 +228,7 @@ public class SignUpActivity extends AppCompatActivity {
                         App.startHomeActivity(activity);
                         finish();
                     }
-                }).run("hitRegisterApi");
+                }).run("register");
     }
 
 }

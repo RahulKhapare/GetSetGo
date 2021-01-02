@@ -94,9 +94,20 @@ public class HelpAndSupportFragment extends Fragment {
                 pos = tab.getPosition();
                 if (pos == 0) {
                 } else if (pos == 1) {
-                    callSupportInboxApi(context);
+                    if (inboxJsonList.size() <= 0) {
+                        inboxPage = 1;
+                        callSupportInboxApi(context);
+                    } else {
+                        InboxFragment.setupRecyclerviewForInbox();
+                    }
+
                 } else {
-                    callSupportOutboxApi(context);
+                    if (outboxJsonList.size() <= 0) {
+                        outboxPage = 1;
+                        callSupportOutboxApi(context);
+                    } else {
+                        OutboxFragment.setupRecyclerviewForOutBox();
+                    }
                 }
             }
 

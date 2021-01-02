@@ -49,7 +49,7 @@ public class InboxFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         binding.recyclerViewInboxOutbox.setLayoutManager(layoutManager);
         binding.recyclerViewInboxOutbox.setItemAnimator(new DefaultItemAnimator());
-        inboxAdapter = new InboxAdapter(context);
+        inboxAdapter = new InboxAdapter(context,HelpAndSupportFragment.inboxJsonList);
         binding.recyclerViewInboxOutbox.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerViewInboxOutbox.setAdapter(inboxAdapter);
 
@@ -71,7 +71,7 @@ public class InboxFragment extends Fragment {
                 if (isScrolling && (currentItem + scrollOutItems) >= totalItems) {
                     if (HelpAndSupportFragment.nextPageForinbox) {
                         isScrolling = false;
-                        HelpAndSupportFragment.callSupportInboxApi(context);
+                        //HelpAndSupportFragment.callSupportInboxApi(context);
                     }
                 }
             }
