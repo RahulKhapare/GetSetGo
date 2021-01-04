@@ -2,7 +2,6 @@ package com.getsetgo.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,27 +26,24 @@ import com.adoisstudio.helper.MessageBox;
 import com.getsetgo.Adapter.TotalUserAdapter;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
-import com.getsetgo.databinding.FragmentSearchUseridBinding;
 import com.getsetgo.databinding.FragmentTotalUsersBinding;
 import com.getsetgo.util.App;
 import com.getsetgo.util.P;
 
-public class TotalUsersFragment extends Fragment {
+public class TotalDirectUsersFragment extends Fragment {
 
     FragmentTotalUsersBinding binding;
     static TotalUserAdapter totalUserAdapter;
     SearchUserFragment searchUserFragment;
-
     LinearLayoutManager layoutManager;
     boolean isScrolling = false;
     int currentItem, totalItems, scrollOutItems;
     Context context;
-
     public static boolean isSearch = false;
 
     static int page = 1;
-    static JsonList totalUserJsonList = new JsonList();
-    static Json totalUserJson = new Json();
+    static JsonList directUserJsonList = new JsonList();
+    static Json directUserJson = new Json();
     static boolean NextPage = true;
 
     @Nullable
@@ -56,7 +52,8 @@ public class TotalUsersFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_total_users, container, false);
         View rootView = binding.getRoot();
 
-        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Total Users");
+
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Total Direct Users");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
         context = inflater.getContext();
         return rootView;
@@ -71,7 +68,7 @@ public class TotalUsersFragment extends Fragment {
 
                 if (getFragmentManager().getBackStackEntryCount() > 0) {
                     getFragmentManager().popBackStackImmediate();
-                    totalUserJsonList.clear();
+                    directUserJsonList.clear();
                 }
             }
         };
@@ -87,9 +84,9 @@ public class TotalUsersFragment extends Fragment {
 
     private void init(View view) {
         if (!isSearch) {
-            if(totalUserJsonList.size() <= 0) {
+            if(directUserJsonList.size() <= 0) {
                 initVariable();
-                callTotalUserApi(context);
+                callTotalDirectUserApi(context);
             }else{
                 setupRecyclerViewForTotalUser();
             }
@@ -97,7 +94,7 @@ public class TotalUsersFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         binding.recyclerViewTotalUser.setLayoutManager(layoutManager);
         binding.recyclerViewTotalUser.setItemAnimator(new DefaultItemAnimator());
-        totalUserAdapter = new TotalUserAdapter(context, totalUserJsonList);
+        totalUserAdapter = new TotalUserAdapter(context, directUserJsonList);
         binding.recyclerViewTotalUser.setAdapter(totalUserAdapter);
 
         binding.recyclerViewTotalUser.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -118,7 +115,7 @@ public class TotalUsersFragment extends Fragment {
                 if (isScrolling && (currentItem + scrollOutItems) >= totalItems) {
                     if (NextPage) {
                         isScrolling = false;
-                        callTotalUserApi(getContext());
+                        callTotalDirectUserApi(getContext());
                     }
                 }
             }
@@ -136,7 +133,7 @@ public class TotalUsersFragment extends Fragment {
 
     private void initVariable() {
         page = 1;
-        totalUserJsonList.clear();
+        directUserJsonList.clear();
     }
 
     public static void setupRecyclerViewForTotalUser() {
@@ -145,7 +142,7 @@ public class TotalUsersFragment extends Fragment {
 
     private void loadFragment(View v) {
         Bundle bundle = new Bundle();
-        bundle.putBoolean("isTotalUser",true);
+        bundle.putBoolean("isTotalUser",false);
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
         searchUserFragment = new SearchUserFragment();
         searchUserFragment.setArguments(bundle);
@@ -158,7 +155,7 @@ public class TotalUsersFragment extends Fragment {
 
     }
 
-    public static void callTotalUserApi(Context context) {
+    public static void callTotalDirectUserApi(Context context) {
 
         int Page = 1;
         String apiParam;
@@ -215,10 +212,10 @@ public class TotalUsersFragment extends Fragment {
                             int numRows = Json1.getInt(P.num_rows);
                             JsonList jsonList = Json1.getJsonList(P.list);
                             if (jsonList != null && !jsonList.isEmpty()) {
-                                totalUserJsonList.addAll(jsonList);
-                                totalUserJson = Json1;
+                                directUserJsonList.addAll(jsonList);
+                                directUserJson = Json1;
                                 setupRecyclerViewForTotalUser();
-                                if (totalUserJsonList.size() < numRows) {
+                                if (directUserJsonList.size() < numRows) {
                                     if (isSearch) {
                                         SearchUserFragment.page++;
                                     }else{

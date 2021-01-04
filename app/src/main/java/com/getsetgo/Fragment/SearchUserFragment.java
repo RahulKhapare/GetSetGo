@@ -44,12 +44,16 @@ public class SearchUserFragment extends Fragment {
     public static String regdPurposeId = "";
 
     public static int page = 1;
+    boolean isFromTotalUser = false;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_user, container, false);
         View rootView = binding.getRoot();
+
+        isFromTotalUser = getArguments().getBoolean("isTotalUser");
+
         init();
         return rootView;
     }
@@ -72,25 +76,40 @@ public class SearchUserFragment extends Fragment {
 
         onClick();
 
-        if (TotalUsersFragment.totalUserJson != null) {
-            bindCourseList(TotalUsersFragment.totalUserJson.getJsonList("course_list"));
-            bindCrashCourseList(TotalUsersFragment.totalUserJson.getJsonList("crash_course_list"));
-            bindRegdPurposeList(TotalUsersFragment.totalUserJson.getJsonList("registration_purpose_list"));
+        if (!isFromTotalUser) {
+            if (TotalDirectUsersFragment.directUserJson != null) {
+                bindCourseList(TotalDirectUsersFragment.directUserJson.getJsonList("course_list"));
+                bindCrashCourseList(TotalDirectUsersFragment.directUserJson.getJsonList("crash_course_list"));
+                bindRegdPurposeList(TotalDirectUsersFragment.directUserJson.getJsonList("registration_purpose_list"));
+            }
+        } else {
+            if (TotalUsersFragment.totalUserJson != null) {
+                bindCourseList(TotalUsersFragment.totalUserJson.getJsonList("course_list"));
+                bindCrashCourseList(TotalUsersFragment.totalUserJson.getJsonList("crash_course_list"));
+                bindRegdPurposeList(TotalUsersFragment.totalUserJson.getJsonList("registration_purpose_list"));
+            }
         }
+
     }
 
     private void onClick() {
         binding.txtSaveNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TotalUsersFragment.isSearch = true;
                 getData();
-                TotalUsersFragment.totalUserJsonList.clear();
-                TotalUsersFragment.callTotalUserApi(getActivity());
+                if (isFromTotalUser) {
+                    TotalUsersFragment.isSearch = true;
+                    TotalUsersFragment.totalUserJsonList.clear();
+                    TotalUsersFragment.callTotalUserApi(getActivity());
+
+                } else {
+                    TotalDirectUsersFragment.isSearch = true;
+                    TotalDirectUsersFragment.directUserJsonList.clear();
+                    TotalDirectUsersFragment.callTotalDirectUserApi(getActivity());
+                }
                 if (getFragmentManager().getBackStackEntryCount() > 0) {
                     getFragmentManager().popBackStackImmediate();
                 }
-                //startActivity(new Intent(getActivity(), SearchUserIdActivity.class));
             }
         });
     }
@@ -266,7 +285,7 @@ public class SearchUserFragment extends Fragment {
 
     }
 
-    private void getData(){
+    private void getData() {
         name = binding.etUserName.getText().toString();
         email = binding.etEmailId.getText().toString();
         contact = binding.etPhoneNumber.getText().toString();

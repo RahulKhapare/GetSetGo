@@ -3,6 +3,7 @@ package com.getsetgo.Fragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.nfc.tech.TagTechnology;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,7 +23,6 @@ import com.getsetgo.databinding.FragmentDashboardBinding;
 public class DashBoardFragment extends Fragment {
 
     FragmentDashboardBinding binding;
-    TotalUsersFragment totalUsersFragment;
 
 
     public DashBoardFragment() {
@@ -97,28 +97,27 @@ public class DashBoardFragment extends Fragment {
         binding.rlTotalUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadTotalFragment("Total User",v);
+                TotalUsersFragment totalUsersFragment = new TotalUsersFragment();
+                loadFragment(totalUsersFragment,v);
             }
         });
 
         binding.rlTotalDirectUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadTotalFragment("Total Direct User",v);
+                TotalDirectUsersFragment totalDirectUsersFragment = new TotalDirectUsersFragment();
+                loadFragment(totalDirectUsersFragment,v);
             }
         });
     }
 
-    private void loadTotalFragment(String title,View v){
+    private void loadFragment(Fragment fragment,View v){
         TotalUsersFragment.isSearch = false;
-        Bundle bundle = new Bundle();
-        bundle.putString("titleText", title);
+        TotalDirectUsersFragment.isSearch = false;
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
-        totalUsersFragment = new TotalUsersFragment();
-        totalUsersFragment.setArguments(bundle);
         activity.getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_container, totalUsersFragment)
+                .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit();
 

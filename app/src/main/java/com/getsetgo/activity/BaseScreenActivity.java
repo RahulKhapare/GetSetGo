@@ -53,7 +53,6 @@ import com.getsetgo.Fragment.SearchFragment;
 import com.getsetgo.Fragment.SearchUserIdFragment;
 import com.getsetgo.Fragment.TermsAndConditionFragment;
 
-import com.getsetgo.Fragment.TotalUsersFragment;
 import com.getsetgo.Fragment.TransactionsHistoryFragment;
 import com.getsetgo.Fragment.YourCourseFragment;
 import com.getsetgo.R;
