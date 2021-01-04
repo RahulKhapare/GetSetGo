@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_lect"
         android:layout_marginTop="5dp"
-        android:elevation="0.5dp"
+        android:elevation="1dp"
         android:layout_marginBottom="5dp"
         android:gravity="center">
 
