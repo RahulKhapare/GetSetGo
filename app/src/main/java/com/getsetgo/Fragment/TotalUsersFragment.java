@@ -187,7 +187,7 @@ public class TotalUsersFragment extends Fragment {
                     "&parent_name="+parent_name + "&registration_purpose_id="+regdPurposeId + "&page=" + Page + "&per_page=10";
         }else{
             Page = page;
-            apiParam = "/all?name=" + "&email=" + "&contact=" + "&has_purchased=" + "&is_affiliate=" + "&start_date=" + "&end_date=" + "&program_service_id=" + "&course_id=" + "&purchase_start_date=" + "&purchase_end_date=" +
+            apiParam = "?name=" + "&email=" + "&contact=" + "&has_purchased=" + "&is_affiliate=" + "&start_date=" + "&end_date=" + "&program_service_id=" + "&course_id=" + "&purchase_start_date=" + "&purchase_end_date=" +
                     "&parent_name=" + "&registration_purpose_id=" + "&page=" + Page + "&per_page=10";
 
         }
