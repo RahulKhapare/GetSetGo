@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +17,7 @@ import com.getsetgo.Fragment.ChatScreenFragment;
 import com.getsetgo.R;
 import com.getsetgo.databinding.LayoutInboxOutboxRowBinding;
 
-public class OutboxAdapter extends RecyclerView.Adapter<OutboxAdapter.InboxOutViewHolder> {
+public class OutboxAdapter extends RecyclerView.Adapter<OutboxAdapter.OutboxViewHolder> {
 
     LayoutInboxOutboxRowBinding binding;
     Context context;
@@ -31,15 +32,19 @@ public class OutboxAdapter extends RecyclerView.Adapter<OutboxAdapter.InboxOutVi
 
     @NonNull
     @Override
-    public OutboxAdapter.InboxOutViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public OutboxAdapter.OutboxViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),R.layout.layout_inbox_outbox_row,parent,false);
-        return new InboxOutViewHolder(binding.getRoot());
+        return new OutboxViewHolder(binding.getRoot());
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OutboxAdapter.InboxOutViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull OutboxAdapter.OutboxViewHolder holder, int position) {
 
-        //Json json = jsonList.get(position);
+        Json json = jsonList.get(position);
+
+        holder.txtMessage.setText(json.getString("message"));
+        //holder.txtDate.setText(json.getString("create_date"));
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,16 +56,19 @@ public class OutboxAdapter extends RecyclerView.Adapter<OutboxAdapter.InboxOutVi
 
     @Override
     public int getItemCount() {
-        return 15;
+        return jsonList.size();
     }
 
-    public class InboxOutViewHolder extends RecyclerView.ViewHolder {
+    public class OutboxViewHolder extends RecyclerView.ViewHolder {
+        TextView txtTitle,txtMessage,txtDate;
 
 
-        public InboxOutViewHolder(View view) {
+        public OutboxViewHolder(View view) {
             super(view);
 
-
+            txtTitle = itemView.findViewById(R.id.txtSupportTitle);
+            txtDate = itemView.findViewById(R.id.txtDate);
+            txtMessage = itemView.findViewById(R.id.txtMessage);
         }
     }
 

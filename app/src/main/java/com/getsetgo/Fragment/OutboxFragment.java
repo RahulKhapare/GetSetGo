@@ -68,7 +68,7 @@ public class OutboxFragment extends Fragment {
                 if (isScrolling && (currentItem + scrollOutItems) >= totalItems) {
                     if (HelpAndSupportFragment.nextPageForOutbox) {
                         isScrolling = false;
-                        //HelpAndSupportFragment.callSupportOutboxApi(context);
+                        HelpAndSupportFragment.callSupportOutboxApi(context);
                     }
                 }
             }

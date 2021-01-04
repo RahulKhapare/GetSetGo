@@ -71,7 +71,7 @@ public class InboxFragment extends Fragment {
                 if (isScrolling && (currentItem + scrollOutItems) >= totalItems) {
                     if (HelpAndSupportFragment.nextPageForinbox) {
                         isScrolling = false;
-                        //HelpAndSupportFragment.callSupportInboxApi(context);
+                        HelpAndSupportFragment.callSupportInboxApi(context);
                     }
                 }
             }
