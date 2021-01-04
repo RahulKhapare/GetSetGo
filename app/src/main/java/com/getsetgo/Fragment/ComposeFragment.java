@@ -44,7 +44,10 @@ public class ComposeFragment extends Fragment {
     }
 
     private void init(View view){
+        onClick();
+    }
 
+    private void onClick() {
         binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,7 +60,13 @@ public class ComposeFragment extends Fragment {
             }
         });
 
-
+        binding.btnDiscard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.etSubject.setText("");
+                binding.etMessage.setText("");
+            }
+        });
     }
 
     private boolean checkValidation() {
