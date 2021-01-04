@@ -21,6 +21,7 @@ import com.adoisstudio.helper.JsonList;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentSearchUserBinding;
+import com.getsetgo.util.Click;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -96,6 +97,7 @@ public class SearchUserFragment extends Fragment {
         binding.txtSaveNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Click.preventTwoClick(v);
                 getData();
                 if (isFromTotalUser) {
                     TotalUsersFragment.isSearch = true;

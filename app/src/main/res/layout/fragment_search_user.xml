@@ -121,12 +121,13 @@
                                     android:visibility="visible">
 
                                     <ImageView
-                                        android:layout_width="35dp"
-                                        android:layout_height="33dp"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
                                         android:layout_alignParentEnd="true"
                                         android:layout_alignParentBottom="true"
+                                        android:layout_marginRight="3dp"
                                         android:src="@drawable/ic_down_spiner"
-                                        app:tint="#90232323" />
+                                        app:tint="@color/colorTextDark" />
                                 </RelativeLayout>
                             </FrameLayout>
 
@@ -169,12 +170,13 @@
                                     android:visibility="visible">
 
                                     <ImageView
-                                        android:layout_width="35dp"
-                                        android:layout_height="33dp"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
                                         android:layout_alignParentEnd="true"
                                         android:layout_alignParentBottom="true"
+                                        android:layout_marginRight="3dp"
                                         android:src="@drawable/ic_down_spiner"
-                                        app:tint="#90232323" />
+                                        app:tint="@color/colorTextDark" />
                                 </RelativeLayout>
                             </FrameLayout>
 
@@ -200,10 +202,10 @@
                                 android:layout_height="wrap_content"
                                 android:backgroundTint="@color/colorTextDark"
                                 android:drawableRight="@drawable/ic_ddate"
-                                android:fontFamily="@font/nunito_sans_semibold"
-                                android:hint="Registration from"
                                 android:editable="false"
                                 android:focusableInTouchMode="false"
+                                android:fontFamily="@font/nunito_sans_semibold"
+                                android:hint="Registration from"
                                 android:imeOptions="actionNext"
                                 android:inputType="textCapWords"
                                 android:textColor="@color/colorTextDark"
@@ -224,10 +226,10 @@
                                 android:layout_height="wrap_content"
                                 android:backgroundTint="@color/colorTextDark"
                                 android:drawableRight="@drawable/ic_ddate"
-                                android:fontFamily="@font/nunito_sans_semibold"
-                                android:hint="Registration to"
                                 android:editable="false"
                                 android:focusableInTouchMode="false"
+                                android:fontFamily="@font/nunito_sans_semibold"
+                                android:hint="Registration to"
                                 android:imeOptions="actionNext"
                                 android:inputType="textCapWords"
                                 android:textColor="@color/colorTextDark"
@@ -265,12 +267,13 @@
                                     android:visibility="visible">
 
                                     <ImageView
-                                        android:layout_width="35dp"
-                                        android:layout_height="33dp"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
                                         android:layout_alignParentEnd="true"
                                         android:layout_alignParentBottom="true"
+                                        android:layout_marginRight="3dp"
                                         android:src="@drawable/ic_down_spiner"
-                                        app:tint="#90232323" />
+                                        app:tint="@color/colorTextDark" />
                                 </RelativeLayout>
                             </FrameLayout>
 
@@ -313,12 +316,13 @@
                                     android:visibility="visible">
 
                                     <ImageView
-                                        android:layout_width="35dp"
-                                        android:layout_height="33dp"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
                                         android:layout_alignParentEnd="true"
                                         android:layout_alignParentBottom="true"
+                                        android:layout_marginRight="3dp"
                                         android:src="@drawable/ic_down_spiner"
-                                        app:tint="#90232323" />
+                                        app:tint="@color/colorTextDark" />
                                 </RelativeLayout>
                             </FrameLayout>
 
@@ -343,9 +347,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:backgroundTint="@color/colorTextDark"
+                                android:drawableRight="@drawable/ic_ddate"
                                 android:editable="false"
                                 android:focusableInTouchMode="false"
-                                android:drawableRight="@drawable/ic_ddate"
                                 android:fontFamily="@font/nunito_sans_semibold"
                                 android:hint="Purchased From"
                                 android:imeOptions="actionNext"
@@ -430,12 +434,13 @@
                                     android:visibility="visible">
 
                                     <ImageView
-                                        android:layout_width="35dp"
-                                        android:layout_height="33dp"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
                                         android:layout_alignParentEnd="true"
                                         android:layout_alignParentBottom="true"
+                                        android:layout_marginRight="3dp"
                                         android:src="@drawable/ic_down_spiner"
-                                        app:tint="#90232323" />
+                                        app:tint="@color/colorTextDark" />
                                 </RelativeLayout>
                             </FrameLayout>
 

@@ -20,6 +20,7 @@ import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentSearchEarningsBinding;
 import com.getsetgo.databinding.FragmentSearchIncentivesBinding;
+import com.getsetgo.util.Click;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -72,6 +73,7 @@ public class SearchIncentivesFragment extends Fragment {
         binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Click.preventTwoClick(view);
                 getData();
                 IncentivesFragment.isSearch = true;
                 IncentivesFragment.incentiveList.clear();

@@ -29,6 +29,7 @@ import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentUserincentiveBinding;
 import com.getsetgo.util.App;
+import com.getsetgo.util.Click;
 import com.getsetgo.util.P;
 
 public class IncentivesFragment extends Fragment {
@@ -99,6 +100,7 @@ public class IncentivesFragment extends Fragment {
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Click.preventTwoClick(view);
                 loadFragment(view);
             }
         });

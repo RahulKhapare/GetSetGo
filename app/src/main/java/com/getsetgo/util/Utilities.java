@@ -1,5 +1,9 @@
 package com.getsetgo.util;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.text.SpannableString;
 import android.view.View;
 import android.widget.EditText;
 
@@ -33,7 +37,6 @@ public class Utilities {
     }
 
     public static String getShortMonthNames(String date) {
-
         try {
             if (date != null && !date.equalsIgnoreCase("null") && !date.isEmpty()) {
 
@@ -55,11 +58,6 @@ public class Utilities {
         return date;
     }
 
-    public static String splitString(String date) {
-        String[] sp = date.split(" ");
-        return sp[1];
-    }
-
     public static String setFirstWordCap(final EditText editText) {
         final String[] text = new String[1];
 
@@ -76,5 +74,31 @@ public class Utilities {
             });
         return text[0];
     }
+
+    public static void showPopuprunnable(final Context context, final String msg,
+                                         final boolean isCancelable, final Runnable runnablePositive) {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                context);
+
+        if (!msg.isEmpty()) {
+            alertDialog.setMessage(msg);
+        }
+        alertDialog.setCancelable(isCancelable);
+        alertDialog.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        if (runnablePositive != null) {
+                            runnablePositive.run();
+                        }
+
+                    }
+                });
+
+        alertDialog.show();
+    }
+
+
 
 }

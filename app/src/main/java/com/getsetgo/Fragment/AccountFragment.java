@@ -22,6 +22,7 @@ import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 
 import com.getsetgo.databinding.FragmentAccountBinding;
+import com.getsetgo.util.Click;
 
 
 public class AccountFragment extends Fragment {
@@ -39,6 +40,7 @@ public class AccountFragment extends Fragment {
 
         return fragment;
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,8 +66,9 @@ public class AccountFragment extends Fragment {
         binding.llBankDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Click.preventTwoClick(v);
                 BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
-               loadFragment(v);
+                loadFragment(v);
             }
         });
     }
@@ -77,7 +80,7 @@ public class AccountFragment extends Fragment {
             public void handleOnBackPressed() {
                 // Handle the back button event
 
-                if(getFragmentManager().getBackStackEntryCount() > 0){
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
                     getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     BaseScreenActivity.callBack();
                 }
@@ -87,10 +90,10 @@ public class AccountFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    private void loadFragment(View v){
+    private void loadFragment(View v) {
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
         Bundle bundle = new Bundle();
-        bundle.putBoolean("isFromBottom",isFromBottom);
+        bundle.putBoolean("isFromBottom", isFromBottom);
         bankDetailsFragment = new BankDetailsFragment();
         bankDetailsFragment.setArguments(bundle);
         activity.getSupportFragmentManager()

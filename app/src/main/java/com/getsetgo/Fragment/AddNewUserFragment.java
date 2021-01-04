@@ -139,21 +139,22 @@ public class AddNewUserFragment extends Fragment {
 
                     String registerAs;
                     if(binding.radioCompany.isSelected()){
-                        registerAs = binding.radioCompany.getText().toString();
+                        registerAs = "1";
                     }else{
-                        registerAs = binding.radioIndividual.getText().toString();
+                        registerAs = "0";
                     }
                     Json json = new Json();
+                    json.addString("id","");
                     json.addString("registered_as",registerAs);
                     json.addString("name",binding.etFirstName.getText().toString());
                     json.addString("lastname",binding.etLastName.getText().toString());
                     json.addString("email",binding.etEmail.getText().toString());
-                    json.addString("country_id",binding.actvIsdCode.getText().toString());
-                    json.addString("country_code",binding.actvIsdCode.getText().toString());
+                    json.addString("country_id","91");
+                    json.addString("country_code",binding.actvIsdCode.getText().toString().substring(1));
                     json.addString("contact",binding.etContactNumber.getText().toString());
                     json.addString("p",binding.etPassword.getText().toString());
                     json.addString("status",binding.spnStatus.getSelectedItem().toString());
-                    //callAddUserAPI(context,json);
+                    callAddUserAPI(context,json);
                 }
             }
         });
@@ -220,6 +221,17 @@ public class AddNewUserFragment extends Fragment {
 
     }
 
+    private void clearFields(){
+        binding.actvIsdCode.setText("91");
+        binding.etFirstName.setText("");
+        binding.etLastName.setText("");
+        binding.etEmail.setText("");
+        binding.etPhone.setText("");
+        binding.etContactNumber.setText("");
+        binding.etPassword.setText("");
+        binding.spnStatus.setSelection(0);
+    }
+
     private boolean checkValidation(FragmentActivity activity) {
         boolean value = true;
         if (TextUtils.isEmpty(binding.etFirstName.getText().toString().trim())) {
@@ -273,12 +285,23 @@ public class AddNewUserFragment extends Fragment {
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
+                        clearFields();
                         loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(context, Json1.getString(P.err));
                         } else {
+                            String msg  = Json1.getString(P.msg);
                             Json1 = Json1.getJson(P.data);
-
+                         /*Runnable runnable = new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(getFragmentManager().getBackStackEntryCount() > 0){
+                                        getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                        BaseScreenActivity.callBack();
+                                    }
+                                }
+                            };
+                            Utilities.showPopuprunnable(context,msg,false,runnable);*/
                         }
                     }
 

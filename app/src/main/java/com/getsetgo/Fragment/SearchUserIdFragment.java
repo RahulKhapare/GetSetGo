@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentSearchUseridBinding;
+import com.getsetgo.util.Click;
 
 public class SearchUserIdFragment extends Fragment {
 
@@ -64,6 +65,7 @@ public class SearchUserIdFragment extends Fragment {
         binding.txtSaveNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Click.preventTwoClick(v);
             }
         });
     }

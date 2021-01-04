@@ -24,6 +24,7 @@ import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentComposeBinding;
 import com.getsetgo.databinding.FragmentSearchEarningsBinding;
+import com.getsetgo.util.Click;
 import com.getsetgo.util.P;
 import com.getsetgo.util.Utilities;
 
@@ -84,6 +85,7 @@ public class SearchEarningsFragment extends Fragment {
         binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Click.preventTwoClick(v);
                 if (isFormValidation()) {
                     if (checkDateValidation()) {
                         if (EarningsFragment.pos == 0) {

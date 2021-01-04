@@ -20,6 +20,7 @@ import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentSearchIncentivesBinding;
 import com.getsetgo.databinding.FragmentSearchTransactionBinding;
+import com.getsetgo.util.Click;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -76,7 +77,7 @@ public class SearchTransactionsFragment extends Fragment {
         binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Click.preventTwoClick(v);
                 if (checkDateValidation()) {
                     if (TransactionsHistoryFragment.pos == 1) {
                         TransactionsHistoryFragment.isFromSearch = true;

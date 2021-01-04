@@ -38,8 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="OnNotifications"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:paddingRight="1dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="end"
@@ -63,9 +62,10 @@
                     android:gravity="center"
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"
-                    android:text="5"
+                    android:text="99"
+                    android:fontFamily="@font/nunito_sans_semibold"
                     android:textColor="@color/colorWhite"
-                    android:textSize="8sp" />
+                    android:textSize="9sp" />
             </RelativeLayout>
 
 

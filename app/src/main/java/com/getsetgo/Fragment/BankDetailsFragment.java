@@ -116,6 +116,7 @@ boolean isFromBottom;
         binding.txtSaveNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Click.preventTwoClick(v);
                 UploadDocsFragment myFragment = new UploadDocsFragment();
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, myFragment).addToBackStack(null).commit();
             }
@@ -123,6 +124,7 @@ boolean isFromBottom;
         binding.llUploadDocs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Click.preventTwoClick(v);
                 onUploadClick();
             }
         });

@@ -21,6 +21,7 @@ import com.adoisstudio.helper.MessageBox;
 import com.getsetgo.R;
 import com.getsetgo.databinding.FragmentComposeBinding;
 import com.getsetgo.util.App;
+import com.getsetgo.util.Click;
 import com.getsetgo.util.P;
 import com.getsetgo.util.Validation;
 
@@ -51,6 +52,7 @@ public class ComposeFragment extends Fragment {
         binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Click.preventTwoClick(view);
                 if(checkValidation()){
                     Json json = new Json();
                     json.addString("subject",binding.etSubject.getText().toString());
@@ -63,6 +65,7 @@ public class ComposeFragment extends Fragment {
         binding.btnDiscard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Click.preventTwoClick(view);
                 binding.etSubject.setText("");
                 binding.etMessage.setText("");
             }

@@ -20,6 +20,8 @@ import androidx.fragment.app.FragmentManager;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentDashboardBinding;
+import com.getsetgo.util.Click;
+
 public class DashBoardFragment extends Fragment {
 
     FragmentDashboardBinding binding;
@@ -97,6 +99,7 @@ public class DashBoardFragment extends Fragment {
         binding.rlTotalUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Click.preventTwoClick(v);
                 TotalUsersFragment totalUsersFragment = new TotalUsersFragment();
                 loadFragment(totalUsersFragment,v);
             }
@@ -105,6 +108,7 @@ public class DashBoardFragment extends Fragment {
         binding.rlTotalDirectUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Click.preventTwoClick(v);
                 TotalDirectUsersFragment totalDirectUsersFragment = new TotalDirectUsersFragment();
                 loadFragment(totalDirectUsersFragment,v);
             }
