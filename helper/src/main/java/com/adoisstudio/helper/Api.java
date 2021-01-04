@@ -2,6 +2,7 @@ package com.adoisstudio.helper;
 
 import android.content.Context;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,7 +34,7 @@ public class Api {
 
     private int method = POST;
 
-    private static int JSON_REQUEST = 1;
+    private static final int JSON_REQUEST = 1;
     private int requestType = 0;
 
     private OnResultListener onResultListener = null;
@@ -42,8 +43,8 @@ public class Api {
     private OnLoadingListener onLoadingListener = null;
     private OnHeaderRequestListener onHeaderRequestListener = null;
 
-    private Context context;
-    private String url;
+    private final Context context;
+    private final String url;
     private JSONObject json;
     private JsonObjectRequest jsonObjectRequest;
 
@@ -144,15 +145,12 @@ public class Api {
         }) {
 
             @Override
-            public Map<String, String> getHeaders() {
+            public Map<String, String> getHeaders() throws AuthFailureError
+            {
+                if (onHeaderRequestListener != null)
+                    return onHeaderRequestListener.getHeaders();
 
-                Map<String, String> headers = new HashMap<>();
-
-                headers.put("Authorization",  "Basic YWRtaW46MTIzNEBhZG1pbg==");
-                headers.put("x-api-key", "123456");
-                headers.put("Content-Type", "application/json");
-
-                return headers;
+                return super.getHeaders();
             }
         };
 
