@@ -40,8 +40,6 @@ public class SearchUserIdFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                // Handle the back button event
-
                 if(getFragmentManager().getBackStackEntryCount() > 0){
                     getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     BaseScreenActivity.callBack();
@@ -58,8 +56,9 @@ public class SearchUserIdFragment extends Fragment {
     }
 
     private void init() {
-        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Search User ");
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Organization Chart");
 
+        onClick();
     }
     private void onClick(){
         binding.txtSaveNext.setOnClickListener(new View.OnClickListener() {

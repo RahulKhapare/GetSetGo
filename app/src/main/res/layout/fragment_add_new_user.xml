@@ -160,7 +160,7 @@
                                 android:fontFamily="@font/nunito_sans_regular"
                                 android:hint="Eg. +91"
                                 android:maxLength="4"
-                                android:drawableRight="@drawable/ic_down_arrow"
+                                android:drawableRight="@drawable/ic_down_spin"
                                 android:imeOptions="actionNext"
                                 android:textColor="@color/colorTextDark"
                                 android:textColorHint="@color/colorTextHint" />
@@ -235,6 +235,56 @@
                             android:textColorHint="@color/colorTextHint" />
 
                     </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <Spinner
+                                android:id="@+id/spnStatus"
+                                style="@style/SpinnerTextViewItem"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_gravity="end|center"
+                                android:background="@null"
+                                android:dropDownVerticalOffset="40dp"
+                                android:gravity="start|center_vertical"
+                                android:singleLine="true"
+                                android:spinnerMode="dropdown" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:visibility="visible">
+
+                                <ImageView
+                                    android:layout_width="35dp"
+                                    android:layout_height="33dp"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentBottom="true"
+                                    android:src="@drawable/ic_down_spin"
+                                    android:layout_marginRight="7dp"
+                                    app:tint="@color/colorTextDark" />
+                            </RelativeLayout>
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"
+                        android:layout_below="@+id/spnStatus"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="2dp"
+                        android:src="@drawable/underline" />
 
 
                 </LinearLayout>

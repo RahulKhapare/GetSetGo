@@ -1,5 +1,8 @@
 package com.getsetgo.util;
 
+import android.view.View;
+import android.widget.EditText;
+
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -56,4 +59,22 @@ public class Utilities {
         String[] sp = date.split(" ");
         return sp[1];
     }
+
+    public static String setFirstWordCap(final EditText editText) {
+        final String[] text = new String[1];
+
+            editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    StringBuilder sb = new StringBuilder(editText.getText().toString());
+                    if (sb.length() != 0) {
+                        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+                        editText.setText(sb);
+                        text[0] = editText.getText().toString();
+                    }
+                }
+            });
+        return text[0];
+    }
+
 }

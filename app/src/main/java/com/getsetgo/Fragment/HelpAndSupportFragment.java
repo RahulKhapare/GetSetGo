@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
 import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
@@ -92,8 +93,9 @@ public class HelpAndSupportFragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 pos = tab.getPosition();
-                if (pos == 0) {
-                } else if (pos == 1) {
+               /* if (pos == 0) {
+                } else*/
+                if (pos == 1) {
                     if (inboxJsonList.size() <= 0) {
                         inboxPage = 1;
                         callSupportInboxApi(context);
@@ -131,7 +133,7 @@ public class HelpAndSupportFragment extends Fragment {
         LoadingDialog loadingDialog = new LoadingDialog(context);
         String apiParam = "?page=" + Page + "&per_page=10";
 
-        Api.newApi(context, P.baseUrl + "support" + apiParam)
+        Api.newApi(context, P.baseUrl + "inbox" + apiParam)
                 .setMethod(Api.GET)
                 .onHeaderRequest(App::getHeaders)
                 .onLoading(isLoading -> {
@@ -168,7 +170,7 @@ public class HelpAndSupportFragment extends Fragment {
                         }
                     }
 
-                }).run("support");
+                }).run("inbox");
     }
 
     public static void callSupportOutboxApi(Context context) {

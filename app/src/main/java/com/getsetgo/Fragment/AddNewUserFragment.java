@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 import androidx.activity.OnBackPressedCallback;
@@ -22,7 +25,11 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.Json;
+import com.adoisstudio.helper.LoadingDialog;
+import com.adoisstudio.helper.MessageBox;
 import com.getsetgo.Adapter.CategoriesCommonAdapter;
 import com.getsetgo.Adapter.CountryCodeAdapter;
 import com.getsetgo.Model.CountryCode;
@@ -30,7 +37,10 @@ import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentAddNewUserBinding;
 import com.getsetgo.databinding.FragmentCategoriesBinding;
+import com.getsetgo.util.App;
 import com.getsetgo.util.Click;
+import com.getsetgo.util.P;
+import com.getsetgo.util.Utilities;
 import com.getsetgo.util.Validation;
 
 import java.util.ArrayList;
@@ -38,6 +48,7 @@ import java.util.ArrayList;
 public class AddNewUserFragment extends Fragment {
 
     FragmentAddNewUserBinding binding;
+    Context context;
 
     public AddNewUserFragment() {
     }
@@ -50,7 +61,9 @@ public class AddNewUserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_add_new_user, container, false);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         View rootView = binding.getRoot();
+        context = inflater.getContext();
         initView();
         return rootView;
     }
@@ -60,8 +73,6 @@ public class AddNewUserFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                // Handle the back button event
-
                 if(getFragmentManager().getBackStackEntryCount() > 0){
                     getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     BaseScreenActivity.callBack();
@@ -100,6 +111,7 @@ public class AddNewUserFragment extends Fragment {
             }
         });
         populateIsdCode(getActivity(), binding.actvIsdCode);
+        bindStatus();
     }
 
     private void onClick() {
@@ -117,12 +129,31 @@ public class AddNewUserFragment extends Fragment {
                 binding.radioIndividual.setChecked(false);
             }
         });
-
+        Utilities.setFirstWordCap(binding.etFirstName);
+        Utilities.setFirstWordCap(binding.etLastName);
         binding.txtSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
                 if (checkValidation(getActivity())) {
+
+                    String registerAs;
+                    if(binding.radioCompany.isSelected()){
+                        registerAs = binding.radioCompany.getText().toString();
+                    }else{
+                        registerAs = binding.radioIndividual.getText().toString();
+                    }
+                    Json json = new Json();
+                    json.addString("registered_as",registerAs);
+                    json.addString("name",binding.etFirstName.getText().toString());
+                    json.addString("lastname",binding.etLastName.getText().toString());
+                    json.addString("email",binding.etEmail.getText().toString());
+                    json.addString("country_id",binding.actvIsdCode.getText().toString());
+                    json.addString("country_code",binding.actvIsdCode.getText().toString());
+                    json.addString("contact",binding.etContactNumber.getText().toString());
+                    json.addString("p",binding.etPassword.getText().toString());
+                    json.addString("status",binding.spnStatus.getSelectedItem().toString());
+                    //callAddUserAPI(context,json);
                 }
             }
         });
@@ -130,6 +161,8 @@ public class AddNewUserFragment extends Fragment {
 
     public void populateIsdCode(Context context, AutoCompleteTextView autoCompleteTextView) {
         final ArrayList<CountryCode> country = new ArrayList<>();
+        CountryCode cod = new CountryCode();
+        cod.setCode("+91");
         CountryCode codes = new CountryCode();
         codes.setCode("+92");
         CountryCode codess = new CountryCode();
@@ -138,6 +171,7 @@ public class AddNewUserFragment extends Fragment {
         codeess.setCode("+94");
         CountryCode coddess = new CountryCode();
         coddess.setCode("+95");
+        country.add(cod);
         country.add(codes);
         country.add(coddess);
         country.add(codeess);
@@ -161,6 +195,31 @@ public class AddNewUserFragment extends Fragment {
 
     }
 
+    private void bindStatus() {
+        ArrayList<String> stringArrayList = new ArrayList<String>();
+        stringArrayList.add("Select");
+        stringArrayList.add("0");
+        stringArrayList.add("1");
+
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getActivity(),
+                R.layout.spinner_display_text, stringArrayList);
+        binding.spnStatus.setAdapter(stringArrayAdapter);
+        binding.spnStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (binding.spnStatus.getSelectedItem().toString() != "Select") {
+                    Log.d("Tag", "Selected Item is = " + binding.spnStatus.getSelectedItem().toString());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+    }
+
     private boolean checkValidation(FragmentActivity activity) {
         boolean value = true;
         if (TextUtils.isEmpty(binding.etFirstName.getText().toString().trim())) {
@@ -175,8 +234,18 @@ public class AddNewUserFragment extends Fragment {
         } else if (!Validation.validEmail(binding.etEmail.getText().toString().trim())) {
             H.showMessage(activity, "Enter valid email");
             value = false;
-        } else if (TextUtils.isEmpty(binding.actvIsdCode.getText().toString().trim())) {
-            H.showMessage(activity, "Enter Isd Code");
+        } else if (binding.actvIsdCode.getText().toString().length() < 2) {
+            H.showMessage(activity, "Enter your isd code");
+            value = false;
+        } else if (TextUtils.isEmpty(binding.etContactNumber.getText().toString().trim())) {
+            H.showMessage(activity, "Enter your phone number");
+            value = false;
+        } else if (binding.actvIsdCode.getText().toString().equals("+91") &&
+                    binding.etContactNumber.getText().toString().length() != 10) {
+            H.showMessage(activity, "Enter valid phone number");
+            value = false;
+        }  else if (binding.spnStatus.getSelectedItem().toString().equalsIgnoreCase("Select")) {
+            H.showMessage(activity, "Please select status");
             value = false;
         } else if (TextUtils.isEmpty(binding.etPassword.getText().toString().trim())) {
             H.showMessage(activity, "Enter password");
@@ -184,6 +253,36 @@ public class AddNewUserFragment extends Fragment {
         }
 
         return value;
+    }
+
+
+    private void callAddUserAPI(Context context, Json json) {
+        LoadingDialog loadingDialog = new LoadingDialog(context);
+        Api.newApi(context, P.baseUrl + "add_user").addJson(json)
+                .setMethod(Api.POST)
+                .onHeaderRequest(App::getHeaders)
+                .onLoading(isLoading -> {
+                    if (isLoading)
+                        loadingDialog.show("loading...");
+                    else
+                        loadingDialog.hide();
+                })
+                .onError(() ->
+                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
+                        }))
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        loadingDialog.dismiss();
+                        if (Json1.getInt(P.status) == 0) {
+                            H.showMessage(context, Json1.getString(P.err));
+                        } else {
+                            Json1 = Json1.getJson(P.data);
+
+                        }
+                    }
+
+                }).run("add_user");
     }
 
 

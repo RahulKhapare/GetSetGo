@@ -191,7 +191,7 @@
                             android:fontFamily="@font/nunito_sans_regular"
                             android:hint="Eg. +91"
                             android:maxLength="4"
-                            android:drawableRight="@drawable/ic_down_arrow"
+                            android:drawableRight="@drawable/ic_down_spin"
                             android:imeOptions="actionNext"
                             android:textColor="@color/colorTextDark"
                             android:textColorHint="@color/colorTextHint" />
@@ -260,7 +260,7 @@
                         android:layout_height="wrap_content"
                         android:hint="Confirm Password"
                         android:inputType="textPassword"
-                        android:imeOptions="actionNext"
+                        android:imeOptions="actionDone"
                         android:textColorHint="@color/colorTextHint"
                         android:fontFamily="@font/nunito_sans_regular"
                         android:textColor="@color/colorTextDark"

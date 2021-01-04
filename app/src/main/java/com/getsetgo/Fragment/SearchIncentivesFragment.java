@@ -132,9 +132,9 @@ public class SearchIncentivesFragment extends Fragment {
     private void bindStatus() {
 
         ArrayList<String> stringArrayList = new ArrayList<String>();
-        stringArrayList.add("Active");
-        stringArrayList.add("Pending");
-        stringArrayList.add("Transferred");
+        stringArrayList.add("Select");
+        stringArrayList.add("0");
+        stringArrayList.add("1");
 
 
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getActivity(),

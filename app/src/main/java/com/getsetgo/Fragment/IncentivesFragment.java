@@ -177,9 +177,9 @@ public class IncentivesFragment extends Fragment {
             Page = SearchIncentivesFragment.page;
         }
 
-        String apiParam = "?create_date_start=" + sDate + "&action_type=" + action + "&page=" + Page + "&per_page=10";
+        String apiParam = "?add_date=" + sDate + "&approve_status=" + action + "&page=" + Page + "&per_page=10";
 
-        Api.newApi(context, P.baseUrl + "user_incentive").setMethod(Api.GET)
+        Api.newApi(context, P.baseUrl + "user_incentive" + apiParam).setMethod(Api.GET)
                 .onHeaderRequest(App::getHeaders)
                 .onLoading(isLoading -> {
                     if (isLoading)

@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 
@@ -26,6 +27,7 @@ import com.getsetgo.databinding.ActivitySignUpBinding;
 import com.getsetgo.util.App;
 import com.getsetgo.util.Click;
 import com.getsetgo.util.P;
+import com.getsetgo.util.Utilities;
 import com.getsetgo.util.Validation;
 import com.getsetgo.util.WindowView;
 
@@ -42,11 +44,14 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         WindowView.getWindow(activity);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         initView();
     }
 
     private void initView() {
         onClick();
+        Utilities.setFirstWordCap(binding.etxFirstName);
+        Utilities.setFirstWordCap(binding.etxLastName);
     }
 
     private void onClick() {
@@ -119,6 +124,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void populateIsdCode(Context context, AutoCompleteTextView autoCompleteTextView) {
         final ArrayList<CountryCode> country = new ArrayList<>();
+        CountryCode cod = new CountryCode();
+        cod.setCode("+91");
         CountryCode codes = new CountryCode();
         codes.setCode("+92");
         CountryCode codess = new CountryCode();
@@ -127,6 +134,8 @@ public class SignUpActivity extends AppCompatActivity {
         codeess.setCode("+94");
         CountryCode coddess = new CountryCode();
         coddess.setCode("+95");
+
+        country.add(cod);
         country.add(codes);
         country.add(coddess);
         country.add(codeess);
@@ -165,7 +174,8 @@ public class SignUpActivity extends AppCompatActivity {
         } else if (TextUtils.isEmpty(binding.etxPhone.getText().toString().trim())) {
             H.showMessage(activity, "Enter your phone number");
             value = false;
-        } else if (binding.etxPhone.getText().toString().length() < 10) {
+        } else if (binding.actvIsdCode.getText().toString().equals("+91") &&
+                binding.etxPhone.getText().toString().length() != 10) {
             H.showMessage(activity, "Enter valid phone number");
             value = false;
         } else if (!Validation.validEmail(binding.etxEmailAddress.getText().toString().trim())) {
