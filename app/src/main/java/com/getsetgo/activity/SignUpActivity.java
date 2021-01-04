@@ -100,8 +100,14 @@ public class SignUpActivity extends AppCompatActivity {
                     startActivity(intent);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     finish();
-
+                    String registerAs;
+                    if(binding.radioCompany.isSelected()){
+                        registerAs = binding.radioCompany.getText().toString();
+                    }else{
+                        registerAs = binding.radioIndividual.getText().toString();
+                    }
                     Json json = new Json();
+                    json.addString("registered_as", registerAs);
                     json.addString(P.name, binding.etxFirstName.getText().toString() + "");
                     json.addString(P.lastname, binding.etxLastName.getText().toString() + "");
                     json.addString(P.email, binding.etxEmailAddress.getText().toString() + "");

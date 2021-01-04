@@ -181,7 +181,7 @@ public class HelpAndSupportFragment extends Fragment {
         LoadingDialog loadingDialog = new LoadingDialog(context);
         String apiParam = "?page=" + Page + "&per_page=10";
 
-        Api.newApi(context, P.baseUrl + "support" + apiParam)
+        Api.newApi(context, P.baseUrl + "send" + apiParam)
                 .setMethod(Api.GET)
                 .onHeaderRequest(App::getHeaders)
                 .onLoading(isLoading -> {
@@ -218,7 +218,7 @@ public class HelpAndSupportFragment extends Fragment {
                         }
                     }
 
-                }).run("support");
+                }).run("send");
     }
 
 
