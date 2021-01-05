@@ -13,15 +13,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adoisstudio.helper.Json;
+import com.adoisstudio.helper.JsonList;
 import com.getsetgo.R;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 public class ActiveCourseAdapter extends RecyclerView.Adapter<ActiveCourseAdapter.ActiveCourseViewHolder> {
 
     Context context;
+    JsonList jsonList;
 
-    public ActiveCourseAdapter(Context context) {
+    public ActiveCourseAdapter(Context context, JsonList jsonList) {
         this.context = context;
+        this.jsonList = jsonList;
     }
 
     @NonNull

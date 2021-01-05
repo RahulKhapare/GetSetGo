@@ -38,6 +38,7 @@ import com.getsetgo.util.P;
 public class HomeFragment extends Fragment {
 
     FragmentHomeBinding binding;
+    Context context;
     ActiveCourseAdapter activeCourseAdapter;
     OtherCategoriesAdapter otherCategoriesAdapter;
     BestSellingCourseAdapter bestSellingCourseAdapter;
@@ -47,6 +48,14 @@ public class HomeFragment extends Fragment {
     JsonList otherCategoriesJsonList = new JsonList();
     JsonList bestSellingCourseJsonList = new JsonList();
     JsonList activeCourseJsonList = new JsonList();
+
+    int categoriesPage = 1;
+    int bestSellingPage = 1;
+    int activeCoursePage = 1;
+
+    boolean categoriesNextPage = false;
+    boolean bestSellingNextPage = false;
+    boolean activeCourseNextPage = false;
 
     boolean isOther = false;
     boolean isActive = false;
@@ -66,7 +75,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         View rootView = binding.getRoot();
-
+        context = inflater.getContext();
         init();
 
         return rootView;
@@ -99,7 +108,10 @@ public class HomeFragment extends Fragment {
                 scrollOutItems = mLayoutManagerOtherCategories.findFirstVisibleItemPosition();
 
                 if (isOther && (currentItem + scrollOutItems) >= totalItems) {
-                    isOther = false;
+                    if(categoriesNextPage) {
+                        isOther = false;
+                        //callOtherCategoriesAPI(context);
+                    }
                 }
             }
         });
@@ -158,7 +170,7 @@ public class HomeFragment extends Fragment {
     private void setupRecyclerViewForActiveCourse() {
         mLayoutManagerActiveCourse = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         binding.recyclerViewCources.setLayoutManager(mLayoutManagerActiveCourse);
-        activeCourseAdapter = new ActiveCourseAdapter(getActivity());
+        activeCourseAdapter = new ActiveCourseAdapter(getActivity(),activeCourseJsonList);
         binding.recyclerViewCources.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerViewCources.setAdapter(activeCourseAdapter);
         activeCourseAdapter.notifyDataSetChanged();
@@ -167,16 +179,15 @@ public class HomeFragment extends Fragment {
     private void setupRecyclerViewForOthersCategories() {
         mLayoutManagerOtherCategories = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         binding.recyclerViewOtherCategories.setLayoutManager(mLayoutManagerOtherCategories);
-        otherCategoriesAdapter = new OtherCategoriesAdapter(getActivity());
+        otherCategoriesAdapter = new OtherCategoriesAdapter(getActivity(),otherCategoriesJsonList);
         binding.recyclerViewOtherCategories.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerViewOtherCategories.setAdapter(otherCategoriesAdapter);
-        otherCategoriesAdapter.notifyDataSetChanged();
     }
 
     private void setupRecyclerViewForBestSellingCourse() {
         mLayoutManagerBestSelling = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         binding.recyclerBestSellingCources.setLayoutManager(mLayoutManagerBestSelling);
-        bestSellingCourseAdapter = new BestSellingCourseAdapter(getActivity());
+        bestSellingCourseAdapter = new BestSellingCourseAdapter(getActivity(),bestSellingCourseJsonList);
         binding.recyclerBestSellingCources.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerBestSellingCources.setAdapter(bestSellingCourseAdapter);
         bestSellingCourseAdapter.notifyDataSetChanged();
@@ -207,6 +218,45 @@ public class HomeFragment extends Fragment {
                             JsonList jsonList = new JsonList();
                             jsonList = Json1.getJsonList("total_courses");
                             if (jsonList != null && !jsonList.isEmpty()) {
+                            }
+                        }
+                    }
+
+                }).run("dashbord");
+    }
+    private void callOtherCategoriesAPI(Context context) {
+        LoadingDialog loadingDialog = new LoadingDialog(context);
+        Api.newApi(context, P.baseUrl + "dashbord")
+                .setMethod(Api.POST)
+                .onHeaderRequest(App::getHeaders)
+                .onLoading(isLoading -> {
+                    if (isLoading)
+                        loadingDialog.show("loading...");
+                    else
+                        loadingDialog.hide();
+                })
+                .onError(() ->
+                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
+                        }))
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        loadingDialog.dismiss();
+                        if (Json1.getInt(P.status) == 0) {
+                            H.showMessage(context, Json1.getString(P.err));
+                        } else {
+                            Json1 = Json1.getJson(P.data);
+                            int numRows = Json1.getInt(P.num_rows);
+                            JsonList jsonList = Json1.getJsonList("total_courses");
+                            if (jsonList != null && !jsonList.isEmpty()) {
+                                otherCategoriesJsonList.addAll(jsonList);
+                                otherCategoriesAdapter.notifyDataSetChanged();
+                                if(otherCategoriesJsonList.size() < numRows){
+                                    categoriesPage++;
+                                    categoriesNextPage = true;
+                                }else{
+                                    categoriesNextPage = false;
+                                }
                             }
                         }
                     }

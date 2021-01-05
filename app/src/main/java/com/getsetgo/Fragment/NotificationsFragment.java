@@ -89,30 +89,11 @@ public class NotificationsFragment extends Fragment {
     private void setupRecyclerViewForNotification() {
         ArrayList<NotificationModel> notificationModelArrayList = new ArrayList<>();
         NotificationModel n = new NotificationModel(1);
-        NotificationModel no = new NotificationModel(1);
-        NotificationModel not = new NotificationModel(2);
-        NotificationModel noti = new NotificationModel(1);
-        NotificationModel notif = new NotificationModel(3);
-        NotificationModel notifi = new NotificationModel(2);
-        NotificationModel notific = new NotificationModel(1);
-        NotificationModel notifica = new NotificationModel(1);
-        NotificationModel notificat = new NotificationModel(3);
-        NotificationModel notificati = new NotificationModel(1);
-        NotificationModel notificatio = new NotificationModel(2);
-        NotificationModel notification = new NotificationModel(1);
+        NotificationModel no = new NotificationModel(2);
+        NotificationModel not = new NotificationModel(3);
         notificationModelArrayList.add(n);
         notificationModelArrayList.add(no);
         notificationModelArrayList.add(not);
-        notificationModelArrayList.add(noti);
-        notificationModelArrayList.add(notif);
-        notificationModelArrayList.add(notifi);
-        notificationModelArrayList.add(notific);
-        notificationModelArrayList.add(notifica);
-        notificationModelArrayList.add(notificat);
-        notificationModelArrayList.add(notificati);
-        notificationModelArrayList.add(notificatio);
-        notificationModelArrayList.add(notification);
-
 
         binding.recyclerViewNotifications.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         notificationAdapter = new NotificationAdapter(getContext(),notificationModelArrayList);

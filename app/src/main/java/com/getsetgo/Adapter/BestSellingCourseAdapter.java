@@ -10,15 +10,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adoisstudio.helper.JsonList;
 import com.getsetgo.R;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 public class BestSellingCourseAdapter extends RecyclerView.Adapter<BestSellingCourseAdapter.BestSellingCourseViewHolder> {
 
     Context context;
+    JsonList jsonList;
 
-    public BestSellingCourseAdapter(Context context) {
+    public BestSellingCourseAdapter(Context context,JsonList jsonList) {
         this.context = context;
+        this.jsonList = jsonList;
     }
 
     @NonNull

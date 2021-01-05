@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adoisstudio.helper.JsonList;
 import com.getsetgo.Fragment.ViewAllCategoriesFragment;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
@@ -21,9 +22,11 @@ public class OtherCategoriesAdapter extends RecyclerView.Adapter<OtherCategories
 
     Context context;
     ViewAllCategoriesFragment viewAllCategoriesFragment;
+    JsonList jsonList;
 
-    public OtherCategoriesAdapter(Context context) {
+    public OtherCategoriesAdapter(Context context,JsonList jsonList) {
         this.context = context;
+        this.jsonList = jsonList;
     }
 
     @NonNull

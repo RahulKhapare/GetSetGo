@@ -73,13 +73,10 @@ public class NotificationAdapter extends RecyclerView.Adapter {
     public int getItemViewType(int position) {
         NotificationModel notification = (NotificationModel) notificationList.get(position);
         if (notification.getViewType() == 1) {
-            Log.e("getItemViewType", "1");
             return VIEW_TYPE_NOTIFICATION;
         } else if (notification.getViewType() == 2) {
-            Log.e("getItemViewType", "2");
             return VIEW_TYPE_CONGRATULATIONS;
         } else {
-            Log.e("getItemViewType", "3");
             return VIEW_TYPE_SPECIAL_OFFER;
         }
 
