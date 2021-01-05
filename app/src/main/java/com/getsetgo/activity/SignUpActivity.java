@@ -50,8 +50,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void initView() {
         onClick();
-        Utilities.setFirstWordCap(binding.etxFirstName);
-        Utilities.setFirstWordCap(binding.etxLastName);
         binding.actvIsdCode.setText("+91");
     }
 

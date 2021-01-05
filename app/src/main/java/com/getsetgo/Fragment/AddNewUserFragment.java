@@ -129,8 +129,6 @@ public class AddNewUserFragment extends Fragment {
                 binding.radioIndividual.setChecked(false);
             }
         });
-        Utilities.setFirstWordCap(binding.etFirstName);
-        Utilities.setFirstWordCap(binding.etLastName);
         binding.txtSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,7 +149,7 @@ public class AddNewUserFragment extends Fragment {
                     json.addString("email",binding.etEmail.getText().toString());
                     json.addString("country_id","91");
                     json.addString("country_code",binding.actvIsdCode.getText().toString().substring(1));
-                    json.addString("contact",binding.etContactNumber.getText().toString());
+                    json.addString("contact",binding.etPhone.getText().toString());
                     json.addString("p",binding.etPassword.getText().toString());
                     json.addString("status",binding.spnStatus.getSelectedItem().toString());
                     callAddUserAPI(context,json);
@@ -219,7 +217,6 @@ public class AddNewUserFragment extends Fragment {
         binding.etLastName.setText("");
         binding.etEmail.setText("");
         binding.etPhone.setText("");
-        binding.etContactNumber.setText("");
         binding.etPassword.setText("");
         binding.spnStatus.setSelection(0);
     }
@@ -241,11 +238,11 @@ public class AddNewUserFragment extends Fragment {
         } else if (binding.actvIsdCode.getText().toString().length() < 2) {
             H.showMessage(activity, "Enter your isd code");
             value = false;
-        } else if (TextUtils.isEmpty(binding.etContactNumber.getText().toString().trim())) {
+        } else if (TextUtils.isEmpty(binding.etPhone.getText().toString().trim())) {
             H.showMessage(activity, "Enter your phone number");
             value = false;
         } else if (binding.actvIsdCode.getText().toString().equals("+91") &&
-                    binding.etContactNumber.getText().toString().length() != 10) {
+                    binding.etPhone.getText().toString().length() != 10) {
             H.showMessage(activity, "Enter valid phone number");
             value = false;
         }  else if (binding.spnStatus.getSelectedItem().toString().equalsIgnoreCase("Select")) {

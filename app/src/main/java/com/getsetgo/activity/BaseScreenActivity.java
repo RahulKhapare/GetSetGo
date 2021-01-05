@@ -174,6 +174,7 @@ public class BaseScreenActivity extends AppCompatActivity {
         Session session = new Session(this);
         String name = session.getString(P.name);
         String lastName = session.getString(P.lastname);
+        String email = session.getString(P.email);
 
         if (name == null || name.isEmpty())
             return;
@@ -181,7 +182,6 @@ public class BaseScreenActivity extends AppCompatActivity {
         TextView txtName = findViewById(R.id.txtName);
         TextView txtEmail = findViewById(R.id.txtEmail);
         txtName.setText(name + " " + lastName);
-        String email = session.getString(P.email);
         txtEmail.setText(email);
     }
 
