@@ -47,6 +47,7 @@ public class HomeFragment extends Fragment {
     JsonList otherCategoriesJsonList = new JsonList();
     JsonList bestSellingCourseJsonList = new JsonList();
     JsonList activeCourseJsonList = new JsonList();
+
     boolean isOther = false;
     boolean isActive = false;
     boolean isBest = false;
