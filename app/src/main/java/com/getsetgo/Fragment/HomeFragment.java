@@ -1,5 +1,6 @@
 package com.getsetgo.Fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,12 +19,19 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adoisstudio.helper.Api;
+import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.JsonList;
+import com.adoisstudio.helper.LoadingDialog;
+import com.adoisstudio.helper.MessageBox;
 import com.getsetgo.Adapter.ActiveCourseAdapter;
 import com.getsetgo.Adapter.BestSellingCourseAdapter;
 import com.getsetgo.Adapter.OtherCategoriesAdapter;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentHomeBinding;
+import com.getsetgo.util.App;
+import com.getsetgo.util.P;
 
 public class HomeFragment extends Fragment {
 
@@ -85,5 +93,37 @@ public class HomeFragment extends Fragment {
         binding.recyclerBestSellingCources.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerBestSellingCources.setAdapter(bestSellingCourseAdapter);
         bestSellingCourseAdapter.notifyDataSetChanged();
+    }
+
+    private void callDashboardCourseAPI(Context context) {
+        LoadingDialog loadingDialog = new LoadingDialog(context);
+        Api.newApi(context, P.baseUrl + "dashbord")
+                .setMethod(Api.POST)
+                .onHeaderRequest(App::getHeaders)
+                .onLoading(isLoading -> {
+                    if (isLoading)
+                        loadingDialog.show("loading...");
+                    else
+                        loadingDialog.hide();
+                })
+                .onError(() ->
+                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
+                        }))
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        loadingDialog.dismiss();
+                        if (Json1.getInt(P.status) == 0) {
+                            H.showMessage(context, Json1.getString(P.err));
+                        } else {
+                            Json1 = Json1.getJson(P.data);
+                            JsonList jsonList = new JsonList();
+                            jsonList = Json1.getJsonList("total_courses");
+                            if (jsonList != null && !jsonList.isEmpty()) {
+                            }
+                        }
+                    }
+
+                }).run("dashbord");
     }
 }
