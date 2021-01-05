@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/videoControllerLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:visibility="gone"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#70000000">
+
+    <RelativeLayout
+        android:id="@+id/imageViewContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/settingImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_settings_black_24dp"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
+            android:clickable="true"
+            android:background="@drawable/clickable_trans_bg"/>
+
+        <ImageView
+            android:id="@+id/zoomImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_fullscreen_black_24dp"
+            android:tag="zoomIn"
+            android:padding="8dp"
+            android:clickable="true"
+            android:background="@drawable/clickable_trans_bg"
+            android:layout_alignParentEnd="true"/>
+
+        <ImageView
+            android:id="@+id/ppImageView"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:src="@drawable/ic_pause_black_24dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginEnd="36dp"
+            android:clickable="true"
+            android:background="@drawable/clickable_trans_bg"
+            android:layout_centerInParent="true" />
+
+        <ImageView
+            android:id="@+id/backImageView"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:src="@drawable/ic_fast_forward_black_24dp"
+            android:clickable="true"
+            android:background="@drawable/clickable_trans_bg"
+            android:layout_toStartOf="@id/ppImageView"
+            android:rotation="180"
+            android:layout_centerVertical="true" />
+
+        <ImageView
+            android:id="@+id/forwardImageView"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:src="@drawable/ic_fast_forward_black_24dp"
+            android:clickable="true"
+            android:background="@drawable/clickable_trans_bg"
+            android:layout_toEndOf="@id/ppImageView"
+            android:layout_centerVertical="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="3dp"
+        android:paddingEnd="3dp">
+
+        <TextView
+            android:id="@+id/timeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif-black"
+            android:textColor="@color/whiteColor"/>
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/timeTextView"
+            android:secondaryProgressTint="@color/whiteColor"
+            android:secondaryProgress="0"
+            android:layout_toStartOf="@id/totalTimeTextView"
+            android:progress="0"/>
+
+        <TextView
+            android:id="@+id/totalTimeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:text="00:00"
+            android:fontFamily="sans-serif-black"
+            android:textColor="@color/whiteColor"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

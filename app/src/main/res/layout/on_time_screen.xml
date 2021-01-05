@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:rotation="-90"
+            android:src="@drawable/swipe"
+            app:tint="@color/whiteColor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Brightness"
+            android:textStyle="bold"
+            android:textColor="@color/whiteColor"
+            android:textSize="25sp"
+            android:fontFamily="monospace"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignParentEnd="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:rotation="-90"
+            android:src="@drawable/swipe"
+            app:tint="@color/whiteColor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Volume"
+            android:textStyle="bold"
+            android:textColor="@color/whiteColor"
+            android:textSize="25sp"
+            android:fontFamily="monospace"/>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="got it"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/colorTextDark"
+        android:background="@drawable/golden_rectangle_stroke"
+        android:onClick="onGotItClick"
+        android:layout_below="@id/linearLayout"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>

@@ -246,8 +246,8 @@
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/nunito_sans_regular"
                                         android:text="167567341"
-                                        android:textColor="@color/viewall_text_color"
-                                        android:textSize="14sp" />
+                                        android:textColor="@color/colorTextDark"
+                                        android:textSize="16sp" />
 
                                     <ImageView
                                         android:id="@+id/imvCopyCode"
