@@ -130,22 +130,12 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void populateIsdCode(Context context, AutoCompleteTextView autoCompleteTextView) {
         final ArrayList<CountryCode> country = new ArrayList<>();
-        CountryCode cod = new CountryCode();
-        cod.setCode("+91");
-        CountryCode codes = new CountryCode();
-        codes.setCode("+92");
-        CountryCode codess = new CountryCode();
-        codess.setCode("+93");
-        CountryCode codeess = new CountryCode();
-        codeess.setCode("+94");
-        CountryCode coddess = new CountryCode();
-        coddess.setCode("+95");
 
-        country.add(cod);
-        country.add(codes);
-        country.add(coddess);
-        country.add(codeess);
-        country.add(codess);
+        //forSample
+        CountryCode code = new CountryCode();
+        code.setCode("+91");
+        country.add(code);
+
         CountryCodeAdapter countryFlagAdapter = new CountryCodeAdapter(context,
                 R.layout.activity_sign_up, R.id.lbl_name, country);
         autoCompleteTextView.setThreshold(2);         //will start working from first character

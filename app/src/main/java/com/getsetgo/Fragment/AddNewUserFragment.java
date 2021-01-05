@@ -162,24 +162,16 @@ public class AddNewUserFragment extends Fragment {
 
     public void populateIsdCode(Context context, AutoCompleteTextView autoCompleteTextView) {
         final ArrayList<CountryCode> country = new ArrayList<>();
-        CountryCode cod = new CountryCode();
-        cod.setCode("+91");
-        CountryCode codes = new CountryCode();
-        codes.setCode("+92");
-        CountryCode codess = new CountryCode();
-        codess.setCode("+93");
-        CountryCode codeess = new CountryCode();
-        codeess.setCode("+94");
-        CountryCode coddess = new CountryCode();
-        coddess.setCode("+95");
-        country.add(cod);
-        country.add(codes);
-        country.add(coddess);
-        country.add(codeess);
-        country.add(codess);
+
+
+        //forSample
+        CountryCode code = new CountryCode();
+        code.setCode("+91");
+        country.add(code);
+
         CountryCodeAdapter countryFlagAdapter = new CountryCodeAdapter(context,
                 R.layout.fragment_add_new_user, R.id.lbl_name, country);
-        autoCompleteTextView.setThreshold(2);         //will start working from first character
+        autoCompleteTextView.setThreshold(2);
         autoCompleteTextView.setAdapter(countryFlagAdapter);
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -285,23 +277,19 @@ public class AddNewUserFragment extends Fragment {
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
-                        clearFields();
                         loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(context, Json1.getString(P.err));
                         } else {
                             String msg  = Json1.getString(P.msg);
                             Json1 = Json1.getJson(P.data);
-                         /*Runnable runnable = new Runnable() {
+                         Runnable runnable = new Runnable() {
                                 @Override
                                 public void run() {
-                                    if(getFragmentManager().getBackStackEntryCount() > 0){
-                                        getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                                        BaseScreenActivity.callBack();
-                                    }
+                                    clearFields();
                                 }
                             };
-                            Utilities.showPopuprunnable(context,msg,false,runnable);*/
+                            Utilities.showPopuprunnable(context,msg,false,runnable);
                         }
                     }
 
