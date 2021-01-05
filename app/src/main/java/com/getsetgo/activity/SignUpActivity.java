@@ -52,11 +52,11 @@ public class SignUpActivity extends AppCompatActivity {
         onClick();
         Utilities.setFirstWordCap(binding.etxFirstName);
         Utilities.setFirstWordCap(binding.etxLastName);
+        binding.actvIsdCode.setText("+91");
     }
 
     private void onClick() {
 
-        binding.actvIsdCode.setText("+91");
 
         binding.actvIsdCode.addTextChangedListener(new TextWatcher() {
             @Override
