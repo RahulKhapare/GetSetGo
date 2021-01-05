@@ -50,6 +50,7 @@ public class AddNewUserFragment extends Fragment {
 
     FragmentAddNewUserBinding binding;
     Context context;
+    JsonList codeJsonList = new JsonList();
 
     public AddNewUserFragment() {
     }
@@ -94,7 +95,12 @@ public class AddNewUserFragment extends Fragment {
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Add New User");
 
         onClick();
-        bindCountryCode(new JsonList());
+
+        if(codeJsonList.size()<=0){
+            bindCountryCode(new JsonList());
+        }else{
+            bindCountryCode(codeJsonList);
+        }
         bindStatus();
     }
 
@@ -120,7 +126,7 @@ public class AddNewUserFragment extends Fragment {
                 if (checkValidation(getActivity())) {
 
                     String registerAs;
-                    if (binding.radioCompany.isSelected()) {
+                    if (binding.radioCompany.isChecked()) {
                         registerAs = "1";
                     } else {
                         registerAs = "0";
@@ -191,9 +197,6 @@ public class AddNewUserFragment extends Fragment {
         } else if (!Validation.validEmail(binding.etEmail.getText().toString().trim())) {
             H.showMessage(activity, "Enter valid email");
             value = false;
-        } else if (binding.actvIsdCode.getText().toString().length() < 2) {
-            H.showMessage(activity, "Enter your isd code");
-            value = false;
         } else if (TextUtils.isEmpty(binding.etPhone.getText().toString().trim())) {
             H.showMessage(activity, "Enter your phone number");
             value = false;
@@ -236,8 +239,9 @@ public class AddNewUserFragment extends Fragment {
                         } else {
                             String msg = Json1.getString(P.msg);
                             Json1 = Json1.getJson(P.data);
-                            JsonList jsonList = Json1.getJsonList("country_list");
-                            bindCountryCode(jsonList);
+                           /* JsonList jsonList = Json1.getJsonList("country_list");
+                            codeJsonList = jsonList;
+                            bindCountryCode(codeJsonList);*/
                             Runnable runnable = new Runnable() {
                                 @Override
                                 public void run() {
