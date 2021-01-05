@@ -34,7 +34,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".activity.SignUpActivity"
             android:screenOrientation="portrait"
