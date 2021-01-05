@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +42,15 @@ public class HomeFragment extends Fragment {
     OtherCategoriesAdapter otherCategoriesAdapter;
     BestSellingCourseAdapter bestSellingCourseAdapter;
 
+    LinearLayoutManager mLayoutManagerActiveCourse, mLayoutManagerBestSelling, mLayoutManagerOtherCategories;
+
+    JsonList otherCategoriesJsonList = new JsonList();
+    JsonList bestSellingCourseJsonList = new JsonList();
+    JsonList activeCourseJsonList = new JsonList();
+    boolean isOther = false;
+    boolean isActive = false;
+    boolean isBest = false;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -56,14 +67,86 @@ public class HomeFragment extends Fragment {
         View rootView = binding.getRoot();
 
         init();
-        setupRecyclerViewForActiveCourse();
-        setupRecyclerViewForOthersCategories();
-        setupRecyclerViewForBestSellingCourse();
+
         return rootView;
     }
 
     private void init() {
+        setupRecyclerViewForActiveCourse();
+        setupRecyclerViewForOthersCategories();
+        setupRecyclerViewForBestSellingCourse();
+        onScrollRecyclerview();
+    }
 
+    private void onScrollRecyclerview() {
+
+        binding.recyclerViewOtherCategories.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                    isOther = true;
+                }
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int currentItem, totalItems, scrollOutItems;
+                currentItem = mLayoutManagerOtherCategories.getChildCount();
+                totalItems = mLayoutManagerOtherCategories.getItemCount();
+                scrollOutItems = mLayoutManagerOtherCategories.findFirstVisibleItemPosition();
+
+                if (isOther && (currentItem + scrollOutItems) >= totalItems) {
+                    isOther = false;
+                }
+            }
+        });
+
+        binding.recyclerViewCources.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                    isActive = true;
+                }
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int currentItem, totalItems, scrollOutItems;
+                currentItem = mLayoutManagerActiveCourse.getChildCount();
+                totalItems = mLayoutManagerActiveCourse.getItemCount();
+                scrollOutItems = mLayoutManagerActiveCourse.findFirstVisibleItemPosition();
+                if (isActive && (currentItem + scrollOutItems) >= totalItems) {
+                    isActive = false;
+                }
+
+            }
+        });
+
+        binding.recyclerBestSellingCources.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                    isBest = true;
+                }
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int currentItem, totalItems, scrollOutItems;
+                currentItem = mLayoutManagerBestSelling.getChildCount();
+                totalItems = mLayoutManagerBestSelling.getItemCount();
+                scrollOutItems = mLayoutManagerBestSelling.findFirstVisibleItemPosition();
+                if (isBest && (currentItem + scrollOutItems) >= totalItems) {
+                    isBest = false;
+                }
+            }
+        });
     }
 
     @Override
@@ -72,7 +155,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupRecyclerViewForActiveCourse() {
-        binding.recyclerViewCources.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        mLayoutManagerActiveCourse = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        binding.recyclerViewCources.setLayoutManager(mLayoutManagerActiveCourse);
         activeCourseAdapter = new ActiveCourseAdapter(getActivity());
         binding.recyclerViewCources.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerViewCources.setAdapter(activeCourseAdapter);
@@ -80,7 +164,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupRecyclerViewForOthersCategories() {
-        binding.recyclerViewOtherCategories.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        mLayoutManagerOtherCategories = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        binding.recyclerViewOtherCategories.setLayoutManager(mLayoutManagerOtherCategories);
         otherCategoriesAdapter = new OtherCategoriesAdapter(getActivity());
         binding.recyclerViewOtherCategories.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerViewOtherCategories.setAdapter(otherCategoriesAdapter);
@@ -88,7 +173,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupRecyclerViewForBestSellingCourse() {
-        binding.recyclerBestSellingCources.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        mLayoutManagerBestSelling = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        binding.recyclerBestSellingCources.setLayoutManager(mLayoutManagerBestSelling);
         bestSellingCourseAdapter = new BestSellingCourseAdapter(getActivity());
         binding.recyclerBestSellingCources.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerBestSellingCources.setAdapter(bestSellingCourseAdapter);
