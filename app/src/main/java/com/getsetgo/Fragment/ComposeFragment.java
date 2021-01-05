@@ -48,6 +48,7 @@ public class ComposeFragment extends Fragment {
 
     private void init(View view) {
         onClick();
+        callDashboardCourseAPI(context);
     }
 
     private void onClick() {
@@ -132,6 +133,42 @@ public class ComposeFragment extends Fragment {
     private void clearFields() {
         binding.etSubject.setText("");
         binding.etMessage.setText("");
+    }
+
+
+    private void callDashboardCourseAPI(Context context) {
+        LoadingDialog loadingDialog = new LoadingDialog(context);
+        Api.newApi(context, P.baseUrl + "dashbord")
+                .setMethod(Api.POST)
+                .onHeaderRequest(App::getHeaders)
+                .onLoading(isLoading -> {
+                    if (isLoading)
+                        loadingDialog.show("loading...");
+                    else
+                        loadingDialog.hide();
+                })
+                .onError(() ->
+                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
+                        }))
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        loadingDialog.dismiss();
+                        if (Json1.getInt(P.status) == 0) {
+                            H.showMessage(context, Json1.getString(P.err));
+                        } else {
+                            Json1 = Json1.getJson(P.data);
+                            JsonList jsonList = new JsonList();
+                            jsonList = Json1.getJsonList("total_courses");
+                            if(jsonList != null && !jsonList.isEmpty()){
+
+                            }
+
+
+                        }
+                    }
+
+                }).run("dashbord");
     }
 
 
