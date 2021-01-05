@@ -42,6 +42,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxOutView
 
         Json json = jsonList.get(position);
 
+        holder.txtTitle.setText(json.getString("subject"));
         holder.txtMessage.setText(json.getString("message"));
         holder.txtDate.setText(json.getString("create_date"));
 

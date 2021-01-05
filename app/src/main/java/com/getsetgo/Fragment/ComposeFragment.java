@@ -23,16 +23,18 @@ import com.getsetgo.databinding.FragmentComposeBinding;
 import com.getsetgo.util.App;
 import com.getsetgo.util.Click;
 import com.getsetgo.util.P;
+import com.getsetgo.util.Utilities;
 import com.getsetgo.util.Validation;
 
 public class ComposeFragment extends Fragment {
 
     FragmentComposeBinding binding;
     Context context;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_compose, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_compose, container, false);
         View rootView = binding.getRoot();
         context = inflater.getContext();
         return rootView;
@@ -44,7 +46,7 @@ public class ComposeFragment extends Fragment {
         init(view);
     }
 
-    private void init(View view){
+    private void init(View view) {
         onClick();
     }
 
@@ -53,11 +55,11 @@ public class ComposeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Click.preventTwoClick(view);
-                if(checkValidation()){
+                if (checkValidation()) {
                     Json json = new Json();
-                    json.addString("subject",binding.etSubject.getText().toString());
-                    json.addString("message",binding.etMessage.getText().toString());
-                    callComposeMessageAPI(context,json);
+                    json.addString("subject", binding.etSubject.getText().toString());
+                    json.addString("message", binding.etMessage.getText().toString());
+                    callComposeMessageAPI(context, json);
                 }
             }
         });
@@ -78,7 +80,7 @@ public class ComposeFragment extends Fragment {
         if (TextUtils.isEmpty(binding.etSubject.getText().toString().trim())) {
             H.showMessage(context, "Enter subject");
             value = false;
-        }  else if (TextUtils.isEmpty(binding.etMessage.getText().toString().trim())) {
+        } else if (TextUtils.isEmpty(binding.etMessage.getText().toString().trim())) {
             H.showMessage(context, "Enter message");
             value = false;
         }
@@ -107,12 +109,29 @@ public class ComposeFragment extends Fragment {
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(context, Json1.getString(P.err));
                         } else {
+                            String msg = Json1.getString(P.msg);
                             Json1 = Json1.getJson(P.data);
+
+                            /*H.showMessage(context,msg);
+                            clearFields();*/
+
+                            Runnable runnable = new Runnable() {
+                                @Override
+                                public void run() {
+                                    clearFields();
+                                }
+                            };
+                            Utilities.showPopuprunnable(context, msg, false, runnable);
 
                         }
                     }
 
                 }).run("compose");
+    }
+
+    private void clearFields() {
+        binding.etSubject.setText("");
+        binding.etMessage.setText("");
     }
 
 

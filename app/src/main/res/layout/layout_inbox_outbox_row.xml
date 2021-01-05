@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_sans_regular"
-                android:lines="3"
+                android:lines="2"
                 android:text="@string/dummy_text"
                 android:textColor="@color/colorBlackHighlight"
                 android:textSize="14sp" />

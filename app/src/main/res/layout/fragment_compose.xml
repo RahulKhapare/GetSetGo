@@ -41,6 +41,9 @@
                         android:fontFamily="@font/nunito_sans_regular"
                         android:hint="Type subject here..."
                         android:paddingLeft="16dp"
+                        android:imeOptions="actionNext"
+                        android:maxLines="1"
+                        android:lines="1"
                         android:textColorHint="@color/colorTextHint"
                         android:textColor="@color/colorTextDark"
                         android:textSize="14sp" />
@@ -63,6 +66,7 @@
                         android:fontFamily="@font/nunito_sans_regular"
                         android:gravity="top"
                         android:hint="Type your Message here..."
+                        android:imeOptions="actionDone"
                         android:paddingLeft="16dp"
                         android:paddingTop="16dp"
                         android:paddingRight="5dp"
