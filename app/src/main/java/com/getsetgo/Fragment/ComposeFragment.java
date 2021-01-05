@@ -160,11 +160,8 @@ public class ComposeFragment extends Fragment {
                             Json1 = Json1.getJson(P.data);
                             JsonList jsonList = new JsonList();
                             jsonList = Json1.getJsonList("total_courses");
-                            if(jsonList != null && !jsonList.isEmpty()){
-
+                            if (jsonList != null && !jsonList.isEmpty()) {
                             }
-
-
                         }
                     }
 
