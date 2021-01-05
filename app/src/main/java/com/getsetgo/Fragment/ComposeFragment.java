@@ -48,7 +48,6 @@ public class ComposeFragment extends Fragment {
 
     private void init(View view) {
         onClick();
-        callDashboardCourseAPI(context);
     }
 
     private void onClick() {

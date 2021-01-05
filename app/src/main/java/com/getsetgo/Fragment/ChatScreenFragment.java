@@ -53,6 +53,8 @@ public class ChatScreenFragment extends Fragment {
         mLayoutManager.setStackFromEnd(true);
         binding.recyclerViewChats.setLayoutManager(mLayoutManager);
         binding.recyclerViewChats.setItemAnimator(new DefaultItemAnimator());
+        chatAdapter = new ChatAdapter(getActivity(), responseMessages);
+        binding.recyclerViewChats.setAdapter(chatAdapter);
 
         setupRecyclerViewForChats();
         binding.rlSend.setOnClickListener(new View.OnClickListener() {
@@ -93,42 +95,27 @@ public class ChatScreenFragment extends Fragment {
 
     private void setupRecyclerViewForChats() {
         ResponseMessage responseMessage5 = new ResponseMessage();
-        responseMessage5.setMessage("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, tempor.");
+        responseMessage5.setMessage("Lorem ipsum dolor sit amet, elitr, tempor.");
         responseMessage5.setTime("6:06 PM");
         responseMessage5.setViewType(1);
         responseMessages.add(responseMessage5);
 
         ResponseMessage responseMessage = new ResponseMessage();
-        responseMessage.setMessage("Lorem ipsum dolor sit amet, consetetur, sed diam nonumy eirmod tempor.");
+        responseMessage.setMessage("Lorem ipsum, consetetur, sed diam nonumy eirmod tempor.");
         responseMessage.setTime("6:06 PM");
         responseMessage.setViewType(0);
         responseMessages.add(responseMessage);
 
         ResponseMessage responseMessage2 = new ResponseMessage();
-        responseMessage2.setMessage("Lorem ipsum dolor sit amet, elitr, sed diam nonumy eirmod tempor.");
+        responseMessage2.setMessage("eirmod tempor.");
         responseMessage2.setTime("6:09 PM");
         responseMessage2.setViewType(1);
         responseMessages.add(responseMessage2);
 
-        ResponseMessage responseMessage3 = new ResponseMessage();
-        responseMessage3.setMessage("Lorem ipsum dolor sit sadipscing elitr, sed diam nonumy eirmod tempor.");
-        responseMessage3.setTime("7:06 PM");
-        responseMessage3.setViewType(0);
-        responseMessages.add(responseMessage3);
-
-        ResponseMessage responseMessage4 = new ResponseMessage();
-        responseMessage4.setMessage("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, tempor.");
-        responseMessage4.setTime("8:06 PM");
-        responseMessage4.setViewType(1);
-        responseMessages.add(responseMessage4);
-
         responseMessages.add(responseMessage);
         responseMessages.add(responseMessage2);
-        responseMessages.add(responseMessage3);
-        responseMessages.add(responseMessage4);
 
-        chatAdapter = new ChatAdapter(getActivity(), responseMessages);
-        binding.recyclerViewChats.setAdapter(chatAdapter);
+
         chatAdapter.notifyDataSetChanged();
         binding.recyclerViewChats.smoothScrollToPosition(responseMessages.lastIndexOf(responseMessage));
 
