@@ -1,18 +1,13 @@
 package com.getsetgo.activity;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -37,10 +31,7 @@ import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
 import com.getsetgo.Fragment.AccountFragment;
 import com.getsetgo.Fragment.AddNewUserFragment;
-import com.getsetgo.Fragment.AllTransactionsFragment;
-import com.getsetgo.Fragment.BankDetailsFragment;
 
-import com.getsetgo.Fragment.CourseDetailFragment;
 import com.getsetgo.Fragment.DashBoardFragment;
 import com.getsetgo.Fragment.EarningsFragment;
 import com.getsetgo.Fragment.FavouritesFragment;
@@ -55,7 +46,7 @@ import com.getsetgo.Fragment.TermsAndConditionFragment;
 
 import com.getsetgo.Fragment.TransactionsHistoryFragment;
 import com.getsetgo.Fragment.YourCourseFragment;
-import com.getsetgo.ParentCategoriesFragment;
+import com.getsetgo.Fragment.ParentCategoriesFragment;
 import com.getsetgo.R;
 import com.getsetgo.databinding.ActivityBaseScreenBinding;
 
@@ -65,7 +56,6 @@ import com.getsetgo.util.Click;
 import com.getsetgo.util.P;
 import com.getsetgo.util.WindowView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.squareup.picasso.Picasso;
 
 
 public class BaseScreenActivity extends AppCompatActivity {
