@@ -42,6 +42,7 @@ public class ViewAllCategoriesFragment extends Fragment {
     public boolean isFromHome;
     ViewAllCategoriesAdapter viewAllCategoriesAdapter;
     JsonList categoriesCoursesList = new JsonList();
+    Context context;
 
     LinearLayoutManager mLayoutManager;
 
@@ -53,8 +54,9 @@ public class ViewAllCategoriesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_view_all_categories, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_view_all_categories, container, false);
         View rootView = binding.getRoot();
+        context = inflater.getContext();
         init(rootView);
         return rootView;
     }
@@ -71,6 +73,7 @@ public class ViewAllCategoriesFragment extends Fragment {
         BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.VISIBLE);
         BaseScreenActivity.binding.incFragmenttool.txtSubCat.setText(myTitle);
 
+        //callCategoriesCoursesAPI(context, myTitle);
         setupRecyclerViewForViewAllCategories();
 
 
@@ -96,8 +99,6 @@ public class ViewAllCategoriesFragment extends Fragment {
         });
 
 
-
-
         BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,6 +111,7 @@ public class ViewAllCategoriesFragment extends Fragment {
     }
 
     private void callback() {
+        categoriesCoursesList.clear();
         if (isFromHome) {
             getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             BaseScreenActivity.callBack();
@@ -125,7 +127,7 @@ public class ViewAllCategoriesFragment extends Fragment {
             public void handleOnBackPressed() {
                 // Handle the back button event
 
-                if(getFragmentManager().getBackStackEntryCount() > 0){
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
                     callback();
                 }
             }
@@ -138,13 +140,14 @@ public class ViewAllCategoriesFragment extends Fragment {
     private void setupRecyclerViewForViewAllCategories() {
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         binding.recyclerViewAllCategory.setLayoutManager(mLayoutManager);
-        viewAllCategoriesAdapter = new ViewAllCategoriesAdapter(getActivity(),categoriesCoursesList);
+        viewAllCategoriesAdapter = new ViewAllCategoriesAdapter(getActivity(), categoriesCoursesList);
         binding.recyclerViewAllCategory.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerViewAllCategory.setAdapter(viewAllCategoriesAdapter);
     }
 
-    private void callCategoriesCoursesAPI(Context context) {
+    private void callCategoriesCoursesAPI(Context context, String title) {
         LoadingDialog loadingDialog = new LoadingDialog(context);
+        String apiParam = "?title" +title;
         Api.newApi(context, P.baseUrl + "categories_courses")
                 .setMethod(Api.GET)
                 .onHeaderRequest(App::getHeaders)
@@ -170,10 +173,10 @@ public class ViewAllCategoriesFragment extends Fragment {
                             if (jsonList != null && !jsonList.isEmpty()) {
                                 categoriesCoursesList.addAll(jsonList);
                                 viewAllCategoriesAdapter.notifyDataSetChanged();
-                                if(categoriesCoursesList.size() < numRows){
+                                if (categoriesCoursesList.size() < numRows) {
                                     Page++;
                                     NextPage = true;
-                                }else{
+                                } else {
                                     NextPage = false;
                                 }
                             }
