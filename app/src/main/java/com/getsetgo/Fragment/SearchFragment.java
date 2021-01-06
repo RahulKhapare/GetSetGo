@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
@@ -22,8 +23,8 @@ import com.getsetgo.databinding.FragmentSearchBinding;
 public class SearchFragment extends Fragment {
 
     FragmentSearchBinding binding;
-    TextView t[];
-    TextView tC[];
+    TextView[] t;
+    TextView[] tC;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -41,10 +42,23 @@ public class SearchFragment extends Fragment {
         View rootView = binding.getRoot();
 
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Search");
-        dynamicTextView();
-
+init();
 
         return rootView;
+    }
+
+    private void init(){
+        dynamicTextView();
+        BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
+                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    BaseScreenActivity.callBack();
+                }
+            }
+        });
     }
 
     private void dynamicTextView() {

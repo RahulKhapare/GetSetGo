@@ -119,6 +119,15 @@ public class SearchEarningsFragment extends Fragment {
                 binding.etEndDate.setText("");
             }
         });
+
+        BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
+                    getFragmentManager().popBackStackImmediate();
+                }
+            }
+        });
     }
 
     private void initCalendar() {

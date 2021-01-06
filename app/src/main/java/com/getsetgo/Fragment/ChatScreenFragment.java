@@ -10,6 +10,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -72,6 +73,15 @@ public class ChatScreenFragment extends Fragment {
                     binding.recyclerViewChats.smoothScrollToPosition(responseMessages.lastIndexOf(responseMessage));
                     binding.etMessage.setText("");
 
+                }
+            }
+        });
+
+        BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(getFragmentManager().getBackStackEntryCount() > 0){
+                    getFragmentManager().popBackStackImmediate();
                 }
             }
         });

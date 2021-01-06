@@ -110,6 +110,15 @@ public class SearchTransactionsFragment extends Fragment {
                 binding.spnIncomeType.setSelection(0);
             }
         });
+
+        BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
+                    getFragmentManager().popBackStackImmediate();
+                }
+            }
+        });
     }
 
     private void getTransData() {

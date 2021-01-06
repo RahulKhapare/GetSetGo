@@ -163,6 +163,15 @@ public class UploadDocsFragment extends Fragment {
                 onUploadClick();
             }
         });
+
+        BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(getFragmentManager().getBackStackEntryCount() > 0){
+                    getFragmentManager().popBackStackImmediate();
+                }
+            }
+        });
     }
 
     private void jumpToSetting() {

@@ -39,7 +39,7 @@ import com.getsetgo.Fragment.AccountFragment;
 import com.getsetgo.Fragment.AddNewUserFragment;
 import com.getsetgo.Fragment.AllTransactionsFragment;
 import com.getsetgo.Fragment.BankDetailsFragment;
-import com.getsetgo.Fragment.CategoriesFragment;
+
 import com.getsetgo.Fragment.CourseDetailFragment;
 import com.getsetgo.Fragment.DashBoardFragment;
 import com.getsetgo.Fragment.EarningsFragment;
@@ -55,6 +55,7 @@ import com.getsetgo.Fragment.TermsAndConditionFragment;
 
 import com.getsetgo.Fragment.TransactionsHistoryFragment;
 import com.getsetgo.Fragment.YourCourseFragment;
+import com.getsetgo.ParentCategoriesFragment;
 import com.getsetgo.R;
 import com.getsetgo.databinding.ActivityBaseScreenBinding;
 
@@ -80,7 +81,8 @@ public class BaseScreenActivity extends AppCompatActivity {
     IncentivesFragment incentivesFragment;
     HelpAndSupportFragment helpAndSupportFragment;
     TermsAndConditionFragment termsAndConditionFragment;
-    CategoriesFragment categoriesFragment;
+
+    ParentCategoriesFragment parentCategoriesFragment;
     AddNewUserFragment addNewUserFragment;
     SearchUserIdFragment searchUserIdFragment;
     CheckBox cbMyEarning, cbUsers;
@@ -334,7 +336,7 @@ public class BaseScreenActivity extends AppCompatActivity {
             case R.id.txtincentive:
                 if (incentivesFragment == null)
                     IncentivesFragment.isSearch = false;
-                    incentivesFragment = IncentivesFragment.newInstance();
+                incentivesFragment = IncentivesFragment.newInstance();
                 fragmentLoader(incentivesFragment, true);
                 break;
 
@@ -350,10 +352,16 @@ public class BaseScreenActivity extends AppCompatActivity {
                 fragmentLoader(termsAndConditionFragment, true);
                 break;
 
-            case R.id.txtViewAllCategories:
+         /*   case R.id.txtViewAllCategories:
                 if (categoriesFragment == null)
                     categoriesFragment = CategoriesFragment.newInstance();
                 fragmentLoader(categoriesFragment, true);
+                break; */
+
+            case R.id.txtViewAllCategories:
+                if (parentCategoriesFragment == null)
+                    parentCategoriesFragment = ParentCategoriesFragment.newInstance();
+                fragmentLoader(parentCategoriesFragment, true);
                 break;
 
             case R.id.txtAddUser:
@@ -433,11 +441,11 @@ public class BaseScreenActivity extends AppCompatActivity {
         }
     }*/
 
-    public void onBackClick(View view) {
+   /* public void onBackClick(View view) {
 
         loadHomeFragment();
 
-    }
+    }*/
 
 
     public static void callBack() {

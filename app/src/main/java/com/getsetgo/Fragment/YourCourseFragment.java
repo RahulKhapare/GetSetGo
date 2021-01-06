@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -30,15 +31,29 @@ public class YourCourseFragment extends Fragment {
         YourCourseFragment fragment = new YourCourseFragment();
         return fragment;
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_your_course, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_your_course, container, false);
         View rootView = binding.getRoot();
-
+        init();
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Your Course");
-        setupRecyclerViewForYourCourse();
         return rootView;
+    }
+
+    private void init() {
+        setupRecyclerViewForYourCourse();
+        BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
+                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    BaseScreenActivity.callBack();
+                }
+            }
+        });
     }
 
     @Override

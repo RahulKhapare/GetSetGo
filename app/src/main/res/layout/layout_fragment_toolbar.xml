@@ -26,7 +26,6 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="start"
-                android:onClick="onBackClick"
                 android:src="@drawable/ic_back" />
 
             <ImageView

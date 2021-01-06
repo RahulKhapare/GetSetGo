@@ -80,6 +80,16 @@ public class TransactionsHistoryDetailsFragment extends Fragment {
             }
         });
 
+        BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
+                    TransactionsHistoryFragment.isFromTransHistory = true;
+                    getFragmentManager().popBackStackImmediate();
+                }
+            }
+        });
+
     }
 
     @Override

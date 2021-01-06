@@ -53,6 +53,20 @@ public class ViewAllCategoriesFragment extends Fragment {
 
         setupRecyclerViewForViewAllCategories(binding.recyclerViewAllCategory);
 
+        BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
+                    if(isFromHome){
+                        getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                        BaseScreenActivity.callBack();
+                    }else{
+                        getFragmentManager().popBackStackImmediate();
+                    }
+                }
+            }
+        });
+
     }
 
     @Override
@@ -63,7 +77,6 @@ public class ViewAllCategoriesFragment extends Fragment {
                 // Handle the back button event
 
                 if(getFragmentManager().getBackStackEntryCount() > 0){
-
                     if(isFromHome){
                         getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                         BaseScreenActivity.callBack();

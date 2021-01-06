@@ -134,6 +134,16 @@ public class TotalUsersFragment extends Fragment {
             }
         });
 
+        BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(getFragmentManager().getBackStackEntryCount() > 0){
+                    getFragmentManager().popBackStackImmediate();
+                    totalUserJsonList.clear();
+                }
+            }
+        });
+
     }
 
     private void initVariable() {

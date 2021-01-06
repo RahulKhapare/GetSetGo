@@ -128,6 +128,23 @@ boolean isFromBottom;
                 onUploadClick();
             }
         });
+
+        BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(getFragmentManager().getBackStackEntryCount() > 0){
+                    if(isFromBottom){
+                        getFragmentManager().popBackStackImmediate();
+                        BaseScreenActivity.binding.bottomNavigation.setVisibility(View.VISIBLE);
+                        BaseScreenActivity.binding.bottomNavigation.setSelectedItemId(R.id.menu_Account);
+                    }else{
+                        getFragmentManager().popBackStackImmediate();
+                    }
+                }
+            }
+        });
+
     }
 
     private void onUploadClick() {
