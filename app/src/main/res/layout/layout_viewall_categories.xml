@@ -90,19 +90,21 @@
                         android:id="@+id/rlReview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
+                        android:layout_centerVertical="true"
                         android:gravity="center">
 
                         <ImageView
                             android:id="@+id/imgViewCategoryReview1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
                             android:src="@drawable/ic_star_review" />
 
                         <ImageView
                             android:id="@+id/imgViewCategoryReview2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
                             android:layout_toRightOf="@id/imgViewCategoryReview1"
                             android:src="@drawable/ic_star_review" />
 
@@ -110,6 +112,7 @@
                             android:id="@+id/imgViewCategoryReview3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
                             android:layout_toRightOf="@id/imgViewCategoryReview2"
                             android:src="@drawable/ic_star_review" />
 
@@ -117,6 +120,7 @@
                             android:id="@+id/imgViewCategoryReview4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
                             android:layout_toRightOf="@id/imgViewCategoryReview3"
                             android:src="@drawable/ic_star_review" />
 
@@ -124,6 +128,7 @@
                             android:id="@+id/imgViewCategoryReview5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
                             android:layout_toRightOf="@id/imgViewCategoryReview4"
                             android:src="@drawable/ic_star_review" />
 
@@ -135,7 +140,7 @@
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="8dp"
-                        android:layout_marginTop="5dp"
+                        android:gravity="center"
                         android:layout_toRightOf="@+id/rlReview"
                         android:fontFamily="@font/nunit_sans_bold"
                         android:text="4.5"
