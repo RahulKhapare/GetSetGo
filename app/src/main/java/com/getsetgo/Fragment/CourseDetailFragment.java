@@ -194,7 +194,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
                 int pastVisibleItems = mLayoutManagerStudentFeedback.findFirstVisibleItemPosition();
                 if (pastVisibleItems + visibleItemCount >= totalItemCount) {
                     //End of list*/
-                fetch("onScrolled");
+                fetch();
 
                 // }
 
@@ -268,7 +268,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
     }
 
 
-    private void fetch(String msg) {
+    private void fetch() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -309,7 +309,6 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         studentsFeedbackAdapter = new StudentsFeedbackAdapter(getActivity(), 1);
         recyclerViewFeedback.setItemAnimator(new DefaultItemAnimator());
         recyclerViewFeedback.setAdapter(studentsFeedbackAdapter);
-        studentsFeedbackAdapter.notifyDataSetChanged();
     }
 
  /*   public void PlayOnActivity(View v){
