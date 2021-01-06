@@ -28,7 +28,6 @@ import com.getsetgo.util.P;
 
 public class ParentCategoriesFragment extends Fragment {
 
-    ViewAllCategoriesFragment viewAllCategoriesFragment;
     FragmentParentCategoriesBinding binding;
     JsonList parentJsonList = new JsonList();
     ParentItemAdapter parentItemAdapter;
@@ -97,21 +96,6 @@ public class ParentCategoriesFragment extends Fragment {
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
         super.onCreate(savedInstanceState);
     }
-
-    private void loadFragment(View v,String title){
-        Bundle bundle = new Bundle();
-        bundle.putString("subTitle", title);
-        bundle.putBoolean("isFromHome", false);
-        AppCompatActivity activity = (AppCompatActivity) v.getContext();
-        viewAllCategoriesFragment = new ViewAllCategoriesFragment();
-        viewAllCategoriesFragment.setArguments(bundle);
-        activity.getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, viewAllCategoriesFragment)
-                .addToBackStack(null)
-                .commit();
-    }
-
     private void callOtherCategoriesAPI(Context context) {
         LoadingDialog loadingDialog = new LoadingDialog(context);
         Api.newApi(context, P.baseUrl + "all_categories")

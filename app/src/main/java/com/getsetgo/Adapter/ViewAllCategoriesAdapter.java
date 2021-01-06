@@ -14,9 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adoisstudio.helper.Json;
+import com.adoisstudio.helper.JsonList;
 import com.daimajia.swipe.SwipeLayout;
 import com.getsetgo.Fragment.CourseDetailFragment;
-import com.getsetgo.Fragment.ViewAllCategoriesFragment;
 import com.getsetgo.R;
 import com.getsetgo.util.P;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -24,6 +24,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 public class ViewAllCategoriesAdapter extends RecyclerView.Adapter<ViewAllCategoriesAdapter.ViewAllCategoriesViewHolder> {
 
     Context context;
+    JsonList jsonList;
     CourseDetailFragment courseDetailFragment;
 
     Bundle bundle = new Bundle();
@@ -31,8 +32,9 @@ public class ViewAllCategoriesAdapter extends RecyclerView.Adapter<ViewAllCatego
     String string = null;
     int it;
 
-    public ViewAllCategoriesAdapter(Context context) {
+    public ViewAllCategoriesAdapter(Context context,JsonList jsonList) {
         this.context = context;
+        this.jsonList = jsonList;
     }
 
     @NonNull
