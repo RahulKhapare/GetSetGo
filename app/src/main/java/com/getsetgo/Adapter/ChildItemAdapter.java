@@ -52,7 +52,7 @@ public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.Chil
         if (imagePath.equals("null") || imagePath.isEmpty())
             imagePath = "pathMustNotBeEmpty";
 
-        LoadImage.picasso(holder.ivCourseImage, P.baseUrl +imagePath);
+        LoadImage.picasso(holder.ivCourseImage, imagePath);
 
     }
 

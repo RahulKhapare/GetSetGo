@@ -96,7 +96,7 @@
                         android:id="@+id/rlReview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
+                        android:layout_centerVertical="true"
                         android:gravity="center">
 
                         <ImageView
@@ -138,11 +138,12 @@
                     <TextView
                         android:id="@+id/txtWishReview"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
                         android:layout_toRightOf="@+id/rlReview"
                         android:fontFamily="@font/nunit_sans_bold"
                         android:layout_centerVertical="true"
+                        android:gravity="center"
                         android:text="4.5"
                         android:textColor="@color/colorTextDark"
                         android:textSize="10sp" />

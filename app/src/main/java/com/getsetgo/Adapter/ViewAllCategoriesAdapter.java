@@ -79,6 +79,7 @@ public class ViewAllCategoriesAdapter extends RecyclerView.Adapter<ViewAllCatego
             txtNewPrice = itemView.findViewById(R.id.txtViewCategoryNewPrice);
             txtOldPrice = itemView.findViewById(R.id.txtViewCategoryOldPrice);
             txtBestSeller = itemView.findViewById(R.id.txtViewCategoryBestSeller);
+            txtBestSeller.setVisibility(View.INVISIBLE);
             imgCategory = itemView.findViewById(R.id.imvViewCategory);
             chkFav = itemView.findViewById(R.id.chkViewCategoryFavourites);
 
@@ -86,14 +87,13 @@ public class ViewAllCategoriesAdapter extends RecyclerView.Adapter<ViewAllCatego
     }
 
     private void loadFragment(View v) {
-        if (courseDetailFragment == null)
-            string = P.baseUrl + "series_check/" + json.getString(P.series_slug) + "/" + json.getString(P.video_slug);
+        string = P.baseUrl + "series_check/" + json.getString(P.series_slug) + "/" + json.getString(P.video_slug);
         it = json.getInt(P.time);
         it *= 1000;
         bundle.putString(P.url, string);
         bundle.putInt("videoProgress", it);
-
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        if (courseDetailFragment == null)
         courseDetailFragment = new CourseDetailFragment();
         courseDetailFragment.setArguments(bundle);
         activity.getSupportFragmentManager()
