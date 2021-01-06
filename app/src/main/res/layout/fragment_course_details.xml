@@ -328,7 +328,7 @@
                             android:layout_height="23dp"
                             android:layout_marginLeft="7dp"
                             android:layout_toRightOf="@+id/txtViewCategoryNewPrice"
-                            android:background="@drawable/strike_white_through_line"
+                            android:background="@drawable/strike_through_line"
                             android:fontFamily="@font/nunito_sans_regular"
                             android:gravity="center"
                             android:text="₹ 699.00"

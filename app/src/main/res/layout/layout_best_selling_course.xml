@@ -76,12 +76,14 @@
                     android:id="@+id/imgReview1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:src="@drawable/ic_star_review" />
 
                 <ImageView
                     android:id="@+id/imgReview2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:layout_toRightOf="@id/imgReview1"
                     android:src="@drawable/ic_star_review" />
 
@@ -90,6 +92,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/imgReview2"
+                    android:visibility="gone"
                     android:src="@drawable/ic_star_review" />
 
                 <ImageView
@@ -97,12 +100,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/imgReview3"
+                    android:visibility="gone"
+
                     android:src="@drawable/ic_star_review" />
 
                 <ImageView
                     android:id="@+id/imgReview5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
+
                     android:layout_toRightOf="@id/imgReview4"
                     android:src="@drawable/ic_star_review" />
 

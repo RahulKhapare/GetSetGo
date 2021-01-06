@@ -29,19 +29,21 @@ public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.Chil
     @Override
     public ChildViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_best_selling_course,viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_best_selling_course, viewGroup, false);
         return new ChildViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(
-            @NonNull ChildViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ChildViewHolder holder, int position) {
 
         Json childItem = jsonList.get(position);
 
         holder.txtCourseName.setText(childItem.getString("course_name"));
         holder.txtOldPrice.setText("₹ " + childItem.getString("price"));
         holder.txtNewPrice.setText("₹ " + childItem.getString("discounted_price"));
+        String review = childItem.getString("average_rating");
+        holder.txtReview.setText(review);
+        setReview(review,holder);
         //LoadImage.picasso(holder.ivCourseImage,childItem.getString("image_path"));
     }
 
@@ -52,11 +54,11 @@ public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.Chil
 
     class ChildViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtCourseName,txtProfName,txtReview,txtNewPrice,txtOldPrice,txtBestSeller;
+        TextView txtCourseName, txtProfName, txtReview, txtNewPrice, txtOldPrice, txtBestSeller;
         RoundedImageView ivCourseImage;
-        ImageView imgReview1,imgReview2,imgReview3,imgReview4,imgReview5;
+        ImageView imgReview1, imgReview2, imgReview3, imgReview4, imgReview5;
 
-        ChildViewHolder(View itemView) {
+        public ChildViewHolder(View itemView) {
             super(itemView);
             txtCourseName = itemView.findViewById(R.id.txtCourseName);
             ivCourseImage = itemView.findViewById(R.id.ivCourseImage);
@@ -64,7 +66,7 @@ public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.Chil
             txtReview = itemView.findViewById(R.id.txtReview);
             txtNewPrice = itemView.findViewById(R.id.txtNewPrice);
             txtOldPrice = itemView.findViewById(R.id.txtOldPrice);
-            txtOldPrice.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.strike_white_through_line));
+            txtOldPrice.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.strike_line));
             imgReview1 = itemView.findViewById(R.id.imgReview1);
             imgReview2 = itemView.findViewById(R.id.imgReview2);
             imgReview3 = itemView.findViewById(R.id.imgReview3);
@@ -72,6 +74,56 @@ public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.Chil
             imgReview5 = itemView.findViewById(R.id.imgReview5);
             txtBestSeller = itemView.findViewById(R.id.txtBestSeller);
             txtBestSeller.setVisibility(View.GONE);
+        }
+    }
+
+    private void setReview(String review, ChildViewHolder viewHolder) {
+        if (review.equalsIgnoreCase("1.00")) {
+            viewHolder.imgReview1.setVisibility(View.VISIBLE);
+        } else if (review.equalsIgnoreCase("1.50")) {
+            viewHolder.imgReview1.setVisibility(View.VISIBLE);
+            viewHolder.imgReview2.setVisibility(View.VISIBLE);
+            viewHolder.imgReview2.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_half_star_review));
+        } else if (review.equalsIgnoreCase("2.00")) {
+            viewHolder.imgReview1.setVisibility(View.VISIBLE);
+            viewHolder.imgReview2.setVisibility(View.VISIBLE);
+        } else if (review.equalsIgnoreCase("2.50")) {
+            viewHolder.imgReview1.setVisibility(View.VISIBLE);
+            viewHolder.imgReview2.setVisibility(View.VISIBLE);
+            viewHolder.imgReview3.setVisibility(View.VISIBLE);
+            viewHolder.imgReview3.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_half_star_review));
+        } else if (review.equalsIgnoreCase("3.00")) {
+            viewHolder.imgReview1.setVisibility(View.VISIBLE);
+            viewHolder.imgReview2.setVisibility(View.VISIBLE);
+            viewHolder.imgReview3.setVisibility(View.VISIBLE);
+        } else if (review.equalsIgnoreCase("3.50")) {
+            viewHolder.imgReview1.setVisibility(View.VISIBLE);
+            viewHolder.imgReview2.setVisibility(View.VISIBLE);
+            viewHolder.imgReview3.setVisibility(View.VISIBLE);
+            viewHolder.imgReview4.setVisibility(View.VISIBLE);
+            viewHolder.imgReview4.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_half_star_review));
+        } else if (review.equalsIgnoreCase("4.00")) {
+            viewHolder.imgReview1.setVisibility(View.VISIBLE);
+            viewHolder.imgReview2.setVisibility(View.VISIBLE);
+            viewHolder.imgReview3.setVisibility(View.VISIBLE);
+            viewHolder.imgReview4.setVisibility(View.VISIBLE);
+        } else if (review.equalsIgnoreCase("4.50")) {
+            viewHolder.imgReview1.setVisibility(View.VISIBLE);
+            viewHolder.imgReview2.setVisibility(View.VISIBLE);
+            viewHolder.imgReview3.setVisibility(View.VISIBLE);
+            viewHolder.imgReview4.setVisibility(View.VISIBLE);
+            viewHolder.imgReview5.setVisibility(View.VISIBLE);
+            viewHolder.imgReview5.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_half_star_review));
+        } else if (review.equalsIgnoreCase("5.00")) {
+            viewHolder.imgReview1.setVisibility(View.VISIBLE);
+            viewHolder.imgReview2.setVisibility(View.VISIBLE);
+            viewHolder.imgReview3.setVisibility(View.VISIBLE);
+            viewHolder.imgReview4.setVisibility(View.VISIBLE);
+            viewHolder.imgReview5.setVisibility(View.VISIBLE);
+        }else{
+            viewHolder.imgReview1.setVisibility(View.VISIBLE);
+            viewHolder.imgReview2.setVisibility(View.VISIBLE);
+            viewHolder.imgReview3.setVisibility(View.VISIBLE);
         }
     }
 }
