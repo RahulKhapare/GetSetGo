@@ -196,7 +196,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void callSignUpApi(Json json) {
-        loadingDialog = new LoadingDialog(this);
+        loadingDialog = new LoadingDialog(this,false);
 
         Api.newApi(this, P.baseUrl + "register").addJson(json)
                 .setMethod(Api.POST)

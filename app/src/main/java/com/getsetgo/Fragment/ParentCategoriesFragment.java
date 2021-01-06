@@ -97,7 +97,7 @@ public class ParentCategoriesFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
     private void callOtherCategoriesAPI(Context context) {
-        LoadingDialog loadingDialog = new LoadingDialog(context);
+        LoadingDialog loadingDialog = new LoadingDialog(context,false);
         Api.newApi(context, P.baseUrl + "all_categories")
                 .setMethod(Api.GET)
                 .onHeaderRequest(App::getHeaders)

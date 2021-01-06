@@ -228,7 +228,7 @@ public class AddNewUserFragment extends Fragment {
 
 
     private void callAddUserAPI(Context context, Json json) {
-        LoadingDialog loadingDialog = new LoadingDialog(context);
+        LoadingDialog loadingDialog = new LoadingDialog(context,false);
         Api.newApi(context, P.baseUrl + "add_user").addJson(json)
                 .setMethod(Api.POST)
                 .onHeaderRequest(App::getHeaders)

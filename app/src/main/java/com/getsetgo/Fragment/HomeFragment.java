@@ -194,7 +194,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void callDashboardCourseAPI(Context context) {
-        LoadingDialog loadingDialog = new LoadingDialog(context);
+        LoadingDialog loadingDialog = new LoadingDialog(context,false);
         Api.newApi(context, P.baseUrl + "dashbord")
                 .setMethod(Api.POST)
                 .onHeaderRequest(App::getHeaders)
@@ -225,7 +225,7 @@ public class HomeFragment extends Fragment {
                 }).run("dashbord");
     }
     private void callOtherCategoriesAPI(Context context) {
-        LoadingDialog loadingDialog = new LoadingDialog(context);
+        LoadingDialog loadingDialog = new LoadingDialog(context,false);
         Api.newApi(context, P.baseUrl + "dashbord")
                 .setMethod(Api.POST)
                 .onHeaderRequest(App::getHeaders)

@@ -249,7 +249,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void callLoginApi() {
-        loadingDialog = new LoadingDialog(activity);
+        loadingDialog = new LoadingDialog(activity,false);
         Json json = new Json();
         json.addString(P.email, binding.etxEmailAddress.getText().toString());
         json.addString(P.password, binding.etxPassword.getText().toString());

@@ -13,7 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
 import com.getsetgo.R;
+import com.getsetgo.util.LoadImage;
+import com.getsetgo.util.P;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
 
 public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.ChildViewHolder> {
 
@@ -44,7 +47,13 @@ public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.Chil
         String review = childItem.getString("average_rating");
         holder.txtReview.setText(review);
         setReview(review,holder);
-        //LoadImage.picasso(holder.ivCourseImage,childItem.getString("image_path"));
+
+        String imagePath = childItem.getString("image_path")+"";
+        if (imagePath.equals("null") || imagePath.isEmpty())
+            imagePath = "pathMustNotBeEmpty";
+
+        LoadImage.picasso(holder.ivCourseImage, P.baseUrl +imagePath);
+
     }
 
     @Override

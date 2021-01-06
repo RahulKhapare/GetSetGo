@@ -453,7 +453,7 @@ public class BaseScreenActivity extends AppCompatActivity {
     }
 
     private void callLogOutApi() {
-        loadingDialog = new LoadingDialog(activity);
+        loadingDialog = new LoadingDialog(activity,false);
         Json json = new Json();
 
         Api.newApi(activity, P.baseUrl + "logout").setMethod(Api.POST)

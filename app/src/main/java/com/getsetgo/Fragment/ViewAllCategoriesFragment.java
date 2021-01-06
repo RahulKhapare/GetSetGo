@@ -146,7 +146,7 @@ public class ViewAllCategoriesFragment extends Fragment {
     }
 
     private void callCategoriesCoursesAPI(Context context, String title) {
-        LoadingDialog loadingDialog = new LoadingDialog(context);
+        LoadingDialog loadingDialog = new LoadingDialog(context,false);
         String apiParam = "?title" +title;
         Api.newApi(context, P.baseUrl + "categories_courses")
                 .setMethod(Api.GET)

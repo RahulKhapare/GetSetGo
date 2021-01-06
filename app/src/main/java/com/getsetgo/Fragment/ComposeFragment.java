@@ -89,7 +89,7 @@ public class ComposeFragment extends Fragment {
     }
 
     private void callComposeMessageAPI(Context context, Json json) {
-        LoadingDialog loadingDialog = new LoadingDialog(context);
+        LoadingDialog loadingDialog = new LoadingDialog(context,false);
         Api.newApi(context, P.baseUrl + "compose").addJson(json)
                 .setMethod(Api.POST)
                 .onHeaderRequest(App::getHeaders)
