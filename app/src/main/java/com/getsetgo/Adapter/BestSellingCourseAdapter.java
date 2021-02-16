@@ -1,6 +1,7 @@
 package com.getsetgo.Adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ public class BestSellingCourseAdapter extends RecyclerView.Adapter<BestSellingCo
     Context context;
     JsonList jsonList;
 
-    public BestSellingCourseAdapter(Context context,JsonList jsonList) {
+    public BestSellingCourseAdapter(Context context, JsonList jsonList) {
         this.context = context;
         this.jsonList = jsonList;
     }
@@ -43,9 +44,9 @@ public class BestSellingCourseAdapter extends RecyclerView.Adapter<BestSellingCo
 
     public class BestSellingCourseViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtCourseName,txtProfName,txtReview,txtNewPrice,txtOldPrice;
+        TextView txtCourseName, txtProfName, txtReview, txtNewPrice, txtOldPrice;
         RoundedImageView ivCourseImage;
-        ImageView imgReview1,imgReview2,imgReview3,imgReview4,imgReview5;
+        ImageView imgReview1, imgReview2, imgReview3, imgReview4, imgReview5;
 
 
         public BestSellingCourseViewHolder(@NonNull View itemView) {
@@ -57,7 +58,8 @@ public class BestSellingCourseAdapter extends RecyclerView.Adapter<BestSellingCo
             txtReview = itemView.findViewById(R.id.txtReview);
             txtNewPrice = itemView.findViewById(R.id.txtNewPrice);
             txtOldPrice = itemView.findViewById(R.id.txtOldPrice);
-            txtOldPrice.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.strike_through_line));
+            txtOldPrice.setPaintFlags(txtOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+//            txtOldPrice.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.strike_through_line));
             imgReview1 = itemView.findViewById(R.id.imgReview1);
             imgReview2 = itemView.findViewById(R.id.imgReview2);
             imgReview3 = itemView.findViewById(R.id.imgReview3);

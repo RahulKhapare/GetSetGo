@@ -260,7 +260,7 @@
                         android:layout_height="wrap_content"
                         android:hint="Confirm Password"
                         android:inputType="textPassword"
-                        android:imeOptions="actionDone"
+                        android:imeOptions="actionNext"
                         android:textColorHint="@color/colorTextHint"
                         android:fontFamily="@font/nunito_sans_regular"
                         android:textColor="@color/colorTextDark"
@@ -269,6 +269,25 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:textColorHint="@color/colorTextHint"
+                    android:layout_marginTop="20dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etxSponserId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Sponser Id"
+                        android:inputType="text"
+                        android:imeOptions="actionDone"
+                        android:textColorHint="@color/colorTextHint"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:textColor="@color/colorTextDark"
+                        android:backgroundTint="@color/colorTextDark" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 

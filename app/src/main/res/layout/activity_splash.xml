@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/ic_bg">
 
-        <ImageView
-            android:layout_width="224dp"
-            android:layout_height="82dp"
-            android:src="@drawable/ic_splash_logo"
-            android:layout_centerInParent="true">
+        <!--        <ImageView
+                    android:layout_width="224dp"
+                    android:layout_height="82dp"
+                    android:src="@drawable/ic_splash_logo"
+                    android:layout_above="@+id/iv"
+                    android:layout_centerInParent="true"/>-->
 
-        </ImageView>
+        <ImageView
+            android:id="@+id/ivSplash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_splash_logo" />
 
     </RelativeLayout>
 

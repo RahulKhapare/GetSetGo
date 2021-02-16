@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -37,6 +39,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.fragment.app.Fragment;
@@ -49,23 +52,32 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
 import com.adoisstudio.helper.Json;
+import com.adoisstudio.helper.JsonList;
 import com.adoisstudio.helper.LoadingDialog;
+import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
 import com.getsetgo.Adapter.CurriculumLectureAdapter;
 import com.getsetgo.Adapter.StudentsFeedbackAdapter;
-import com.getsetgo.Others.CustomVideoView;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
-
 import com.getsetgo.activity.SplashActivity;
+import com.getsetgo.others.CustomVideoView;
 import com.getsetgo.util.App;
 import com.getsetgo.util.P;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static android.content.Context.AUDIO_SERVICE;
+import static com.getsetgo.util.Utilities.pxFromDp;
 
 public class CourseDetailFragment extends Fragment implements GestureDetector.OnGestureListener, Api.OnHeaderRequestListener {
 
@@ -74,14 +86,16 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
     LinearLayoutManager layoutManager;
     LinearLayoutManager mLayoutManagerStudentFeedback;
     TextView txtMoreFeedback;
+    BuyCourseFragment buyCourseFragment;
 
     RecyclerView recyclerViewLecture, recyclerViewFeedback;
-    LinearLayout llCourseIncludes, llLearn;
+    LinearLayout llCourseIncludes, llLearn, llCourseVideo, llCourseContent, llCourse, llCollapse;
 
-    TextView[] t;
+    TextView[] t = new TextView[0];
     TextView[] tC;
     ImageView imageView;
     public static boolean videoIsRunning;
+    public boolean isFromHome;
 
 
     //private CustomMediaController customMediaController;
@@ -95,7 +109,9 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
 
     private String checkUrl = "";
     private String apiUrl = "";
-    private String videoUrl = "https://player.vimeo.com/external/355047357.sd.mp4?s=70acd77556613cd48ac925134cac183d18287c45&profile_id=164";
+    //    private String videoUrl = "https://player.vimeo.com/external/355047357.sd.mp4?s=70acd77556613cd48ac925134cac183d18287c45&profile_id=164";
+    private String videoUrl = "";
+    String id = "";
     private int videoProgress;
     private int isFavourite;
     private boolean startFromPreviousPosition;
@@ -110,11 +126,21 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
     public static ArrayList<String> fullVideoUrlList = new ArrayList<>();
     public static ArrayList<String> trailerVideoResolutionList = new ArrayList<>();
     public static ArrayList<String> trailerVideoUrlList = new ArrayList<>();
+    JsonList jsonList = new JsonList();
+
 
     // following is for brightness and volume
     private ProgressBar brightnessProgressBar, volumeProgressBar;
     View v;
-    TextView txtShowMore, txtViewMore, txtDesc;
+    TextView txtShowMore, txtViewMore, txtDesc, txtCourseTitle, txtTimeLect,
+            txtViewCategoryNewPrice, txtViewCategoryOldPrice,
+            txtCouseProfName,
+            txtProff, txtBuyNow, txtTitle, txtLectureTitle, txtVideoDetails, txtPreview;
+    RelativeLayout rlBuyNow;
+    ImageView imvViewCategory;
+    Context context;
+    CheckBox chkExpClp;
+//    ImageButton chkExpClp;
 
     public CourseDetailFragment() {
     }
@@ -124,12 +150,19 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         return fragment;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_course_details, container, false);
         init(v);
         return v;
+
+//        mBinding = FragmentCourseDetailsBinding.inflate(inflater, container, false);
+//        context = inflater.getContext();
+//        init(mBinding.getRoot());
+
+//        return mBinding.getRoot();
     }
 
     @Override
@@ -140,7 +173,8 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
                 // Handle the back button event
 
                 if (getFragmentManager().getBackStackEntryCount() > 0) {
-                    getFragmentManager().popBackStackImmediate();
+//                    getFragmentManager().popBackStackImmediate();
+                    callback();
                 }
             }
         };
@@ -153,11 +187,16 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void init(View view) {
 
-
+        String title = this.getArguments().getString("title");
+        String slug = this.getArguments().getString("slug");
+        isFromHome = this.getArguments().getBoolean("isFromHome");
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Course Details");
         BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
+//        BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.VISIBLE);
+        BaseScreenActivity.binding.incFragmenttool.txtSubCat.setText(title);
 
         recyclerViewFeedback = view.findViewById(R.id.recyclerViewFeedback);
         txtMoreFeedback = view.findViewById(R.id.txtMoreFeedback);
@@ -167,20 +206,29 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         txtShowMore = view.findViewById(R.id.txtShowMore);
         txtViewMore = view.findViewById(R.id.txtViewMore);
         txtDesc = view.findViewById(R.id.txtDesc);
+        txtCourseTitle = view.findViewById(R.id.txtCourseTitle);
+        txtViewCategoryNewPrice = view.findViewById(R.id.txtViewCategoryNewPrice);
+        txtCouseProfName = view.findViewById(R.id.txtCouseProfName);
+        txtProff = view.findViewById(R.id.txtProff);
+        txtViewCategoryOldPrice = view.findViewById(R.id.txtViewCategoryOldPrice);
+        txtTimeLect = view.findViewById(R.id.txtTimeLect);
+        txtBuyNow = view.findViewById(R.id.txtBuyNow);
+        rlBuyNow = view.findViewById(R.id.rlBuyNow);
+        llCourseVideo = view.findViewById(R.id.llCourseVideo);
 
         imageView = v.findViewById(R.id.imageView);
-
+        imvViewCategory = v.findViewById(R.id.imvViewCategory);
 
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mLayoutManagerStudentFeedback = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
 
+        callCourseDetailsApi(getActivity(), slug);
 
-        setupRecyclerViewCurriculumLecture();
-        setupRecyclerViewStudenrFeedback();
+//        setupRecyclerViewCurriculumLecture();
+//        setupRecyclerViewStudenrFeedback();
 
-        dynamicTextView(getActivity());
 
-        recyclerViewFeedback.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        /*mBinding.recyclerViewFeedback.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -189,17 +237,17 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-        /*        int visibleItemCount = mLayoutManagerStudentFeedback.getChildCount();
+        *//*        int visibleItemCount = mLayoutManagerStudentFeedback.getChildCount();
                 int totalItemCount = mLayoutManagerStudentFeedback.getItemCount();
                 int pastVisibleItems = mLayoutManagerStudentFeedback.findFirstVisibleItemPosition();
                 if (pastVisibleItems + visibleItemCount >= totalItemCount) {
-                    //End of list*/
+                    //End of list*//*
                 fetch();
 
                 // }
 
             }
-        });
+        });*/
 
         txtShowMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -214,12 +262,12 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
             }
         });
 
-        imageView.setOnClickListener(new View.OnClickListener() {
+        /*imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onPlayClick();
             }
-        });
+        });*/
 
         BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -230,49 +278,205 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
             }
         });
 
-        videoInit(view);
+        videoInit(view, "");
+    }
+
+    private void setUpFullScreenPlayer() {
+
 
     }
 
-    private void dynamicTextView(FragmentActivity context) {
-        Typeface typeface = ResourcesCompat.getFont(context, R.font.nunito_sans_regular);
-        LinearLayout.LayoutParams dim = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        String[] arr = context.getResources().getStringArray(R.array.listArray);
-        t = new TextView[arr.length];
-        textViewMore(t, dim, typeface, arr, arr.length, llCourseIncludes);
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void callCourseDetailsApi(Context context, String slug) {
 
-        LinearLayout.LayoutParams llm = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        String[] arrCat = context.getResources().getStringArray(R.array.categoryArray);
-        tC = new TextView[arrCat.length];
+        LoadingDialog loadingDialog = new LoadingDialog(context, false);
+//        String apiParam = "?title" + title;
+        Api.newApi(context, P.baseUrl + "course_details" + "/" + slug)
+                .setMethod(Api.GET)
+                .onHeaderRequest(App::getHeaders)
+                .onLoading(isLoading -> {
+                    if (isLoading)
+                        loadingDialog.show("loading...");
+                    else
+                        loadingDialog.hide();
+                })
+                .onError(() ->
+                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
+                        }))
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        loadingDialog.dismiss();
+                        if (Json1.getInt(P.status) == 0) {
+                            H.showMessage(context, Json1.getString(P.err));
+                        } else {
+                            Json1 = Json1.getJson(P.data);
+                            Json1.getJson("list");
 
-       /*txtViewMore.setOnClickListener(new View.OnClickListener() {
+                            setData(Json1.getJson("list"));
+
+                        }
+                    }
+
+                }).run("course_details");
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void setData(Json list) {
+        Log.d("Hardik", "Reviews " + list);
+
+        id = list.getString("id");
+        txtDesc.setText(list.getString("description"));
+        txtCourseTitle.setText(list.getString("course_name"));
+        txtViewCategoryNewPrice.setText("₹ " + list.getString("saleprice"));
+        txtViewCategoryOldPrice.setText("₹ " + list.getString("price"));
+
+        if (list.getString("has_purchased").equals("true")) {
+            rlBuyNow.setVisibility(View.GONE);
+        } else {
+            rlBuyNow.setVisibility(View.VISIBLE);
+
+        }
+
+        try {
+            ArrayList<String> mVideoList = new ArrayList<>();
+
+            JSONArray s = list.getJsonArray("instructor");
+
+            if (!s.getJSONObject(0).getString("name").isEmpty()) {
+                txtCouseProfName.setText("Prof. " + s.getJSONObject(0).getString("name"));
+                txtProff.setText("Prof. " + s.getJSONObject(0).getString("name"));
+            }
+            Picasso.get().load(s.getJSONObject(0).getString("image")).placeholder(R.drawable.ic_wp).error(R.drawable.ic_wp).into(imvViewCategory);
+
+            JSONObject courseInclusion = list.getJsonObject("course_inclusion");
+            String duration = courseInclusion.getString("duration");
+            String newDuration = duration.replace(":", "").replace("H", "h").replace("M", "m");
+
+            txtTimeLect.setText("Lectures: " + courseInclusion.getString("videos") + " " + "Total time(" + newDuration + ")");
+
+            Json jsonObject = list.getJson("course_videos");
+            JSONObject element;
+            Iterator<?> keys = jsonObject.keys();
+            Map<String, ArrayList<JSONObject>> mMap = new LinkedHashMap<>();
+            while (keys.hasNext()) {
+
+                String key = (String) keys.next();
+
+                JsonList arr = jsonObject.getJsonList(key);
+                mVideoList.add(key);
+
+                ArrayList<JSONObject> mVideoNameList = new ArrayList<>();
+
+                for (int i = 0; i < arr.size(); i++) {
+                    element = arr.get(i);
+                    mVideoNameList.add(element);
+                }
+                mMap.put(key, mVideoNameList);
+            }
+
+            for (Map.Entry<String, ArrayList<JSONObject>> video : mMap.entrySet()) {
+
+                int count = 1;
+                CourseDetailsParentViewHolder courseDetailsParentViewHolder = new CourseDetailsParentViewHolder();
+                courseDetailsParentViewHolder.txtTitle.setText(video.getKey());
+                ArrayList<JSONObject> mTempList = new ArrayList<>();
+                for (int i = 0; i < video.getValue().size(); i++) {
+                    mTempList.add(video.getValue().get(i));
+                }
+
+                for (int i = 0; i < mTempList.size(); i++) {
+                    CourseDetailsChildViewHolder courseDetailsChildViewHolder = new CourseDetailsChildViewHolder();
+
+                    courseDetailsChildViewHolder.txtLectureTitle.setText(mTempList.get(i).getString("video_name"));
+                    courseDetailsChildViewHolder.txtVideoDetails.setText("Video: " + mTempList.get(i).getString("video_duration") + " mins");
+                    courseDetailsChildViewHolder.txtCount.setText(String.valueOf(count));
+                    count++;
+                    courseDetailsParentViewHolder.llChild.addView(courseDetailsChildViewHolder.getViewGroup());
+
+                }
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+
+                params.setMargins((int) pxFromDp(getActivity(), 8), (int) pxFromDp(getActivity(), 4), (int) pxFromDp(getActivity(), 8), (int) pxFromDp(getActivity(), 4));
+
+                courseDetailsParentViewHolder.llParent.setLayoutParams(params);
+                llCourseVideo.addView(courseDetailsParentViewHolder.getViewGroup());
+
+            }
+            videoUrl = list.getString("vimeo_url");
+            videoInit(v, videoUrl);
+
+            for (int i = 0; i < list.getJsonArray("course_testimonials").length(); i++)
+                jsonList.add(i, list);
+
+            setupRecyclerViewStudenrFeedback(jsonList);
+        } catch (
+                JSONException e) {
+            e.printStackTrace();
+        }
+
+        dynamicTextView(getActivity(), list);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (txtViewMore.getText().toString().equalsIgnoreCase(getString(R.string.view_more))) {
-                    LinearLayout.LayoutParams llm = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    String[] arrCat = context.getResources().getStringArray(R.array.categoryArray);
-                    tC = new TextView[arrCat.length];
-                    textViewMore(tC, llm, typeface, arrCat, arrCat.length, llLearn,Integer.MAX_VALUE);
-                    txtViewMore.setText(R.string.view_less);
-                } else {
-                    LinearLayout.LayoutParams llm = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    String[] arrCat = context.getResources().getStringArray(R.array.categoryArray);
-                    tC = new TextView[arrCat.length];
-                    textViewMore(tC, llm, typeface, arrCat, arrCat.length, llLearn,5);
-                    txtViewMore.setText(R.string.view_more);
-                }
+                onPlayClick();
             }
-        });*/
+        });
 
-        textViewMore(tC, llm, typeface, arrCat, arrCat.length, llLearn);
+        txtBuyNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                loadFragment(id);
+            }
+        });
     }
 
+    private void dynamicTextView(FragmentActivity context, Json list) {
+        Typeface typeface = ResourcesCompat.getFont(context, R.font.nunito_sans_regular);
+        Typeface typefaceHeader = ResourcesCompat.getFont(context, R.font.nunito_sans_semibold);
+//        LinearLayout.LayoutParams dim = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        JSONArray learningOutcomes = list.getJsonArray("learning_outcomes");
+//        String[] arr = new String[0];
+
+        for (int i = 0; i < learningOutcomes.length(); i++) {
+
+            try {
+                if (learningOutcomes.getJSONObject(i).getString("is_heading").contains("1")) {
+                    TextView textView = new TextView(getActivity());
+                    textView.setPadding(0, 4, 0, 4);
+                    textView.setText(learningOutcomes.getJSONObject(i).getString("text").trim());
+                    textView.setTextColor(getActivity().getResources().getColor(R.color.colorTextDark));
+                    textView.setTypeface(typefaceHeader);
+                    textView.setTextSize(16f);
+                    llCourseIncludes.addView(textView);
+
+                } else {
+                    TextView textView = new TextView(getActivity());
+                    textView.setText("\u2022  " + learningOutcomes.getJSONObject(i).getString("text").trim());
+                    textView.setTextColor(getActivity().getResources().getColor(R.color.colorTextDark));
+                    textView.setTypeface(typeface);
+                    textView.setTextSize(14f);
+                    llCourseIncludes.addView(textView);
+
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     private void fetch() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                studentsFeedbackAdapter = new StudentsFeedbackAdapter(getContext(), 3);
+                studentsFeedbackAdapter = new StudentsFeedbackAdapter(getContext(), jsonList);
                 txtMoreFeedback.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -284,29 +488,24 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         }, 3000);
     }
 
-    private void textViewMore(TextView[] tC, LinearLayout.LayoutParams dim, Typeface typeface, String[] arrCat, int length, LinearLayout linearLayout) {
-        for (int i = 0; i < length; i++) {
-            tC[i] = new TextView(getActivity());
-            tC[i].setLayoutParams(dim);
-            tC[i].setText("\u25CF  " + arrCat[i]);
-            tC[i].setTextSize(14);
-            tC[i].setTypeface(typeface);
-            tC[i].setTextColor(getActivity().getResources().getColor(R.color.colorTextDark));
-            linearLayout.addView(tC[i]);
-        }
-    }
+    private void setupRecyclerViewCurriculumLecture(Json list) {
+//        recyclerViewLecture.setLayoutManager(layoutManager);
+        Json modules = list.getJson("course_videos");
+        JsonList jsonList = new JsonList();
+        for (int i = 0; i < modules.length(); i++)
+            jsonList.add(modules);
 
-    private void setupRecyclerViewCurriculumLecture() {
-        recyclerViewLecture.setLayoutManager(layoutManager);
-        curriculumLectureAdapter = new CurriculumLectureAdapter(getActivity(), 5);
+        curriculumLectureAdapter = new CurriculumLectureAdapter(getActivity(), jsonList);
+
         recyclerViewLecture.setItemAnimator(new DefaultItemAnimator());
         recyclerViewLecture.setAdapter(curriculumLectureAdapter);
         curriculumLectureAdapter.notifyDataSetChanged();
+
     }
 
-    private void setupRecyclerViewStudenrFeedback() {
-        recyclerViewFeedback.setLayoutManager(mLayoutManagerStudentFeedback);
-        studentsFeedbackAdapter = new StudentsFeedbackAdapter(getActivity(), 1);
+    private void setupRecyclerViewStudenrFeedback(JsonList reviewList) {
+//        recyclerViewFeedback.setLayoutManager(mLayoutManagerStudentFeedback);
+        studentsFeedbackAdapter = new StudentsFeedbackAdapter(getActivity(), reviewList);
         recyclerViewFeedback.setItemAnimator(new DefaultItemAnimator());
         recyclerViewFeedback.setAdapter(studentsFeedbackAdapter);
     }
@@ -321,12 +520,12 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
     }*/
 
     @SuppressLint("ClickableViewAccessibility")
-    private void videoInit(View view) {
+    private void videoInit(View view, String checkUrl) {
         loadingDialog = new LoadingDialog(getActivity());
-        videoProgress = this.getArguments().getInt("videoProgress", 0);
+//        videoProgress = this.getArguments().getInt("videoProgress", 0);
         startFromPreviousPosition = videoProgress != 0;
 
-        checkUrl = this.getArguments().getString(P.url);
+//        checkUrl = this.getArguments().getString(P.url);
         if (checkUrl != null && checkUrl.contains("series_check"))
             apiUrl = checkUrl.replace("series_check", "series");
 
@@ -1082,7 +1281,6 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
 
             videoControllerLayout = v.findViewById(R.id.videoControllerLayout);
             handleVisibilityOfVideoController();
-
             setting = videoControllerLayout.findViewById(R.id.settingImageView);
             zoom = videoControllerLayout.findViewById(R.id.zoomImageView);
             zoom.setVisibility(View.GONE);
@@ -1097,8 +1295,6 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
             for (int i = 0; i < relativeLayout.getChildCount(); i++)
                 relativeLayout.getChildAt(i).setOnClickListener(this::onClick);
 
-            seekBar.setOnSeekBarChangeListener(this);
-            //customVideoView.setOnClickListener(this::onClick);
         }
 
 
@@ -1348,6 +1544,120 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
                 }
 
             }
+        }
+    }
+
+    private void loadFragment(String course_id) {
+        Bundle bundle = new Bundle();
+        bundle.putString("course_id", course_id);
+        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        buyCourseFragment = new BuyCourseFragment();
+        buyCourseFragment.setArguments(bundle);
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_container, buyCourseFragment)
+                .addToBackStack("")
+                .commit();
+    }
+
+
+    class CourseDetailsParentViewHolder {
+
+        private final ViewGroup viewParentLayout;
+        TextView txtTitle;
+        ImageView ivExpand;
+        LinearLayout llParent, llChild;
+
+        public CourseDetailsParentViewHolder() {
+
+            viewParentLayout = (ViewGroup) getActivity().getLayoutInflater().inflate(R.layout.layout_lecture_parent, null);
+
+            llParent = viewParentLayout.findViewById(R.id.llParent);
+            llChild = viewParentLayout.findViewById(R.id.llChild);
+            txtTitle = viewParentLayout.findViewById(R.id.txtTitle);
+            ivExpand = viewParentLayout.findViewById(R.id.ivExpClp);
+
+            llParent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onClickParent(v);
+                }
+            });
+        }
+
+        ViewGroup getViewGroup() {
+            return viewParentLayout;
+        }
+
+        public void onClickParent(View v) {
+
+            switch (v.getId()) {
+
+                case R.id.llParent:
+
+                    if (llChild.getChildCount() > 0) {
+                        if (llChild.getVisibility() == View.GONE) {
+                            llChild.setVisibility(View.VISIBLE);
+                            ivExpand.setImageResource(R.drawable.ic_collapse);
+                        } else {
+                            llChild.setVisibility(View.GONE);
+                            ivExpand.setImageResource(R.drawable.ic_expand);
+
+                        }
+                    }
+
+                    break;
+            }
+        }
+    }
+
+
+    class CourseDetailsChildViewHolder {
+
+        private final ViewGroup viewChildLayout;
+
+        TextView txtLectureTitle, txtVideoDetails, txtPreview, txtCount;
+
+        public CourseDetailsChildViewHolder() {
+            viewChildLayout = (ViewGroup) getActivity().getLayoutInflater().inflate(R.layout.layout_lecture_child, null);
+
+            txtLectureTitle = viewChildLayout.findViewById(R.id.txtLectureTitle);
+            txtVideoDetails = viewChildLayout.findViewById(R.id.txtVideoDetails);
+            txtPreview = viewChildLayout.findViewById(R.id.txtPreview);
+            txtCount = viewChildLayout.findViewById(R.id.txtCount);
+            llCollapse = viewChildLayout.findViewById(R.id.llCollapse);
+
+            llCollapse.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    onClickChild(v);
+                }
+            });
+        }
+
+        private void onClickChild(View v) {
+
+            switch (v.getId()) {
+
+                case R.id.llCollapse:
+
+                    break;
+            }
+        }
+
+        ViewGroup getViewGroup() {
+            return viewChildLayout;
+        }
+    }
+
+    private void callback() {
+//        categoriesCoursesList.clear();
+        if (isFromHome) {
+            getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            BaseScreenActivity.callBack();
+        } else {
+            getFragmentManager().popBackStackImmediate();
         }
     }
 }

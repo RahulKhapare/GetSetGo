@@ -15,7 +15,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -133,8 +132,8 @@ public class Api {
             public void onErrorResponse(VolleyError error) {
                 if (onLoadingListener != null) onLoadingListener.onLoading(false);
 
-                H.log("Api Error", code + ": " + error.toString());
-                H.showMessage(context,error+"");
+                H.log("Api Error", code + ": " + error.toString() + " " + error.getMessage());
+                H.showMessage(context, error + "");
 
                 if (onErrorListener != null)
                     onErrorListener.onError();
@@ -145,8 +144,7 @@ public class Api {
         }) {
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError
-            {
+            public Map<String, String> getHeaders() throws AuthFailureError {
                 if (onHeaderRequestListener != null)
                     return onHeaderRequestListener.getHeaders();
 

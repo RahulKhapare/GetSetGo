@@ -1,7 +1,6 @@
 package com.getsetgo.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adoisstudio.helper.Json;
@@ -26,7 +24,7 @@ public class AllTransactionsAdapter extends RecyclerView.Adapter<AllTransactions
     Context context;
     JsonList jsonList;
 
-    public AllTransactionsAdapter(Context context,JsonList jsonList) {
+    public AllTransactionsAdapter(Context context, JsonList jsonList) {
         this.context = context;
         this.jsonList = jsonList;
     }
@@ -49,7 +47,7 @@ public class AllTransactionsAdapter extends RecyclerView.Adapter<AllTransactions
 
                 Bundle bundle = new Bundle();
                 String dataJson = json.toString();
-                bundle.putString("jsonObj",dataJson);
+                bundle.putString("jsonObj", dataJson);
 
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
@@ -63,7 +61,23 @@ public class AllTransactionsAdapter extends RecyclerView.Adapter<AllTransactions
         });
         holder.txtAmount.setText(json.getString("amount"));
         holder.txtDate.setText(Utilities.getShortMonthNames(json.getString("create_date_text")));
-        holder.txtMode.setText(json.getString("income_type"));
+
+
+        switch (json.getString("income_type")) {
+
+            case "RF":
+                holder.txtMode.setText(context.getString(R.string.referral_income));
+                break;
+            case "T":
+                holder.txtMode.setText(context.getString(R.string.transfer));
+                break;
+            case "MF":
+                holder.txtMode.setText("MF");
+                break;
+            default:
+                holder.txtMode.setText("RF");
+
+        }
     }
 
     @Override

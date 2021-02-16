@@ -6,7 +6,7 @@ import android.content.Intent;
 
 import com.adoisstudio.helper.H;
 import com.adoisstudio.helper.JsonList;
-import com.getsetgo.Others.VideoActivity;
+import com.getsetgo.others.VideoActivity;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.activity.LoginActivity;
 
@@ -55,8 +55,8 @@ public class App extends Application {
 
         headers.put("Content-Type", "application/json");
         headers.put("x-api-key", "123456");
-        if(user_id != null && !user_id.isEmpty()){
-            headers.put("token", user_id);
+        if(authToken != null && !authToken.isEmpty()){
+            headers.put("token", authToken);
         }
 
         H.log("headersAre", headers + "");

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -11,8 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/main_layout_bg"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+            android:paddingHorizontal="@dimen/x8">
 
 
             <LinearLayout
@@ -23,7 +24,11 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewCourse"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:reverseLayout="false"
+                    tools:listitem="@layout/layout_my_course"/>
 
             </LinearLayout>
 

@@ -1,201 +1,206 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="155dp"
-    android:gravity="center">
+    android:gravity="center">-->
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewAllCategories"
-        android:layout_width="325dp"
-        android:layout_height="143dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="3dp">
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardViewAllCategories"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/x6"
+    android:layout_marginTop="@dimen/x6"
+    app:cardCornerRadius="@dimen/x10"
+    app:cardElevation="@dimen/x4">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/x6">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/imvViewCategory"
+            android:layout_width="@dimen/x120"
+            android:layout_height="@dimen/x0"
+            android:scaleType="fitXY"
+            android:src="@drawable/download"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:riv_corner_radius="@dimen/x4" />
+
+        <LinearLayout
+            android:layout_width="@dimen/x0"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center_vertical"
-            android:paddingLeft="7dp"
-            android:paddingRight="3dp">
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/imvViewCategory"
-                android:layout_width="110dp"
-                android:layout_height="115dp"
-                app:riv_corner_radius="5dp"
-                android:src="@drawable/download" />
+            android:layout_toEndOf="@+id/imvViewCategory"
+            android:layout_toRightOf="@+id/imvViewCategory"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/x8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imvViewCategory"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_toEndOf="@+id/imvViewCategory"
-                android:layout_toRightOf="@+id/imvViewCategory"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/txtViewCategory"
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/nunito_sans_semibold"
-                        android:text="Student's Brain Booster"
-                        android:textColor="@color/colorTextDark"
-                        android:textSize="14sp" />
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="3dp"
-                        android:layout_toRightOf="@+id/txtViewCategory">
-
-                        <CheckBox
-                            android:id="@+id/chkViewCategoryFavourites"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="10dp"
-                            android:button="@drawable/favorite_checkox"
-                            android:focusableInTouchMode="false" />
-
-                    </RelativeLayout>
-
-
-                </RelativeLayout>
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/txtViewCategoryProfName"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/txtViewCategory"
+                    android:layout_width="@dimen/x0"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunito_sans_regular"
-                    android:text="prof John Doe"
-                    android:textColor="@color/main_highlighttext_color"
-                    android:textSize="12sp" />
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="15dp"
-                    android:gravity="center">
-
-                    <RelativeLayout
-                        android:id="@+id/rlReview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:id="@+id/imgViewCategoryReview1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_star_review" />
-
-                        <ImageView
-                            android:id="@+id/imgViewCategoryReview2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@id/imgViewCategoryReview1"
-                            android:src="@drawable/ic_star_review" />
-
-                        <ImageView
-                            android:id="@+id/imgViewCategoryReview3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@id/imgViewCategoryReview2"
-                            android:src="@drawable/ic_star_review" />
-
-                        <ImageView
-                            android:id="@+id/imgViewCategoryReview4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@id/imgViewCategoryReview3"
-                            android:src="@drawable/ic_star_review" />
-
-                        <ImageView
-                            android:id="@+id/imgViewCategoryReview5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@id/imgViewCategoryReview4"
-                            android:src="@drawable/ic_star_review" />
-
-                    </RelativeLayout>
-
-                    <TextView
-                        android:id="@+id/txtViewCategoryReview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="8dp"
-                        android:gravity="center"
-                        android:layout_toRightOf="@+id/rlReview"
-                        android:fontFamily="@font/nunit_sans_bold"
-                        android:text="4.5"
-                        android:textColor="@color/colorTextDark"
-                        android:textSize="10sp" />
-
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/txtViewCategoryBestSeller"
-                    android:layout_width="60dp"
-                    android:layout_height="18dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/bg_bestseller"
-                    android:fontFamily="@font/nunito_sans_regular"
-                    android:gravity="center"
-                    android:text="BestSeller"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:maxLines="2"
+                    android:text="Student's Brain Booster"
                     android:textColor="@color/colorTextDark"
-                    android:textSize="10sp" />
+                    android:textSize="@dimen/font_size_x14" />
 
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="23dp"
-                    android:layout_marginTop="5dp">
+                    android:layout_width="@dimen/x0"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight=".2">
 
-                    <TextView
-                        android:id="@+id/txtViewCategoryNewPrice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="23dp"
-                        android:fontFamily="@font/nunit_sans_bold"
-                        android:gravity="center"
-                        android:text="₹ 399.00"
-                        android:textColor="@color/colorTextDark"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/txtViewCategoryOldPrice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="23dp"
-                        android:layout_marginLeft="7dp"
-                        android:layout_toRightOf="@+id/txtViewCategoryNewPrice"
-                        android:background="@drawable/strike_white_through_line"
-                        android:fontFamily="@font/nunito_sans_regular"
-                        android:gravity="center"
-                        android:text="₹ 699.00"
-                        android:textColor="@color/main_highlighttext_color"
-                        android:textSize="12sp" />
+                    <CheckBox
+                        android:id="@+id/chkViewCategoryFavourites"
+                        android:layout_width="@dimen/x24"
+                        android:layout_height="@dimen/x24"
+                        android:layout_alignParentRight="true"
+                        android:button="@drawable/favorite_checkox"
+                        android:focusableInTouchMode="false" />
 
                 </RelativeLayout>
+
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/txtViewCategoryProfName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_sans_regular"
+                android:text="prof John Doe"
+                android:textColor="@color/main_highlighttext_color"
+                android:textSize="12sp" />
 
-        </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/x16"
+                android:gravity="center">
 
-    </androidx.cardview.widget.CardView>
-</RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rlReview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/imgViewCategoryReview1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_star_review" />
+
+                    <ImageView
+                        android:id="@+id/imgViewCategoryReview2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/imgViewCategoryReview1"
+                        android:src="@drawable/ic_star_review" />
+
+                    <ImageView
+                        android:id="@+id/imgViewCategoryReview3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/imgViewCategoryReview2"
+                        android:src="@drawable/ic_star_review" />
+
+                    <ImageView
+                        android:id="@+id/imgViewCategoryReview4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/imgViewCategoryReview3"
+                        android:src="@drawable/ic_star_review" />
+
+                    <ImageView
+                        android:id="@+id/imgViewCategoryReview5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/imgViewCategoryReview4"
+                        android:src="@drawable/ic_star_review" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txtViewCategoryReview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@+id/rlReview"
+                    android:fontFamily="@font/nunit_sans_bold"
+                    android:gravity="center"
+                    android:text="4.5"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="10sp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txtViewCategoryBestSeller"
+                android:layout_width="60dp"
+                android:layout_height="18dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_bestseller"
+                android:fontFamily="@font/nunito_sans_regular"
+                android:gravity="center"
+                android:text="BestSeller"
+                android:textColor="@color/colorTextDark"
+                android:textSize="10sp"
+                android:visibility="gone" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x4"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtViewCategoryNewPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunit_sans_bold"
+                    android:text="₹ 399.00"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="@dimen/font_size_x14" />
+
+                <TextView
+                    android:id="@+id/txtViewCategoryOldPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/x6"
+                    android:background="@drawable/strike_white_through_line"
+                    android:fontFamily="@font/nunito_sans_regular"
+                    android:text="₹ 699.00"
+                    android:textColor="@color/main_highlighttext_color"
+                    android:textSize="@dimen/font_size_x12" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView><!--</RelativeLayout>-->

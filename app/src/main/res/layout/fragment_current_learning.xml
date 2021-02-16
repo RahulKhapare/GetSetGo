@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--    <data>
+
+        </data>-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="@color/toolbar_backgound">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/main_layout_bg">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideStart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent=".04" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideEnd"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent=".96" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideCenter"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent=".50" />
+
+                <TextView
+                    android:id="@+id/txtCourseTitle"
+                    android:layout_width="@dimen/x0"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/x16"
+                    android:text="2020 Web Developement Bootcamp"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="@dimen/font_size_x18"
+                    app:layout_constraintEnd_toStartOf="@id/guideEnd"
+                    app:layout_constraintStart_toEndOf="@id/guideStart"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/llPlayerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x250"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@id/txtCourseTitle">
+
+                    <com.google.android.exoplayer2.ui.PlayerView
+                        android:id="@+id/playerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/x250"
+                        app:animation_enabled="true"
+                        app:controller_layout_id="@layout/exo_playback_control_view"
+
+                        app:show_buffering="when_playing" />
+
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvVideo"
+                    android:layout_width="@dimen/x0"
+                    android:layout_height="@dimen/x250"
+                    android:visibility="gone"
+                    app:cardCornerRadius="@dimen/x8"
+                    app:cardElevation="@dimen/x4"
+                    app:layout_constraintEnd_toStartOf="@id/guideEnd"
+                    app:layout_constraintStart_toEndOf="@id/guideStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtCourseTitle">
+
+                    <FrameLayout
+                        android:id="@+id/main_media_frame"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <com.getsetgo.others.CustomVideoView
+                            android:id="@+id/customVideoView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ProgressBar
+                            android:id="@+id/pbVideoPlayer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <!--<ImageView
+                            android:id="@+id/ivFullScreen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:scaleType="fitXY"
+                            android:visibility="gone"
+                            android:src="@drawable/exo_ic_fullscreen_enter"
+                            app:layout_constraintBottom_toBottomOf="@id/playerView"
+                            app:layout_constraintEnd_toEndOf="@id/playerView" />-->
+
+                        <ImageView
+                            android:id="@+id/imageView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#99000000"
+                            android:clickable="true"
+                            android:onClick="onPlayClick"
+                            android:padding="100dp"
+                            android:src="@drawable/ic_play"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/txtPrview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_sans_semibold"
+                            android:gravity="center|bottom"
+                            android:padding="15dp"
+                            android:text="Preview This Course"
+                            android:textColor="@color/whiteColor"
+                            android:textSize="18sp"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="parent" />
+
+                    </FrameLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <ProgressBar
+                    android:id="@+id/pbCourse"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="@dimen/x0"
+                    android:layout_height="@dimen/x12"
+                    android:layout_marginTop="10dp"
+                    android:indeterminate="false"
+                    android:maxHeight="@dimen/x12"
+                    android:minHeight="@dimen/x12"
+                    android:progress="30"
+                    android:progressDrawable="@drawable/progress_bar_rounded"
+                    app:layout_constraintEnd_toStartOf="@id/guideEnd"
+                    app:layout_constraintStart_toEndOf="@id/guideStart"
+                    app:layout_constraintTop_toBottomOf="@id/llPlayerView" />
+
+                <TextView
+                    android:id="@+id/txtStatus"
+                    android:layout_width="@dimen/x0"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/x2"
+                    android:fontFamily="@font/nunit_sans_bold"
+                    android:paddingVertical="@dimen/x2"
+                    android:text="30% Complete"
+                    android:textColor="@color/main_highlighttext_color"
+                    android:textSize="@dimen/font_size_x14"
+                    app:layout_constraintEnd_toStartOf="@id/guideEnd"
+                    app:layout_constraintStart_toEndOf="@id/guideStart"
+                    app:layout_constraintTop_toBottomOf="@id/pbCourse" />
+
+                <Button
+                    android:id="@+id/btnPrevious"
+                    android:layout_width="@dimen/x0"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/x16"
+                    android:layout_marginTop="@dimen/x24"
+                    android:background="@drawable/bg_previous"
+                    android:fontFamily="@font/nunit_sans_bold"
+                    android:text="@string/previous"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/font_size_x14"
+                    app:layout_constraintEnd_toStartOf="@id/guideCenter"
+                    app:layout_constraintStart_toEndOf="@id/guideStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtStatus" />
+
+                <Button
+                    android:id="@+id/btnNext"
+                    android:layout_width="@dimen/x0"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/x16"
+                    android:layout_marginTop="@dimen/x24"
+                    android:background="@drawable/bg_next"
+                    android:fontFamily="@font/nunit_sans_bold"
+                    android:text="@string/next"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_size_x14"
+                    app:layout_constraintEnd_toStartOf="@id/guideEnd"
+                    app:layout_constraintStart_toEndOf="@id/guideCenter"
+                    app:layout_constraintTop_toBottomOf="@id/txtStatus" />
+
+                <TextView
+                    android:id="@+id/txtModules"
+                    android:layout_width="@dimen/x0"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/x24"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:text="@string/modules"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="@dimen/font_size_x16"
+                    app:layout_constraintEnd_toStartOf="@id/guideEnd"
+                    app:layout_constraintStart_toEndOf="@id/guideStart"
+                    app:layout_constraintTop_toBottomOf="@id/btnPrevious" />
+
+                <LinearLayout
+                    android:id="@+id/llCourseIncludes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingVertical="@dimen/x4"
+                    app:layout_constraintTop_toBottomOf="@id/txtModules" />
+
+                <TextView
+                    android:id="@+id/txtAdditionalFiles"
+                    android:layout_width="@dimen/x0"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/x24"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:text="@string/downloadable_additional_files"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="@dimen/font_size_x16"
+                    app:layout_constraintEnd_toStartOf="@id/guideEnd"
+                    app:layout_constraintStart_toEndOf="@id/guideStart"
+                    app:layout_constraintTop_toBottomOf="@id/llCourseIncludes" />
+
+                <LinearLayout
+                    android:id="@+id/llAdditionalFiles"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingVertical="@dimen/x4"
+                    app:layout_constraintEnd_toStartOf="@id/guideEnd"
+                    app:layout_constraintStart_toEndOf="@id/guideStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtAdditionalFiles" />
+
+                <TextView
+                    android:id="@+id/txtComments"
+                    android:layout_width="@dimen/x0"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/x24"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:text="@string/comments"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="@dimen/font_size_x16"
+                    app:layout_constraintEnd_toStartOf="@id/guideEnd"
+                    app:layout_constraintStart_toEndOf="@id/guideStart"
+                    app:layout_constraintTop_toBottomOf="@id/llAdditionalFiles" />
+
+                <EditText
+                    android:id="@+id/etComments"
+                    android:layout_width="@dimen/x0"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/x16"
+                    android:background="@drawable/bg_comment_box"
+                    android:fontFamily="@font/nunito_sans_regular"
+                    android:maxLines="10"
+                    android:minLines="5"
+                    android:paddingVertical="@dimen/x2"
+                    android:textColor="@color/main_highlighttext_color"
+                    android:textSize="@dimen/font_size_x14"
+                    app:layout_constraintEnd_toStartOf="@id/guideEnd"
+                    app:layout_constraintStart_toEndOf="@id/guideStart"
+                    app:layout_constraintTop_toBottomOf="@id/txtComments" />
+
+                <Button
+                    android:id="@+id/btnSubmit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/x24"
+                    android:background="@drawable/bg_next"
+                    android:fontFamily="@font/nunit_sans_bold"
+                    android:paddingHorizontal="@dimen/x58"
+                    android:text="@string/submit"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_size_x14"
+                    app:layout_constraintEnd_toStartOf="@id/guideEnd"
+                    app:layout_constraintStart_toEndOf="@id/guideStart"
+                    app:layout_constraintTop_toBottomOf="@id/etComments" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -3,23 +3,17 @@ package com.getsetgo.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
@@ -29,12 +23,9 @@ import com.adoisstudio.helper.MessageBox;
 import com.getsetgo.Adapter.ViewAllCategoriesAdapter;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
-import com.getsetgo.databinding.FragmentSearchUserBinding;
 import com.getsetgo.databinding.FragmentViewAllCategoriesBinding;
 import com.getsetgo.util.App;
 import com.getsetgo.util.P;
-
-import java.util.ArrayList;
 
 public class ViewAllCategoriesFragment extends Fragment {
 
@@ -69,15 +60,17 @@ public class ViewAllCategoriesFragment extends Fragment {
     private void init(View view) {
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Categories");
         String myTitle = this.getArguments().getString("subTitle");
+        String slug = this.getArguments().getString("slug");
         isFromHome = this.getArguments().getBoolean("isFromHome");
+//        JsonList jsonList = (JsonList) this.getArguments().getSerializable("categoryList");
+//        categoriesCoursesList.addAll(jsonList);
         BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.VISIBLE);
         BaseScreenActivity.binding.incFragmenttool.txtSubCat.setText(myTitle);
-
-        //callCategoriesCoursesAPI(context, myTitle);
+        callCategoriesCoursesAPI(context, slug);
         setupRecyclerViewForViewAllCategories();
 
 
-        binding.recyclerViewAllCategory.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        /*binding.recyclerViewAllCategory.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -96,7 +89,7 @@ public class ViewAllCategoriesFragment extends Fragment {
                     isScrolling = false;
                 }
             }
-        });
+        });*/
 
 
         BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
@@ -138,17 +131,17 @@ public class ViewAllCategoriesFragment extends Fragment {
 
 
     private void setupRecyclerViewForViewAllCategories() {
-        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        binding.recyclerViewAllCategory.setLayoutManager(mLayoutManager);
+//        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+//        binding.recyclerViewAllCategory.setLayoutManager(mLayoutManager);
         viewAllCategoriesAdapter = new ViewAllCategoriesAdapter(getActivity(), categoriesCoursesList);
         binding.recyclerViewAllCategory.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerViewAllCategory.setAdapter(viewAllCategoriesAdapter);
     }
 
     private void callCategoriesCoursesAPI(Context context, String title) {
-        LoadingDialog loadingDialog = new LoadingDialog(context,false);
-        String apiParam = "?title" +title;
-        Api.newApi(context, P.baseUrl + "categories_courses")
+        LoadingDialog loadingDialog = new LoadingDialog(context, false);
+//        String apiParam = "?title" + title;
+        Api.newApi(context, P.baseUrl + "category_courses" + "/" + title)
                 .setMethod(Api.GET)
                 .onHeaderRequest(App::getHeaders)
                 .onLoading(isLoading -> {
@@ -167,10 +160,12 @@ public class ViewAllCategoriesFragment extends Fragment {
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(context, Json1.getString(P.err));
                         } else {
+
                             Json1 = Json1.getJson(P.data);
                             int numRows = Json1.getInt(P.num_rows);
-                            JsonList jsonList = Json1.getJsonList("total_courses");
+                            JsonList jsonList = Json1.getJsonList("course_list");
                             if (jsonList != null && !jsonList.isEmpty()) {
+                                categoriesCoursesList.clear();
                                 categoriesCoursesList.addAll(jsonList);
                                 viewAllCategoriesAdapter.notifyDataSetChanged();
                                 if (categoriesCoursesList.size() < numRows) {

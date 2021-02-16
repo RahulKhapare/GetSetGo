@@ -6,15 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.ImageView;
-import android.widget.TextView;
-
+import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -23,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
 import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
@@ -30,12 +26,12 @@ import com.getsetgo.Adapter.ActiveCourseAdapter;
 import com.getsetgo.Adapter.BestSellingCourseAdapter;
 import com.getsetgo.Adapter.OtherCategoriesAdapter;
 import com.getsetgo.R;
-import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentHomeBinding;
 import com.getsetgo.util.App;
 import com.getsetgo.util.P;
+import com.getsetgo.util.Utilities;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener {
 
     FragmentHomeBinding binding;
     Context context;
@@ -78,6 +74,8 @@ public class HomeFragment extends Fragment {
         context = inflater.getContext();
         init();
 
+        binding.cardViewCurrentLearning.setOnClickListener(this);
+
         return rootView;
     }
 
@@ -85,7 +83,9 @@ public class HomeFragment extends Fragment {
         setupRecyclerViewForActiveCourse();
         setupRecyclerViewForOthersCategories();
         setupRecyclerViewForBestSellingCourse();
-        onScrollRecyclerview();
+//        onScrollRecyclerview();
+        callDashboardCourseAPI(getActivity());
+//        callOtherCategoriesAPI(getActivity());
     }
 
     private void onScrollRecyclerview() {
@@ -108,7 +108,7 @@ public class HomeFragment extends Fragment {
                 scrollOutItems = mLayoutManagerOtherCategories.findFirstVisibleItemPosition();
 
                 if (isOther && (currentItem + scrollOutItems) >= totalItems) {
-                    if(categoriesNextPage) {
+                    if (categoriesNextPage) {
                         isOther = false;
                         //callOtherCategoriesAPI(context);
                     }
@@ -168,35 +168,29 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupRecyclerViewForActiveCourse() {
-        mLayoutManagerActiveCourse = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        binding.recyclerViewCources.setLayoutManager(mLayoutManagerActiveCourse);
-        activeCourseAdapter = new ActiveCourseAdapter(getActivity(),activeCourseJsonList);
+        activeCourseAdapter = new ActiveCourseAdapter(getActivity(), activeCourseJsonList);
         binding.recyclerViewCources.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerViewCources.setAdapter(activeCourseAdapter);
         activeCourseAdapter.notifyDataSetChanged();
     }
 
     private void setupRecyclerViewForOthersCategories() {
-        mLayoutManagerOtherCategories = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        binding.recyclerViewOtherCategories.setLayoutManager(mLayoutManagerOtherCategories);
-        otherCategoriesAdapter = new OtherCategoriesAdapter(getActivity(),otherCategoriesJsonList);
+        otherCategoriesAdapter = new OtherCategoriesAdapter(getActivity(), otherCategoriesJsonList);
         binding.recyclerViewOtherCategories.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerViewOtherCategories.setAdapter(otherCategoriesAdapter);
     }
 
     private void setupRecyclerViewForBestSellingCourse() {
-        mLayoutManagerBestSelling = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        binding.recyclerBestSellingCources.setLayoutManager(mLayoutManagerBestSelling);
-        bestSellingCourseAdapter = new BestSellingCourseAdapter(getActivity(),bestSellingCourseJsonList);
+        bestSellingCourseAdapter = new BestSellingCourseAdapter(getActivity(), bestSellingCourseJsonList);
         binding.recyclerBestSellingCources.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerBestSellingCources.setAdapter(bestSellingCourseAdapter);
         bestSellingCourseAdapter.notifyDataSetChanged();
     }
 
     private void callDashboardCourseAPI(Context context) {
-        LoadingDialog loadingDialog = new LoadingDialog(context,false);
-        Api.newApi(context, P.baseUrl + "dashbord")
-                .setMethod(Api.POST)
+        LoadingDialog loadingDialog = new LoadingDialog(context, false);
+        Api.newApi(context, P.baseUrl + "dashboard")
+                .setMethod(Api.GET)
                 .onHeaderRequest(App::getHeaders)
                 .onLoading(isLoading -> {
                     if (isLoading)
@@ -214,20 +208,32 @@ public class HomeFragment extends Fragment {
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(context, Json1.getString(P.err));
                         } else {
-                            Json1 = Json1.getJson(P.data);
-                            JsonList jsonList = new JsonList();
-                            jsonList = Json1.getJsonList("total_courses");
-                            if (jsonList != null && !jsonList.isEmpty()) {
+                            Json json = Json1.getJson(P.data);
+                            JsonList categories = new JsonList();
+                            JsonList totalCourses = new JsonList();
+                            totalCourses = json.getJsonList("active_course_list");
+                            categories = json.getJsonList("category_list");
+                            if (categories != null && !categories.isEmpty()) {
+                                otherCategoriesJsonList.clear();
+                                otherCategoriesJsonList.addAll(categories);
+                                otherCategoriesAdapter.notifyDataSetChanged();
+                            }
+
+                            if (totalCourses != null && !totalCourses.isEmpty()) {
+                                activeCourseJsonList.clear();
+                                activeCourseJsonList.addAll(totalCourses);
+                                activeCourseAdapter.notifyDataSetChanged();
                             }
                         }
                     }
 
                 }).run("dashbord");
     }
+
     private void callOtherCategoriesAPI(Context context) {
-        LoadingDialog loadingDialog = new LoadingDialog(context,false);
+        LoadingDialog loadingDialog = new LoadingDialog(context, false);
         Api.newApi(context, P.baseUrl + "dashbord")
-                .setMethod(Api.POST)
+                .setMethod(Api.GET)
                 .onHeaderRequest(App::getHeaders)
                 .onLoading(isLoading -> {
                     if (isLoading)
@@ -251,10 +257,10 @@ public class HomeFragment extends Fragment {
                             if (jsonList != null && !jsonList.isEmpty()) {
                                 otherCategoriesJsonList.addAll(jsonList);
                                 otherCategoriesAdapter.notifyDataSetChanged();
-                                if(otherCategoriesJsonList.size() < numRows){
+                                if (otherCategoriesJsonList.size() < numRows) {
                                     categoriesPage++;
                                     categoriesNextPage = true;
-                                }else{
+                                } else {
                                     categoriesNextPage = false;
                                 }
                             }
@@ -262,5 +268,27 @@ public class HomeFragment extends Fragment {
                     }
 
                 }).run("dashbord");
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        int id = v.getId();
+
+        switch (id){
+
+            case R.id.cardViewCurrentLearning:
+
+                CurrentLearningFragment currentLearningFragment = CurrentLearningFragment.newInstance();
+
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .setCustomAnimations(R.anim.anim_enter, R.anim.anim_exit)
+                        .addToBackStack("")
+                        .add(R.id.fragment_container, currentLearningFragment).commit();
+                break;
+
+        }
     }
 }
