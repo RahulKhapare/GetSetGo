@@ -1,16 +1,11 @@
 package com.getsetgo.activity;
 
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.IntentSender;
-
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -36,12 +31,10 @@ import com.getsetgo.util.Click;
 import com.getsetgo.util.P;
 import com.getsetgo.util.Validation;
 import com.getsetgo.util.WindowView;
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.credentials.Credential;
-import com.google.android.gms.auth.api.credentials.HintRequest;
-
-import com.google.android.gms.common.api.GoogleApiClient;
-
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,6 +50,8 @@ public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 31;
     private static final String PROFILE_PUBLIC = "public_profile";
     private LoadingDialog loadingDialog;
+    private GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInOptions mGoogleSignInOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         WindowView.getWindow(activity);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         initView();
+        setUpGoogle();
     }
 
     private void initView() {
@@ -74,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void setUpGoogle() {
 
-        GoogleApiClient googleApiClient = new GoogleApiClient.Builder(this)
+        /*GoogleApiClient googleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Auth.CREDENTIALS_API)
                 .build();
 
@@ -88,7 +84,10 @@ public class LoginActivity extends AppCompatActivity {
             startIntentSenderForResult(intent.getIntentSender(), RC_SIGN_IN, null, 0, 0, 0);
         } catch (IntentSender.SendIntentException e) {
             e.printStackTrace();
-        }
+        }*/
+
+        mGoogleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, mGoogleSignInOptions);
     }
 
     private void onClick() {
@@ -103,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
-                if (checkValidation()){
+                if (checkValidation()) {
                     callLoginApi();
                 }
             }
@@ -130,7 +129,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
-                setUpGoogle();
+//                setUpGoogle();
+                startActivityForResult(mGoogleSignInClient.getSignInIntent(), RC_SIGN_IN);
             }
         });
     }
@@ -198,6 +198,7 @@ public class LoginActivity extends AppCompatActivity {
                             session.addString(P.full_name, json.getString("name") + "");
                             session.addString(P.email_id, json.getString("email") + "");
                             session.addString(P.id, json.getString("id") + "");
+                            session.addString(P.token, json.getString("token") + "");
 
                             //hitSocialLoginApi(session, 3);
 
@@ -249,7 +250,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void callLoginApi() {
-        loadingDialog = new LoadingDialog(activity,false);
+        loadingDialog = new LoadingDialog(activity, false);
         Json json = new Json();
         json.addString(P.email, binding.etxEmailAddress.getText().toString());
         json.addString(P.password, binding.etxPassword.getText().toString());

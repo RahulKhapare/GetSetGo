@@ -1,4 +1,4 @@
-package com.getsetgo.Others;
+package com.getsetgo.others;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;

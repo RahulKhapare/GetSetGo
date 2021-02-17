@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">GetSetGo</string>
+
+    <string name="facebook_app_id">1338817783117401</string>
+    <string name="fb_login_protocol_scheme">fb1338817783117401</string>
+
+
     <string name="title_crash_course">Crash Course</string>
     <string name="title_all_transactions">All Transactions</string>
     <string name="dummy_text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.</string>
@@ -10,9 +15,18 @@
     <string name="view_less">View Less</string>
     <string name="show_more">Show More</string>
     <string name="show_less">Show Less</string>
+    <string name="referral_income">Referral Income</string>
+    <string name="transfer">Transfer</string>
+    <string name="preview">Preview</string>
+    <string name="learning_outcomes">Learning Outcomes</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+    <string name="modules">Modules</string>
+    <string name="downloadable_additional_files">Downloadable additional files</string>
+    <string name="comments">Comments</string>
+    <string name="submit">Submit</string>
+    <string name="completed">Completed</string>
 
-    <string name="facebook_app_id">1338817783117401</string>
-    <string name="fb_login_protocol_scheme">fb1338817783117401</string>
 
     <string-array name="listArray">
         <item>Python</item>

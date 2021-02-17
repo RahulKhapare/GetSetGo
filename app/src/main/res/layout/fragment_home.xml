@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
 
@@ -11,17 +10,18 @@
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScroll"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_above="@+id/bottom_navigation">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottom_navigation"
+            android:fillViewport="true"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:orientation="vertical"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp">
+                android:paddingHorizontal="@dimen/x16">
 
                 <TextView
                     android:layout_width="138dp"
@@ -33,14 +33,14 @@
 
 
                 <androidx.cardview.widget.CardView
+                    android:clickable="true"
                     android:id="@+id/cardViewCurrentLearning"
                     android:layout_width="325dp"
                     android:layout_height="130dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp">
-
+                    android:elevation="@dimen/x6"
+                    app:cardCornerRadius="10dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -105,7 +105,7 @@
                                 android:maxHeight="12dp"
                                 android:minHeight="12dp"
                                 android:progress="30"
-                                android:progressDrawable="@drawable/progress_bar_rounded"/>
+                                android:progressDrawable="@drawable/progress_bar_rounded" />
 
 
                             <TextView
@@ -155,9 +155,11 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:onClick="onDrawerItemClick"
                         android:id="@+id/txtViewAll"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="2"
                         android:fontFamily="@font/nunito_sans_semibold"
                         android:gravity="end|center"
@@ -170,7 +172,12 @@
                     android:id="@+id/recyclerViewCources"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp" />
+                    android:layout_marginTop="15dp"
+                    android:nestedScrollingEnabled="true"
+                    android:orientation="horizontal"
+                    android:overScrollMode="never"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:reverseLayout="false" />
 
 
                 <LinearLayout
@@ -183,9 +190,10 @@
                     <TextView
                         android:id="@+id/titleCategories"
                         android:layout_width="0dp"
-                        android:layout_weight="8"
                         android:layout_height="22dp"
+                        android:layout_weight="8"
                         android:fontFamily="@font/nunit_sans_bold"
+                        android:maxLines="1"
                         android:text="Explore Other Categories"
                         android:textColor="@color/colorTextDark"
                         android:textSize="16sp" />
@@ -194,11 +202,12 @@
                         android:id="@+id/txtViewAllCategories"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="2"
                         android:fontFamily="@font/nunito_sans_semibold"
                         android:gravity="end|center"
-                        android:text="View All"
                         android:onClick="onDrawerItemClick"
+                        android:text="View All"
                         android:textColor="@color/viewall_text_color"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -208,7 +217,12 @@
                     android:id="@+id/recyclerViewOtherCategories"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"/>
+                    android:layout_marginTop="15dp"
+                    android:nestedScrollingEnabled="true"
+                    android:orientation="horizontal"
+                    android:overScrollMode="never"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:reverseLayout="false" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -223,6 +237,7 @@
                         android:layout_height="22dp"
                         android:layout_weight="8"
                         android:fontFamily="@font/nunit_sans_bold"
+                        android:maxLines="1"
                         android:text="Best Selling Courses"
                         android:textColor="@color/colorTextDark"
                         android:textSize="16sp" />
@@ -231,6 +246,7 @@
                         android:id="@+id/txtViewAllBestCourse"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="2"
                         android:fontFamily="@font/nunito_sans_semibold"
                         android:gravity="end|center"
@@ -244,7 +260,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:layout_marginBottom="25dp" />
+                    android:layout_marginBottom="25dp"
+                    android:nestedScrollingEnabled="true"
+                    android:orientation="horizontal"
+                    android:overScrollMode="never"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:reverseLayout="false" />
 
             </LinearLayout>
 

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llCollapse"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorStrokeView"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerCollapsed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/x4"
+        android:paddingVertical="@dimen/x10">
+
+        <TextView
+            android:id="@+id/txtCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".05"
+            android:fontFamily="@font/nunito_sans_regular"
+            android:gravity="start"
+            android:text="1"
+            android:textColor="@color/colorTextDark"
+            android:textSize="14sp" />
+
+
+        <LinearLayout
+            android:layout_width="@dimen/x0"
+            android:layout_height="wrap_content"
+            android:layout_weight=".70"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtLectureTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:gravity="start|center"
+                android:maxLines="3"
+                android:paddingHorizontal="@dimen/x4"
+                android:text="What you'll get in this Course"
+                android:textColor="@color/colorTextDark"
+                android:textSize="@dimen/font_size_x14" />
+
+            <TextView
+                android:id="@+id/txtVideoDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:gravity="start|center"
+                android:paddingHorizontal="@dimen/x4"
+                android:text="Video - 03:00 mins"
+                android:textColor="#60232323"
+                android:textSize="@dimen/font_size_x14" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="@dimen/x0"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight=".25">
+
+            <TextView
+                android:id="@+id/txtPreview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="@string/preview"
+                android:gravity="end"
+                android:textColor="@color/viewall_text_color"
+                android:textSize="@dimen/font_size_x12" />
+
+            <TextView
+                android:gravity="end"
+                android:visibility="gone"
+                android:id="@+id/txtCompleted"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="@string/completed"
+                android:textColor="#60232323"
+                android:textSize="@dimen/font_size_x12" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

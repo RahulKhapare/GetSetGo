@@ -94,10 +94,10 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Click.preventTwoClick(v);
                 if (checkValidation()) {
-                    Intent intent = new Intent(activity, BaseScreenActivity.class);
-                    startActivity(intent);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    finish();
+//                    Intent intent = new Intent(activity, BaseScreenActivity.class);
+//                    startActivity(intent);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                    finish();
                     String registerAs;
                     if(binding.radioCompany.isSelected()){
                         registerAs = binding.radioCompany.getText().toString();
@@ -112,6 +112,7 @@ public class SignUpActivity extends AppCompatActivity {
                     json.addString(P.contact, binding.etxPhone.getText().toString() + "");
                     json.addString(P.password, binding.etxPassword.getText().toString() + "");
                     json.addString(P.confirm_password, binding.etxConfirmPassword.getText().toString() + "");
+                    json.addString(P.sponsor_id, binding.etxSponserId.getText().toString() + "");
                     callSignUpApi(json);
                 }
             }
@@ -189,6 +190,9 @@ public class SignUpActivity extends AppCompatActivity {
             value = false;
         } else if (!binding.etxConfirmPassword.getText().toString().trim().equals(binding.etxPassword.getText().toString().trim())) {
             H.showMessage(activity, "Confirm password not matched with password");
+            value = false;
+        }else if (TextUtils.isEmpty(binding.etxSponserId.getText().toString().trim())) {
+            H.showMessage(activity, "Enter sponser id");
             value = false;
         }
 

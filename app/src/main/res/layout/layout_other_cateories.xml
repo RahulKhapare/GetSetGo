@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="85dp"
-    android:layout_height="100dp"
-    android:gravity="center"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp">
+    android:layout_width="@dimen/x88"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/x4"
+    android:elevation="@dimen/x6"
+    app:cardCornerRadius="@dimen/x8">
 
     <LinearLayout
-        android:layout_width="82dp"
-        android:layout_height="86dp"
-        android:background="@drawable/small_bg_elevation"
-        android:elevation="4dp"
-        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/imvOtherCategories"
-            android:layout_width="70dp"
-            android:layout_height="54dp"
-            android:scaleType="fitXY"
+            android:layout_width="@dimen/x84"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="@dimen/x64"
+            android:paddingVertical="@dimen/x4"
             android:src="@drawable/download"
-            app:riv_corner_radius="5dp" />
+            app:riv_corner_radius="@dimen/x0" />
 
 
         <TextView
+            android:paddingVertical="@dimen/x4"
             android:id="@+id/txtOtherCategories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:fontFamily="@font/nunito_sans_semibold"
             android:gravity="center"
+            android:maxLines="2"
+            android:paddingHorizontal="@dimen/x4"
             android:text="Smart School"
             android:textColor="@color/programme_text_color"
             android:textSize="12sp" />
@@ -37,6 +39,5 @@
 
     </LinearLayout>
 
-</RelativeLayout>
-
+</androidx.cardview.widget.CardView>
 

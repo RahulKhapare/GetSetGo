@@ -59,7 +59,23 @@ public class CrashTransactionsAdapter extends RecyclerView.Adapter<CrashTransact
         });
         holder.txtAmount.setText(json.getString("amount"));
         holder.txtDate.setText(Utilities.getShortMonthNames(json.getString("create_date_text")));
-        holder.txtMode.setText(json.getString("income_type"));
+//        holder.txtMode.setText(json.getString("income_type"));
+
+        switch (json.getString("income_type")) {
+
+            case "RF":
+                holder.txtMode.setText(context.getString(R.string.referral_income));
+                break;
+            case "T":
+                holder.txtMode.setText(context.getString(R.string.transfer));
+                break;
+            case "MF":
+                holder.txtMode.setText("MF");
+                break;
+            default:
+                holder.txtMode.setText("RF");
+
+        }
     }
 
     @Override

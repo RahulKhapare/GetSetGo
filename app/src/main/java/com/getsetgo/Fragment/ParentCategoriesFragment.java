@@ -98,7 +98,7 @@ public class ParentCategoriesFragment extends Fragment {
     }
     private void callOtherCategoriesAPI(Context context) {
         LoadingDialog loadingDialog = new LoadingDialog(context,false);
-        Api.newApi(context, P.baseUrl + "all_categories")
+        Api.newApi(context, P.baseUrl + "all_course_categories")
                 .setMethod(Api.GET)
                 .onHeaderRequest(App::getHeaders)
                 .onLoading(isLoading -> {
@@ -118,7 +118,7 @@ public class ParentCategoriesFragment extends Fragment {
                             H.showMessage(context, Json1.getString(P.err));
                         } else {
                             Json1 = Json1.getJson(P.data);
-                            JsonList jsonList = Json1.getJsonList("categories");
+                            JsonList jsonList = Json1.getJsonList("category_list");
                             if (jsonList != null && !jsonList.isEmpty()) {
                                 parentJsonList.addAll(jsonList);
                                 parentItemAdapter.notifyDataSetChanged();
@@ -126,7 +126,7 @@ public class ParentCategoriesFragment extends Fragment {
                         }
                     }
 
-                }).run("all_categories");
+                }).run("all_course_categories");
     }
 
 

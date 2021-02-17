@@ -5,13 +5,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
 import com.getsetgo.Fragment.ViewAllCategoriesFragment;
 import com.getsetgo.R;
@@ -24,7 +24,7 @@ public class OtherCategoriesAdapter extends RecyclerView.Adapter<OtherCategories
     ViewAllCategoriesFragment viewAllCategoriesFragment;
     JsonList jsonList;
 
-    public OtherCategoriesAdapter(Context context,JsonList jsonList) {
+    public OtherCategoriesAdapter(Context context, JsonList jsonList) {
         this.context = context;
         this.jsonList = jsonList;
     }
@@ -33,16 +33,21 @@ public class OtherCategoriesAdapter extends RecyclerView.Adapter<OtherCategories
     @Override
     public OtherCategoriesAdapter.OtherCategoriesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.layout_other_cateories, parent, false);
-        return new  OtherCategoriesViewHolder(view);
+        return new OtherCategoriesViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull OtherCategoriesAdapter.OtherCategoriesViewHolder holder, int position) {
 
+        final Json json = jsonList.get(position);
+
+//        holder.imvOtherCategories.setImageResource(json.get());
+        holder.txtOtherCategories.setText(json.getString("category_name"));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadFragment(view,"Smart School");
+                loadFragment(view, json.getString("category_name"),json.getString("category_slug"));
+
             }
         });
 
@@ -50,10 +55,10 @@ public class OtherCategoriesAdapter extends RecyclerView.Adapter<OtherCategories
 
     @Override
     public int getItemCount() {
-        return 10;
+        return jsonList.size();
     }
 
-    public class OtherCategoriesViewHolder extends RecyclerView.ViewHolder{
+    public class OtherCategoriesViewHolder extends RecyclerView.ViewHolder {
 
         TextView txtOtherCategories;
         RoundedImageView imvOtherCategories;
@@ -66,13 +71,15 @@ public class OtherCategoriesAdapter extends RecyclerView.Adapter<OtherCategories
             imvOtherCategories = itemView.findViewById(R.id.imvOtherCategories);
         }
     }
-    private void loadFragment(View v,String title){
+
+    private void loadFragment(View v, String title,String slug) {
         Bundle bundle = new Bundle();
         BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
         BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);
         BaseScreenActivity.binding.incFragmenttool.content.setVisibility(View.VISIBLE);
         BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
         bundle.putString("subTitle", title);
+        bundle.putString("slug", slug);
         bundle.putBoolean("isFromHome", true);
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
         viewAllCategoriesFragment = new ViewAllCategoriesFragment();

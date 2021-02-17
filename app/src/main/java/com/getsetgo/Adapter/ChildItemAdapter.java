@@ -1,6 +1,7 @@
 package com.getsetgo.Adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,13 +9,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
+import com.getsetgo.Fragment.CourseDetailFragment;
+import com.getsetgo.Fragment.ViewAllCategoriesFragment;
 import com.getsetgo.R;
-import com.getsetgo.util.LoadImage;
-import com.getsetgo.util.P;
+import com.getsetgo.activity.BaseScreenActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
@@ -22,6 +25,8 @@ public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.Chil
 
     Context context;
     JsonList jsonList;
+    CourseDetailFragment courseDetailFragment;
+
 
     ChildItemAdapter(Context context, JsonList jsonList) {
         this.context = context;
@@ -43,17 +48,26 @@ public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.Chil
 
         holder.txtCourseName.setText(childItem.getString("course_name"));
         holder.txtOldPrice.setText("₹ " + childItem.getString("price"));
-        holder.txtNewPrice.setText("₹ " + childItem.getString("discounted_price"));
-        String review = childItem.getString("average_rating");
+        holder.txtNewPrice.setText("₹ " + childItem.getString("sale_price"));
+        holder.txtProfName.setText("Prof. " + childItem.getString("instructor_name"));
+        String review = childItem.getString("rating");
         holder.txtReview.setText(review);
-        setReview(review,holder);
+        setReview(review, holder);
 
-        String imagePath = childItem.getString("image_path")+"";
-        if (imagePath.equals("null") || imagePath.isEmpty())
-            imagePath = "pathMustNotBeEmpty";
+//        String imagePath = childItem.getString("image_path")+"";
+//        if (imagePath.equals("null") || imagePath.isEmpty())
+//            imagePath = "pathMustNotBeEmpty";
+//
+//        LoadImage.picasso(holder.ivCourseImage, imagePath);
+        Picasso.get().load(childItem.getString("image")).placeholder(R.drawable.ic_wp).error(R.drawable.ic_wp).into(holder.ivCourseImage);
 
-        LoadImage.picasso(holder.ivCourseImage, imagePath);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadFragment(view, childItem.getString("course_name"),childItem.getString("slug"));
 
+            }
+        });
     }
 
     @Override
@@ -129,11 +143,30 @@ public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.Chil
             viewHolder.imgReview3.setVisibility(View.VISIBLE);
             viewHolder.imgReview4.setVisibility(View.VISIBLE);
             viewHolder.imgReview5.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             viewHolder.imgReview1.setVisibility(View.VISIBLE);
             viewHolder.imgReview2.setVisibility(View.VISIBLE);
             viewHolder.imgReview3.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void loadFragment(View v, String title,String slug) {
+        Bundle bundle = new Bundle();
+        BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
+        BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);
+        BaseScreenActivity.binding.incFragmenttool.content.setVisibility(View.VISIBLE);
+        BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
+        bundle.putString("title", title);
+        bundle.putString("slug", slug);
+        bundle.putBoolean("isFromHome", true);
+        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        courseDetailFragment = new CourseDetailFragment();
+        courseDetailFragment.setArguments(bundle);
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, courseDetailFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
 

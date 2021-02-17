@@ -1,9 +1,11 @@
 package com.getsetgo.activity;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
@@ -32,6 +34,7 @@ import com.adoisstudio.helper.Session;
 import com.getsetgo.Fragment.AccountFragment;
 import com.getsetgo.Fragment.AddNewUserFragment;
 
+import com.getsetgo.Fragment.CurrentLearningFragment;
 import com.getsetgo.Fragment.DashBoardFragment;
 import com.getsetgo.Fragment.EarningsFragment;
 import com.getsetgo.Fragment.FavouritesFragment;
@@ -57,6 +60,10 @@ import com.getsetgo.util.P;
 import com.getsetgo.util.WindowView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import static com.getsetgo.Fragment.CurrentLearningFragment.PLAYBACK_POSITION;
+import static com.getsetgo.Fragment.CurrentLearningFragment.REQUEST_CODE;
+import static com.getsetgo.Fragment.CurrentLearningFragment.RESULT_CODE;
+
 
 public class BaseScreenActivity extends AppCompatActivity {
 
@@ -75,6 +82,8 @@ public class BaseScreenActivity extends AppCompatActivity {
     ParentCategoriesFragment parentCategoriesFragment;
     AddNewUserFragment addNewUserFragment;
     SearchUserIdFragment searchUserIdFragment;
+    YourCourseFragment yourCourseFragment;
+    CurrentLearningFragment currentLearningFragment;
     CheckBox cbMyEarning, cbUsers;
     OnBackPressedCallback onBackPressedCallback;
     private LoadingDialog loadingDialog;
@@ -370,6 +379,18 @@ public class BaseScreenActivity extends AppCompatActivity {
                 onLogout();
                 break;
 
+            case R.id.txtViewAll:
+                if (yourCourseFragment == null)
+                    yourCourseFragment = YourCourseFragment.newInstance();
+                fragmentLoader(yourCourseFragment, true);
+                break;
+
+/*            case R.id.cardViewCurrentLearning:
+                if (currentLearningFragment == null)
+                    currentLearningFragment = CurrentLearningFragment.newInstance();
+                fragmentLoader(currentLearningFragment,true);
+                break;*/
+
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START);
     }
@@ -506,5 +527,21 @@ public class BaseScreenActivity extends AppCompatActivity {
         adb.show();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_CODE) {
+            String testResult = data.getStringExtra(PLAYBACK_POSITION);
+
+            long l = Long.parseLong(testResult);
+
+            Log.d("+","Playback position result "+l);
+
+            CurrentLearningFragment fragment = (CurrentLearningFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+            fragment.onActivityResult(requestCode, resultCode, data);
+
+//            Toast.makeText(getActivity(),"Playback position result "+testResult,Toast.LENGTH_SHORT).show();
+        }
+    }
 }

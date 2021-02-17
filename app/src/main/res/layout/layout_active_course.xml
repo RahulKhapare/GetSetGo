@@ -1,118 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="179dp"
-    android:layout_height="245dp"
-    android:gravity="center"
-    android:layout_marginLeft="3dp"
-    android:layout_marginRight="3dp">
+    android:layout_width="@dimen/x168"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/x4"
+    android:elevation="@dimen/x6"
+    app:cardCornerRadius="10dp">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="173dp"
-        android:layout_height="235dp"
-        android:layout_gravity="center"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="4dp">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/x10"
+        android:paddingTop="10dp">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/imvActiveCourse"
+            android:layout_width="@dimen/x148"
+            android:layout_height="@dimen/x100"
+            android:paddingVertical="@dimen/x2"
+            android:scaleType="fitXY"
+            android:src="@drawable/images"
+            app:riv_corner_radius="@dimen/x10" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp"
-            android:paddingRight="10dp">
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/imvActiveCourse"
-                android:layout_width="153dp"
-                android:scaleType="fitXY"
-                android:layout_height="100dp"
-                app:riv_corner_radius="10dp"
-                android:src="@drawable/images" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="3dp">
-
-                <TextView
-                    android:id="@+id/textTech"
-                    android:layout_width="wrap_content"
-                    android:layout_height="16dp"
-                    android:fontFamily="@font/nunito_sans_semibold"
-                    android:text="Technology"
-                    android:textColor="@color/main_highlighttext_color"
-                    android:textSize="12sp" />
-
-                <ImageView
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:background="@drawable/circle_disable_stroke"/>
-            </RelativeLayout>
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/txtTech"
+                android:layout_width="@dimen/x0"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight=".95"
+                android:ellipsize="end"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:gravity="end"
-                android:maxLines="2"
-                android:text="Basics of"
-                android:textColor="@color/programme_text_color"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/txtActiveProgram"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nunit_sans_bold"
-                android:gravity="end"
-                android:text="PhotoShop"
-                android:textColor="@color/programme_text_color"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/txtCountStudents"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:gravity="end"
-                android:layout_marginTop="3dp"
-                android:text="1K Student"
-                android:textColor="@color/colorTextDark"
-                android:textSize="12sp" />
-
-            <ProgressBar
-                android:id="@+id/progressActiveCourse"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="7dp"
-                android:layout_marginTop="7dp"
-                android:indeterminate="false"
-                android:maxHeight="12dp"
-                android:minHeight="12dp"
-                android:progress="20"
-                android:progressDrawable="@drawable/progress_bar_rounded"/>
-
-
-            <TextView
-                android:id="@+id/txtStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="3dp"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:gravity="end"
-                android:text="20% Complete"
+                android:maxLines="1"
+                android:text="Technology"
                 android:textColor="@color/main_highlighttext_color"
-                android:textSize="10sp" />
+                android:textSize="@dimen/font_size_x12" />
 
-
+            <ImageView
+                android:layout_width="@dimen/x0"
+                android:layout_height="@dimen/x8"
+                android:layout_gravity="center"
+                android:layout_weight=".05"
+                android:background="@drawable/circle_disable_stroke" />
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/txtCourseName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/nunito_sans_semibold"
+            android:maxLines="2"
+            android:minLines="2"
+            android:text="Basics of"
+            android:textColor="@color/programme_text_color"
+            android:textSize="@dimen/font_size_x14" />
+
+        <TextView
+            android:id="@+id/txtActiveProgram"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunit_sans_bold"
+            android:gravity="end"
+            android:text="PhotoShop"
+            android:textColor="@color/programme_text_color"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txtCountStudents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/nunito_sans_semibold"
+            android:gravity="end"
+            android:text="1K Student"
+            android:textColor="@color/colorTextDark"
+            android:textSize="12sp" />
+
+        <ProgressBar
+            android:id="@+id/progressActiveCourse"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            android:layout_marginTop="7dp"
+            android:indeterminate="false"
+            android:maxHeight="12dp"
+            android:minHeight="12dp"
+            android:progress="20"
+            android:progressDrawable="@drawable/progress_bar_rounded" />
 
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/txtStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/nunito_sans_semibold"
+            android:gravity="end"
+            android:text="20% Complete"
+            android:textColor="@color/main_highlighttext_color"
+            android:textSize="10sp" />
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

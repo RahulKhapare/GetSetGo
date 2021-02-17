@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llParent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_lect"
+    android:elevation="@dimen/x2"
+    android:orientation="vertical"
+    android:paddingVertical="@dimen/x10">
+
+    <LinearLayout
+        android:weightSum="10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="@dimen/x0"
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:fontFamily="@font/nunito_sans_semibold"
+            android:paddingHorizontal="@dimen/x12"
+            android:text="Front-End Web Development"
+            android:textColor="@color/colorTextDark"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/ivExpClp"
+            android:layout_width="@dimen/x0"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:src="@drawable/ic_expand" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/x10"
+        android:layout_marginHorizontal="@dimen/x10"
+        android:id="@+id/llChild"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone" />
+
+</LinearLayout>
