@@ -587,6 +587,7 @@ int drawable abc_textfield_search_material 0x0
 int drawable abc_vector_test 0x0
 int drawable dialog_bg 0x0
 int drawable dialog_title_bg 0x0
+int drawable ic_baseline_fullscreen_white 0x0
 int drawable notification_action_background 0x0
 int drawable notification_bg 0x0
 int drawable notification_bg_low 0x0

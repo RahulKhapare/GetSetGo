@@ -9,6 +9,7 @@ dimen H3
 dimen H4
 drawable dialog_bg
 drawable dialog_title_bg
+drawable ic_baseline_fullscreen_white
 drawable round_bg
 id btn_no
 id btn_ok

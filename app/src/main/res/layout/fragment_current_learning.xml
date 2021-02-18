@@ -2,10 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!--    <data>
-
-        </data>-->
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -71,7 +67,6 @@
                         android:layout_height="@dimen/x250"
                         app:animation_enabled="true"
                         app:controller_layout_id="@layout/exo_playback_control_view"
-
                         app:show_buffering="when_playing" />
 
                 </LinearLayout>
@@ -293,6 +288,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/x24"
+                    android:layout_marginBottom="@dimen/x50"
                     android:background="@drawable/bg_next"
                     android:fontFamily="@font/nunit_sans_bold"
                     android:paddingHorizontal="@dimen/x58"

@@ -588,6 +588,7 @@ drawable abc_textfield_search_material
 drawable abc_vector_test
 drawable dialog_bg
 drawable dialog_title_bg
+drawable ic_baseline_fullscreen_white
 drawable notification_action_background
 drawable notification_bg
 drawable notification_bg_low

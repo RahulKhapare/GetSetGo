@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/toolbar_backgound">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/main_layout_bg">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                   <TextView
+                       android:id="@+id/txtCourseName"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:textColor="@color/colorTextDark"
+                       android:textSize="@dimen/font_size_x18"
+                       android:ellipsize="marquee"
+                       android:fontFamily="@font/nunito_sans_semibold"
+                       android:gravity="center"
+                       android:paddingLeft="@dimen/x16"
+                       android:paddingRight="@dimen/x16"
+                       android:paddingTop="@dimen/x16">
+
+                   </TextView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/x250"
+                        app:cardCornerRadius="@dimen/x10"
+                        android:layout_marginTop="@dimen/x16"
+                        android:layout_marginLeft="@dimen/x16"
+                        android:layout_marginRight="16dp"
+                        app:cardElevation="0dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <com.google.android.exoplayer2.ui.PlayerView
+                                android:id="@+id/playerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:animation_enabled="true"
+                                app:controller_layout_id="@layout/exo_playback_control_view"
+                                app:show_buffering="when_playing" />
+
+                            <ProgressBar
+                                android:id="@+id/videoProgressBar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="invisible"
+                                android:theme="@style/ProgressAccent"
+                                android:layout_centerInParent="true"/>
+
+
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/x10"
+                        android:layout_marginTop="@dimen/x10"
+                        android:layout_marginLeft="@dimen/x16"
+                        android:layout_marginRight="@dimen/x16"
+                        android:indeterminate="false"
+                        android:maxHeight="@dimen/x12"
+                        android:minHeight="@dimen/x12"
+                        android:progress="5"
+                        android:progressDrawable="@drawable/progress_bar_rounded" />
+
+                    <TextView
+                        android:id="@+id/txtPercentage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/x2"
+                        android:fontFamily="@font/nunit_sans_bold"
+                        android:paddingVertical="@dimen/x2"
+                        android:text="5% Complete"
+                        android:textColor="@color/main_highlighttext_color"
+                        android:textSize="@dimen/font_size_x14"
+                        android:layout_marginLeft="@dimen/x16"
+                        android:layout_marginRight="@dimen/x16"
+                        />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/x24"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/btnPrevious"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/x16"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_previous"
+                            android:fontFamily="@font/nunit_sans_bold"
+                            android:text="@string/previous"
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/font_size_x14" />
+
+                        <Button
+                            android:id="@+id/btnNext"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/x16"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_next"
+                            android:fontFamily="@font/nunit_sans_bold"
+                            android:text="@string/next"
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/font_size_x14" />
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/x24"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:text="@string/modules"
+                        android:layout_marginRight="@dimen/x16"
+                        android:layout_marginLeft="@dimen/x16"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/font_size_x16"
+                        />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerModule"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/x16">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/x24"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:text="@string/downloadable_additional_files"
+                        android:layout_marginRight="@dimen/x16"
+                        android:layout_marginLeft="@dimen/x16"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/font_size_x16"
+                        />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerDocument"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/x16">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/x24"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:text="@string/additionalLink"
+                        android:layout_marginRight="@dimen/x16"
+                        android:layout_marginLeft="@dimen/x16"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/font_size_x16"
+                        />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerLink"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/x16">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/x24"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:text="@string/comments"
+                        android:layout_marginRight="@dimen/x16"
+                        android:layout_marginLeft="@dimen/x16"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/font_size_x16"
+                        />
+
+
+                    <EditText
+                        android:id="@+id/etxComments"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/x16"
+                        android:background="@drawable/bg_comment_box"
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:maxLines="10"
+                        android:minLines="5"
+                        android:padding="@dimen/x10"
+                        android:gravity="start"
+                        android:text=""
+                        android:layout_marginLeft="@dimen/x16"
+                        android:layout_marginRight="@dimen/x16"
+                        android:paddingVertical="@dimen/x2"
+                        android:textColor="@color/main_highlighttext_color"
+                        android:textSize="@dimen/font_size_x14" />
+
+                    <Button
+                        android:id="@+id/btnSubmit"
+                        android:layout_width="@dimen/x172"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/x16"
+                        android:background="@drawable/bg_next"
+                        android:fontFamily="@font/nunit_sans_bold"
+                        android:text="@string/submit"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/x20"
+                        android:layout_marginBottom="@dimen/x20"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/font_size_x14"
+                        />
+
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</layout>

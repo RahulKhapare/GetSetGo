@@ -19,7 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
 import com.getsetgo.Fragment.CourseDetailFragment;
+import com.getsetgo.Fragment.CurrentLearningFragment;
+import com.getsetgo.Fragment.MyCourseDetailFragment;
 import com.getsetgo.R;
+import com.getsetgo.util.Config;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
@@ -27,7 +30,7 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.MyCour
 
     Context context;
     JsonList activeCourseJsonList;
-    CourseDetailFragment courseDetailFragment;
+    MyCourseDetailFragment courseDetailFragment;
     Bundle bundle = new Bundle();
 
     public MyCourseAdapter(Context context, JsonList activeCourseJsonList) {
@@ -61,8 +64,9 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.MyCour
                 public void onClick(View view) {
 
                     String courseSlug = json.getString("slug");
+                    String courseName = json.getString("course_name");
                     Log.d("Hardik","slug: "+courseSlug);
-                    loadFragment(view,courseSlug);
+                    loadFragment(view,courseSlug,courseName);
                 }
             });
 
@@ -96,7 +100,9 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.MyCour
         }
     }
 
-    private void loadFragment(View v, String courseSlug) {
+    private void loadFragment(View v, String courseSlug,String courseName) {
+        Config.myCourseSlug = courseSlug;
+        Config.myCourseTitle = courseName;
 //        string = P.baseUrl + "series_check/" + json.getString(P.series_slug) + "/" + json.getString(P.video_slug);
 //        it = json.getInt(P.time);
 //        it *= 1000;
@@ -105,7 +111,7 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.MyCour
         bundle.putString("slug",courseSlug);
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
         if (courseDetailFragment == null)
-            courseDetailFragment = new CourseDetailFragment();
+            courseDetailFragment = new MyCourseDetailFragment();
         courseDetailFragment.setArguments(bundle);
         activity.getSupportFragmentManager()
                 .beginTransaction()

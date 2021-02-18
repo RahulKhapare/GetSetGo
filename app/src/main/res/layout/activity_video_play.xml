@@ -3,10 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-<!--    <data>
-
-    </data>-->
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:animation_enabled="true"
-            app:controller_layout_id="@layout/exo_playback_control_view"
+            app:controller_layout_id="@layout/exo_playback_control_view_full"
             app:show_buffering="when_playing" />
 
         <ProgressBar
@@ -26,6 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="invisible"
+            android:theme="@style/ProgressAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

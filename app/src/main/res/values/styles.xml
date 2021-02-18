@@ -60,5 +60,8 @@
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
     </style>
 
+    <style name="ProgressAccent" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorAccent">@color/colorWhite</item>
+    </style>
 
 </resources>

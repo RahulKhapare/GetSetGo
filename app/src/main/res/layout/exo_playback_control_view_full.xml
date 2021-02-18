@@ -121,7 +121,7 @@
                 android:layout_gravity="center"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_baseline_fullscreen_white" />
+                android:src="@drawable/ic_baseline_falfscreen_exit_24" />
 
         </FrameLayout>
 

@@ -86,4 +86,11 @@ public class P {
     public static String similar_series = "similar_series";
 
 
+
+    public static String course = "course";
+    public static String course_name = "course_name";
+    public static String course_videos = "course_videos";
+    public static String complete_percentage = "complete_percentage";
+
+
 }

@@ -365,6 +365,7 @@ public class CurrentLearningFragment extends Fragment implements Player.EventLis
                 fragmentCurrentLearningBinding.llAdditionalFiles.addView(currentCourseAdditionalFilesParentViewHolder.getViewGroup());
 
             }
+
             ivQuality.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -379,7 +380,6 @@ public class CurrentLearningFragment extends Fragment implements Player.EventLis
 
                     Intent intent = new Intent(getContext(), VideoPlayActivity.class);
                     intent.putExtra("url", "http://html5videoformatconverter.com/data/images/happyfit2.mp4");
-
                     startActivityForResult(intent, REQUEST_CODE);
 
                 }
