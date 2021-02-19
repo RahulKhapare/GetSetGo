@@ -16,12 +16,14 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adoisstudio.helper.H;
 import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
 import com.getsetgo.Fragment.CourseDetailFragment;
 import com.getsetgo.Fragment.CurrentLearningFragment;
 import com.getsetgo.Fragment.MyCourseDetailFragment;
 import com.getsetgo.R;
+import com.getsetgo.util.CheckConnection;
 import com.getsetgo.util.Config;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
@@ -66,7 +68,12 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.MyCour
                     String courseSlug = json.getString("slug");
                     String courseName = json.getString("course_name");
                     Log.d("Hardik","slug: "+courseSlug);
-                    loadFragment(view,courseSlug,courseName);
+                    if (CheckConnection.isVailable(context)){
+                        loadFragment(view,courseSlug,courseName);
+                    }else {
+                        H.showMessage(context,"No internet connection available");
+                    }
+
                 }
             });
 

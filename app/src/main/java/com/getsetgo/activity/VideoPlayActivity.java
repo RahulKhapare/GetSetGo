@@ -1,16 +1,26 @@
 package com.getsetgo.activity;
 
+import android.app.Dialog;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.getsetgo.Fragment.MyCourseDetailFragment;
+import com.getsetgo.Model.VideoUrlModel;
 import com.getsetgo.R;
+import com.getsetgo.adapterview.VideoQualityAdapter;
 import com.getsetgo.databinding.ActivityVideoPlayBinding;
 import com.getsetgo.util.Click;
 import com.getsetgo.util.Config;
+import com.getsetgo.util.WindowView;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
@@ -21,27 +31,32 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
-public class VideoPlayActivity extends AppCompatActivity implements Player.EventListener {
+import java.util.List;
 
-    String url = "";
-    long time = 0;
+public class VideoPlayActivity extends AppCompatActivity implements Player.EventListener,VideoQualityAdapter.onClick {
+
     ActivityVideoPlayBinding activityVideoPlayBinding;
     SimpleExoPlayer exoPlayer;
     private ImageView imgFullScreen;
     private ImageView imgQuality;
+    private  VideoPlayActivity activity = this;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         activityVideoPlayBinding = ActivityVideoPlayBinding.inflate(getLayoutInflater());
         setContentView(activityVideoPlayBinding.getRoot());
+        playVideo(MyCourseDetailFragment.videoPlayPath);
 
-        url = Config.url;
-        time = Config.time;
+        onClick();
+    }
+
+    private void playVideo(String url){
+
+        MyCourseDetailFragment.videoPlayPath = url;
 
         Uri uri = Uri.parse(url);
 
@@ -61,12 +76,11 @@ public class VideoPlayActivity extends AppCompatActivity implements Player.Event
         exoPlayer.setMediaItem(MediaItem.fromUri(uri));
         exoPlayer.prepare(videoSource);
 
-        if (time != C.TIME_UNSET) {
-            exoPlayer.seekTo(time);
+        if (MyCourseDetailFragment.lastVideoPosition != C.TIME_UNSET) {
+            exoPlayer.seekTo(MyCourseDetailFragment.lastVideoPosition );
         }
-
         exoPlayer.play();
-        onClick();
+
     }
 
     private void onClick(){
@@ -83,8 +97,42 @@ public class VideoPlayActivity extends AppCompatActivity implements Player.Event
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
+                if (MyCourseDetailFragment.videoUrlModelList!=null && !MyCourseDetailFragment.videoUrlModelList.isEmpty()){
+                    qualityUrlDialog(MyCourseDetailFragment.videoUrlModelList);
+                }
             }
         });
+    }
+
+    private void qualityUrlDialog(List<VideoUrlModel> videoUrlModelList){
+        dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.activity_video_url_dialog);
+
+        RecyclerView recyclerQuality = dialog.findViewById(R.id.recyclerQuality);
+        recyclerQuality.setLayoutManager(new LinearLayoutManager(activity));
+        VideoQualityAdapter adapter = new VideoQualityAdapter(activity,videoUrlModelList,MyCourseDetailFragment.lastSelectedPosition,2);
+        recyclerQuality.setAdapter(adapter);
+
+        dialog.setCancelable(true);
+        dialog.show();
+//        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//        dialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+    }
+
+    @Override
+    public void qualityClick(VideoUrlModel model,int position) {
+        if (dialog!=null){
+            dialog.dismiss();
+        }
+        if (exoPlayer!=null){
+            MyCourseDetailFragment.lastSelectedPosition = position;
+            MyCourseDetailFragment.lastVideoPosition = exoPlayer.getCurrentPosition();
+            exoPlayer.release();
+            exoPlayer = null;
+        }
+        Log.e("TAG", "setVideoData: "+  model.getLink() );
+        playVideo(model.getLink());
     }
 
     @Override
@@ -102,10 +150,8 @@ public class VideoPlayActivity extends AppCompatActivity implements Player.Event
     public void onBackPressed() {
 
         if (exoPlayer != null) {
-
             Config.isHalfScreen = true;
-            Config.time = exoPlayer.getContentPosition();
-
+            MyCourseDetailFragment.lastVideoPosition = exoPlayer.getCurrentPosition();
             exoPlayer.release();
             exoPlayer = null;
             finish();
@@ -117,5 +163,6 @@ public class VideoPlayActivity extends AppCompatActivity implements Player.Event
     }
 
     private void closeActivity() {
+
     }
 }

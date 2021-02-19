@@ -9,8 +9,8 @@
         android:orientation="horizontal"
         android:layout_marginLeft="@dimen/x16"
         android:layout_marginRight="@dimen/x16"
-        android:layout_marginTop="@dimen/x5"
-        android:layout_marginBottom="@dimen/x5">
+        android:layout_marginTop="@dimen/x10"
+        android:layout_marginBottom="@dimen/x10">
 
         <LinearLayout
             android:layout_width="@dimen/x0"
@@ -27,8 +27,10 @@
                 android:fontFamily="@font/nunito_sans_semibold"
                 android:gravity="start|center"
                 android:maxLines="3"
+                android:layout_gravity="center_vertical"
                 android:paddingHorizontal="@dimen/x4"
                 android:text="@string/app_name"
+                android:alpha="0.8"
                 android:textColor="@color/colorTextDark"
                 android:textSize="@dimen/font_size_x14" />
 
@@ -38,8 +40,10 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_sans_semibold"
                 android:gravity="start|center"
+                android:layout_gravity="center_vertical"
                 android:paddingHorizontal="@dimen/x4"
                 android:text="@string/app_name"
+                android:visibility="gone"
                 android:textColor="#60232323"
                 android:textSize="@dimen/font_size_x14" />
 

@@ -10,10 +10,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adoisstudio.helper.Json;
+import com.getsetgo.Fragment.MyCourseDetailFragment;
 import com.getsetgo.Model.CourseModuleModel;
 import com.getsetgo.R;
 import com.getsetgo.databinding.ActivityCourseModuleListBinding;
 import com.getsetgo.util.Click;
+import com.getsetgo.util.P;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +25,19 @@ public class CourseModuleAdapter extends RecyclerView.Adapter<CourseModuleAdapte
 
     Context context;
     List<CourseModuleModel> courseModuleModelList;
-    int lastCheckPosition = -1;
+    int lastCheckPosition = 0;
+    MyCourseDetailFragment fragment;
+    boolean flagValue = false;
 
-    public CourseModuleAdapter(Context context, List<CourseModuleModel> courseModuleModelList) {
+    public interface click{
+        void moduleSelection(CourseModuleModel moduleModel);
+    }
+
+    public CourseModuleAdapter(Context context, List<CourseModuleModel> courseModuleModelList,MyCourseDetailFragment fragment, boolean flagValue) {
         this.context = context;
         this.courseModuleModelList = courseModuleModelList;
+        this.fragment = fragment;
+        this.flagValue = flagValue;
     }
 
     @NonNull
@@ -40,7 +51,7 @@ public class CourseModuleAdapter extends RecyclerView.Adapter<CourseModuleAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CourseModuleModel model = courseModuleModelList.get(position);
 
-        holder.binding.txtTitle.setText(model.getModule_title());
+        holder.binding.txtTitle.setText(model.getModule_name());
 
         holder.binding.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +70,12 @@ public class CourseModuleAdapter extends RecyclerView.Adapter<CourseModuleAdapte
             }else {
                 model.setClickFlag(true);
                 holder.binding.imgTitle.setImageResource(R.drawable.ic_collapse);
-                holder.binding.lnrChildView.setVisibility(View.VISIBLE);
+                if (model.getVideos().size()!=0){
+                    holder.binding.lnrChildView.setVisibility(View.VISIBLE);
+                    ((MyCourseDetailFragment)fragment).moduleSelection(model);
+                }else {
+                    holder.binding.lnrChildView.setVisibility(View.GONE);
+                }
             }
         }else {
             model.setClickFlag(false);
@@ -68,10 +84,29 @@ public class CourseModuleAdapter extends RecyclerView.Adapter<CourseModuleAdapte
         }
 
         List<CourseChildModel> courseChildModelList = new ArrayList<>();
-        CourseChildAdapter adapter = new CourseChildAdapter(context,courseChildModelList);
+
+        if (model.getVideos()!=null || model.getVideos().size()!=0){
+            for (Json json : model.getVideos()){
+                CourseChildModel childModel = new CourseChildModel();
+                childModel.setVideo_id(json.getString(P.video_id));
+                childModel.setVideo_title(json.getString(P.video_title));
+                childModel.setDuration(json.getString(P.duration));
+                childModel.setIs_completed(json.getString(P.is_completed));
+                childModel.setVideo_urls(json.getJsonList(P.video_urls));
+                childModel.setAdditional_links(json.getJsonList(P.additional_links));
+                childModel.setAdditional_files(json.getJsonList(P.additional_files));
+                courseChildModelList.add(childModel);
+            }
+        }
+
+        CourseChildAdapter adapter = new CourseChildAdapter(context,courseChildModelList,flagValue,fragment);
         holder.binding.recyclerChild.setLayoutManager(new LinearLayoutManager(context));
         holder.binding.recyclerChild.setNestedScrollingEnabled(false);
         holder.binding.recyclerChild.setAdapter(adapter);
+
+        if (flagValue){
+            flagValue = false;
+        }
 
     }
 

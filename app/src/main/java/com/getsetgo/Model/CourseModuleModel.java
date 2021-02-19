@@ -4,15 +4,33 @@ import com.adoisstudio.helper.JsonList;
 
 public class CourseModuleModel {
 
-    String module_title;
+    String id;
+    String module_name;
+    JsonList videos;
     boolean clickFlag;
 
-    public String getModule_title() {
-        return module_title;
+    public String getId() {
+        return id;
     }
 
-    public void setModule_title(String module_title) {
-        this.module_title = module_title;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getModule_name() {
+        return module_name;
+    }
+
+    public void setModule_name(String module_name) {
+        this.module_name = module_name;
+    }
+
+    public JsonList getVideos() {
+        return videos;
+    }
+
+    public void setVideos(JsonList videos) {
+        this.videos = videos;
     }
 
     public boolean isClickFlag() {

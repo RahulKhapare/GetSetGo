@@ -1,10 +1,18 @@
 package com.getsetgo.activity;
 
+import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.os.Environment;
+import android.os.StrictMode;
+import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -50,15 +59,20 @@ import com.getsetgo.Fragment.TermsAndConditionFragment;
 import com.getsetgo.Fragment.TransactionsHistoryFragment;
 import com.getsetgo.Fragment.YourCourseFragment;
 import com.getsetgo.Fragment.ParentCategoriesFragment;
+import com.getsetgo.Model.CourseDocumentModel;
 import com.getsetgo.R;
 import com.getsetgo.databinding.ActivityBaseScreenBinding;
 
 
 import com.getsetgo.util.App;
 import com.getsetgo.util.Click;
+import com.getsetgo.util.OpenFile;
 import com.getsetgo.util.P;
+import com.getsetgo.util.DocumentDownloader;
 import com.getsetgo.util.WindowView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.io.File;
 
 import static com.getsetgo.Fragment.CurrentLearningFragment.PLAYBACK_POSITION;
 import static com.getsetgo.Fragment.CurrentLearningFragment.REQUEST_CODE;
@@ -88,11 +102,16 @@ public class BaseScreenActivity extends AppCompatActivity {
     OnBackPressedCallback onBackPressedCallback;
     private LoadingDialog loadingDialog;
 
+    private static final int READ_WRITE = 20;
+    private String pdf_url = "";
+    private String pdf_title = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         WindowView.getWindow(activity);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_base_screen);
+        getAccess();
         init();
     }
 
@@ -544,4 +563,78 @@ public class BaseScreenActivity extends AppCompatActivity {
 //            Toast.makeText(getActivity(),"Playback position result "+testResult,Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void checkPDFPath(CourseDocumentModel model){
+        pdf_title = model.getFile_name();
+        pdf_url = model.getFile();
+        checkPDF();
+    }
+
+    private void getAccess() {
+        try {
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+            StrictMode.setVmPolicy(builder.build());
+        } catch (Exception e) {
+        }
+    }
+
+    private void checkPDF() {
+        if (TextUtils.isEmpty(pdf_url) || pdf_url.equals("null")) {
+            H.showMessage(this, "Something went wrong to download pdf file");
+        } else {
+            getPermission();
+        }
+    }
+
+    private void getPermission() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                READ_WRITE);
+    }
+
+    public void jumpToSetting() {
+        H.showMessage(this, "Please allow permission from setting.");
+        Intent intent = new Intent();
+        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getPackageName(), null);
+        intent.setData(uri);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case READ_WRITE: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    checkDirectory(this, pdf_url, pdf_title);
+                } else if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                    jumpToSetting();
+                } else {
+                    getPermission();
+                }
+                return;
+            }
+        }
+    }
+
+    private void checkDirectory(Context context, String fileURL, String title) {
+        try {
+            String destination = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/GetSetGo/Document/";
+            String fileName = title;
+            destination += fileName;
+            File direct = new File(destination);
+            if (direct.exists()) {
+                OpenFile.openPath(context,direct);
+            } else {
+                DocumentDownloader.download(context, fileURL, title);
+            }
+        } catch (Exception e) {
+            Log.e("TAG", "checkDirectory: " + e.getMessage());
+            H.showMessage(context, "Something went wrong, try again.");
+        }
+
+    }
+
 }

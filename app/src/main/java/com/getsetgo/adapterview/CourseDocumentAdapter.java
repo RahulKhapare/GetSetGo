@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.getsetgo.Fragment.MyCourseDetailFragment;
 import com.getsetgo.Model.CourseDocumentModel;
 import com.getsetgo.R;
 import com.getsetgo.databinding.ActivityCourseDocumentListBinding;
@@ -21,11 +22,17 @@ public class CourseDocumentAdapter extends RecyclerView.Adapter<CourseDocumentAd
 
     Context context;
     List<CourseDocumentModel> courseDocumentModelList;
+    MyCourseDetailFragment fragment;
+
+    public interface onClick{
+        void downloadPDF(CourseDocumentModel model);
+    }
 
 
-    public CourseDocumentAdapter(Context context, List<CourseDocumentModel> courseDocumentModelList) {
+    public CourseDocumentAdapter(Context context, List<CourseDocumentModel> courseDocumentModelList,MyCourseDetailFragment fragment) {
         this.context = context;
         this.courseDocumentModelList = courseDocumentModelList;
+        this.fragment = fragment;
     }
 
 
@@ -46,6 +53,7 @@ public class CourseDocumentAdapter extends RecyclerView.Adapter<CourseDocumentAd
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
+                ((MyCourseDetailFragment)fragment).downloadPDF(model);
             }
         });
     }

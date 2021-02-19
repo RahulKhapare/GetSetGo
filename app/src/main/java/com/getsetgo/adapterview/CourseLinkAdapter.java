@@ -1,6 +1,8 @@
 package com.getsetgo.adapterview;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adoisstudio.helper.H;
 import com.getsetgo.Model.CourseLinkModel;
 import com.getsetgo.R;
 import com.getsetgo.databinding.ActivityCourseLinkListBinding;
@@ -45,6 +48,13 @@ public class CourseLinkAdapter extends RecyclerView.Adapter<CourseLinkAdapter.Vi
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
+                try{
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(model.getLink()));
+                    context.startActivity(i);
+                }catch (Exception e){
+                    H.showMessage(context,"Something went wrong to open link");
+                }
             }
         });
     }

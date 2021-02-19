@@ -4,22 +4,13 @@ import com.adoisstudio.helper.JsonList;
 
 public class CourseChildModel {
 
-    String module_id;
     String video_id;
     String video_title;
     String duration;
     String is_completed;
     JsonList video_urls;
-    JsonList additional_files;
     JsonList additional_links;
-
-    public String getModule_id() {
-        return module_id;
-    }
-
-    public void setModule_id(String module_id) {
-        this.module_id = module_id;
-    }
+    JsonList additional_files;
 
     public String getVideo_id() {
         return video_id;
@@ -61,19 +52,19 @@ public class CourseChildModel {
         this.video_urls = video_urls;
     }
 
-    public JsonList getAdditional_files() {
-        return additional_files;
-    }
-
-    public void setAdditional_files(JsonList additional_files) {
-        this.additional_files = additional_files;
-    }
-
     public JsonList getAdditional_links() {
         return additional_links;
     }
 
     public void setAdditional_links(JsonList additional_links) {
         this.additional_links = additional_links;
+    }
+
+    public JsonList getAdditional_files() {
+        return additional_files;
+    }
+
+    public void setAdditional_files(JsonList additional_files) {
+        this.additional_files = additional_files;
     }
 }

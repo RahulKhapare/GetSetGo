@@ -3,13 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
+        android:id="@+id/lnrChild"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginLeft="@dimen/x16"
         android:layout_marginRight="@dimen/x16"
-        android:layout_marginTop="@dimen/x5"
-        android:layout_marginBottom="@dimen/x5">
+        android:layout_marginTop="@dimen/x10"
+        android:layout_marginBottom="@dimen/x10">
 
         <TextView
             android:id="@+id/txtCount"
@@ -30,7 +31,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtLectureTitle"
+                android:id="@+id/txtVideoTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -43,7 +44,7 @@
                 android:textSize="@dimen/font_size_x14" />
 
             <TextView
-                android:id="@+id/txtVideoDetails"
+                android:id="@+id/txtDuration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_sans_semibold"

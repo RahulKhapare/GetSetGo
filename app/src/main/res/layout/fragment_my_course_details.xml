@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -39,16 +40,17 @@
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/x250"
+                        android:layout_height="@dimen/x200"
                         app:cardCornerRadius="@dimen/x10"
                         android:layout_marginTop="@dimen/x16"
                         android:layout_marginLeft="@dimen/x16"
                         android:layout_marginRight="16dp"
                         app:cardElevation="0dp">
 
-                        <RelativeLayout
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:background="@android:color/black">
 
                             <com.google.android.exoplayer2.ui.PlayerView
                                 android:id="@+id/playerView"
@@ -59,15 +61,17 @@
                                 app:show_buffering="when_playing" />
 
                             <ProgressBar
-                                android:id="@+id/videoProgressBar"
+                                android:id="@+id/pbVideoPlayer"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:visibility="invisible"
-                                android:theme="@style/ProgressAccent"
-                                android:layout_centerInParent="true"/>
+                                android:indeterminateDrawable="@drawable/progress"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
-
-                        </RelativeLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </androidx.cardview.widget.CardView>
 
@@ -153,17 +157,19 @@
                         android:id="@+id/recyclerModule"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/x16">
+                        android:layout_marginTop="@dimen/x5">
 
                     </androidx.recyclerview.widget.RecyclerView>
 
                     <TextView
+                        android:id="@+id/txtAdditionalFiles"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/x24"
                         android:fontFamily="@font/nunito_sans_semibold"
                         android:text="@string/downloadable_additional_files"
                         android:layout_marginRight="@dimen/x16"
+                        android:visibility="gone"
                         android:layout_marginLeft="@dimen/x16"
                         android:textColor="@color/colorTextDark"
                         android:textSize="@dimen/font_size_x16"
@@ -173,11 +179,12 @@
                         android:id="@+id/recyclerDocument"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/x16">
+                        android:layout_marginTop="@dimen/x5">
 
                     </androidx.recyclerview.widget.RecyclerView>
 
                     <TextView
+                        android:id="@+id/txtAdditionalLinked"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/x24"
@@ -185,6 +192,7 @@
                         android:text="@string/additionalLink"
                         android:layout_marginRight="@dimen/x16"
                         android:layout_marginLeft="@dimen/x16"
+                        android:visibility="gone"
                         android:textColor="@color/colorTextDark"
                         android:textSize="@dimen/font_size_x16"
                         />
@@ -193,7 +201,7 @@
                         android:id="@+id/recyclerLink"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/x16">
+                        android:layout_marginTop="@dimen/x5">
 
                     </androidx.recyclerview.widget.RecyclerView>
 

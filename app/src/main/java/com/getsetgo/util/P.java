@@ -90,7 +90,21 @@ public class P {
     public static String course = "course";
     public static String course_name = "course_name";
     public static String course_videos = "course_videos";
+    public static String module_list = "module_list";
     public static String complete_percentage = "complete_percentage";
+    public static String module_id = "module_id";
+    public static String module_name = "module_name";
+    public static String videos = "videos";
+    public static String video_title = "video_title";
+    public static String duration = "duration";
+    public static String is_completed = "is_completed";
+    public static String video_urls = "video_urls";
+    public static String additional_links = "additional_links";
+    public static String additional_files = "additional_files";
+    public static String file = "file";
+    public static String file_name = "file_name";
+    public static String quality = "quality";
+    public static String link_name = "link_name";
 
 
 }
