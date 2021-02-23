@@ -45,6 +45,7 @@ import com.getsetgo.util.App;
 import com.getsetgo.util.Click;
 import com.getsetgo.util.Config;
 import com.getsetgo.util.P;
+import com.getsetgo.util.ProgressView;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.MediaItem;
@@ -95,6 +96,8 @@ CourseModuleAdapter.click{
     private int actualSize;
 
     private Dialog dialog;
+    private LoadingDialog loadingDialog;
+    private String courseId = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -107,14 +110,12 @@ CourseModuleAdapter.click{
             BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
             BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
             initView();
-
         }
-
         return binding.getRoot();
     }
 
     private void initView(){
-
+        loadingDialog = new LoadingDialog(context);
         imgFullScreen = binding.playerView.findViewById(R.id.exo_fullscreen_icon);
         imgQuality = binding.playerView.findViewById(R.id.ivVideoQuality);
 
@@ -331,12 +332,13 @@ CourseModuleAdapter.click{
     }
 
 
+
     private void setData(Json jsonData){
 
         Json courseObject = jsonData.getJson(P.course);
         JsonList module_list = jsonData.getJsonList(P.module_list);
 
-        String id = courseObject.getString(P.id);
+        courseId = courseObject.getString(P.id);
         String courseName = courseObject.getString(P.course_name);
         String progress = courseObject.getString(P.complete_percentage);
 
@@ -406,8 +408,30 @@ CourseModuleAdapter.click{
         actualSize--;
     }
 
+    private void updateVideoStatus(String course_id,String video_id) {
+//        ProgressView.show(context,loadingDialog);
+        Json j = new Json();
+        j.addString(P.course_id,course_id);
+        j.addString(P.video_id,video_id);
+        Api.newApi(context, P.baseUrl + "add_video_status").addJson(j)
+                .setMethod(Api.POST)
+                .onHeaderRequest(App::getHeaders)
+                .onError(() -> {
+//                    ProgressView.dismiss(loadingDialog);
+                })
+                .onSuccess(json ->
+                {
+                    if (json.getInt(P.status) == 1) {
+                    }else {
+                    }
+//                    ProgressView.dismiss(loadingDialog);
+                })
+                .run("updateVideoStatus");
+    }
+
     @Override
     public void calledChild(CourseChildModel model,int position) {
+        updateVideoStatus(courseId,model.getVideo_id());
         childVideoPosition = position;
         updateButton(childVideoPosition);
         lastVideoPosition = 0;

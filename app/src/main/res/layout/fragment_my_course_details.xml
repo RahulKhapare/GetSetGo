@@ -201,6 +201,7 @@
                         android:id="@+id/recyclerLink"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x24"
                         android:layout_marginTop="@dimen/x5">
 
                     </androidx.recyclerview.widget.RecyclerView>
@@ -211,6 +212,7 @@
                         android:layout_marginTop="@dimen/x24"
                         android:fontFamily="@font/nunito_sans_semibold"
                         android:text="@string/comments"
+                        android:visibility="gone"
                         android:layout_marginRight="@dimen/x16"
                         android:layout_marginLeft="@dimen/x16"
                         android:textColor="@color/colorTextDark"
@@ -230,6 +232,7 @@
                         android:padding="@dimen/x10"
                         android:gravity="start"
                         android:text=""
+                        android:visibility="gone"
                         android:layout_marginLeft="@dimen/x16"
                         android:layout_marginRight="@dimen/x16"
                         android:paddingVertical="@dimen/x2"
@@ -250,6 +253,7 @@
                         android:textAllCaps="false"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/font_size_x14"
+                        android:visibility="gone"
                         />
 
 
