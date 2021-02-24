@@ -23,6 +23,7 @@ public class P {
     public static String confirm_password = "confirm_password";
     public static String token = "token";
     public static String user_id = "user_id";
+    public static String is_affiliate = "is_affiliate";
     public static String list = "list";
     public static String referral_income = "referral_income";
     public static String event_income = "event_income";
@@ -47,6 +48,7 @@ public class P {
     public static String issue_master = "issue_master";
     public static String category_list = "category_list";
     public static String category_name = "category_name";
+    public static String instructor_name = "instructor_name";
     public static String series = "series";
     public static String image = "image";
     public static String series_name = "series_name";
@@ -70,6 +72,8 @@ public class P {
     public static String is_purchased = "is_purchased";
     public static String video_pricing = "video_pricing";
     public static String price = "price";
+    public static String sale_price = "sale_price";
+    public static String rating = "rating";
     public static String series_pricing = "series_pricing";
     public static String plan_list = "plan_list";
     public static String duration_in_months = "duration_in_months";
@@ -106,6 +110,8 @@ public class P {
     public static String file_name = "file_name";
     public static String quality = "quality";
     public static String link_name = "link_name";
+    public static String course_list = "course_list";
+
 
 
 }

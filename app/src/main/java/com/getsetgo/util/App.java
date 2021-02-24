@@ -6,7 +6,7 @@ import android.content.Intent;
 
 import com.adoisstudio.helper.H;
 import com.adoisstudio.helper.JsonList;
-import com.getsetgo.others.VideoActivity;
+import com.getsetgo.Others.VideoActivity;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.activity.LoginActivity;
 

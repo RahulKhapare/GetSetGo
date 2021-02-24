@@ -1,4 +1,4 @@
-package com.getsetgo.others;
+package com.getsetgo.Others;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.MediaController;
 
 import com.adoisstudio.helper.H;
+import com.getsetgo.Others.VideoActivity;
 import com.getsetgo.R;
 
 public class CustomMediaController extends MediaController implements View.OnClickListener {

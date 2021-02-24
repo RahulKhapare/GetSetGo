@@ -32,6 +32,7 @@
 
 
                     <EditText
+                        android:id="@+id/etxSearch"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="8.5"
@@ -39,6 +40,7 @@
                         android:fontFamily="@font/nunito_sans_regular"
                         android:hint="Search for Courses"
                         android:maxLines="3"
+                        android:text=""
                         android:paddingLeft="16dp"
                         android:textColor="@color/colorTextDark"
                         android:textColorHint="@color/colorTextHint"
@@ -46,10 +48,10 @@
 
 
                     <ImageView
-                        android:layout_width="0dp"
+                        android:id="@+id/imgSearch"
+                        android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_gravity="end|center"
-                        android:layout_marginRight="20dp"
                         android:layout_weight="1.5"
                         android:src="@drawable/ic_search" />
                 </LinearLayout>
@@ -57,9 +59,10 @@
 
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/Scroll"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_below="@+id/flSearch"
+                android:fillViewport="true"
                 android:layout_marginTop="25dp">
 
                 <LinearLayout
@@ -70,6 +73,7 @@
 
 
                     <TextView
+                        android:id="@+id/txtTopSearch"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_sans_semibold"
@@ -77,35 +81,49 @@
                         android:textColor="@color/colorTextDark"
                         android:textSize="16sp" />
 
-                    <LinearLayout
-                        android:id="@+id/llDynamicSearch"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/recyclerTopSearch"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content">
 
-
-                    </LinearLayout>
-
+                    </androidx.recyclerview.widget.RecyclerView>
 
                     <TextView
+                        android:id="@+id/txtYourSearch"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/nunito_sans_semibold"
-                        android:text="Browse Categories"
+                        android:text="Your Search"
+                        android:visibility="gone"
                         android:textColor="@color/colorTextDark"
                         android:textSize="16sp" />
 
-                    <LinearLayout
-                        android:id="@+id/llDynamicCategory"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:orientation="vertical">
+                        android:layout_height="match_parent">
 
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_marginTop="10dp"
+                            android:id="@+id/recyclerYourSearch"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-                    </LinearLayout>
+                        </androidx.recyclerview.widget.RecyclerView>
+
+                        <TextView
+                            android:id="@+id/txtError"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_sans_semibold"
+                            android:text="No search result found !"
+                            android:textColor="@color/colorTextDark"
+                            android:layout_centerInParent="true"
+                            android:visibility="gone"
+                            android:textSize="16sp" />
+
+                    </RelativeLayout>
 
 
                 </LinearLayout>

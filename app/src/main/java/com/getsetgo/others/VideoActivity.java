@@ -1,4 +1,4 @@
-package com.getsetgo.others;
+package com.getsetgo.Others;
 
 import android.app.Dialog;
 import android.content.pm.ActivityInfo;
@@ -36,6 +36,7 @@ import com.adoisstudio.helper.Session;
 import com.getsetgo.R;
 import com.getsetgo.activity.SplashActivity;
 import com.getsetgo.util.App;
+import com.getsetgo.util.JumpToLogin;
 import com.getsetgo.util.P;
 
 import java.util.ArrayList;
@@ -43,7 +44,8 @@ import java.util.Map;
 
 public class VideoActivity extends AppCompatActivity implements GestureDetector.OnGestureListener, Api.OnHeaderRequestListener {
     //private CustomMediaController customMediaController;
-    private CustomVideoView customVideoView;
+    private VideoActivity activity = this;
+    private com.getsetgo.others.CustomVideoView customVideoView;
     private MediaPlayer mediaPlayer;
     private VideoController videoController;
     private LoadingDialog loadingDialog;
@@ -112,6 +114,7 @@ public class VideoActivity extends AppCompatActivity implements GestureDetector.
                 .onLoading(this::onLoading)
                 .onError(this::onError)
                 .onSuccess(json -> {
+                    JumpToLogin.call(json,activity);
                     if (json.getInt(P.status) == 0)
                         H.showMessage(VideoActivity.this, json.getString(P.err));
                     else {

@@ -1,7 +1,11 @@
 package com.getsetgo.Fragment;
 
+import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +18,39 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.adoisstudio.helper.Api;
+import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.Json;
+import com.adoisstudio.helper.JsonList;
+import com.adoisstudio.helper.LoadingDialog;
+import com.adoisstudio.helper.MessageBox;
+import com.getsetgo.Adapter.SearchAdapter;
+import com.getsetgo.Model.SearchModel;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentComposeBinding;
 import com.getsetgo.databinding.FragmentSearchBinding;
+import com.getsetgo.util.App;
+import com.getsetgo.util.Click;
+import com.getsetgo.util.JumpToLogin;
+import com.getsetgo.util.P;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class SearchFragment extends Fragment {
 
     FragmentSearchBinding binding;
     TextView[] t;
     TextView[] tC;
+
+    private List<SearchModel> topSearchModelList;
+    private List<SearchModel> yourSearchModelList;
+    private SearchAdapter topAdapter;
+    private SearchAdapter yourAdapter;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -40,15 +66,12 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false);
         View rootView = binding.getRoot();
-
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Search");
-init();
-
+        init();
         return rootView;
     }
 
-    private void init(){
-        dynamicTextView();
+    private void init() {
         BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,49 +82,113 @@ init();
                 }
             }
         });
+
+        topSearchModelList = new ArrayList<>();
+        yourSearchModelList = new ArrayList<>();
+
+        topAdapter = new SearchAdapter(getActivity(),topSearchModelList);
+        binding.recyclerTopSearch.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.recyclerTopSearch.setAdapter(topAdapter);
+
+        yourAdapter = new SearchAdapter(getActivity(),yourSearchModelList);
+        binding.recyclerYourSearch.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.recyclerYourSearch.setAdapter(yourAdapter);
+
+        setTopSearchData(HomeFragment.top_searches);
+
+        binding.imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                if (TextUtils.isEmpty(binding.etxSearch.getText().toString().trim())){
+                    H.showMessage(getActivity(),"Please enter course for search");
+                }else {
+                    hitSearchListApi(getActivity(),binding.etxSearch.getText().toString().trim());
+                }
+            }
+        });
+
     }
 
-    private void dynamicTextView() {
+    private void hitSearchListApi(Context context, String searchValue) {
 
-        Typeface typeface = ResourcesCompat.getFont(getActivity(), R.font.nunito_sans_regular);
-        LinearLayout.LayoutParams dim = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        dim.setMargins(0, 20, 0, 20);
+        LoadingDialog loadingDialog = new LoadingDialog(context, false);
+        Api.newApi(context, P.baseUrl + "search" + "?q=" + searchValue)
+                .setMethod(Api.GET)
+                .onHeaderRequest(App::getHeaders)
+                .onLoading(isLoading -> {
+                    if (isLoading)
+                        loadingDialog.show("loading...");
+                    else
+                        loadingDialog.hide();
+                })
+                .onError(() ->
+                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
+                        }))
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        JumpToLogin.call(Json1,context);
+                        loadingDialog.dismiss();
+                        if (Json1.getInt(P.status) == 0) {
+                            checkSearch(yourSearchModelList);
+                        } else {
+                            Json1 = Json1.getJson(P.data);
+                            JsonList jsonList = Json1.getJsonList(P.course_list);
+                            if (jsonList==null || jsonList.size()==0){
+                                H.showMessage(getActivity(),"No search result found !");
+                            }
+                            setYourSearchData(jsonList);
+                        }
+                    }
 
-        String[] arr = getActivity().getResources().getStringArray(R.array.listArray);
-        t = new TextView[arr.length];
-        for (int i = 0; i < arr.length; i++) {
-            t[i] = new TextView(getActivity());
-            t[i].setLayoutParams(dim);
-            t[i].setText(arr[i]);
-            t[i].setTextSize(14);
-            t[i].setTypeface(typeface);
-            t[i].setTextColor(getActivity().getResources().getColor(R.color.colorTextHint60));
-            binding.llDynamicSearch.addView(t[i]);
+                }).run("hitSearchListApi");
+
+    }
+
+    private void setTopSearchData(JsonList jsonList){
+        topSearchModelList.clear();
+        if (jsonList==null || jsonList.size()==0){
+            binding.txtTopSearch.setVisibility(View.GONE);
+            topAdapter.notifyDataSetChanged();
+        }else {
+            binding.txtTopSearch.setVisibility(View.VISIBLE);
+            for (Json json : jsonList){
+                SearchModel model = new SearchModel();
+                model.setId(json.getString(P.id));
+                model.setSlug(json.getString(P.slug));
+                model.setCourse_name(json.getString(P.course_name));
+                topSearchModelList.add(model);
+            }
+            topAdapter.notifyDataSetChanged();
         }
+    }
 
-
-        LinearLayout.LayoutParams llm = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        llm.setMargins(0, 20, 0, 20);
-
-        String[] arrCat = getActivity().getResources().getStringArray(R.array.categoryArray);
-
-        tC = new TextView[arrCat.length];
-
-        for (int i = 0; i < arrCat.length; i++) {
-            tC[i] = new TextView(getActivity());
-            tC[i].setLayoutParams(dim);
-            tC[i].setText(arrCat[i]);
-            tC[i].setTextSize(14);
-            tC[i].setTypeface(typeface);
-            tC[i].setTextColor(getActivity().getResources().getColor(R.color.colorTextHint60));
-            binding.llDynamicCategory.addView(tC[i]);
-            int finalI = i;
-            tC[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getActivity(), arrCat[finalI], Toast.LENGTH_SHORT).show();
+    private void setYourSearchData(JsonList jsonList){
+        if (jsonList==null || jsonList.size()==0){
+            checkSearch(yourSearchModelList);
+        }else {
+            for (Json json : jsonList){
+                SearchModel model = new SearchModel();
+                model.setId(json.getString(P.id));
+                model.setSlug(json.getString(P.slug));
+                model.setCourse_name(json.getString(P.course_name));
+                if (!isContainsLocation(yourSearchModelList,model.getId())){
+                    yourSearchModelList.add(model);
                 }
-            });
+            }
+            yourAdapter.notifyDataSetChanged();
+            checkSearch(yourSearchModelList);
+        }
+    }
+
+    private void checkSearch(List<SearchModel> list){
+        if (list.isEmpty()){
+            binding.txtError.setVisibility(View.VISIBLE);
+            binding.txtYourSearch.setVisibility(View.VISIBLE);
+        }else {
+            binding.txtError.setVisibility(View.GONE);
+            binding.txtYourSearch.setVisibility(View.VISIBLE);
         }
     }
 
@@ -110,5 +197,13 @@ init();
         super.onViewCreated(view, savedInstanceState);
     }
 
+    public boolean isContainsLocation(Collection<SearchModel> c, String location) {
+        for(SearchModel o : c) {
+            if(o != null && o.getId().equals(location)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

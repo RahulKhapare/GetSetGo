@@ -15,12 +15,16 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adoisstudio.helper.H;
 import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
 import com.getsetgo.Fragment.CourseDetailFragment;
+import com.getsetgo.Fragment.MyCourseDetailFragment;
 import com.getsetgo.Fragment.ViewAllCategoriesFragment;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
+import com.getsetgo.util.CheckConnection;
+import com.getsetgo.util.Config;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
@@ -28,7 +32,7 @@ public class ActiveCourseAdapter extends RecyclerView.Adapter<ActiveCourseAdapte
 
     Context context;
     JsonList jsonList;
-    CourseDetailFragment courseDetailFragment;
+    MyCourseDetailFragment courseDetailFragment;
     Bundle bundle = new Bundle();
 
     public ActiveCourseAdapter(Context context, JsonList jsonList) {
@@ -51,7 +55,7 @@ public class ActiveCourseAdapter extends RecyclerView.Adapter<ActiveCourseAdapte
 
         try {
             holder.txtCourseName.setText(json.getString("course_name"));
-            Picasso.get().load(json.getString("image")).placeholder(R.drawable.ic_wp).error(R.drawable.ic_wp).into(holder.imvActiveCourse);
+            Picasso.get().load(json.getString("image")).placeholder(R.drawable.ic_no_image).error(R.drawable.ic_no_image).into(holder.imvActiveCourse);
             holder.progressActiveCourse.setProgress(Integer.parseInt(json.getString("completion_percent")), true);
             holder.txtTech.setText(json.getString("category_name"));
             holder.txtStatus.setText(json.getString("completion_percent") + "% Complete");
@@ -61,8 +65,12 @@ public class ActiveCourseAdapter extends RecyclerView.Adapter<ActiveCourseAdapte
                 public void onClick(View view) {
 
                     String courseSlug = json.getString("slug");
-                    Log.d("Hardik","slug: "+courseSlug);
-                    loadFragment(view,courseSlug);
+                    String courseName = json.getString("course_name");
+                    if (CheckConnection.isVailable(context)){
+                        loadFragment(view,courseSlug,courseName);
+                    }else {
+                        H.showMessage(context,"No internet connection available");
+                    }
                 }
             });
 
@@ -114,18 +122,37 @@ public class ActiveCourseAdapter extends RecyclerView.Adapter<ActiveCourseAdapte
                 .commit();
     }*/
 
-    private void loadFragment(View v, String title) {
-        Bundle bundle = new Bundle();
+//    private void loadFragment(View v, String title) {
+//        Bundle bundle = new Bundle();
+//        BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
+//        BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);
+//        BaseScreenActivity.binding.incFragmenttool.content.setVisibility(View.VISIBLE);
+//        BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
+//        bundle.putString("slug", title);
+//        bundle.putBoolean("isFromHome", true);
+//        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+//        if (courseDetailFragment == null)
+//            courseDetailFragment = new CourseDetailFragment();
+//
+//        courseDetailFragment.setArguments(bundle);
+//        activity.getSupportFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.fragment_container, courseDetailFragment)
+//                .addToBackStack(null)
+//                .commit();
+//    }
+
+    private void loadFragment(View v, String courseSlug,String courseName) {
         BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
         BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);
         BaseScreenActivity.binding.incFragmenttool.content.setVisibility(View.VISIBLE);
         BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
-        bundle.putString("slug", title);
-        bundle.putBoolean("isFromHome", true);
+        Config.myCourseSlug = courseSlug;
+        Config.myCourseTitle = courseName;
+        bundle.putString("slug",courseSlug);
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
         if (courseDetailFragment == null)
-            courseDetailFragment = new CourseDetailFragment();
-
+            courseDetailFragment = new MyCourseDetailFragment();
         courseDetailFragment.setArguments(bundle);
         activity.getSupportFragmentManager()
                 .beginTransaction()

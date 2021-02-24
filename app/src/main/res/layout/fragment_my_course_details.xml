@@ -142,6 +142,7 @@
 
 
                     <TextView
+                        android:id="@+id/txtModule"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/x24"
@@ -151,6 +152,7 @@
                         android:layout_marginLeft="@dimen/x16"
                         android:textColor="@color/colorTextDark"
                         android:textSize="@dimen/font_size_x16"
+                        android:visibility="gone"
                         />
 
                     <androidx.recyclerview.widget.RecyclerView

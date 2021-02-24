@@ -19,6 +19,7 @@
     <item
         android:id="@+id/menu_favourites"
         android:icon="@drawable/ic_favourites_menu"
+        android:visible="false"
         android:title="Favourites"/>
     <item
         android:id="@+id/menu_Account"

@@ -25,6 +25,7 @@ import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentYourCourseBinding;
 import com.getsetgo.util.App;
+import com.getsetgo.util.JumpToLogin;
 import com.getsetgo.util.P;
 
 public class YourCourseFragment extends Fragment {
@@ -116,6 +117,7 @@ public class YourCourseFragment extends Fragment {
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
+                        JumpToLogin.call(Json1,context);
                         loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(context, Json1.getString(P.err));

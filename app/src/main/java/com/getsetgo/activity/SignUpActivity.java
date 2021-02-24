@@ -26,6 +26,7 @@ import com.getsetgo.R;
 import com.getsetgo.databinding.ActivitySignUpBinding;
 import com.getsetgo.util.App;
 import com.getsetgo.util.Click;
+import com.getsetgo.util.JumpToLogin;
 import com.getsetgo.util.P;
 import com.getsetgo.util.Utilities;
 import com.getsetgo.util.Validation;
@@ -217,6 +218,7 @@ public class SignUpActivity extends AppCompatActivity {
                         MessageBox.showOkMessage(this, "Message", "Registration failed. Please try again", () -> {
                         }))
                 .onSuccess(json1 -> {
+                    JumpToLogin.call(json1,this);
                     loadingDialog.dismiss();
                     if (json1.getInt(P.status) == 0)
                         H.showMessage(activity, json1.getString(P.err));

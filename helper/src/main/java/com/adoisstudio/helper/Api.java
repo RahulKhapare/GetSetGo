@@ -1,6 +1,8 @@
 package com.adoisstudio.helper;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;

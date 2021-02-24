@@ -1,4 +1,4 @@
-package com.getsetgo.others;
+package com.getsetgo.Others;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -10,13 +10,14 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.adoisstudio.helper.H;
+import com.getsetgo.Others.VideoActivity;
 import com.getsetgo.R;
 
 import java.util.concurrent.TimeUnit;
 
 public class VideoController implements SeekBar.OnSeekBarChangeListener {
     private final Context context;
-    private final CustomVideoView customVideoView;
+    private final com.getsetgo.others.CustomVideoView customVideoView;
     public ImageView setting, zoom, back, playPause, forward;
     private final SeekBar seekBar;
     private final TextView time;

@@ -67,7 +67,6 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.MyCour
 
                     String courseSlug = json.getString("slug");
                     String courseName = json.getString("course_name");
-                    Log.d("Hardik","slug: "+courseSlug);
                     if (CheckConnection.isVailable(context)){
                         loadFragment(view,courseSlug,courseName);
                     }else {

@@ -156,7 +156,7 @@
 
                     <TextView
                         android:onClick="onDrawerItemClick"
-                        android:id="@+id/txtViewAll"
+                        android:id="@+id/txtViewAllActive"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -225,6 +225,7 @@
                     app:reverseLayout="false" />
 
                 <LinearLayout
+                    android:id="@+id/lnrBestSellingCourse"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
@@ -251,6 +252,7 @@
                         android:fontFamily="@font/nunito_sans_semibold"
                         android:gravity="end|center"
                         android:text="View All"
+                        android:onClick="onDrawerItemClick"
                         android:textColor="@color/viewall_text_color"
                         android:textSize="12sp" />
                 </LinearLayout>

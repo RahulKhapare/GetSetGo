@@ -28,6 +28,7 @@ import com.getsetgo.R;
 import com.getsetgo.databinding.ActivityLoginBinding;
 import com.getsetgo.util.App;
 import com.getsetgo.util.Click;
+import com.getsetgo.util.JumpToLogin;
 import com.getsetgo.util.P;
 import com.getsetgo.util.Validation;
 import com.getsetgo.util.WindowView;
@@ -272,6 +273,7 @@ public class LoginActivity extends AppCompatActivity {
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
+                        JumpToLogin.call(Json1,this);
                         loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(activity, Json1.getString(P.err));
@@ -283,6 +285,7 @@ public class LoginActivity extends AppCompatActivity {
                             String user_id = Json1.getString(P.user_id);
                             session.addString(P.token, token + "");
                             session.addString(P.user_id, user_id + "");
+                            session.addString(P.is_affiliate, Json1.getString(P.is_affiliate));
                             session.addString(P.name, Json1.getString(P.name) + "");
                             session.addString(P.lastname, Json1.getString(P.lastname) + "");
                             session.addString(P.email, Json1.getString(P.email) + "");

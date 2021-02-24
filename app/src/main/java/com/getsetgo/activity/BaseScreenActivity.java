@@ -43,6 +43,7 @@ import com.adoisstudio.helper.Session;
 import com.getsetgo.Fragment.AccountFragment;
 import com.getsetgo.Fragment.AddNewUserFragment;
 
+import com.getsetgo.Fragment.BestSellingCourseFragment;
 import com.getsetgo.Fragment.CurrentLearningFragment;
 import com.getsetgo.Fragment.DashBoardFragment;
 import com.getsetgo.Fragment.EarningsFragment;
@@ -66,6 +67,7 @@ import com.getsetgo.databinding.ActivityBaseScreenBinding;
 
 import com.getsetgo.util.App;
 import com.getsetgo.util.Click;
+import com.getsetgo.util.JumpToLogin;
 import com.getsetgo.util.OpenFile;
 import com.getsetgo.util.P;
 import com.getsetgo.util.DocumentDownloader;
@@ -94,6 +96,7 @@ public class BaseScreenActivity extends AppCompatActivity {
     TermsAndConditionFragment termsAndConditionFragment;
 
     ParentCategoriesFragment parentCategoriesFragment;
+    BestSellingCourseFragment bestSellingCourseFragment;
     AddNewUserFragment addNewUserFragment;
     SearchUserIdFragment searchUserIdFragment;
     YourCourseFragment yourCourseFragment;
@@ -376,6 +379,12 @@ public class BaseScreenActivity extends AppCompatActivity {
                 fragmentLoader(categoriesFragment, true);
                 break; */
 
+            case R.id.txtViewAllBestCourse:
+                if (bestSellingCourseFragment == null)
+                    bestSellingCourseFragment = BestSellingCourseFragment.newInstance();
+                fragmentLoader(bestSellingCourseFragment, true);
+                break;
+
             case R.id.txtViewAllCategories:
                 if (parentCategoriesFragment == null)
                     parentCategoriesFragment = ParentCategoriesFragment.newInstance();
@@ -511,6 +520,7 @@ public class BaseScreenActivity extends AppCompatActivity {
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
+                        JumpToLogin.call(Json1,activity);
                         loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(activity, Json1.getString(P.err));
@@ -534,7 +544,6 @@ public class BaseScreenActivity extends AppCompatActivity {
         {
             Session session = new Session(this);
             boolean bool = session.getBool("isViewed");// for intro of video player
-
             session.clear();
 
            /* if (bool)

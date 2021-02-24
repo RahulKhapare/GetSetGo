@@ -30,6 +30,7 @@ import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentTransactionsBinding;
 import com.getsetgo.util.App;
 import com.getsetgo.util.Click;
+import com.getsetgo.util.JumpToLogin;
 import com.getsetgo.util.P;
 import com.google.android.material.tabs.TabLayout;
 
@@ -259,6 +260,7 @@ public class TransactionsHistoryFragment extends Fragment {
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
+                        JumpToLogin.call(Json1,context);
                         loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(context, Json1.getString(P.err));
@@ -334,6 +336,7 @@ public class TransactionsHistoryFragment extends Fragment {
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
+                        JumpToLogin.call(Json1,context);
                         loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(context, Json1.getString(P.err));

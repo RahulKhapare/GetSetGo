@@ -10,6 +10,7 @@ import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -25,11 +26,18 @@ import com.adoisstudio.helper.MessageBox;
 import com.getsetgo.Adapter.ActiveCourseAdapter;
 import com.getsetgo.Adapter.BestSellingCourseAdapter;
 import com.getsetgo.Adapter.OtherCategoriesAdapter;
+import com.getsetgo.Model.BestSellingCourseModel;
 import com.getsetgo.R;
+import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentHomeBinding;
 import com.getsetgo.util.App;
+import com.getsetgo.util.Click;
+import com.getsetgo.util.JumpToLogin;
 import com.getsetgo.util.P;
 import com.getsetgo.util.Utilities;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
@@ -42,8 +50,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     LinearLayoutManager mLayoutManagerActiveCourse, mLayoutManagerBestSelling, mLayoutManagerOtherCategories;
 
     JsonList otherCategoriesJsonList = new JsonList();
-    JsonList bestSellingCourseJsonList = new JsonList();
     JsonList activeCourseJsonList = new JsonList();
+    private List<BestSellingCourseModel> bestSellingCourseModelList;
 
     int categoriesPage = 1;
     int bestSellingPage = 1;
@@ -56,6 +64,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     boolean isOther = false;
     boolean isActive = false;
     boolean isBest = false;
+
+    public static  JsonList bestselling_course_list = new JsonList();
+    public static  JsonList top_searches = new JsonList();
 
     public HomeFragment() {
         // Required empty public constructor
@@ -86,6 +97,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 //        onScrollRecyclerview();
         callDashboardCourseAPI(getActivity());
 //        callOtherCategoriesAPI(getActivity());
+
+        binding.txtViewAllActive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                View view = BaseScreenActivity.binding.bottomNavigation.findViewById(R.id.menu_yourCourse);
+                view.performClick();
+            }
+        });
     }
 
     private void onScrollRecyclerview() {
@@ -181,7 +201,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setupRecyclerViewForBestSellingCourse() {
-        bestSellingCourseAdapter = new BestSellingCourseAdapter(getActivity(), bestSellingCourseJsonList);
+        bestSellingCourseModelList = new ArrayList<>();
+        bestSellingCourseAdapter = new BestSellingCourseAdapter(getActivity(), bestSellingCourseModelList,1);
         binding.recyclerBestSellingCources.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerBestSellingCources.setAdapter(bestSellingCourseAdapter);
         bestSellingCourseAdapter.notifyDataSetChanged();
@@ -204,6 +225,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
+                        JumpToLogin.call(Json1,context);
                         loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(context, Json1.getString(P.err));
@@ -213,6 +235,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                             JsonList totalCourses = new JsonList();
                             totalCourses = json.getJsonList("active_course_list");
                             categories = json.getJsonList("category_list");
+                            bestselling_course_list = json.getJsonList("bestselling_course_list");
+                            top_searches = json.getJsonList("top_searches");
+                            setupBestSellingCourseData(bestselling_course_list);
                             if (categories != null && !categories.isEmpty()) {
                                 otherCategoriesJsonList.clear();
                                 otherCategoriesJsonList.addAll(categories);
@@ -247,6 +272,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
+                        JumpToLogin.call(Json1,context);
                         loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(context, Json1.getString(P.err));
@@ -270,6 +296,30 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 }).run("dashbord");
     }
 
+
+    private void setupBestSellingCourseData(JsonList jsonList){
+        bestSellingCourseModelList.clear();
+        if (jsonList==null || jsonList.size()==0){
+            binding.lnrBestSellingCourse.setVisibility(View.GONE);
+            bestSellingCourseAdapter.notifyDataSetChanged();
+        }else {
+            for (Json json : jsonList){
+                BestSellingCourseModel model = new BestSellingCourseModel();
+                model.setId(json.getString(P.id));
+                model.setCourse_name(json.getString(P.course_name));
+                model.setSlug(json.getString(P.slug));
+                model.setImage(json.getString(P.image));
+                model.setCategory_name(json.getString(P.category_name));
+                model.setInstructor_name(json.getString(P.instructor_name));
+                model.setPrice(json.getString(P.price));
+                model.setSale_price(json.getString(P.sale_price));
+                model.setRating(json.getString(P.rating));
+                bestSellingCourseModelList.add(model);
+            }
+            bestSellingCourseAdapter.notifyDataSetChanged();
+        }
+
+    }
     @Override
     public void onClick(View v) {
 
@@ -279,14 +329,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
             case R.id.cardViewCurrentLearning:
 
-                CurrentLearningFragment currentLearningFragment = CurrentLearningFragment.newInstance();
-
-                getActivity()
-                        .getSupportFragmentManager()
-                        .beginTransaction()
-                        .setCustomAnimations(R.anim.anim_enter, R.anim.anim_exit)
-                        .addToBackStack("")
-                        .add(R.id.fragment_container, currentLearningFragment).commit();
+//                CurrentLearningFragment currentLearningFragment = CurrentLearningFragment.newInstance();
+//
+//                getActivity()
+//                        .getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .setCustomAnimations(R.anim.anim_enter, R.anim.anim_exit)
+//                        .addToBackStack("")
+//                        .add(R.id.fragment_container, currentLearningFragment).commit();
                 break;
 
         }

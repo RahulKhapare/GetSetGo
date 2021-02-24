@@ -40,6 +40,7 @@ import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.activity.VideoPlayActivity;
 import com.getsetgo.databinding.FragmentCurrentLearningBinding;
 import com.getsetgo.util.App;
+import com.getsetgo.util.JumpToLogin;
 import com.getsetgo.util.P;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.Player;
@@ -177,6 +178,7 @@ public class CurrentLearningFragment extends Fragment implements Player.EventLis
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
+                        JumpToLogin.call(Json1,context);
                         loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(context, Json1.getString(P.err));

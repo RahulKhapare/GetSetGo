@@ -16,8 +16,11 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +47,7 @@ import com.getsetgo.databinding.FragmentMyCourseDetailsBinding;
 import com.getsetgo.util.App;
 import com.getsetgo.util.Click;
 import com.getsetgo.util.Config;
+import com.getsetgo.util.JumpToLogin;
 import com.getsetgo.util.P;
 import com.getsetgo.util.ProgressView;
 import com.google.android.exoplayer2.C;
@@ -100,6 +104,23 @@ CourseModuleAdapter.click{
     private String courseId = "";
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+
+                if(getFragmentManager().getBackStackEntryCount() > 0){
+                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    BaseScreenActivity.callBack();
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         if (binding == null) {
@@ -115,6 +136,18 @@ CourseModuleAdapter.click{
     }
 
     private void initView(){
+
+        BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
+                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    BaseScreenActivity.callBack();
+                }
+            }
+        });
+
         loadingDialog = new LoadingDialog(context);
         imgFullScreen = binding.playerView.findViewById(R.id.exo_fullscreen_icon);
         imgQuality = binding.playerView.findViewById(R.id.ivVideoQuality);
@@ -318,6 +351,7 @@ CourseModuleAdapter.click{
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
+                        JumpToLogin.call(Json1,context);
                         loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(context, Json1.getString(P.err));
@@ -374,6 +408,12 @@ CourseModuleAdapter.click{
             courseModuleModelList.add(moduleModel);
         }
 
+        if (courseModuleModelList.isEmpty()){
+            binding.txtModule.setVisibility(View.VISIBLE);
+        }else {
+            binding.txtModule.setVisibility(View.VISIBLE);
+        }
+
         courseModuleAdapter.notifyDataSetChanged();
     }
 
@@ -421,6 +461,7 @@ CourseModuleAdapter.click{
                 })
                 .onSuccess(json ->
                 {
+                    JumpToLogin.call(json,context);
                     if (json.getInt(P.status) == 1) {
                     }else {
                     }
