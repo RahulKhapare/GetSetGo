@@ -24,10 +24,12 @@
                 android:paddingHorizontal="@dimen/x16">
 
                 <TextView
+                    android:id="@+id/txtCurrentLEarning"
                     android:layout_width="138dp"
                     android:layout_height="22dp"
                     android:fontFamily="@font/nunit_sans_bold"
                     android:text="Currently Learning"
+                    android:visibility="gone"
                     android:textColor="@color/colorTextDark"
                     android:textSize="16sp" />
 
@@ -40,6 +42,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
                     android:elevation="@dimen/x6"
+                    android:visibility="gone"
                     app:cardCornerRadius="10dp">
 
                     <RelativeLayout
@@ -50,53 +53,62 @@
                         android:paddingLeft="7dp"
                         android:paddingRight="3dp">
 
-                        <com.makeramen.roundedimageview.RoundedImageView
-                            android:id="@+id/imvCourse"
+<!--                       <com.makeramen.roundedimageview.RoundedImageView-->
+<!--                            android:id="@+id/imvCourse"-->
+<!--                            android:layout_width="97dp"-->
+<!--                            android:layout_height="100dp"-->
+<!--                            android:src="@drawable/download"-->
+<!--                            app:riv_corner_radius="5dp" />-->
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardImage"
                             android:layout_width="97dp"
                             android:layout_height="100dp"
-                            android:src="@drawable/download"
-                            app:riv_corner_radius="5dp" />
+                            app:cardElevation="0dp"
+                            app:cardCornerRadius="5dp">
+
+                            <ImageView
+                                android:id="@+id/imgCourse"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitXY">
+
+                            </ImageView>
+
+                        </androidx.cardview.widget.CardView>
+
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="10dp"
-                            android:layout_toLeftOf="@id/imvCircle"
-                            android:layout_toEndOf="@+id/imvCourse"
-                            android:layout_toRightOf="@+id/imvCourse"
+                            android:layout_toLeftOf="@id/cardImage"
+                            android:layout_toEndOf="@+id/cardImage"
+                            android:layout_toRightOf="@+id/cardImage"
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/txtTech"
+                                android:id="@+id/txtCategoryName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/nunito_sans_semibold"
-                                android:text="Technology"
+                                android:text=""
                                 android:textColor="@color/main_highlighttext_color"
                                 android:textSize="12sp" />
 
-                            <TextView
-                                android:id="@+id/txtDes"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:fontFamily="@font/nunito_sans_semibold"
-                                android:text="Easiest way to Learn"
-                                android:textColor="@color/programme_text_color"
-                                android:textSize="12sp" />
 
                             <TextView
-                                android:id="@+id/txtProgramme"
+                                android:id="@+id/txtCourseName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/nunit_sans_bold"
-                                android:text="Mobile App Designing"
+                                android:text=""
                                 android:textColor="@color/colorTextDark"
                                 android:textSize="12sp" />
 
                             <ProgressBar
-                                android:id="@+id/progress_bar_1"
+                                android:id="@+id/progressBar"
                                 style="?android:attr/progressBarStyleHorizontal"
                                 android:layout_width="194dp"
                                 android:layout_height="7dp"
@@ -104,7 +116,7 @@
                                 android:indeterminate="false"
                                 android:maxHeight="12dp"
                                 android:minHeight="12dp"
-                                android:progress="30"
+                                android:progress="0"
                                 android:progressDrawable="@drawable/progress_bar_rounded" />
 
 
@@ -114,7 +126,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
                                 android:fontFamily="@font/nunit_sans_bold"
-                                android:text="30% Complete"
+                                android:text="0% Complete"
                                 android:textColor="@color/main_highlighttext_color"
                                 android:textSize="12sp" />
 
@@ -138,10 +150,12 @@
 
 
                 <LinearLayout
+                    android:id="@+id/lnrActiveCourse"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:weightSum="10">
 
                     <TextView

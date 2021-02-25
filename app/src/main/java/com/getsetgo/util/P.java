@@ -48,6 +48,7 @@ public class P {
     public static String issue_master = "issue_master";
     public static String category_list = "category_list";
     public static String category_name = "category_name";
+    public static String completion_percent = "completion_percent";
     public static String instructor_name = "instructor_name";
     public static String series = "series";
     public static String image = "image";
@@ -111,6 +112,17 @@ public class P {
     public static String quality = "quality";
     public static String link_name = "link_name";
     public static String course_list = "course_list";
+    public static String message = "message";
+    public static String subject_id = "subject_id";
+    public static String datetime = "datetime";
+    public static String msg_from = "msg_from";
+    public static String occupation_id = "occupation_id";
+    public static String dob = "dob";
+    public static String marital_status_id = "marital_status_id";
+    public static String gender = "gender";
+    public static String profile_picture = "profile_picture";
+    public static String occupation_list = "occupation_list";
+    public static String marital_status_list = "marital_status_list";
 
 
 

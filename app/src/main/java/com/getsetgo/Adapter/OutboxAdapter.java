@@ -1,6 +1,7 @@
 package com.getsetgo.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.adoisstudio.helper.JsonList;
 import com.getsetgo.Fragment.ChatScreenFragment;
 import com.getsetgo.R;
 import com.getsetgo.databinding.LayoutInboxOutboxRowBinding;
+import com.getsetgo.util.Config;
 
 public class OutboxAdapter extends RecyclerView.Adapter<OutboxAdapter.OutboxViewHolder> {
 
@@ -41,15 +43,16 @@ public class OutboxAdapter extends RecyclerView.Adapter<OutboxAdapter.OutboxView
     public void onBindViewHolder(@NonNull OutboxAdapter.OutboxViewHolder holder, int position) {
 
         Json json = jsonList.get(position);
+        Log.e("TAG", "onBindViewHolderOutbox: " + json.toString() );
 
         holder.txtTitle.setText(json.getString("subject"));
         holder.txtMessage.setText(json.getString("message"));
         //holder.txtDate.setText(json.getString("create_date"));
-
+        String subject_id = json.getString("subject_id");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadTotalFragment(v);
+                loadTotalFragment(v,subject_id);
             }
         });
 
@@ -73,8 +76,8 @@ public class OutboxAdapter extends RecyclerView.Adapter<OutboxAdapter.OutboxView
         }
     }
 
-    private void loadTotalFragment(View v){
-
+    private void loadTotalFragment(View v,String subject_id){
+        Config.subjectID = subject_id;
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
         chatScreenFragment = new ChatScreenFragment();
         activity.getSupportFragmentManager()

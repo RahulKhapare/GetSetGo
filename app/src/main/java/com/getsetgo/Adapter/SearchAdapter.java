@@ -18,9 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.adoisstudio.helper.H;
 import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
+import com.getsetgo.Fragment.CourseDetailFragment;
 import com.getsetgo.Fragment.MyCourseDetailFragment;
 import com.getsetgo.Model.SearchModel;
 import com.getsetgo.R;
+import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.util.CheckConnection;
 import com.getsetgo.util.Click;
 import com.getsetgo.util.Config;
@@ -34,8 +36,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyCourseVi
     Context context;
     List<SearchModel> searchModelList;
 
-    MyCourseDetailFragment courseDetailFragment;
-    Bundle bundle = new Bundle();
+    CourseDetailFragment courseDetailFragment;
 
     public SearchAdapter(Context context, List<SearchModel> searchModelList) {
         this.context = context;
@@ -58,10 +59,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyCourseVi
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
-                String courseSlug = model.getSlug();
-                String courseName = model.getCourse_name();
                 if (CheckConnection.isVailable(context)){
-                    loadFragment(v,courseSlug,courseName);
+                    loadFragment(v,model.getCourse_name(),model.getSlug());
                 }else {
                     H.showMessage(context,"No internet connection available");
                 }
@@ -86,13 +85,17 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyCourseVi
         }
     }
 
-    private void loadFragment(View v, String courseSlug,String courseName) {
-        Config.myCourseSlug = courseSlug;
-        Config.myCourseTitle = courseName;
-        bundle.putString("slug",courseSlug);
+    private void loadFragment(View v, String title,String slug) {
+        Bundle bundle = new Bundle();
+        BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
+        BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);
+        BaseScreenActivity.binding.incFragmenttool.content.setVisibility(View.VISIBLE);
+        BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
+        bundle.putString("title", title);
+        bundle.putString("slug", slug);
+        bundle.putBoolean("isFromHome", true);
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
-        if (courseDetailFragment == null)
-            courseDetailFragment = new MyCourseDetailFragment();
+        courseDetailFragment = new CourseDetailFragment();
         courseDetailFragment.setArguments(bundle);
         activity.getSupportFragmentManager()
                 .beginTransaction()

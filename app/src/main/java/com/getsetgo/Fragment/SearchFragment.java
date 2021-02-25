@@ -96,48 +96,53 @@ public class SearchFragment extends Fragment {
 
         setTopSearchData(HomeFragment.top_searches);
 
-        binding.imgSearch.setOnClickListener(new View.OnClickListener() {
+        binding.etxSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-                Click.preventTwoClick(v);
-                if (TextUtils.isEmpty(binding.etxSearch.getText().toString().trim())){
-                    H.showMessage(getActivity(),"Please enter course for search");
-                }else {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String newText = s.toString();
+                if (!TextUtils.isEmpty(newText) && newText.length()>2) {
                     hitSearchListApi(getActivity(),binding.etxSearch.getText().toString().trim());
                 }
             }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
         });
+
+
 
     }
 
     private void hitSearchListApi(Context context, String searchValue) {
 
-        LoadingDialog loadingDialog = new LoadingDialog(context, false);
+//        LoadingDialog loadingDialog = new LoadingDialog(context, false);
         Api.newApi(context, P.baseUrl + "search" + "?q=" + searchValue)
                 .setMethod(Api.GET)
                 .onHeaderRequest(App::getHeaders)
                 .onLoading(isLoading -> {
-                    if (isLoading)
-                        loadingDialog.show("loading...");
-                    else
-                        loadingDialog.hide();
+//                    if (isLoading)
+//                        loadingDialog.show("loading...");
+//                    else
+//                        loadingDialog.hide();
                 })
                 .onError(() ->
                         MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
-                            loadingDialog.dismiss();
+//                            loadingDialog.dismiss();
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
                         JumpToLogin.call(Json1,context);
-                        loadingDialog.dismiss();
+//                        loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             checkSearch(yourSearchModelList);
                         } else {
                             Json1 = Json1.getJson(P.data);
                             JsonList jsonList = Json1.getJsonList(P.course_list);
-                            if (jsonList==null || jsonList.size()==0){
-                                H.showMessage(getActivity(),"No search result found !");
-                            }
                             setYourSearchData(jsonList);
                         }
                     }

@@ -1,6 +1,10 @@
 package com.getsetgo.Model;
 
 public class ResponseMessage {
+    String message;
+    String datetime;
+    String msg_from;
+
     public String getMessage() {
         return message;
     }
@@ -9,33 +13,19 @@ public class ResponseMessage {
         this.message = message;
     }
 
-    public boolean isMe() {
-        return isMe;
+    public String getDatetime() {
+        return datetime;
     }
 
-    public void setMe(boolean me) {
-        isMe = me;
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
     }
 
-    private String message;
-    private String time;
-
-    public String getTime() {
-        return time;
+    public String getMsg_from() {
+        return msg_from;
     }
 
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    private boolean isMe;
-    private int viewType;
-
-    public int getViewType() {
-        return viewType;
-    }
-
-    public void setViewType(int viewType) {
-        this.viewType = viewType;
+    public void setMsg_from(String msg_from) {
+        this.msg_from = msg_from;
     }
 }

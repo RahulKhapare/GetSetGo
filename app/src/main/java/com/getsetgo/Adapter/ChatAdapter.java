@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -14,15 +13,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.getsetgo.Model.ResponseMessage;
 import com.getsetgo.R;
+import com.getsetgo.util.Config;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.StringTokenizer;
 
-public class ChatAdapter extends RecyclerView.Adapter {
+public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     Context context;
     List<ResponseMessage> responseMessages;
-    private static final int VIEW_TYPE_MESSAGE_SENT = 1;
-    private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
 
     public ChatAdapter(Context context, List<ResponseMessage> responseMessages) {
         this.context = context;
@@ -31,44 +34,49 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view;
-        if (viewType == VIEW_TYPE_MESSAGE_SENT) {
-            view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.layout_me_bubble_row, parent, false);
-            return new SentMessageHolder(view);
-        } else if (viewType == VIEW_TYPE_MESSAGE_RECEIVED) {
-            view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.layout_bot_bubble_row, parent, false);
-            return new ReceivedMessageHolder(view);
-        }
-        return null;
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_chat_message_view, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ResponseMessage message = responseMessages.get(position);
-        switch (holder.getItemViewType()) {
-            case VIEW_TYPE_MESSAGE_SENT:
-                ((SentMessageHolder) holder).bind(message);
-                break;
-            case VIEW_TYPE_MESSAGE_RECEIVED:
-                ((ReceivedMessageHolder) holder).bind(message);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        ResponseMessage model = responseMessages.get(position);
+
+        String TIME = "";
+
+        if (!model.getDatetime().contains("AM") || !model.getDatetime().contains("PM")){
+
+            StringTokenizer tk = new StringTokenizer(model.getDatetime());
+            String date = tk.nextToken();
+            String time = tk.nextToken();
+
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss",Locale.US);
+            SimpleDateFormat sdfs = new SimpleDateFormat("hh:mm aa", Locale.US);
+
+            Date dt;
+            try {
+                dt = sdf.parse(time);
+                TIME = sdfs.format(dt);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                TIME = model.getDatetime();
+            }
+
+        }else {
+            TIME = model.getDatetime();
         }
 
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        ResponseMessage message = (ResponseMessage) responseMessages.get(position);
-        if (message.getViewType() == 0) {
-            // If the current user is the sender of the message
-            Log.e("getItemViewType", "0");
-            return VIEW_TYPE_MESSAGE_SENT;
-        } else {
-            // If some other user sent the message
-            Log.e("getItemViewType", "1");
-            return VIEW_TYPE_MESSAGE_RECEIVED;
+        if (model.getMsg_from().contains(Config.user)){
+            holder.lnrUser.setVisibility(View.VISIBLE);
+            holder.lnrAdmin.setVisibility(View.GONE);
+            holder.txtUserMessage.setText(model.getMessage());
+            holder.txtUserTime.setText(TIME);
+        }else if (model.getMsg_from().contains(Config.admin)){
+            holder.lnrAdmin.setVisibility(View.VISIBLE);
+            holder.lnrUser.setVisibility(View.GONE);
+            holder.txtAdminMessage.setText(model.getMessage());
+            holder.txtAdminTime.setText(TIME);
         }
 
     }
@@ -78,40 +86,32 @@ public class ChatAdapter extends RecyclerView.Adapter {
         return responseMessages.size();
     }
 
-    private class SentMessageHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView message;
-        TextView time;
+        RelativeLayout lnrAdmin;
+        TextView txtAdminMessage;
+        TextView txtAdminTime;
 
+        RelativeLayout lnrUser;
+        TextView txtUserMessage;
+        TextView txtUserTime;
 
-        public SentMessageHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            message = (TextView)itemView.findViewById(R.id.txtMessage);
-            time = (TextView)itemView.findViewById(R.id.txtTime);
+
+            lnrAdmin = itemView.findViewById(R.id.lnrAdmin);
+            lnrUser = itemView.findViewById(R.id.lnrUser);
+            txtAdminMessage = itemView.findViewById(R.id.txtAdminMessage);
+            txtAdminTime = itemView.findViewById(R.id.txtAdminTime);
+            txtUserMessage = itemView.findViewById(R.id.txtUserMessage);
+            txtUserTime = itemView.findViewById(R.id.txtUserTime);
 
         }
-
-        void bind(ResponseMessage messageModel) {
-            message.setText(messageModel.getMessage());
-            time.setText(messageModel.getTime());
-
-        }
-
     }
 
-    private class ReceivedMessageHolder extends RecyclerView.ViewHolder{
-        TextView message;
-        TextView time;
-        public ReceivedMessageHolder(@NonNull View itemView) {
-            super(itemView);
-            message = (TextView)itemView.findViewById(R.id.txtMessage);
-            time = (TextView)itemView.findViewById(R.id.txtTime);
-        }
+    //layout_me_bubble_row
+    //layout_bot_bubble_row
 
-        void bind(ResponseMessage messageModel){
-            message.setText(messageModel.getMessage());
-            time.setText(messageModel.getTime());
-        }
-    }
+
 }
 

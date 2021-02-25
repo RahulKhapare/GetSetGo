@@ -17,18 +17,22 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.adoisstudio.helper.Session;
 import com.getsetgo.R;
 
 import com.getsetgo.activity.BaseScreenActivity;
 
 import com.getsetgo.databinding.FragmentAccountBinding;
 import com.getsetgo.util.Click;
+import com.getsetgo.util.P;
 
 
 public class AccountFragment extends Fragment {
 
     FragmentAccountBinding binding;
     BankDetailsFragment bankDetailsFragment;
+    ChangePasswordFragment changePasswordFragment;
+    EditProfileFragment editProfileFragment;
     boolean isFromBottom;
 
     public AccountFragment() {
@@ -50,6 +54,7 @@ public class AccountFragment extends Fragment {
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("My Account");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         onClick();
+        setProfileData();
         isFromBottom = getArguments().getBoolean("isFromBottom");
         return rootView;
     }
@@ -61,6 +66,12 @@ public class AccountFragment extends Fragment {
 
     }
 
+    private void setProfileData(){
+        Session session = new Session(getActivity());
+        binding.txtProfileName.setText(session.getString(P.name) + " " + session.getString(P.lastname));
+        binding.txtProfileEmail.setText(session.getString(P.email));
+    }
+
     public void onClick() {
 
         binding.llBankDetails.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +79,34 @@ public class AccountFragment extends Fragment {
             public void onClick(View v) {
                 Click.preventTwoClick(v);
                 BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
-                loadFragment(v);
+                loadBankDetailFragment(v);
+            }
+        });
+
+        binding.lnrChnagePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
+                loadChangePasswordFragment(v);
+            }
+        });
+
+        binding.lnrEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
+                loadEditProfileFragment(v);
+            }
+        });
+
+        binding.txtEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
+                loadEditProfileFragment(v);
             }
         });
 
@@ -100,7 +138,7 @@ public class AccountFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    private void loadFragment(View v) {
+    private void loadBankDetailFragment(View v) {
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
         Bundle bundle = new Bundle();
         bundle.putBoolean("isFromBottom", isFromBottom);
@@ -111,6 +149,31 @@ public class AccountFragment extends Fragment {
                 .replace(R.id.fragment_container, bankDetailsFragment)
                 .addToBackStack(null)
                 .commit();
+    }
 
+    private void loadEditProfileFragment(View v) {
+        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isFromBottom", isFromBottom);
+        editProfileFragment = new EditProfileFragment();
+        editProfileFragment.setArguments(bundle);
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, editProfileFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private void loadChangePasswordFragment(View v) {
+        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isFromBottom", isFromBottom);
+        changePasswordFragment = new ChangePasswordFragment();
+        changePasswordFragment.setArguments(bundle);
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, changePasswordFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

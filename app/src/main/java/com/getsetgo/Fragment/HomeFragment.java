@@ -2,6 +2,7 @@ package com.getsetgo.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ import com.getsetgo.util.Click;
 import com.getsetgo.util.JumpToLogin;
 import com.getsetgo.util.P;
 import com.getsetgo.util.Utilities;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +69,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     public static  JsonList bestselling_course_list = new JsonList();
     public static  JsonList top_searches = new JsonList();
+
+    CourseDetailFragment courseDetailFragment;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -237,7 +241,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                             categories = json.getJsonList("category_list");
                             bestselling_course_list = json.getJsonList("bestselling_course_list");
                             top_searches = json.getJsonList("top_searches");
+                            Json currently_learning = json.getJson("currently_learning");
                             setupBestSellingCourseData(bestselling_course_list);
+                            setUpCurrentLearningData(currently_learning);
                             if (categories != null && !categories.isEmpty()) {
                                 otherCategoriesJsonList.clear();
                                 otherCategoriesJsonList.addAll(categories);
@@ -248,46 +254,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                                 activeCourseJsonList.clear();
                                 activeCourseJsonList.addAll(totalCourses);
                                 activeCourseAdapter.notifyDataSetChanged();
-                            }
-                        }
-                    }
-
-                }).run("dashbord");
-    }
-
-    private void callOtherCategoriesAPI(Context context) {
-        LoadingDialog loadingDialog = new LoadingDialog(context, false);
-        Api.newApi(context, P.baseUrl + "dashbord")
-                .setMethod(Api.GET)
-                .onHeaderRequest(App::getHeaders)
-                .onLoading(isLoading -> {
-                    if (isLoading)
-                        loadingDialog.show("loading...");
-                    else
-                        loadingDialog.hide();
-                })
-                .onError(() ->
-                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
-                            loadingDialog.dismiss();
-                        }))
-                .onSuccess(Json1 -> {
-                    if (Json1 != null) {
-                        JumpToLogin.call(Json1,context);
-                        loadingDialog.dismiss();
-                        if (Json1.getInt(P.status) == 0) {
-                            H.showMessage(context, Json1.getString(P.err));
-                        } else {
-                            Json1 = Json1.getJson(P.data);
-                            int numRows = Json1.getInt(P.num_rows);
-                            JsonList jsonList = Json1.getJsonList("total_courses");
-                            if (jsonList != null && !jsonList.isEmpty()) {
-                                otherCategoriesJsonList.addAll(jsonList);
-                                otherCategoriesAdapter.notifyDataSetChanged();
-                                if (otherCategoriesJsonList.size() < numRows) {
-                                    categoriesPage++;
-                                    categoriesNextPage = true;
-                                } else {
-                                    categoriesNextPage = false;
+                                if (activeCourseJsonList!=null && activeCourseJsonList.size()!=0){
+                                    binding.lnrActiveCourse.setVisibility(View.VISIBLE);
+                                }else {
+                                    binding.lnrActiveCourse.setVisibility(View.VISIBLE);
                                 }
                             }
                         }
@@ -296,6 +266,63 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 }).run("dashbord");
     }
 
+    private void setUpCurrentLearningData(Json json){
+
+        if (!json.toString().equals("") || !json.toString().equals("null")){
+            String id = json.getString(P.id);
+            String course_name = json.getString(P.course_name);
+            String slug = json.getString(P.slug);
+            String image = json.getString(P.image);
+            String category_name = json.getString(P.category_name);
+            String completion_percent = json.getString(P.completion_percent);
+
+            Picasso.get().load(image).placeholder(R.drawable.ic_no_image).error(R.drawable.ic_no_image).into(binding.imgCourse);
+            binding.txtCourseName.setText(course_name);
+            binding.txtCategoryName.setText(category_name);
+            binding.txtStatus.setText(completion_percent + "% Complete");
+
+            if (!TextUtils.isEmpty(completion_percent) && !completion_percent.equals("null")){
+                int progress = Integer.parseInt(completion_percent);
+                binding.progressBar.setProgress(progress);
+            }
+
+            binding.txtCurrentLEarning.setVisibility(View.VISIBLE);
+            binding.cardViewCurrentLearning.setVisibility(View.VISIBLE);
+
+            binding.cardViewCurrentLearning.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Click.preventTwoClick(v);
+                    loadFragment(v,course_name,slug);
+                }
+            });
+
+        }else {
+            binding.txtCurrentLEarning.setVisibility(View.GONE);
+            binding.cardViewCurrentLearning.setVisibility(View.GONE);
+        }
+
+
+    }
+
+    private void loadFragment(View v, String title,String slug) {
+        Bundle bundle = new Bundle();
+        BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
+        BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);
+        BaseScreenActivity.binding.incFragmenttool.content.setVisibility(View.VISIBLE);
+        BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
+        bundle.putString("title", title);
+        bundle.putString("slug", slug);
+        bundle.putBoolean("isFromHome", true);
+        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        courseDetailFragment = new CourseDetailFragment();
+        courseDetailFragment.setArguments(bundle);
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, courseDetailFragment)
+                .addToBackStack(null)
+                .commit();
+    }
 
     private void setupBestSellingCourseData(JsonList jsonList){
         bestSellingCourseModelList.clear();

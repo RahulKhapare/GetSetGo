@@ -1,6 +1,8 @@
 package com.getsetgo.Fragment;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +16,30 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.adoisstudio.helper.Api;
+import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.Json;
+import com.adoisstudio.helper.JsonList;
+import com.adoisstudio.helper.LoadingDialog;
+import com.adoisstudio.helper.MessageBox;
 import com.getsetgo.Adapter.ChatAdapter;
 import com.getsetgo.Model.ResponseMessage;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 
 import com.getsetgo.databinding.FragmentChatScreenrBinding;
+import com.getsetgo.util.App;
+import com.getsetgo.util.CheckConnection;
+import com.getsetgo.util.Config;
+import com.getsetgo.util.JumpToLogin;
+import com.getsetgo.util.P;
+import com.getsetgo.util.ProgressView;
 import com.getsetgo.util.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.getsetgo.util.P.course_id;
 
 public class ChatScreenFragment extends Fragment {
 
@@ -31,11 +47,12 @@ public class ChatScreenFragment extends Fragment {
     List<ResponseMessage> responseMessages = new ArrayList<>();
     ChatAdapter chatAdapter;
     LinearLayoutManager mLayoutManager;
+    LoadingDialog loadingDialog;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_chat_screenr, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat_screenr, container, false);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         View rootView = binding.getRoot();
         init(rootView);
@@ -48,6 +65,8 @@ public class ChatScreenFragment extends Fragment {
     }
 
     private void init(View view) {
+        loadingDialog = new LoadingDialog(getActivity());
+        hitMessageThreadApi(getActivity(), Config.subjectID);
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Support/Help");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
@@ -57,21 +76,26 @@ public class ChatScreenFragment extends Fragment {
         chatAdapter = new ChatAdapter(getActivity(), responseMessages);
         binding.recyclerViewChats.setAdapter(chatAdapter);
 
-        setupRecyclerViewForChats();
         binding.rlSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!binding.etMessage.getText().toString().trim().isEmpty() &&
-                        !binding.etMessage.getText().toString().trim().equals("")) {
+                if (!TextUtils.isEmpty(binding.etMessage.getText().toString().trim())) {
                     String msg = binding.etMessage.getText().toString().trim();
+
                     ResponseMessage responseMessage = new ResponseMessage();
                     responseMessage.setMessage(msg);
-                    responseMessage.setTime(Utilities.getCurrentDateTime());
-                    responseMessage.setViewType(0);
-                    responseMessages.add(responseMessage);
-                    chatAdapter.notifyDataSetChanged();
-                    binding.recyclerViewChats.smoothScrollToPosition(responseMessages.lastIndexOf(responseMessage));
-                    binding.etMessage.setText("");
+                    responseMessage.setDatetime(Utilities.getCurrentDateTime());
+                    responseMessage.setMsg_from(Config.user);
+
+                    if (CheckConnection.isVailable(getActivity())){
+                        responseMessages.add(responseMessage);
+                        chatAdapter.notifyDataSetChanged();
+                        binding.recyclerViewChats.smoothScrollToPosition(responseMessages.size());
+                        binding.etMessage.setText("");
+                        hitReplyMessageThreadApi(getActivity(),Config.subjectID,responseMessage);
+                    }else {
+                        H.showMessage(getActivity(),"Please check internet connection");
+                    }
 
                 }
             }
@@ -80,7 +104,7 @@ public class ChatScreenFragment extends Fragment {
         BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(getFragmentManager().getBackStackEntryCount() > 0){
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
                     getFragmentManager().popBackStackImmediate();
                 }
             }
@@ -94,7 +118,7 @@ public class ChatScreenFragment extends Fragment {
             public void handleOnBackPressed() {
                 // Handle the back button event
 
-                if(getFragmentManager().getBackStackEntryCount() > 0){
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
                     getFragmentManager().popBackStackImmediate();
                 }
             }
@@ -103,35 +127,74 @@ public class ChatScreenFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    private void setupRecyclerViewForChats() {
-        ResponseMessage responseMessage5 = new ResponseMessage();
-        responseMessage5.setMessage("Lorem ipsum dolor sit amet, elitr, tempor.");
-        responseMessage5.setTime("6:06 PM");
-        responseMessage5.setViewType(1);
-        responseMessages.add(responseMessage5);
+    private void hitMessageThreadApi(Context context, String subject_id) {
 
-        ResponseMessage responseMessage = new ResponseMessage();
-        responseMessage.setMessage("Lorem ipsum, consetetur, sed diam nonumy eirmod tempor.");
-        responseMessage.setTime("6:06 PM");
-        responseMessage.setViewType(0);
-        responseMessages.add(responseMessage);
+        LoadingDialog loadingDialog = new LoadingDialog(context, false);
+        Api.newApi(context, P.baseUrl + "message_thread" + "/" + subject_id)
+                .setMethod(Api.GET)
+                .onHeaderRequest(App::getHeaders)
+                .onLoading(isLoading -> {
+                    if (isLoading)
+                        loadingDialog.show("loading...");
+                    else
+                        loadingDialog.hide();
+                })
+                .onError(() ->
+                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
+                        }))
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        JumpToLogin.call(Json1, context);
+                        loadingDialog.dismiss();
+                        Json jsonData = Json1.getJson(P.data);
+                        JsonList list = jsonData.getJsonList(P.list);
+                        for (Json listJson : list) {
+                            ResponseMessage model = new ResponseMessage();
+                            String message = listJson.getString(P.message);
+                            String datetime = listJson.getString(P.datetime);
+                            String msg_from = listJson.getString(P.msg_from);
+                            model.setMessage(message);
+                            model.setDatetime(datetime);
+                            model.setMsg_from(msg_from);
+                            responseMessages.add(model);
+                        }
+                        chatAdapter.notifyDataSetChanged();
+                        binding.recyclerViewChats.smoothScrollToPosition(responseMessages.size());
+                    }
 
-        ResponseMessage responseMessage2 = new ResponseMessage();
-        responseMessage2.setMessage("eirmod tempor.");
-        responseMessage2.setTime("6:09 PM");
-        responseMessage2.setViewType(1);
-        responseMessages.add(responseMessage2);
-
-        responseMessages.add(responseMessage);
-        responseMessages.add(responseMessage2);
-
-
-        chatAdapter.notifyDataSetChanged();
-        binding.recyclerViewChats.smoothScrollToPosition(responseMessages.lastIndexOf(responseMessage));
+                }).run("hitMessageThreadApi");
 
     }
 
+    private void hitReplyMessageThreadApi(Context context, String subjectId,ResponseMessage model) {
 
+//        ProgressView.show(context,loadingDialog);
 
+        Json j = new Json();
+        j.addString(P.subject_id, subjectId);
+        j.addString(P.message, model.getMessage());
+
+        Api.newApi(context, P.baseUrl + "reply_message_thread").addJson(j)
+                .setMethod(Api.POST)
+                .onHeaderRequest(App::getHeaders)
+                .onError(() -> {
+//                    ProgressView.dismiss(loadingDialog);
+                })
+                .onSuccess(json ->
+                {
+                    JumpToLogin.call(json, context);
+                    if (json.getInt(P.status) == 1) {
+
+//                        responseMessages.add(model);
+//                        chatAdapter.notifyDataSetChanged();
+//                        binding.recyclerViewChats.smoothScrollToPosition(responseMessages.size());
+//                        binding.etMessage.setText("");
+
+                    }
+//                    ProgressView.dismiss(loadingDialog);
+                })
+                .run("hitReplyMessageThreadApi");
+    }
 
 }
