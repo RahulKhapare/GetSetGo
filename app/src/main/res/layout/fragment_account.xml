@@ -34,13 +34,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp">
 
-                        <com.makeramen.roundedimageview.RoundedImageView
+                        <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/cvProfile"
                             android:layout_width="74dp"
                             android:layout_height="74dp"
-                            app:riv_corner_radius="35dp"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/ic_profile_holder" />
+                            android:src="@drawable/ic_profile_imag" />
 
                         <TextView
                             android:id="@+id/txtEdit"

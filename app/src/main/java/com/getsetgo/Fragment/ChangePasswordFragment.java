@@ -2,6 +2,8 @@ package com.getsetgo.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -117,7 +119,13 @@ public class ChangePasswordFragment extends Fragment {
                     ProgressView.dismiss(loadingDialog);
                     if (json.getInt(P.status) == 1) {
                         H.showMessage(context,"Password change successfully");
-                        getFragmentManager().popBackStackImmediate();
+                        final Handler handler = new Handler(Looper.getMainLooper());
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                getFragmentManager().popBackStackImmediate();
+                            }
+                        }, 1000);
                     }
                 })
                 .run("hitChangePassword");

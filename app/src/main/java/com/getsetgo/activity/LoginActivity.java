@@ -289,6 +289,11 @@ public class LoginActivity extends AppCompatActivity {
                             session.addString(P.name, Json1.getString(P.name) + "");
                             session.addString(P.lastname, Json1.getString(P.lastname) + "");
                             session.addString(P.email, Json1.getString(P.email) + "");
+                            session.addString(P.dob, Json1.getString(P.dob) + "");
+                            session.addString(P.occupation_id, Json1.getString(P.occupation_id) + "");
+                            session.addString(P.marital_status_id, Json1.getString(P.marital_status_id) + "");
+                            session.addString(P.gender, Json1.getString(P.gender) + "");
+                            session.addString(P.profile_picture, Json1.getString(P.profile_picture) + "");
                             App.authToken = token;
                             App.user_id = user_id;
                             App.startHomeActivity(activity);

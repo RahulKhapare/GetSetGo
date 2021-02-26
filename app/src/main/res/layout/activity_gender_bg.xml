@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RadioButton
+        android:id="@+id/radioGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorTextDark"
+        android:paddingRight="20dp"
+        android:fontFamily="@font/nunito_sans_regular"
+        android:textSize="16sp"
+        android:text="Gender">
+    </RadioButton>
+
+</layout>

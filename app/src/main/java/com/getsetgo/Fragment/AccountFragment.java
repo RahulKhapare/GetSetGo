@@ -5,6 +5,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentAccountBinding;
 import com.getsetgo.util.Click;
 import com.getsetgo.util.P;
+import com.squareup.picasso.Picasso;
 
 
 public class AccountFragment extends Fragment {
@@ -68,6 +70,10 @@ public class AccountFragment extends Fragment {
 
     private void setProfileData(){
         Session session = new Session(getActivity());
+        String profile_picture = session.getString(P.profile_picture);
+        if (!TextUtils.isEmpty(profile_picture)){
+            Picasso.get().load(profile_picture).placeholder(R.drawable.ic_profile_imag).error(R.drawable.ic_profile_imag).into(binding.cvProfile);
+        }
         binding.txtProfileName.setText(session.getString(P.name) + " " + session.getString(P.lastname));
         binding.txtProfileEmail.setText(session.getString(P.email));
     }

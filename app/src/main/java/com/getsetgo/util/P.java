@@ -85,6 +85,7 @@ public class P {
     public static String video_slug = "video_slug";
     public static String app_id = "app_id";
     public static String type = "type";
+    public static String content = "content";
     public static String new_password="new_password";
     public static String user_data="user_data";
     public static String cast = "cast";
@@ -108,6 +109,7 @@ public class P {
     public static String additional_links = "additional_links";
     public static String additional_files = "additional_files";
     public static String file = "file";
+    public static String file_path = "file_path";
     public static String file_name = "file_name";
     public static String quality = "quality";
     public static String link_name = "link_name";
@@ -123,6 +125,9 @@ public class P {
     public static String profile_picture = "profile_picture";
     public static String occupation_list = "occupation_list";
     public static String marital_status_list = "marital_status_list";
+    public static String gender_list = "gender_list";
+    public static String occupation_name = "occupation_name";
+    public static String value = "value";
 
 
 

@@ -150,7 +150,7 @@ boolean isFromBottom;
     private void onUploadClick() {
         Dialog dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.upload_dialog);
+        dialog.setContentView(R.layout.activity_upload_dialog);
         dialog.findViewById(R.id.txtCamera).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
