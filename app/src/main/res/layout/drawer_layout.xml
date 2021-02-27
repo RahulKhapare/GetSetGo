@@ -194,6 +194,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/lnrUser"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -208,15 +209,12 @@
                             android:src="@drawable/ic_user" />
 
                         <TextView
-                            android:id="@+id/txtUser"
                             android:layout_width="0dp"
                             android:layout_height="35dp"
                             android:layout_marginLeft="25dp"
                             android:layout_weight="7.5"
-                            android:clickable="true"
                             android:fontFamily="@font/nunito_sans_regular"
                             android:gravity="start|center"
-                            android:onClick="onDrawerItemClick"
                             android:text="Users"
                             android:textColor="@color/colorTextDark"
                             android:textSize="16sp" />
@@ -357,6 +355,7 @@
 
 
                     <LinearLayout
+                        android:id="@+id/lnrEarning"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -376,10 +375,8 @@
                             android:layout_height="35dp"
                             android:layout_marginLeft="25dp"
                             android:layout_weight="7.5"
-                            android:clickable="true"
                             android:fontFamily="@font/nunito_sans_regular"
                             android:gravity="start|center"
-                            android:onClick="onDrawerItemClick"
                             android:text="My Earnings"
                             android:textColor="@color/colorTextDark"
                             android:textSize="16sp" />
@@ -491,6 +488,7 @@
 
 
                     <LinearLayout
+                        android:id="@+id/lnrBusiness"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -505,20 +503,18 @@
                             android:src="@drawable/ic_nav_businessprofile" />
 
                         <TextView
-                            android:id="@+id/txtBusProf"
                             android:layout_width="0dp"
                             android:layout_height="35dp"
                             android:layout_marginLeft="25dp"
                             android:layout_weight="7.5"
-                            android:clickable="true"
                             android:fontFamily="@font/nunito_sans_regular"
                             android:gravity="start|center"
-                            android:onClick="onDrawerItemClick"
                             android:text="Business Profile"
                             android:textColor="@color/colorTextDark"
                             android:textSize="16sp" />
 
                         <CheckBox
+                            android:id="@+id/cbBusiness"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.5"
@@ -528,6 +524,103 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/llCbBusinessExpand"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal"
+                            android:weightSum="10">
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/txtBankDetails"
+                                android:layout_width="0dp"
+                                android:layout_height="35dp"
+                                android:layout_marginLeft="25dp"
+                                android:layout_weight="7.5"
+                                android:clickable="true"
+                                android:fontFamily="@font/nunito_sans_regular"
+                                android:gravity="start|center"
+                                android:onClick="onDrawerItemClick"
+                                android:text="Bank Details"
+                                android:textColor="@color/colorTextHighLight"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal"
+                            android:weightSum="10">
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/txtKYCDocument"
+                                android:layout_width="0dp"
+                                android:layout_height="35dp"
+                                android:layout_marginLeft="25dp"
+                                android:layout_weight="7.5"
+                                android:clickable="true"
+                                android:fontFamily="@font/nunito_sans_regular"
+                                android:gravity="start|center"
+                                android:onClick="onDrawerItemClick"
+                                android:text="KYC Document"
+                                android:textColor="@color/colorTextHighLight"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal"
+                            android:weightSum="10">
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/txtNomineeDetails"
+                                android:layout_width="0dp"
+                                android:layout_height="35dp"
+                                android:layout_marginLeft="25dp"
+                                android:layout_weight="7.5"
+                                android:clickable="true"
+                                android:fontFamily="@font/nunito_sans_regular"
+                                android:gravity="start|center"
+                                android:onClick="onDrawerItemClick"
+                                android:text="Nominee Details"
+                                android:textColor="@color/colorTextHighLight"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lnrTransaction"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -542,20 +635,18 @@
                             android:src="@drawable/ic_nav_transaction" />
 
                         <TextView
-                            android:id="@+id/txtTransactions"
                             android:layout_width="0dp"
                             android:layout_height="35dp"
                             android:layout_marginLeft="25dp"
                             android:layout_weight="7.5"
-                            android:clickable="true"
                             android:fontFamily="@font/nunito_sans_regular"
                             android:gravity="start|center"
-                            android:onClick="onDrawerItemClick"
                             android:text="Transactions"
                             android:textColor="@color/colorTextDark"
                             android:textSize="16sp" />
 
                         <CheckBox
+                            android:id="@+id/cbTransaction"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.5"
@@ -565,43 +656,75 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/llCbTransactionExpand"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:orientation="horizontal"
-                        android:weightSum="10">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:src="@drawable/ic_nav_userincentive" />
-
-                        <TextView
-                            android:id="@+id/txtincentive"
-                            android:layout_width="0dp"
-                            android:layout_height="35dp"
-                            android:layout_marginLeft="25dp"
-                            android:layout_weight="7.5"
-                            android:clickable="true"
-                            android:fontFamily="@font/nunito_sans_regular"
-                            android:gravity="start|center"
-                            android:onClick="onDrawerItemClick"
-                            android:text="User Incentives"
-                            android:textColor="@color/colorTextDark"
-                            android:textSize="16sp" />
-
-                        <CheckBox
-                            android:layout_width="0dp"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1.5"
-                            android:button="@drawable/chekcbox_up_down" />
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal"
+                            android:weightSum="10">
 
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/txtTransactionAll"
+                                android:layout_width="0dp"
+                                android:layout_height="35dp"
+                                android:layout_marginLeft="25dp"
+                                android:layout_weight="7.5"
+                                android:clickable="true"
+                                android:fontFamily="@font/nunito_sans_regular"
+                                android:gravity="start|center"
+                                android:onClick="onDrawerItemClick"
+                                android:text="All Transactions"
+                                android:textColor="@color/colorTextHighLight"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal"
+                            android:weightSum="10">
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/txtTransactionCrashCourse"
+                                android:layout_width="0dp"
+                                android:layout_height="35dp"
+                                android:layout_marginLeft="25dp"
+                                android:layout_weight="7.5"
+                                android:clickable="true"
+                                android:fontFamily="@font/nunito_sans_regular"
+                                android:gravity="start|center"
+                                android:onClick="onDrawerItemClick"
+                                android:text="Crash Course"
+                                android:textColor="@color/colorTextHighLight"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
+
                     <LinearLayout
+                        android:id="@+id/lnrPoints"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -616,24 +739,60 @@
                             android:src="@drawable/ic_nav_mypoints" />
 
                         <TextView
-                            android:id="@+id/txtMyPoints"
                             android:layout_width="0dp"
                             android:layout_height="35dp"
                             android:layout_marginLeft="25dp"
                             android:layout_weight="7.5"
-                            android:clickable="true"
                             android:fontFamily="@font/nunito_sans_regular"
                             android:gravity="start|center"
-                            android:onClick="onDrawerItemClick"
                             android:text="My Points"
                             android:textColor="@color/colorTextDark"
                             android:textSize="16sp" />
 
                         <CheckBox
+                            android:id="@+id/cbPoints"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.5"
                             android:button="@drawable/chekcbox_up_down" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lnrInsentive"
+                        android:onClick="onDrawerItemClick"
+                        android:clickable="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_nav_userincentive" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="35dp"
+                            android:layout_marginLeft="25dp"
+                            android:layout_weight="7.5"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:gravity="start|center"
+                            android:text="User Incentives"
+                            android:textColor="@color/colorTextDark"
+                            android:textSize="16sp" />
+
+                        <!--                        <CheckBox-->
+                        <!--                            android:id="@+id/cbInsentive"-->
+                        <!--                            android:layout_width="0dp"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:layout_weight="1.5"-->
+                        <!--                            android:button="@drawable/chekcbox_up_down" />-->
 
 
                     </LinearLayout>
@@ -670,6 +829,8 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/lnrTearmCondition"
+                        android:onClick="onDrawerItemClick"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -694,13 +855,15 @@
                             android:fontFamily="@font/nunito_sans_regular"
                             android:gravity="start|center"
                             android:onClick="onDrawerItemClick"
-                            android:text="Terms &amp; Condition"
+                            android:text="Terms &amp; Conditions"
                             android:textColor="@color/colorTextDark"
                             android:textSize="16sp" />
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/lnrPrivacy"
+                        android:onClick="onDrawerItemClick"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -716,7 +879,7 @@
                             android:src="@drawable/ic_nav_settng" />
 
                         <TextView
-                            android:id="@+id/txtsettings"
+                            android:id="@+id/txtPrivacy"
                             android:layout_width="0dp"
                             android:layout_height="35dp"
                             android:layout_marginLeft="25dp"
@@ -725,7 +888,7 @@
                             android:fontFamily="@font/nunito_sans_regular"
                             android:gravity="start|center"
                             android:onClick="onDrawerItemClick"
-                            android:text="Settings"
+                            android:text="Privacy Policy"
                             android:textColor="@color/colorTextDark"
                             android:textSize="16sp" />
 

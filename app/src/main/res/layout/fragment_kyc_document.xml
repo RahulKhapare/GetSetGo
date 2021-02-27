@@ -37,55 +37,12 @@
                             android:textColorHint="@color/colorTextHint">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etAccHolderName"
+                                android:id="@+id/etxPanCardNumber"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:backgroundTint="@color/colorTextDark"
                                 android:fontFamily="@font/nunito_sans_semibold"
-                                android:hint="Account Holder"
-                                android:imeOptions="actionNext"
-                                android:textAllCaps="true"
-                                android:inputType="textCapCharacters"
-                                android:textColor="@color/colorTextDark"
-                                android:textColorHint="@color/colorTextHint"
-                                android:textSize="16sp" />
-
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="?actionBarSize"
-                            android:layout_marginTop="20dp"
-                            android:textColorHint="@color/colorTextHint">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etBankName"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:backgroundTint="@color/colorTextDark"
-                                android:fontFamily="@font/nunito_sans_semibold"
-                                android:hint="Bank Name"
-                                android:imeOptions="actionNext"
-                                android:inputType="textCapCharacters"
-                                android:textColor="@color/colorTextDark"
-                                android:textColorHint="@color/colorTextHint"
-                                android:textSize="16sp" />
-
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="?actionBarSize"
-                            android:layout_marginTop="20dp"
-                            android:textColorHint="@color/colorTextHint">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etAccNumber"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:backgroundTint="@color/colorTextDark"
-                                android:fontFamily="@font/nunito_sans_semibold"
-                                android:hint="Account Number"
+                                android:hint="PAN Card Number"
                                 android:imeOptions="actionNext"
                                 android:inputType="number"
                                 android:textColor="@color/colorTextDark"
@@ -94,73 +51,8 @@
 
                         </com.google.android.material.textfield.TextInputLayout>
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="?actionBarSize"
-                            android:layout_marginTop="20dp"
-                            android:textColorHint="@color/colorTextHint">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etIFSCCode"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:backgroundTint="@color/colorTextDark"
-                                android:fontFamily="@font/nunito_sans_semibold"
-                                android:hint="IFSC Code"
-                                android:imeOptions="actionNext"
-                                android:inputType="textCapCharacters"
-                                android:textColor="@color/colorTextDark"
-                                android:textColorHint="@color/colorTextHint"
-                                android:textSize="16sp" />
-
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="?actionBarSize"
-                            android:layout_marginTop="20dp"
-                            android:textColorHint="@color/colorTextHint">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etBranch"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:backgroundTint="@color/colorTextDark"
-                                android:fontFamily="@font/nunito_sans_semibold"
-                                android:hint="Branch"
-                                android:imeOptions="actionDone"
-                                android:inputType="textCapCharacters"
-                                android:textColor="@color/colorTextDark"
-                                android:textColorHint="@color/colorTextHint"
-                                android:textSize="16sp" />
-
-                        </com.google.android.material.textfield.TextInputLayout>
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="30dp"
-                            android:fontFamily="@font/nunito_sans_regular"
-                            android:text="Account Type"
-                            android:textColor="@color/colorTextHint60"
-                            android:textSize="14sp" />
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="?actionBarSize"
-                            android:layout_marginTop="10dp"
-                            android:background="@drawable/grey_border">
-
-                            <Spinner
-                                android:id="@+id/spinnerAccountType"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
-
-                        </FrameLayout>
-
                         <LinearLayout
-                            android:id="@+id/llUploadDocs"
+                            android:id="@+id/llPANUploadDocs"
                             android:layout_width="match_parent"
                             android:layout_height="?actionBarSize"
                             android:layout_gravity="center"
@@ -177,12 +69,71 @@
                                 app:tint="@color/colorTextDark" />
 
                             <TextView
-                                android:id="@+id/txtDocument"
+                                android:id="@+id/txtPAnCardUpload"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
                                 android:fontFamily="@font/nunit_sans_bold"
-                                android:text="Upload Document"
+                                android:text="Upload PAN Card Image"
+                                android:textColor="@color/colorTextDark"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:text="*Please upload an image (jpg/ jpeg)"
+                            android:textColor="@color/colorTextHint60"
+                            android:textSize="12sp" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:layout_marginTop="30dp"
+                            android:textColorHint="@color/colorTextHint">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etxAdharCardNumber"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorTextDark"
+                                android:fontFamily="@font/nunito_sans_semibold"
+                                android:hint="Aadhar Card Number"
+                                android:imeOptions="actionDone"
+                                android:inputType="number"
+                                android:textColor="@color/colorTextDark"
+                                android:textColorHint="@color/colorTextHint"
+                                android:textSize="16sp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/llAdharUploadDocs"
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="30dp"
+                            android:background="@drawable/bg_upload_docs"
+                            android:elevation="1dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/ic_upload"
+                                app:tint="@color/colorTextDark" />
+
+                            <TextView
+                                android:id="@+id/txtAadharCardUpload"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:fontFamily="@font/nunit_sans_bold"
+                                android:text="Upload Aadhar Card Image"
                                 android:textColor="@color/colorTextDark"
                                 android:textSize="16sp" />
                         </LinearLayout>

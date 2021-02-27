@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.getsetgo.Model.ResponseMessage;
 import com.getsetgo.R;
 import com.getsetgo.util.Config;
+import com.getsetgo.util.RemoveHtml;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -70,12 +71,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         if (model.getMsg_from().contains(Config.user)){
             holder.lnrUser.setVisibility(View.VISIBLE);
             holder.lnrAdmin.setVisibility(View.GONE);
-            holder.txtUserMessage.setText(model.getMessage());
+            holder.txtUserMessage.setText(RemoveHtml.html2text(model.getMessage()));
             holder.txtUserTime.setText(TIME);
         }else if (model.getMsg_from().contains(Config.admin)){
             holder.lnrAdmin.setVisibility(View.VISIBLE);
             holder.lnrUser.setVisibility(View.GONE);
-            holder.txtAdminMessage.setText(model.getMessage());
+            holder.txtAdminMessage.setText(RemoveHtml.html2text(model.getMessage()));
             holder.txtAdminTime.setText(TIME);
         }
 

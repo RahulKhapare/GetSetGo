@@ -128,6 +128,8 @@ public class P {
     public static String gender_list = "gender_list";
     public static String occupation_name = "occupation_name";
     public static String value = "value";
+    public static String terms_and_conditions_url = "terms_and_conditions_url";
+    public static String privacy_policy_url = "privacy_policy_url";
 
 
 

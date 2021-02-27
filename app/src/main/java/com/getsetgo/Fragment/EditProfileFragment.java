@@ -130,7 +130,6 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
 
         strictMode();
         loadingDialog = new LoadingDialog(getActivity());
-        hitInitApi(getActivity());
 
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Edit Profile");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
@@ -171,6 +170,10 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
 
         onClick();
         setProfileData();
+
+        setupOccupationData(BaseScreenActivity.occupation_list);
+        setupStatusData(BaseScreenActivity.marital_status_list);
+        setupGenderData(BaseScreenActivity.gender_list);
 
         return rootView;
     }
@@ -290,41 +293,6 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
 
     }
 
-    private void hitInitApi(Context context) {
-        LoadingDialog loadingDialog = new LoadingDialog(context, false);
-        Api.newApi(context, P.baseUrl + "init")
-                .setMethod(Api.GET)
-                .onHeaderRequest(App::getHeaders)
-                .onLoading(isLoading -> {
-                    if (isLoading)
-                        loadingDialog.show("loading...");
-                    else
-                        loadingDialog.hide();
-                })
-                .onError(() ->
-                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
-                            loadingDialog.dismiss();
-                        }))
-                .onSuccess(Json1 -> {
-                    if (Json1 != null) {
-                        JumpToLogin.call(Json1,context);
-                        loadingDialog.dismiss();
-                        if (Json1.getInt(P.status) == 0) {
-                            H.showMessage(context, Json1.getString(P.err));
-                        } else if (Json1.getInt(P.status) == 1) {
-                            Json1 = Json1.getJson(P.data);
-                            JsonList occupation_list = Json1.getJsonList(P.occupation_list);
-                            JsonList marital_status_list = Json1.getJsonList(P.marital_status_list);
-                            JsonList gender_list = Json1.getJsonList(P.gender_list);
-                            setupOccupationData(occupation_list);
-                            setupStatusData(marital_status_list);
-                            setupGenderData(gender_list);
-                        }
-                    }
-
-                }).run("hitInitApi");
-    }
-
     private void setupOccupationData(JsonList jsonList){
         String id = session.getString(P.occupation_id);
         int adapterPosition = 0;
@@ -413,7 +381,7 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
                             public void run() {
                                 getFragmentManager().popBackStackImmediate();
                             }
-                        }, 1000);
+                        }, 500);
                     }
                 })
                 .run("hitUpdateProfile");

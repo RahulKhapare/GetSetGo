@@ -37,12 +37,14 @@ import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
 
 import com.adoisstudio.helper.Json;
+import com.adoisstudio.helper.JsonList;
 import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
 import com.getsetgo.Fragment.AccountFragment;
 import com.getsetgo.Fragment.AddNewUserFragment;
 
+import com.getsetgo.Fragment.BankDetailsFragment;
 import com.getsetgo.Fragment.BestSellingCourseFragment;
 import com.getsetgo.Fragment.CurrentLearningFragment;
 import com.getsetgo.Fragment.DashBoardFragment;
@@ -52,12 +54,15 @@ import com.getsetgo.Fragment.HelpAndSupportFragment;
 import com.getsetgo.Fragment.HomeFragment;
 import com.getsetgo.Fragment.IncentivesFragment;
 
+import com.getsetgo.Fragment.KYCDocumentFragment;
+import com.getsetgo.Fragment.NomineeDetailsFragment;
 import com.getsetgo.Fragment.NotificationsFragment;
 import com.getsetgo.Fragment.SearchFragment;
 import com.getsetgo.Fragment.SearchUserIdFragment;
 import com.getsetgo.Fragment.TermsAndConditionFragment;
 
 import com.getsetgo.Fragment.TransactionsHistoryFragment;
+import com.getsetgo.Fragment.WebViewFragment;
 import com.getsetgo.Fragment.YourCourseFragment;
 import com.getsetgo.Fragment.ParentCategoriesFragment;
 import com.getsetgo.Model.CourseDocumentModel;
@@ -67,6 +72,7 @@ import com.getsetgo.databinding.ActivityBaseScreenBinding;
 
 import com.getsetgo.util.App;
 import com.getsetgo.util.Click;
+import com.getsetgo.util.Config;
 import com.getsetgo.util.JumpToLogin;
 import com.getsetgo.util.OpenFile;
 import com.getsetgo.util.P;
@@ -94,20 +100,32 @@ public class BaseScreenActivity extends AppCompatActivity {
     IncentivesFragment incentivesFragment;
     HelpAndSupportFragment helpAndSupportFragment;
     TermsAndConditionFragment termsAndConditionFragment;
+    NomineeDetailsFragment nomineeDetailsFragment;
+    KYCDocumentFragment kycDocumentFragment;
+    BankDetailsFragment bankDetailsFragment;
 
     ParentCategoriesFragment parentCategoriesFragment;
     BestSellingCourseFragment bestSellingCourseFragment;
     AddNewUserFragment addNewUserFragment;
     SearchUserIdFragment searchUserIdFragment;
     YourCourseFragment yourCourseFragment;
+    WebViewFragment webViewFragment;
     CurrentLearningFragment currentLearningFragment;
-    CheckBox cbMyEarning, cbUsers;
+    LinearLayout lnrUser,lnrEarning,lnrBusiness,lnrTransaction,lnrInsentive,lnrPoints;
+    CheckBox cbMyEarning, cbUsers,cbBusiness,cbTransaction,cbPoints;
     OnBackPressedCallback onBackPressedCallback;
     private LoadingDialog loadingDialog;
 
     private static final int READ_WRITE = 20;
     private String pdf_url = "";
     private String pdf_title = "";
+
+    public static JsonList occupation_list = null;
+    public static JsonList marital_status_list = null;
+    public static JsonList gender_list = null;
+
+    private String termConditionUrl = "";
+    private String privacyPolicyUrl = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,10 +136,180 @@ public class BaseScreenActivity extends AppCompatActivity {
         init();
     }
 
-    private void init() {
+    private void onItemClick(){
+
+        lnrUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cbUsers.isChecked()){
+                    cbUsers.setChecked(false);
+                }else {
+                    cbUsers.setChecked(true);
+                }
+            }
+        });
+
+        lnrEarning.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cbMyEarning.isChecked()){
+                    cbMyEarning.setChecked(false);
+                }else {
+                    cbMyEarning.setChecked(true);
+                }
+            }
+        });
+
+        lnrBusiness.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cbBusiness.isChecked()){
+                    cbBusiness.setChecked(false);
+                }else {
+                    cbBusiness.setChecked(true);
+                }
+            }
+        });
+
+        lnrTransaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cbTransaction.isChecked()){
+                    cbTransaction.setChecked(false);
+                }else {
+                    cbTransaction.setChecked(true);
+                }
+            }
+        });
+
+        lnrPoints.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cbPoints.isChecked()){
+                    cbPoints.setChecked(false);
+                }else {
+                    cbPoints.setChecked(true);
+                }
+            }
+        });
+
+    }
+
+    protected void onCheckView(){
+
+        lnrUser = findViewById(R.id.lnrUser);
+        lnrEarning = findViewById(R.id.lnrEarning);
+        lnrBusiness = findViewById(R.id.lnrBusiness);
+        lnrTransaction = findViewById(R.id.lnrTransaction);
+        lnrPoints = findViewById(R.id.lnrPoints);
+
 
         cbUsers = findViewById(R.id.cbUsers);
         cbMyEarning = findViewById(R.id.cbMyEarning);
+        cbBusiness = findViewById(R.id.cbBusiness);
+        cbTransaction = findViewById(R.id.cbTransaction);
+        cbPoints = findViewById(R.id.cbPoints);
+
+        checkBoxUsers();
+        checkBoxMyEarning();
+        checkBoxBisness();
+        checkBoxTransaction();
+        checkBoxPoints();
+
+        onItemClick();
+    }
+
+    private void checkBoxUsers() {
+        LinearLayout llCbUsers = findViewById(R.id.llCbUsersExpand);
+        cbUsers.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    llCbUsers.setVisibility(View.VISIBLE);
+                    isCollapse(cbMyEarning);
+                    isCollapse(cbBusiness);
+                    isCollapse(cbTransaction);
+                    isCollapse(cbPoints);
+                } else {
+                    llCbUsers.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    private void checkBoxMyEarning() {
+        LinearLayout llCbMyEarningExpand = findViewById(R.id.llCbMyEarningExpand);
+        cbMyEarning.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    llCbMyEarningExpand.setVisibility(View.VISIBLE);
+                    isCollapse(cbUsers);
+                    isCollapse(cbBusiness);
+                    isCollapse(cbTransaction);
+                    isCollapse(cbPoints);
+                } else {
+                    llCbMyEarningExpand.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+
+    private void checkBoxBisness() {
+        LinearLayout llCbBusinessExpand = findViewById(R.id.llCbBusinessExpand);
+        cbBusiness.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    llCbBusinessExpand.setVisibility(View.VISIBLE);
+                    isCollapse(cbUsers);
+                    isCollapse(cbMyEarning);
+                    isCollapse(cbTransaction);
+                    isCollapse(cbPoints);
+                } else {
+                    llCbBusinessExpand.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    private void checkBoxTransaction() {
+        LinearLayout llCbTransactionExpand = findViewById(R.id.llCbTransactionExpand);
+        cbTransaction.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    llCbTransactionExpand.setVisibility(View.VISIBLE);
+                    isCollapse(cbUsers);
+                    isCollapse(cbMyEarning);
+                    isCollapse(cbBusiness);
+                    isCollapse(cbPoints);
+                } else {
+                    llCbTransactionExpand.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    private void checkBoxPoints() {
+        cbPoints.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    isCollapse(cbUsers);
+                    isCollapse(cbMyEarning);
+                    isCollapse(cbBusiness);
+                    isCollapse(cbTransaction);
+                } else {
+                }
+            }
+        });
+    }
+
+
+    private void init() {
+        onCheckView();
 
         onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
@@ -183,14 +371,14 @@ public class BaseScreenActivity extends AppCompatActivity {
             }
         });
 
-
-        checkBoxMyEarning();
-        checkBoxUsers();
         try {
             setDrawerData();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        hitInitApi(this);
+
     }
 
     private void setDrawerData() throws Exception {
@@ -206,36 +394,6 @@ public class BaseScreenActivity extends AppCompatActivity {
         TextView txtEmail = findViewById(R.id.txtEmail);
         txtName.setText(name + " " + lastName);
         txtEmail.setText(email);
-    }
-
-    private void checkBoxMyEarning() {
-        LinearLayout llCbMyEarningExpand = findViewById(R.id.llCbMyEarningExpand);
-        cbMyEarning.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked) {
-                    llCbMyEarningExpand.setVisibility(View.VISIBLE);
-                    isCollapse(cbUsers);
-                } else {
-                    llCbMyEarningExpand.setVisibility(View.GONE);
-                }
-            }
-        });
-    }
-
-    private void checkBoxUsers() {
-        LinearLayout llCbUsers = findViewById(R.id.llCbUsersExpand);
-        cbUsers.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked) {
-                    llCbUsers.setVisibility(View.VISIBLE);
-                    isCollapse(cbMyEarning);
-                } else {
-                    llCbUsers.setVisibility(View.GONE);
-                }
-            }
-        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -308,14 +466,14 @@ public class BaseScreenActivity extends AppCompatActivity {
                 fragmentLoader(notificationsFragment, true);
                 break;
 
-            case R.id.txtEarning:
-                EarningsFragment earningsFragment;
-                bundle.putString("tabItem", "Course Earnings");
-                earningsFragment = EarningsFragment.newInstance();
-                earningsFragment.setArguments(bundle);
-                EarningsFragment.isFromBack = false;
-                fragmentLoader(earningsFragment, true);
-                break;
+//            case R.id.txtEarning:
+//                EarningsFragment earningsFragment;
+//                bundle.putString("tabItem", "Course Earnings");
+//                earningsFragment = EarningsFragment.newInstance();
+//                earningsFragment.setArguments(bundle);
+//                EarningsFragment.isFromBack = false;
+//                fragmentLoader(earningsFragment, true);
+//                break;
 
             case R.id.txtCourseEarning:
                 EarningsFragment coursEarning;
@@ -344,17 +502,45 @@ public class BaseScreenActivity extends AppCompatActivity {
                 fragmentLoader(totalEarning, true);
                 break;
 
-            case R.id.txtTransactions:
-                bundle.putString("tabTCItem", "All Transations");
-                TransactionsHistoryFragment transactionsHistoryFragment;
-                transactionsHistoryFragment = TransactionsHistoryFragment.newInstance();
+            case R.id.txtTransactionAll:
+                bundle.putString("tabTCItem", "All Transactions");
+                TransactionsHistoryFragment transactionsHistoryFragment1;
+                transactionsHistoryFragment1 = TransactionsHistoryFragment.newInstance();
                 TransactionsHistoryFragment.isFromTransHistory = false;
                 TransactionsHistoryFragment.isFromSearch = false;
-                transactionsHistoryFragment.setArguments(bundle);
-                fragmentLoader(transactionsHistoryFragment, true);
+                transactionsHistoryFragment1.setArguments(bundle);
+                fragmentLoader(transactionsHistoryFragment1, true);
                 break;
 
-            case R.id.txtincentive:
+            case R.id.txtTransactionCrashCourse:
+                bundle.putString("tabTCItem", "Crash Course");
+                TransactionsHistoryFragment transactionsHistoryFragment2;
+                transactionsHistoryFragment2 = TransactionsHistoryFragment.newInstance();
+                TransactionsHistoryFragment.isFromTransHistory = false;
+                TransactionsHistoryFragment.isFromSearch = false;
+                transactionsHistoryFragment2.setArguments(bundle);
+                fragmentLoader(transactionsHistoryFragment2, true);
+                break;
+
+            case R.id.txtBankDetails:
+                if (bankDetailsFragment == null)
+                    bankDetailsFragment = BankDetailsFragment.newInstance();
+                fragmentLoader(bankDetailsFragment, true);
+                break;
+
+            case R.id.txtKYCDocument:
+                if (kycDocumentFragment == null)
+                    kycDocumentFragment = KYCDocumentFragment.newInstance();
+                fragmentLoader(kycDocumentFragment, true);
+                break;
+
+            case R.id.txtNomineeDetails:
+                if (nomineeDetailsFragment == null)
+                    nomineeDetailsFragment = NomineeDetailsFragment.newInstance();
+                fragmentLoader(nomineeDetailsFragment, true);
+                break;
+
+            case R.id.lnrInsentive:
                 if (incentivesFragment == null)
                     IncentivesFragment.isSearch = false;
                 incentivesFragment = IncentivesFragment.newInstance();
@@ -366,18 +552,6 @@ public class BaseScreenActivity extends AppCompatActivity {
                     helpAndSupportFragment = HelpAndSupportFragment.newInstance();
                 fragmentLoader(helpAndSupportFragment, true);
                 break;
-
-            case R.id.txttermCondition:
-                if (termsAndConditionFragment == null)
-                    termsAndConditionFragment = TermsAndConditionFragment.newInstance();
-                fragmentLoader(termsAndConditionFragment, true);
-                break;
-
-         /*   case R.id.txtViewAllCategories:
-                if (categoriesFragment == null)
-                    categoriesFragment = CategoriesFragment.newInstance();
-                fragmentLoader(categoriesFragment, true);
-                break; */
 
             case R.id.txtViewAllBestCourse:
                 if (bestSellingCourseFragment == null)
@@ -413,11 +587,23 @@ public class BaseScreenActivity extends AppCompatActivity {
                 fragmentLoader(yourCourseFragment, true);
                 break;
 
-/*            case R.id.cardViewCurrentLearning:
-                if (currentLearningFragment == null)
-                    currentLearningFragment = CurrentLearningFragment.newInstance();
-                fragmentLoader(currentLearningFragment,true);
-                break;*/
+            case R.id.txttermCondition:
+                if (webViewFragment == null) {
+                    webViewFragment = WebViewFragment.newInstance();
+                }
+                Config.flag = Config.term;
+                Config.webViewUrl = termConditionUrl;
+                fragmentLoader(webViewFragment, true);
+                break;
+
+            case R.id.txtPrivacy:
+                if (webViewFragment == null) {
+                    webViewFragment = WebViewFragment.newInstance();
+                }
+                Config.flag = Config.privacy;
+                Config.webViewUrl = privacyPolicyUrl;
+                fragmentLoader(webViewFragment, true);
+                break;
 
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START);
@@ -502,7 +688,7 @@ public class BaseScreenActivity extends AppCompatActivity {
     }
 
     private void callLogOutApi() {
-        loadingDialog = new LoadingDialog(activity,false);
+        loadingDialog = new LoadingDialog(activity, false);
         Json json = new Json();
 
         Api.newApi(activity, P.baseUrl + "logout").setMethod(Api.POST)
@@ -520,7 +706,7 @@ public class BaseScreenActivity extends AppCompatActivity {
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
-                        JumpToLogin.call(Json1,activity);
+                        JumpToLogin.call(Json1, activity);
                         loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(activity, Json1.getString(P.err));
@@ -564,7 +750,7 @@ public class BaseScreenActivity extends AppCompatActivity {
 
             long l = Long.parseLong(testResult);
 
-            Log.d("+","Playback position result "+l);
+            Log.d("+", "Playback position result " + l);
 
             CurrentLearningFragment fragment = (CurrentLearningFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
             fragment.onActivityResult(requestCode, resultCode, data);
@@ -573,7 +759,7 @@ public class BaseScreenActivity extends AppCompatActivity {
         }
     }
 
-    public void checkPDFPath(CourseDocumentModel model){
+    public void checkPDFPath(CourseDocumentModel model) {
         pdf_title = model.getFile_name();
         pdf_url = model.getFile();
         checkPDF();
@@ -584,6 +770,7 @@ public class BaseScreenActivity extends AppCompatActivity {
             StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
             StrictMode.setVmPolicy(builder.build());
         } catch (Exception e) {
+
         }
     }
 
@@ -635,7 +822,7 @@ public class BaseScreenActivity extends AppCompatActivity {
             destination += fileName;
             File direct = new File(destination);
             if (direct.exists()) {
-                OpenFile.openPath(context,direct);
+                OpenFile.openPath(context, direct);
             } else {
                 DocumentDownloader.download(context, fileURL, title);
             }
@@ -643,7 +830,40 @@ public class BaseScreenActivity extends AppCompatActivity {
             Log.e("TAG", "checkDirectory: " + e.getMessage());
             H.showMessage(context, "Something went wrong, try again.");
         }
+    }
 
+    private void hitInitApi(Context context) {
+        LoadingDialog loadingDialog = new LoadingDialog(context, false);
+        Api.newApi(context, P.baseUrl + "init")
+                .setMethod(Api.GET)
+                .onHeaderRequest(App::getHeaders)
+                .onLoading(isLoading -> {
+                    if (isLoading)
+                        loadingDialog.show("loading...");
+                    else
+                        loadingDialog.hide();
+                })
+                .onError(() ->
+                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
+                        }))
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        JumpToLogin.call(Json1,context);
+                        loadingDialog.dismiss();
+                        if (Json1.getInt(P.status) == 0) {
+                            H.showMessage(context, Json1.getString(P.err));
+                        } else if (Json1.getInt(P.status) == 1) {
+                            Json1 = Json1.getJson(P.data);
+                            occupation_list = Json1.getJsonList(P.occupation_list);
+                            marital_status_list = Json1.getJsonList(P.marital_status_list);
+                            gender_list = Json1.getJsonList(P.gender_list);
+                            termConditionUrl = Json1.getString(P.terms_and_conditions_url);
+                            privacyPolicyUrl = Json1.getString(P.privacy_policy_url);
+                        }
+                    }
+
+                }).run("hitInitApi");
     }
 
 }

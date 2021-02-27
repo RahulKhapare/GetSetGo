@@ -37,7 +37,7 @@ public class TransactionViewPagerAdapter extends FragmentPagerAdapter {
         String title = null;
         if (position == 0)
         {
-            title = "All Transations";
+            title = "All Transactions";
         }
         else if (position == 1)
         {

@@ -80,14 +80,6 @@ public class AccountFragment extends Fragment {
 
     public void onClick() {
 
-        binding.llBankDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Click.preventTwoClick(v);
-                BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
-                loadBankDetailFragment(v);
-            }
-        });
 
         binding.lnrChnagePassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,18 +136,6 @@ public class AccountFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    private void loadBankDetailFragment(View v) {
-        AppCompatActivity activity = (AppCompatActivity) v.getContext();
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("isFromBottom", isFromBottom);
-        bankDetailsFragment = new BankDetailsFragment();
-        bankDetailsFragment.setArguments(bundle);
-        activity.getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, bankDetailsFragment)
-                .addToBackStack(null)
-                .commit();
-    }
 
     private void loadEditProfileFragment(View v) {
         AppCompatActivity activity = (AppCompatActivity) v.getContext();

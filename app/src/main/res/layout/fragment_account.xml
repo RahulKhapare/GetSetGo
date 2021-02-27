@@ -225,68 +225,9 @@
                     android:gravity="center">
 
                     <RelativeLayout
-                        android:id="@+id/rlBank"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp">
-
-                        <TextView
-                            android:id="@+id/txtBankTitle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/nunito_sans_regular"
-                            android:text="Bank Details"
-                            android:textColor="@color/colorTextHint60"
-                            android:textSize="14sp" />
-
-                        <LinearLayout
-                            android:id="@+id/llBankDetails"
-                            android:layout_width="match_parent"
-                            android:layout_height="26dp"
-                            android:layout_below="@+id/txtBankTitle"
-                            android:layout_marginTop="12dp"
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            android:weightSum="10">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="9.3"
-                                android:fontFamily="@font/nunito_sans_regular"
-                                android:text="Enter your Bank Details"
-                                android:textColor="@color/colorTextDark"
-                                android:textSize="16sp" />
-
-                            <ImageView
-                                android:layout_width="0dp"
-                                android:layout_height="22dp"
-                                android:layout_weight="0.7"
-                                android:rotationY="180"
-                                android:src="@drawable/ic_back"
-                                app:tint="@color/colorArrow" />
-
-
-                        </LinearLayout>
-
-
-                    </RelativeLayout>
-
-                    <View
-                        android:id="@+id/viewBank"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_below="@+id/rlBank"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@color/colorStrokeView" />
-
-                    <RelativeLayout
                         android:id="@+id/rlAccountSettings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewBank"
                         android:layout_marginTop="15dp"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp">
@@ -329,40 +270,12 @@
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/llAccountSecurity"
-                            android:layout_width="match_parent"
-                            android:layout_height="26dp"
-                            android:layout_below="@+id/lnrChnagePassword"
-                            android:layout_marginTop="12dp"
-                            android:orientation="horizontal"
-                            android:weightSum="10">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="9.3"
-                                android:fontFamily="@font/nunito_sans_regular"
-                                android:text="Account security"
-                                android:textColor="@color/colorTextDark"
-                                android:textSize="16sp" />
-
-                            <ImageView
-                                android:layout_width="0dp"
-                                android:layout_height="22dp"
-                                android:layout_weight="0.7"
-                                android:rotationY="180"
-                                android:src="@drawable/ic_back"
-                                app:tint="@color/colorArrow" />
-
-
-                        </LinearLayout>
 
                         <LinearLayout
                             android:id="@+id/lnrEditProfile"
                             android:layout_width="match_parent"
                             android:layout_height="26dp"
-                            android:layout_below="@+id/llAccountSecurity"
+                            android:layout_below="@+id/lnrChnagePassword"
                             android:layout_marginTop="15dp"
                             android:orientation="horizontal"
                             android:weightSum="10">
@@ -512,7 +425,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/rlSupport"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="50dp"
                         android:fontFamily="@font/nunit_sans_bold"
                         android:gravity="center"
                         android:text="Sign out"

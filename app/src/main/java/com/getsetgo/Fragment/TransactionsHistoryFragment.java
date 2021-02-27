@@ -104,7 +104,7 @@ public class TransactionsHistoryFragment extends Fragment {
         String tab = this.getArguments().getString("tabTCItem");
         transactionViewPagerAdapter = new TransactionViewPagerAdapter(getChildFragmentManager());
         binding.viewPager.setAdapter(transactionViewPagerAdapter);
-        if (tab.equalsIgnoreCase("All Transations")) {
+        if (tab.equalsIgnoreCase("All Transactions")) {
             binding.viewPager.setCurrentItem(0);
 
             if (!isFromSearch) {

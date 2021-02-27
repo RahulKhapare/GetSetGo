@@ -18,7 +18,7 @@
             android:id="@+id/ivMyCourse"
             android:layout_width="@dimen/x72"
             android:layout_height="@dimen/x72"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:src="@drawable/download"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

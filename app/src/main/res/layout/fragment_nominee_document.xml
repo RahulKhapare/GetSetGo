@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/toolbar_backgound">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_layout_bg">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nestedScroll"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="10dp">
+
+                <RelativeLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:layout_marginTop="20dp"
+                            android:textColorHint="@color/colorTextHint">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etxNomineeOne"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorTextDark"
+                                android:fontFamily="@font/nunito_sans_semibold"
+                                android:hint="Nominee 1"
+                                android:imeOptions="actionNext"
+                                android:inputType="textCapCharacters"
+                                android:textColor="@color/colorTextDark"
+                                android:textColorHint="@color/colorTextHint"
+                                android:textSize="16sp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:text="Nominee 1 Relation"
+                            android:textColor="@color/colorTextHint60"
+                            android:textSize="14sp" />
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/grey_border">
+
+                            <Spinner
+                                android:id="@+id/spinnerNomineeOne"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+
+                        </FrameLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:layout_marginTop="20dp"
+                            android:textColorHint="@color/colorTextHint">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/NomineeTwo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorTextDark"
+                                android:fontFamily="@font/nunito_sans_semibold"
+                                android:hint="Nominee 2"
+                                android:imeOptions="actionDone"
+                                android:inputType="textCapCharacters"
+                                android:textColor="@color/colorTextDark"
+                                android:textColorHint="@color/colorTextHint"
+                                android:textSize="16sp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:text="Nominee 2 Relation"
+                            android:textColor="@color/colorTextHint60"
+                            android:textSize="14sp" />
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/grey_border">
+
+                            <Spinner
+                                android:id="@+id/spinnerNomineeTwo"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+
+                        </FrameLayout>
+
+
+                        <TextView
+                            android:id="@+id/txtSaveNext"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="50dp"
+                            android:layout_marginBottom="25dp"
+                            android:background="@drawable/button_dark_bg"
+                            android:fontFamily="@font/nunit_sans_bold"
+                            android:gravity="center"
+                            android:paddingTop="20dp"
+                            android:paddingBottom="20dp"
+                            android:text="Save Details"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+
+            </androidx.core.widget.NestedScrollView>
+
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>
+

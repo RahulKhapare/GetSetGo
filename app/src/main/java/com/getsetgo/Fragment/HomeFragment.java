@@ -33,6 +33,7 @@ import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentHomeBinding;
 import com.getsetgo.util.App;
 import com.getsetgo.util.Click;
+import com.getsetgo.util.Config;
 import com.getsetgo.util.JumpToLogin;
 import com.getsetgo.util.P;
 import com.getsetgo.util.Utilities;
@@ -41,7 +42,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements View.OnClickListener {
+public class HomeFragment extends Fragment {
 
     FragmentHomeBinding binding;
     Context context;
@@ -70,7 +71,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public static  JsonList bestselling_course_list = new JsonList();
     public static  JsonList top_searches = new JsonList();
 
-    CourseDetailFragment courseDetailFragment;
+    MyCourseDetailFragment courseDetailFragment;
+    Bundle bundle = new Bundle();
 
     public HomeFragment() {
         // Required empty public constructor
@@ -88,8 +90,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         View rootView = binding.getRoot();
         context = inflater.getContext();
         init();
-
-        binding.cardViewCurrentLearning.setOnClickListener(this);
 
         return rootView;
     }
@@ -293,7 +293,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onClick(View v) {
                     Click.preventTwoClick(v);
-                    loadFragment(v,course_name,slug);
+                    loadFragment(v,slug,course_name);
                 }
             });
 
@@ -302,20 +302,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             binding.cardViewCurrentLearning.setVisibility(View.GONE);
         }
 
-
     }
 
-    private void loadFragment(View v, String title,String slug) {
-        Bundle bundle = new Bundle();
+    private void loadFragment(View v, String courseSlug,String courseName) {
         BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
         BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);
         BaseScreenActivity.binding.incFragmenttool.content.setVisibility(View.VISIBLE);
         BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
-        bundle.putString("title", title);
-        bundle.putString("slug", slug);
-        bundle.putBoolean("isFromHome", true);
+        Config.myCourseSlug = courseSlug;
+        Config.myCourseTitle = courseName;
+        bundle.putString("slug",courseSlug);
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
-        courseDetailFragment = new CourseDetailFragment();
+        if (courseDetailFragment == null)
+            courseDetailFragment = new MyCourseDetailFragment();
         courseDetailFragment.setArguments(bundle);
         activity.getSupportFragmentManager()
                 .beginTransaction()
@@ -346,26 +345,5 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             bestSellingCourseAdapter.notifyDataSetChanged();
         }
 
-    }
-    @Override
-    public void onClick(View v) {
-
-        int id = v.getId();
-
-        switch (id){
-
-            case R.id.cardViewCurrentLearning:
-
-//                CurrentLearningFragment currentLearningFragment = CurrentLearningFragment.newInstance();
-//
-//                getActivity()
-//                        .getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .setCustomAnimations(R.anim.anim_enter, R.anim.anim_exit)
-//                        .addToBackStack("")
-//                        .add(R.id.fragment_container, currentLearningFragment).commit();
-                break;
-
-        }
     }
 }
