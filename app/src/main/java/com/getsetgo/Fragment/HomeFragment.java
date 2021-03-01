@@ -3,6 +3,7 @@ package com.getsetgo.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -268,13 +269,17 @@ public class HomeFragment extends Fragment {
 
     private void setUpCurrentLearningData(Json json){
 
-        if (!json.toString().equals("") || !json.toString().equals("null")){
+        if (!json.toString().equals("") && !json.toString().equals("null") && !json.toString().equals("{}")){
             String id = json.getString(P.id);
             String course_name = json.getString(P.course_name);
             String slug = json.getString(P.slug);
             String image = json.getString(P.image);
             String category_name = json.getString(P.category_name);
             String completion_percent = json.getString(P.completion_percent);
+
+            if(TextUtils.isEmpty(image)){
+                image = "empty_image";
+            }
 
             Picasso.get().load(image).placeholder(R.drawable.ic_no_image).error(R.drawable.ic_no_image).into(binding.imgCourse);
             binding.txtCourseName.setText(course_name);

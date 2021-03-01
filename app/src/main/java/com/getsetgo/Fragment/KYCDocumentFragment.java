@@ -3,6 +3,7 @@ package com.getsetgo.Fragment;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -10,18 +11,18 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
@@ -31,13 +32,19 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.Json;
+import com.adoisstudio.helper.LoadingDialog;
+import com.adoisstudio.helper.MessageBox;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentKycDocumentBinding;
-import com.getsetgo.databinding.FragmentWebViewBinding;
+import com.getsetgo.util.App;
 import com.getsetgo.util.Click;
-import com.getsetgo.util.Config;
+import com.getsetgo.util.JumpToLogin;
+import com.getsetgo.util.P;
+import com.getsetgo.util.ProgressView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -58,6 +65,9 @@ public class KYCDocumentFragment extends Fragment {
     private int clickFor = 0;
     private int PANClick = 1;
     private int AadharClick = 2;
+    LoadingDialog loadingDialog;
+    String aadharImage = "";
+    String panImage = "";
 
     public KYCDocumentFragment() {
     }
@@ -97,10 +107,8 @@ public class KYCDocumentFragment extends Fragment {
             public void handleOnBackPressed() {
                 // Handle the back button event
 
-                if(getFragmentManager().getBackStackEntryCount() > 0){
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    BaseScreenActivity.callBack();
-                }
+                onBackPressClick();
+
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
@@ -123,6 +131,7 @@ public class KYCDocumentFragment extends Fragment {
     }
 
     private void init(){
+        loadingDialog = new LoadingDialog(getActivity());
         onClick();
     }
 
@@ -133,10 +142,7 @@ public class KYCDocumentFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if (getFragmentManager().getBackStackEntryCount() > 0) {
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    BaseScreenActivity.callBack();
-                }
+                onBackPressClick();
             }
         });
 
@@ -158,7 +164,37 @@ public class KYCDocumentFragment extends Fragment {
             }
         });
 
+        binding.txtSaveNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                if (checkValidation()){
+                    hitSaveKYCData(getActivity());
+                }
+            }
+        });
+
     }
+
+    private boolean checkValidation(){
+        boolean value = true;
+
+        if (TextUtils.isEmpty(binding.etxPanCardNumber.getText().toString().trim())){
+            H.showMessage(getActivity(),"Please enter PAN number");
+            value = false;
+        }else if (TextUtils.isEmpty(binding.etxAdharCardNumber.getText().toString().trim())){
+            H.showMessage(getActivity(),"Please enter Aadhar number");
+            value = false;
+        }else if (TextUtils.isEmpty(panImage)){
+            H.showMessage(getActivity(),"Please choose PAN card image");
+            value = false;
+        }else if (TextUtils.isEmpty(aadharImage)){
+            H.showMessage(getActivity(),"Please choose Aadhar card image");
+            value = false;
+        }
+        return value;
+    }
+
 
     private void strictMode(){
         try {
@@ -324,5 +360,44 @@ public class KYCDocumentFragment extends Fragment {
         return encImage;
     }
 
+    private void hitSaveKYCData(Context context) {
+        ProgressView.show(context,loadingDialog);
 
+        Json j = new Json();
+//        j.addString(P.occupation_id,occupation);
+
+        Api.newApi(context, P.baseUrl + "").addJson(j)
+                .setMethod(Api.POST)
+                .onHeaderRequest(App::getHeaders)
+                .onError(() -> {
+                    ProgressView.dismiss(loadingDialog);
+                    MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                    });
+                })
+                .onSuccess(json ->
+                {
+                    JumpToLogin.call(json,context);
+                    ProgressView.dismiss(loadingDialog);
+                    if (json.getInt(P.status) == 1) {
+                        H.showMessage(context,"Details save successfully");
+                        final Handler handler = new Handler(Looper.getMainLooper());
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                NomineeDetailsFragment myFragment = new NomineeDetailsFragment();
+                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, myFragment).addToBackStack(null).commit();
+                            }
+                        }, 500);
+                    }
+                })
+                .run("hitSaveKYCData");
+    }
+
+
+    private void onBackPressClick(){
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            BaseScreenActivity.callBack();
+        }
+    }
 }

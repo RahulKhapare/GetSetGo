@@ -158,7 +158,7 @@
                             android:gravity="center"
                             android:paddingTop="20dp"
                             android:paddingBottom="20dp"
-                            android:text="Save Details"
+                            android:text="Save &amp; Next"
                             android:textColor="@color/colorWhite"
                             android:textSize="16sp" />
 

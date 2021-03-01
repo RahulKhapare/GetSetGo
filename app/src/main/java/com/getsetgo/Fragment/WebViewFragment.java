@@ -43,10 +43,7 @@ public class WebViewFragment extends Fragment {
             public void handleOnBackPressed() {
                 // Handle the back button event
 
-                if(getFragmentManager().getBackStackEntryCount() > 0){
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    BaseScreenActivity.callBack();
-                }
+                onBackPressClick();
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
@@ -64,6 +61,8 @@ public class WebViewFragment extends Fragment {
             title = "Terms & Conditions";
         }else  if (Config.flag == Config.privacy){
             title = "Privacy Policy";
+        }else  if (Config.flag == Config.faq){
+            title = "FAQ";
         }
 
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText(title);
@@ -91,7 +90,7 @@ public class WebViewFragment extends Fragment {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setUseWideViewPort(true);
-        webSettings.setBuiltInZoomControls(true);
+//        webSettings.setBuiltInZoomControls(true);
 
         binding.webView.loadUrl(url);
     }
@@ -101,14 +100,17 @@ public class WebViewFragment extends Fragment {
         BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (getFragmentManager().getBackStackEntryCount() > 0) {
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    BaseScreenActivity.callBack();
-                }
+                onBackPressClick();
             }
         });
 
+    }
+
+    private void onBackPressClick(){
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            BaseScreenActivity.callBack();
+        }
     }
 
 }

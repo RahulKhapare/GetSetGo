@@ -1,10 +1,13 @@
 package com.getsetgo.Fragment;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
@@ -12,23 +15,27 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.getsetgo.Adapter.SpinnerSelectionAdapter;
-import com.getsetgo.Model.SpinnerModel;
+import com.adoisstudio.helper.Api;
+import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.Json;
+import com.adoisstudio.helper.LoadingDialog;
+import com.adoisstudio.helper.MessageBox;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentNomineeDocumentBinding;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.getsetgo.util.App;
+import com.getsetgo.util.Click;
+import com.getsetgo.util.JumpToLogin;
+import com.getsetgo.util.P;
+import com.getsetgo.util.ProgressView;
 
 public class NomineeDetailsFragment extends Fragment {
 
     private FragmentNomineeDocumentBinding binding;
 
-    private List<SpinnerModel> nomineeOneList;
-    SpinnerSelectionAdapter nomineeOneAdapter;
-    private List<SpinnerModel> nomineeTwoList;
-    SpinnerSelectionAdapter nomineeTwoAdapter;
+    LoadingDialog loadingDialog;
+    String relationOne = "";
+    String relationTwo = "";
 
 
 
@@ -46,16 +53,32 @@ public class NomineeDetailsFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
+                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    BaseScreenActivity.callBack();
+                }
+
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+    }
+
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
                 // Handle the back button event
 
-                if(getFragmentManager().getBackStackEntryCount() > 0){
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    BaseScreenActivity.callBack();
-                }
+                onBackPressClick();
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
@@ -78,21 +101,8 @@ public class NomineeDetailsFragment extends Fragment {
 
     private void init(){
 
-        nomineeOneList = new ArrayList<>();
-        SpinnerModel model1 = new SpinnerModel();
-        model1.setId("");
-        model1.setName("Select Relation");
-        nomineeOneList.add(model1);
-        nomineeOneAdapter = new SpinnerSelectionAdapter(getActivity(), nomineeOneList);
-        binding.spinnerNomineeOne.setAdapter(nomineeOneAdapter);
-
-        nomineeTwoList = new ArrayList<>();
-        SpinnerModel model2 = new SpinnerModel();
-        model2.setId("");
-        model2.setName("Select Relation");
-        nomineeTwoList.add(model2);
-        nomineeTwoAdapter = new SpinnerSelectionAdapter(getActivity(), nomineeTwoList);
-        binding.spinnerNomineeTwo.setAdapter(nomineeTwoAdapter);
+        loadingDialog = new LoadingDialog(getActivity());
+        hitGetNomineeData(getActivity());
 
         onClick();
     }
@@ -104,39 +114,117 @@ public class NomineeDetailsFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if (getFragmentManager().getBackStackEntryCount() > 0) {
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    BaseScreenActivity.callBack();
+                onBackPressClick();
+            }
+        });
+
+
+        binding.txtSaveNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                if (checkValidation()){
+                    hitSaveNomineeData(getActivity());
                 }
-            }
-        });
-
-        binding.spinnerNomineeOne.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                SpinnerModel model = nomineeOneList.get(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-
-        binding.spinnerNomineeTwo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                SpinnerModel model = nomineeTwoList.get(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
     }
 
+
+    private boolean checkValidation(){
+        boolean value = true;
+
+        if (TextUtils.isEmpty(binding.etxNomineeOne.getText().toString().trim())){
+            H.showMessage(getActivity(),"Please enter nominee one name");
+            value = false;
+        }else if (TextUtils.isEmpty(binding.etxNomineeOneRelation.getText().toString().trim())){
+            H.showMessage(getActivity(),"Please enter nominee one relation");
+            value = false;
+        }else if (TextUtils.isEmpty(binding.etxNomineeOne.getText().toString().trim())){
+            H.showMessage(getActivity(),"Please enter nominee two name");
+            value = false;
+        }else if (TextUtils.isEmpty(binding.etxNomineeTwoRelation.getText().toString().trim())){
+            H.showMessage(getActivity(),"Please enter nominee two relation");
+            value = false;
+        }
+        return value;
+    }
+
+    private void hitSaveNomineeData(Context context) {
+        ProgressView.show(context,loadingDialog);
+
+        Json j = new Json();
+        j.addString(P.nominee1,binding.etxNomineeOne.getText().toString().trim());
+        j.addString(P.nominee1_relation,binding.etxNomineeOneRelation.getText().toString().trim());
+        j.addString(P.nominee2,binding.etxNomineeTwo.getText().toString().trim());
+        j.addString(P.nominee2_relation,binding.etxNomineeTwoRelation.getText().toString().trim());
+
+        Api.newApi(context, P.baseUrl + "nominee_details").addJson(j)
+                .setMethod(Api.POST)
+                .onHeaderRequest(App::getHeaders)
+                .onError(() -> {
+                    ProgressView.dismiss(loadingDialog);
+                    MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                    });
+                })
+                .onSuccess(json ->
+                {
+                    JumpToLogin.call(json,context);
+                    ProgressView.dismiss(loadingDialog);
+                    if (json.getInt(P.status) == 1) {
+                        H.showMessage(context,"Details save successfully");
+                        final Handler handler = new Handler(Looper.getMainLooper());
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                               onBackPressClick();
+                            }
+                        }, 500);
+                    }
+                })
+                .run("hitSaveNomineeData");
+    }
+
+    private void hitGetNomineeData(Context context) {
+        ProgressView.show(context,loadingDialog);
+        Api.newApi(context, P.baseUrl + "nominee_details")
+                .setMethod(Api.GET)
+                .onHeaderRequest(App::getHeaders)
+                .onError(() -> {
+                    ProgressView.dismiss(loadingDialog);
+                    MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                    });
+                })
+                .onSuccess(json ->
+                {
+                    JumpToLogin.call(json,context);
+                    ProgressView.dismiss(loadingDialog);
+                    if (json.getInt(P.status) == 1) {
+                        Json jsonData = json.getJson(P.data);
+                        Json nomineeJson = jsonData.getJson(P.nominee_details);
+                        binding.etxNomineeOne.setText(checkString(nomineeJson.getString(P.nominee1)));
+                        binding.etxNomineeOneRelation.setText(checkString(nomineeJson.getString(P.nominee1_relation)));
+                        binding.etxNomineeTwo.setText(checkString(nomineeJson.getString(P.nominee2)));
+                        binding.etxNomineeTwoRelation.setText(checkString(nomineeJson.getString(P.nominee2_relation)));
+                    }
+                })
+                .run("hitGetNomineeData");
+    }
+
+    private String checkString(String string){
+        String value = "";
+        if (!TextUtils.isEmpty(string) || !string.equals("null")){
+            value = string;
+        }
+        return value;
+    }
+
+    private void onBackPressClick(){
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            BaseScreenActivity.callBack();
+        }
+    }
 
 }

@@ -25,6 +25,7 @@ import com.getsetgo.activity.BaseScreenActivity;
 
 import com.getsetgo.databinding.FragmentAccountBinding;
 import com.getsetgo.util.Click;
+import com.getsetgo.util.Config;
 import com.getsetgo.util.P;
 import com.squareup.picasso.Picasso;
 
@@ -35,6 +36,7 @@ public class AccountFragment extends Fragment {
     BankDetailsFragment bankDetailsFragment;
     ChangePasswordFragment changePasswordFragment;
     EditProfileFragment editProfileFragment;
+    WebViewFragment webViewFragment;
     boolean isFromBottom;
 
     public AccountFragment() {
@@ -108,6 +110,14 @@ public class AccountFragment extends Fragment {
             }
         });
 
+        binding.llSupportFAQ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
+                loadFAQFragment(v);
+            }
+        });
+
         BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,6 +125,14 @@ public class AccountFragment extends Fragment {
                     getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     BaseScreenActivity.callBack();
                 }
+            }
+        });
+
+        binding.txtSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                ((BaseScreenActivity)getActivity()).onLogout();
             }
         });
     }
@@ -162,4 +180,20 @@ public class AccountFragment extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
+
+    private void loadFAQFragment(View v) {
+        Config.flag = Config.faq;
+        Config.webViewUrl = BaseScreenActivity.faq_url;
+        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isFromBottom", isFromBottom);
+        webViewFragment = new WebViewFragment();
+        webViewFragment.setArguments(bundle);
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, webViewFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
 }

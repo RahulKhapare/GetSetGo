@@ -300,7 +300,7 @@ CourseModuleAdapter.click{
             }
             exoPlayer.play();
         }else {
-            exoPlayer.pause();
+            exoPlayer.play();
         }
 
     }
@@ -505,6 +505,8 @@ CourseModuleAdapter.click{
             courseLinkModelList.clear();
             courseLinkAdapter.notifyDataSetChanged();
         }
+
+        binding.nestedScroll.scrollTo(0,0);
     }
 
     private void setVideoData(JsonList jsonList){

@@ -111,7 +111,7 @@ public class BaseScreenActivity extends AppCompatActivity {
     YourCourseFragment yourCourseFragment;
     WebViewFragment webViewFragment;
     CurrentLearningFragment currentLearningFragment;
-    LinearLayout lnrUser,lnrEarning,lnrBusiness,lnrTransaction,lnrInsentive,lnrPoints;
+    LinearLayout lnrDashboard,lnrUser,lnrEarning,lnrBusiness,lnrTransaction,lnrInsentive,lnrPoints;
     CheckBox cbMyEarning, cbUsers,cbBusiness,cbTransaction,cbPoints;
     OnBackPressedCallback onBackPressedCallback;
     private LoadingDialog loadingDialog;
@@ -126,6 +126,7 @@ public class BaseScreenActivity extends AppCompatActivity {
 
     private String termConditionUrl = "";
     private String privacyPolicyUrl = "";
+    public static String faq_url = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,11 +198,13 @@ public class BaseScreenActivity extends AppCompatActivity {
 
     protected void onCheckView(){
 
+        lnrDashboard = findViewById(R.id.lnrDashboard);
         lnrUser = findViewById(R.id.lnrUser);
         lnrEarning = findViewById(R.id.lnrEarning);
         lnrBusiness = findViewById(R.id.lnrBusiness);
         lnrTransaction = findViewById(R.id.lnrTransaction);
         lnrPoints = findViewById(R.id.lnrPoints);
+        lnrInsentive = findViewById(R.id.lnrInsentive);
 
 
         cbUsers = findViewById(R.id.cbUsers);
@@ -308,8 +311,26 @@ public class BaseScreenActivity extends AppCompatActivity {
     }
 
 
+    private void checkAffiliate(){
+
+//        String is_affiliate = new Session(this).getString(P.is_affiliate);
+        String is_affiliate = "1";
+
+        if (is_affiliate.equals("0")){
+            lnrDashboard.setVisibility(View.GONE);
+            lnrUser.setVisibility(View.GONE);
+            lnrEarning.setVisibility(View.GONE);
+            lnrBusiness.setVisibility(View.GONE);
+            lnrTransaction.setVisibility(View.GONE);
+            lnrPoints.setVisibility(View.GONE);
+            lnrInsentive.setVisibility(View.GONE);
+        }
+
+    }
+
     private void init() {
         onCheckView();
+        checkAffiliate();
 
         onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
@@ -860,6 +881,7 @@ public class BaseScreenActivity extends AppCompatActivity {
                             gender_list = Json1.getJsonList(P.gender_list);
                             termConditionUrl = Json1.getString(P.terms_and_conditions_url);
                             privacyPolicyUrl = Json1.getString(P.privacy_policy_url);
+                            faq_url = Json1.getString(P.faq_url);
                         }
                     }
 

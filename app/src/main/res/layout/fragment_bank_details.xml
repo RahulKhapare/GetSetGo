@@ -201,13 +201,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="50dp"
-                            android:layout_marginBottom="25dp"
+                            android:layout_marginBottom="50dp"
                             android:background="@drawable/button_dark_bg"
                             android:fontFamily="@font/nunit_sans_bold"
                             android:gravity="center"
                             android:paddingTop="20dp"
                             android:paddingBottom="20dp"
-                            android:text="Save Details"
+                            android:text="Save &amp; Next"
                             android:textColor="@color/colorWhite"
                             android:textSize="16sp" />
 

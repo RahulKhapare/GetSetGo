@@ -104,6 +104,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/lnrDashboard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -941,7 +942,7 @@
                     android:fontFamily="@font/nunito_sans_regular"
                     android:gravity="start|center"
                     android:onClick="onDrawerItemClick"
-                    android:text="Logout"
+                    android:text="Sign out"
                     android:textColor="@color/colorTextDark"
                     android:textSize="16sp" />
 

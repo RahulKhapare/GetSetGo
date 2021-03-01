@@ -129,7 +129,13 @@ public class P {
     public static String occupation_name = "occupation_name";
     public static String value = "value";
     public static String terms_and_conditions_url = "terms_and_conditions_url";
+    public static String faq_url = "faq_url";
     public static String privacy_policy_url = "privacy_policy_url";
+    public static String nominee_details = "nominee_details";
+    public static String nominee1 = "nominee1";
+    public static String nominee1_relation = "nominee1_relation";
+    public static String nominee2 = "nominee2";
+    public static String nominee2_relation = "nominee2_relation";
 
 
 

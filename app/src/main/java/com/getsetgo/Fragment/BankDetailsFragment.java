@@ -3,6 +3,7 @@ package com.getsetgo.Fragment;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -10,9 +11,12 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,13 +32,21 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.Json;
+import com.adoisstudio.helper.LoadingDialog;
+import com.adoisstudio.helper.MessageBox;
 import com.getsetgo.Adapter.SpinnerSelectionAdapter;
 import com.getsetgo.Model.SpinnerModel;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentBankDetailsBinding;
+import com.getsetgo.util.App;
 import com.getsetgo.util.Click;
+import com.getsetgo.util.JumpToLogin;
+import com.getsetgo.util.P;
+import com.getsetgo.util.ProgressView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -55,8 +67,13 @@ public class BankDetailsFragment extends Fragment {
     private final int galleryClick = 1;
     private String imgString = "";
 
+    LoadingDialog loadingDialog;
+
     private List<SpinnerModel> bankAccountList;
     SpinnerSelectionAdapter bankAccountAdapter;
+
+    String accountType = "";
+    String documentPath = "";
 
     public BankDetailsFragment() {
     }
@@ -88,10 +105,7 @@ public class BankDetailsFragment extends Fragment {
             public void handleOnBackPressed() {
                 // Handle the back button event
 
-                if (getFragmentManager().getBackStackEntryCount() > 0) {
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    BaseScreenActivity.callBack();
-                }
+               onBackPressClick();
 
             }
         };
@@ -105,10 +119,7 @@ public class BankDetailsFragment extends Fragment {
             public void handleOnBackPressed() {
                 // Handle the back button event
 
-                if (getFragmentManager().getBackStackEntryCount() > 0) {
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    BaseScreenActivity.callBack();
-                }
+                onBackPressClick();
 
             }
         };
@@ -122,7 +133,7 @@ public class BankDetailsFragment extends Fragment {
     }
 
     private void init(View view) {
-
+        loadingDialog = new LoadingDialog(getActivity());
         bankAccountList = new ArrayList<>();
         SpinnerModel bankModel = new SpinnerModel();
         bankModel.setId("");
@@ -160,8 +171,9 @@ public class BankDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
-                UploadDocsFragment myFragment = new UploadDocsFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, myFragment).addToBackStack(null).commit();
+                if (checkValidation()){
+                    hitSaveBankData(getActivity());
+                }
             }
         });
 
@@ -184,6 +196,34 @@ public class BankDetailsFragment extends Fragment {
             }
         });
 
+    }
+
+    private boolean checkValidation(){
+        boolean value = true;
+
+        if (TextUtils.isEmpty(binding.etAccHolderName.getText().toString().trim())){
+            H.showMessage(getActivity(),"Please enter account holder ame");
+            value = false;
+        }else if (TextUtils.isEmpty(binding.etBankName.getText().toString().trim())){
+            H.showMessage(getActivity(),"Please enter bank name");
+            value = false;
+        }else if (TextUtils.isEmpty(binding.etAccNumber.getText().toString().trim())){
+            H.showMessage(getActivity(),"Please enter account number");
+            value = false;
+        }else if (TextUtils.isEmpty(binding.etIFSCCode.getText().toString().trim())){
+            H.showMessage(getActivity(),"Please enter IFSC code");
+            value = false;
+        }else if (TextUtils.isEmpty(binding.etBranch.getText().toString().trim())){
+            H.showMessage(getActivity(),"Please enter branch name");
+            value = false;
+        }else if (TextUtils.isEmpty(accountType)){
+            H.showMessage(getActivity(),"Please select account type");
+            value = false;
+        }else if (TextUtils.isEmpty(documentPath)){
+            H.showMessage(getActivity(),"Please choose document");
+            value = false;
+        }
+        return value;
     }
 
     private void onUploadClick() {
@@ -330,5 +370,45 @@ public class BankDetailsFragment extends Fragment {
         return encImage;
     }
 
+    private void hitSaveBankData(Context context) {
+        ProgressView.show(context,loadingDialog);
+
+        Json j = new Json();
+//        j.addString(P.occupation_id,occupation);
+
+        Api.newApi(context, P.baseUrl + "").addJson(j)
+                .setMethod(Api.POST)
+                .onHeaderRequest(App::getHeaders)
+                .onError(() -> {
+                    ProgressView.dismiss(loadingDialog);
+                    MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                    });
+                })
+                .onSuccess(json ->
+                {
+                    JumpToLogin.call(json,context);
+                    ProgressView.dismiss(loadingDialog);
+                    if (json.getInt(P.status) == 1) {
+                        H.showMessage(context,"Details save successfully");
+                        final Handler handler = new Handler(Looper.getMainLooper());
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                KYCDocumentFragment myFragment = new KYCDocumentFragment();
+                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, myFragment).addToBackStack(null).commit();
+                            }
+                        }, 500);
+                    }
+                })
+                .run("hitSaveBankData");
+    }
+
+
+    private void onBackPressClick(){
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            BaseScreenActivity.callBack();
+        }
+    }
 
 }
