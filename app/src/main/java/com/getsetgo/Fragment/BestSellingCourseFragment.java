@@ -19,6 +19,7 @@ import com.getsetgo.Model.BestSellingCourseModel;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentBestSellingCourseBinding;
+import com.getsetgo.util.Config;
 import com.getsetgo.util.P;
 
 import java.util.ArrayList;
@@ -67,12 +68,12 @@ public class BestSellingCourseFragment extends Fragment {
     }
 
     private void init() {
-        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Best Selling Course");
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText(Config.courseTitle);
         bestSellingCourseModelList = new ArrayList<>();
         binding.recyclerSellingCourse.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new BestSellingCourseAdapter(getActivity(),bestSellingCourseModelList,2);
         binding.recyclerSellingCourse.setAdapter(adapter);
-        setupBestSellingCourseData(HomeFragment.bestselling_course_list);
+        setupBestSellingCourseData(Config.courseJsonList);
 
         BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override

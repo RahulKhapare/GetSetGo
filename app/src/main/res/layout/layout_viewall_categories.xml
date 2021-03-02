@@ -72,6 +72,7 @@
                         android:layout_height="@dimen/x24"
                         android:layout_alignParentRight="true"
                         android:button="@drawable/favorite_checkox"
+                        android:visibility="gone"
                         android:focusableInTouchMode="false" />
 
                 </RelativeLayout>
@@ -101,42 +102,47 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:id="@+id/imgViewCategoryReview1"
+                        android:id="@+id/imgReview1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:visibility="gone"
                         android:src="@drawable/ic_star_review" />
 
                     <ImageView
-                        android:id="@+id/imgViewCategoryReview2"
+                        android:id="@+id/imgReview2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/imgViewCategoryReview1"
+                        android:visibility="gone"
+                        android:layout_toRightOf="@id/imgReview1"
                         android:src="@drawable/ic_star_review" />
 
                     <ImageView
-                        android:id="@+id/imgViewCategoryReview3"
+                        android:id="@+id/imgReview3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/imgViewCategoryReview2"
+                        android:visibility="gone"
+                        android:layout_toRightOf="@id/imgReview2"
                         android:src="@drawable/ic_star_review" />
 
                     <ImageView
-                        android:id="@+id/imgViewCategoryReview4"
+                        android:id="@+id/imgReview4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/imgViewCategoryReview3"
-                        android:src="@drawable/ic_star_review" />
+                        android:layout_toRightOf="@id/imgReview3"
+                        android:src="@drawable/ic_star_review"
+                        android:visibility="gone"/>
 
                     <ImageView
-                        android:id="@+id/imgViewCategoryReview5"
+                        android:id="@+id/imgReview5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/imgViewCategoryReview4"
+                        android:visibility="gone"
+                        android:layout_toRightOf="@id/imgReview4"
                         android:src="@drawable/ic_star_review" />
 
                 </RelativeLayout>
@@ -150,7 +156,7 @@
                     android:layout_toRightOf="@+id/rlReview"
                     android:fontFamily="@font/nunit_sans_bold"
                     android:gravity="center"
-                    android:text="4.5"
+                    android:text="0"
                     android:textColor="@color/colorTextDark"
                     android:textSize="10sp" />
 

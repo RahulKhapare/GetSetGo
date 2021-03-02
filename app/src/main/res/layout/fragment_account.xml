@@ -417,6 +417,64 @@
 
                         </LinearLayout>
 
+                        <LinearLayout
+                            android:id="@+id/llTermCondition"
+                            android:layout_width="match_parent"
+                            android:layout_height="26dp"
+                            android:layout_below="@+id/llSupportFAQ"
+                            android:layout_marginTop="15dp"
+                            android:orientation="horizontal"
+                            android:weightSum="10">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="9.3"
+                                android:fontFamily="@font/nunito_sans_regular"
+                                android:text="Term &amp; Conditions"
+                                android:textColor="@color/colorTextDark"
+                                android:textSize="16sp" />
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="22dp"
+                                android:layout_weight="0.7"
+                                android:rotationY="180"
+                                android:src="@drawable/ic_back"
+                                app:tint="@color/colorArrow" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llPrivacyPolicy"
+                            android:layout_width="match_parent"
+                            android:layout_height="26dp"
+                            android:layout_below="@+id/llTermCondition"
+                            android:layout_marginTop="15dp"
+                            android:orientation="horizontal"
+                            android:weightSum="10">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="9.3"
+                                android:fontFamily="@font/nunito_sans_regular"
+                                android:text="Privacy Policy"
+                                android:textColor="@color/colorTextDark"
+                                android:textSize="16sp" />
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="22dp"
+                                android:layout_weight="0.7"
+                                android:rotationY="180"
+                                android:src="@drawable/ic_back"
+                                app:tint="@color/colorArrow" />
+
+
+                        </LinearLayout>
+
 
                     </RelativeLayout>
 
@@ -433,14 +491,15 @@
                         android:textSize="14sp" />
 
                     <TextView
+                        android:id="@+id/txtVersionName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/txtSignOut"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginBottom="25dp"
                         android:fontFamily="@font/nunito_sans_regular"
                         android:gravity="center"
-                        android:text="GetSetGo v1.0.1"
+                        android:text="@string/app_name"
                         android:textColor="@color/colorTextHighLight"
                         android:textSize="12sp" />
 

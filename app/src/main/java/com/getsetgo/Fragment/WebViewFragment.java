@@ -22,6 +22,8 @@ import com.getsetgo.util.Config;
 public class WebViewFragment extends Fragment {
 
     private FragmentWebViewBinding binding;
+    boolean isFromBottom;
+
 
     public WebViewFragment() {
     }
@@ -55,13 +57,13 @@ public class WebViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_web_view, container, false);
         View rootView = binding.getRoot();
-
+        isFromBottom = getArguments().getBoolean("isFromBottom");
         String title = "";
-        if (Config.flag == Config.term){
+        if (Config.flag == Config.term) {
             title = "Terms & Conditions";
-        }else  if (Config.flag == Config.privacy){
+        } else if (Config.flag == Config.privacy) {
             title = "Privacy Policy";
-        }else  if (Config.flag == Config.faq){
+        } else if (Config.flag == Config.faq) {
             title = "FAQ";
         }
 
@@ -73,12 +75,12 @@ public class WebViewFragment extends Fragment {
         return rootView;
     }
 
-    private void init(){
+    private void init() {
         loadUrl(Config.webViewUrl);
         onClick();
     }
 
-    private void loadUrl(String url){
+    private void loadUrl(String url) {
         binding.webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -95,7 +97,7 @@ public class WebViewFragment extends Fragment {
         binding.webView.loadUrl(url);
     }
 
-    private void onClick(){
+    private void onClick() {
 
         BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,10 +108,16 @@ public class WebViewFragment extends Fragment {
 
     }
 
-    private void onBackPressClick(){
+    private void onBackPressClick() {
         if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            BaseScreenActivity.callBack();
+            if (isFromBottom) {
+                getFragmentManager().popBackStackImmediate();
+                BaseScreenActivity.binding.bottomNavigation.setVisibility(View.VISIBLE);
+                BaseScreenActivity.binding.bottomNavigation.setSelectedItemId(R.id.menu_Account);
+            } else {
+                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                BaseScreenActivity.callBack();
+            }
         }
     }
 

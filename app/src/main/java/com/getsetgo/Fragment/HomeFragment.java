@@ -2,6 +2,7 @@ package com.getsetgo.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,9 +29,14 @@ import com.adoisstudio.helper.MessageBox;
 import com.getsetgo.Adapter.ActiveCourseAdapter;
 import com.getsetgo.Adapter.BestSellingCourseAdapter;
 import com.getsetgo.Adapter.OtherCategoriesAdapter;
+import com.getsetgo.Adapter.ParentItemAdapter;
+import com.getsetgo.Adapter.ViewAllCategoriesAdapter;
 import com.getsetgo.Model.BestSellingCourseModel;
+import com.getsetgo.Model.SliderModel;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
+import com.getsetgo.adapterview.HomeParentCourseAdapter;
+import com.getsetgo.adapterview.SliderImageAdapter;
 import com.getsetgo.databinding.FragmentHomeBinding;
 import com.getsetgo.util.App;
 import com.getsetgo.util.Click;
@@ -50,6 +56,11 @@ public class HomeFragment extends Fragment {
     ActiveCourseAdapter activeCourseAdapter;
     OtherCategoriesAdapter otherCategoriesAdapter;
     BestSellingCourseAdapter bestSellingCourseAdapter;
+    private List<SliderModel> sliderModelList;
+    private SliderImageAdapter sliderImageAdapter;
+
+    JsonList parentJsonList = new JsonList();
+    HomeParentCourseAdapter parentItemAdapter;
 
     LinearLayoutManager mLayoutManagerActiveCourse, mLayoutManagerBestSelling, mLayoutManagerOtherCategories;
 
@@ -96,9 +107,11 @@ public class HomeFragment extends Fragment {
     }
 
     private void init() {
+        setupSliderView();
         setupRecyclerViewForActiveCourse();
         setupRecyclerViewForOthersCategories();
         setupRecyclerViewForBestSellingCourse();
+        setupHomeExternalCourse();
 //        onScrollRecyclerview();
         callDashboardCourseAPI(getActivity());
 //        callOtherCategoriesAPI(getActivity());
@@ -192,6 +205,13 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    private void setupSliderView(){
+        sliderModelList = new ArrayList<>();
+        sliderImageAdapter = new SliderImageAdapter(context, sliderModelList);
+        binding.pager.setAdapter(sliderImageAdapter);
+        binding.tabLayout.setupWithViewPager(binding.pager, true);
+    }
+
     private void setupRecyclerViewForActiveCourse() {
         activeCourseAdapter = new ActiveCourseAdapter(getActivity(), activeCourseJsonList);
         binding.recyclerViewCources.setItemAnimator(new DefaultItemAnimator());
@@ -212,6 +232,14 @@ public class HomeFragment extends Fragment {
         binding.recyclerBestSellingCources.setAdapter(bestSellingCourseAdapter);
         bestSellingCourseAdapter.notifyDataSetChanged();
     }
+
+    private void setupHomeExternalCourse() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
+        parentItemAdapter = new HomeParentCourseAdapter(getActivity(),parentJsonList);
+        binding.recyclerHomeCourse.setAdapter(parentItemAdapter);
+        binding.recyclerHomeCourse.setLayoutManager(layoutManager);
+    }
+
 
     private void callDashboardCourseAPI(Context context) {
         LoadingDialog loadingDialog = new LoadingDialog(context, false);
@@ -242,14 +270,20 @@ public class HomeFragment extends Fragment {
                             categories = json.getJsonList("category_list");
                             bestselling_course_list = json.getJsonList("bestselling_course_list");
                             top_searches = json.getJsonList("top_searches");
-                            Json currently_learning = json.getJson("currently_learning");
+//                            Json currently_learning = json.getJson("currently_learning");
+                            JsonList home_course_list = json.getJsonList("home_course_list");
+
+                            setUpSliderList(new JsonList());
                             setupBestSellingCourseData(bestselling_course_list);
-                            setUpCurrentLearningData(currently_learning);
+                            setupHomeCourseData(home_course_list);
+//                            setUpCurrentLearningData(currently_learning);
+
                             if (categories != null && !categories.isEmpty()) {
                                 otherCategoriesJsonList.clear();
                                 otherCategoriesJsonList.addAll(categories);
                                 otherCategoriesAdapter.notifyDataSetChanged();
                             }
+//:[{"category_id":"1","category_name":"Brain & Memory","category_slug":"brain-memory","course_list":[{"id":"1","course_name":"Student's Brain Booster","slug":"super-brain-booster","image":"https:\/\/getsetgoworld.com\/dev_env\/uploads\/course\/course-1\/geometric-1732847_1920.jpg","category_name":"Brain & Memory","instructor_name":"Sanjay Rahate","price":"9999","sale_price":"100","rating":"0"},{"id":"19","course_name":"Smart School","slug":"smart-school","image":null,"category_name":"Brain & Memory","instructor_name":"Sanjay Rahate","price":"100","sale_price":"100","rating":"0"}]},
 
                             if (totalCourses != null && !totalCourses.isEmpty()) {
                                 activeCourseJsonList.clear();
@@ -258,7 +292,7 @@ public class HomeFragment extends Fragment {
                                 if (activeCourseJsonList!=null && activeCourseJsonList.size()!=0){
                                     binding.lnrActiveCourse.setVisibility(View.VISIBLE);
                                 }else {
-                                    binding.lnrActiveCourse.setVisibility(View.VISIBLE);
+                                    binding.lnrActiveCourse.setVisibility(View.GONE);
                                 }
                             }
                         }
@@ -309,24 +343,49 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void loadFragment(View v, String courseSlug,String courseName) {
-        BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
-        BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);
-        BaseScreenActivity.binding.incFragmenttool.content.setVisibility(View.VISIBLE);
-        BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
-        Config.myCourseSlug = courseSlug;
-        Config.myCourseTitle = courseName;
-        bundle.putString("slug",courseSlug);
-        AppCompatActivity activity = (AppCompatActivity) v.getContext();
-        if (courseDetailFragment == null)
-            courseDetailFragment = new MyCourseDetailFragment();
-        courseDetailFragment.setArguments(bundle);
-        activity.getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, courseDetailFragment)
-                .addToBackStack(null)
-                .commit();
+    private void setUpSliderList(JsonList jsonList) {
+
+        sliderModelList.clear();
+
+//        if (jsonList!=null){
+//            for (Json json : jsonList){
+//                SliderModel model = new SliderModel();
+//                model.setBanner_image();
+//                sliderModelList.add(model);
+//            }
+//        }
+
+        sliderModelList.add(new SliderModel("https://elearningindustry.com/wp-content/uploads/2016/09/online-course-development-process-must-know-outsource.jpeg"));
+        sliderModelList.add(new SliderModel("https://scholarship-positions.com/wp-content/uploads/2020/02/Free-Online-Course-2.jpg"));
+        sliderModelList.add(new SliderModel("https://mk0thinkificig8baqk3.kinstacdn.com/wp-content/uploads/2016/06/Create-Online-Courses-10.jpg"));
+        sliderModelList.add(new SliderModel("https://www.studyingram.com/wp-content/uploads/2020/07/onlineedu-960x540-1.jpg"));
+
+        sliderImageAdapter.notifyDataSetChanged();
+
+        if (sliderModelList.isEmpty()){
+            binding.lnrSlider.setVisibility(View.GONE);
+        }else {
+            binding.lnrSlider.setVisibility(View.VISIBLE);
+        }
+
+        Handler handler = new Handler();
+        Runnable runnable = null;
+
+        if (runnable != null)
+            handler.removeCallbacks(runnable);
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                handler.postDelayed(this, 3000);
+                if (binding.pager.getCurrentItem() == sliderImageAdapter.getCount() - 1)
+                    binding.pager.setCurrentItem(0);
+                else
+                    binding.pager.setCurrentItem(binding.pager.getCurrentItem() + 1);
+            }
+        };
+        runnable.run();
     }
+
 
     private void setupBestSellingCourseData(JsonList jsonList){
         bestSellingCourseModelList.clear();
@@ -350,5 +409,30 @@ public class HomeFragment extends Fragment {
             bestSellingCourseAdapter.notifyDataSetChanged();
         }
 
+    }
+
+    private void setupHomeCourseData(JsonList jsonList){
+        parentJsonList.clear();
+        parentJsonList.addAll(jsonList);
+        parentItemAdapter.notifyDataSetChanged();
+    }
+
+    private void loadFragment(View v, String courseSlug,String courseName) {
+        BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
+        BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);
+        BaseScreenActivity.binding.incFragmenttool.content.setVisibility(View.VISIBLE);
+        BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
+        Config.myCourseSlug = courseSlug;
+        Config.myCourseTitle = courseName;
+        bundle.putString("slug",courseSlug);
+        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        if (courseDetailFragment == null)
+            courseDetailFragment = new MyCourseDetailFragment();
+        courseDetailFragment.setArguments(bundle);
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, courseDetailFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

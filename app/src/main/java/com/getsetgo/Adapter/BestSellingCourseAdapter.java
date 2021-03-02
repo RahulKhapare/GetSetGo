@@ -161,8 +161,6 @@ public class BestSellingCourseAdapter extends RecyclerView.Adapter<BestSellingCo
             viewHolder.imgReview5.setVisibility(View.VISIBLE);
         } else {
             viewHolder.imgReview1.setVisibility(View.VISIBLE);
-            viewHolder.imgReview2.setVisibility(View.VISIBLE);
-            viewHolder.imgReview3.setVisibility(View.VISIBLE);
         }
     }
 

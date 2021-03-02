@@ -1,4 +1,4 @@
-package com.getsetgo.Adapter;
+package com.getsetgo.adapterview;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,9 +16,10 @@ import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
 import com.getsetgo.Fragment.ViewAllCategoriesFragment;
 import com.getsetgo.R;
+import com.getsetgo.activity.BaseScreenActivity;
 
-public class ParentItemAdapter extends RecyclerView
-        .Adapter<ParentItemAdapter.ParentViewHolder> {
+public class HomeParentCourseAdapter extends RecyclerView
+        .Adapter<HomeParentCourseAdapter.ParentViewHolder> {
 
     public RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
 
@@ -26,7 +27,7 @@ public class ParentItemAdapter extends RecyclerView
     JsonList jsonList;
     ViewAllCategoriesFragment viewAllCategoriesFragment;
 
-    public ParentItemAdapter(Context context, JsonList jsonList) {
+    public HomeParentCourseAdapter(Context context, JsonList jsonList) {
         this.context = context;
         this.jsonList = jsonList;
     }
@@ -34,7 +35,7 @@ public class ParentItemAdapter extends RecyclerView
     @NonNull
     @Override
     public ParentViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.parent_item, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.home_parent_item, viewGroup, false);
         return new ParentViewHolder(view);
     }
 
@@ -46,7 +47,7 @@ public class ParentItemAdapter extends RecyclerView
         Json json = jsonList.get(position);
         JsonList childJsonList = new JsonList();
 //        childJsonList = json.getJsonList("courses");
-        childJsonList = json.getJsonList("course_list");
+        childJsonList = json.getJsonList("courses");
 
         holder.ParentItemTitle.setText(json.getString("category_name"));
         JsonList finalChildJsonList = childJsonList;
@@ -58,7 +59,7 @@ public class ParentItemAdapter extends RecyclerView
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(holder.ChildRecyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         layoutManager.setInitialPrefetchItemCount(childJsonList.size());
-        ChildItemAdapter childItemAdapter = new ChildItemAdapter(context, childJsonList);
+        HomeChildAdapter childItemAdapter = new HomeChildAdapter(context, childJsonList);
         holder.ChildRecyclerView.setLayoutManager(layoutManager);
         holder.ChildRecyclerView.setAdapter(childItemAdapter);
         holder.ChildRecyclerView.setRecycledViewPool(viewPool);
@@ -87,10 +88,14 @@ public class ParentItemAdapter extends RecyclerView
     }
 
     private void loadFragment(View v, String title, String slug) {
+        BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
+        BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);
+        BaseScreenActivity.binding.incFragmenttool.content.setVisibility(View.VISIBLE);
+        BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
         Bundle bundle = new Bundle();
         bundle.putString("subTitle", title);
         bundle.putString("slug", slug);
-        bundle.putBoolean("isFromHome", false);
+        bundle.putBoolean("isFromHome", true);
 //        bundle.putSerializable("categoryList", list);
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
         viewAllCategoriesFragment = new ViewAllCategoriesFragment();
@@ -101,5 +106,6 @@ public class ParentItemAdapter extends RecyclerView
                 .addToBackStack(null)
                 .commit();
     }
+
 }
 

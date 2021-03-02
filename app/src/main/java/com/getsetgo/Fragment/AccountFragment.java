@@ -4,6 +4,8 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -78,6 +80,15 @@ public class AccountFragment extends Fragment {
         }
         binding.txtProfileName.setText(session.getString(P.name) + " " + session.getString(P.lastname));
         binding.txtProfileEmail.setText(session.getString(P.email));
+
+        try {
+            PackageInfo pInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
+            String version = pInfo.versionName;
+            binding.txtVersionName.setText(getResources().getString(R.string.app_name) + " v"+version);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void onClick() {
@@ -88,7 +99,8 @@ public class AccountFragment extends Fragment {
             public void onClick(View v) {
                 Click.preventTwoClick(v);
                 BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
-                loadChangePasswordFragment(v);
+                changePasswordFragment = new ChangePasswordFragment();
+                loadFragment(v,changePasswordFragment);
             }
         });
 
@@ -97,7 +109,8 @@ public class AccountFragment extends Fragment {
             public void onClick(View v) {
                 Click.preventTwoClick(v);
                 BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
-                loadEditProfileFragment(v);
+                editProfileFragment = new EditProfileFragment();
+                loadFragment(v,editProfileFragment);
             }
         });
 
@@ -106,7 +119,8 @@ public class AccountFragment extends Fragment {
             public void onClick(View v) {
                 Click.preventTwoClick(v);
                 BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
-                loadEditProfileFragment(v);
+                editProfileFragment = new EditProfileFragment();
+                loadFragment(v,editProfileFragment);
             }
         });
 
@@ -114,7 +128,32 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
-                loadFAQFragment(v);
+                Config.flag = Config.faq;
+                Config.webViewUrl = BaseScreenActivity.faq_url;
+                webViewFragment = new WebViewFragment();
+                loadFragment(v,webViewFragment);
+            }
+        });
+
+        binding.llTermCondition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
+                Config.flag = Config.term;
+                Config.webViewUrl = BaseScreenActivity.termConditionUrl;
+                webViewFragment = new WebViewFragment();
+                loadFragment(v,webViewFragment);
+            }
+        });
+
+        binding.llPrivacyPolicy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
+                Config.flag = Config.privacy;
+                Config.webViewUrl = BaseScreenActivity.privacyPolicyUrl;
+                webViewFragment = new WebViewFragment();
+                loadFragment(v,webViewFragment);
             }
         });
 
@@ -154,44 +193,14 @@ public class AccountFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-
-    private void loadEditProfileFragment(View v) {
+    private void loadFragment(View v,Fragment fragment){
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
         Bundle bundle = new Bundle();
         bundle.putBoolean("isFromBottom", isFromBottom);
-        editProfileFragment = new EditProfileFragment();
-        editProfileFragment.setArguments(bundle);
+        fragment.setArguments(bundle);
         activity.getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_container, editProfileFragment)
-                .addToBackStack(null)
-                .commit();
-    }
-
-    private void loadChangePasswordFragment(View v) {
-        AppCompatActivity activity = (AppCompatActivity) v.getContext();
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("isFromBottom", isFromBottom);
-        changePasswordFragment = new ChangePasswordFragment();
-        changePasswordFragment.setArguments(bundle);
-        activity.getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, changePasswordFragment)
-                .addToBackStack(null)
-                .commit();
-    }
-
-    private void loadFAQFragment(View v) {
-        Config.flag = Config.faq;
-        Config.webViewUrl = BaseScreenActivity.faq_url;
-        AppCompatActivity activity = (AppCompatActivity) v.getContext();
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("isFromBottom", isFromBottom);
-        webViewFragment = new WebViewFragment();
-        webViewFragment.setArguments(bundle);
-        activity.getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, webViewFragment)
+                .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit();
     }

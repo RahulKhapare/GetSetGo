@@ -1,43 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="@dimen/x88"
+    android:layout_width="@dimen/x168"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/x4"
     android:elevation="@dimen/x6"
-    app:cardCornerRadius="@dimen/x8">
+    app:cardCornerRadius="10dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/x10"
+        android:paddingTop="10dp">
 
         <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/imvOtherCategories"
-            android:layout_width="@dimen/x84"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="@dimen/x64"
-            android:paddingVertical="@dimen/x4"
-            android:src="@drawable/download"
-            app:riv_corner_radius="@dimen/x0" />
+            android:id="@+id/imvCategory"
+            android:layout_width="@dimen/x148"
+            android:layout_height="@dimen/x100"
+            android:paddingVertical="@dimen/x2"
+            android:scaleType="fitXY"
+            app:riv_corner_radius="@dimen/x10" />
 
 
         <TextView
-            android:paddingVertical="@dimen/x4"
             android:id="@+id/txtOtherCategories"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:fontFamily="@font/nunito_sans_semibold"
-            android:gravity="center"
             android:maxLines="2"
-            android:paddingHorizontal="@dimen/x4"
-            android:text="Smart School"
+            android:minLines="2"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Basics of"
             android:textColor="@color/programme_text_color"
-            android:textSize="12sp" />
-
+            android:textSize="@dimen/x14" />
 
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
-

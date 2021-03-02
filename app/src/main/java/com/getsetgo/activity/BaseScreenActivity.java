@@ -124,8 +124,8 @@ public class BaseScreenActivity extends AppCompatActivity {
     public static JsonList marital_status_list = null;
     public static JsonList gender_list = null;
 
-    private String termConditionUrl = "";
-    private String privacyPolicyUrl = "";
+    public static String termConditionUrl = "";
+    public static String privacyPolicyUrl = "";
     public static String faq_url = "";
 
     @Override
@@ -575,6 +575,8 @@ public class BaseScreenActivity extends AppCompatActivity {
                 break;
 
             case R.id.txtViewAllBestCourse:
+                Config.courseTitle = "Best Selling Course";
+                Config.courseJsonList = HomeFragment.bestselling_course_list;
                 if (bestSellingCourseFragment == null)
                     bestSellingCourseFragment = BestSellingCourseFragment.newInstance();
                 fragmentLoader(bestSellingCourseFragment, true);
@@ -612,6 +614,9 @@ public class BaseScreenActivity extends AppCompatActivity {
                 if (webViewFragment == null) {
                     webViewFragment = WebViewFragment.newInstance();
                 }
+                Bundle b = new Bundle();
+                b.putBoolean("isFromBottom", false);
+                webViewFragment.setArguments(b);
                 Config.flag = Config.term;
                 Config.webViewUrl = termConditionUrl;
                 fragmentLoader(webViewFragment, true);
@@ -621,6 +626,9 @@ public class BaseScreenActivity extends AppCompatActivity {
                 if (webViewFragment == null) {
                     webViewFragment = WebViewFragment.newInstance();
                 }
+                Bundle b2 = new Bundle();
+                b2.putBoolean("isFromBottom", false);
+                webViewFragment.setArguments(b2);
                 Config.flag = Config.privacy;
                 Config.webViewUrl = privacyPolicyUrl;
                 fragmentLoader(webViewFragment, true);

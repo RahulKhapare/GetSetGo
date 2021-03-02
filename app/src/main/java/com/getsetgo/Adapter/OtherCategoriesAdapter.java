@@ -2,6 +2,8 @@ package com.getsetgo.Adapter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import com.getsetgo.Fragment.ViewAllCategoriesFragment;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
 
 public class OtherCategoriesAdapter extends RecyclerView.Adapter<OtherCategoriesAdapter.OtherCategoriesViewHolder> {
 
@@ -41,13 +44,18 @@ public class OtherCategoriesAdapter extends RecyclerView.Adapter<OtherCategories
 
         final Json json = jsonList.get(position);
 
-//        holder.imvOtherCategories.setImageResource(json.get());
+        String image = json.getString("category_image");
+        if (!TextUtils.isEmpty(image)){
+            Picasso.get().load(image).placeholder(R.drawable.ic_no_image).error(R.drawable.ic_no_image).into(holder.imvCategory);
+        }else {
+            Picasso.get().load(R.drawable.ic_no_image).error(R.drawable.ic_no_image).into(holder.imvCategory);
+        }
+
         holder.txtOtherCategories.setText(json.getString("category_name"));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 loadFragment(view, json.getString("category_name"),json.getString("category_slug"));
-
             }
         });
 
@@ -61,14 +69,14 @@ public class OtherCategoriesAdapter extends RecyclerView.Adapter<OtherCategories
     public class OtherCategoriesViewHolder extends RecyclerView.ViewHolder {
 
         TextView txtOtherCategories;
-        RoundedImageView imvOtherCategories;
+        RoundedImageView imvCategory;
 
 
         public OtherCategoriesViewHolder(@NonNull View itemView) {
             super(itemView);
 
             txtOtherCategories = itemView.findViewById(R.id.txtOtherCategories);
-            imvOtherCategories = itemView.findViewById(R.id.imvOtherCategories);
+            imvCategory = itemView.findViewById(R.id.imvCategory);
         }
     }
 

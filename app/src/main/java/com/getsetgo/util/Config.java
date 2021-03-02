@@ -1,6 +1,8 @@
 package com.getsetgo.util;
 
 
+import com.adoisstudio.helper.JsonList;
+
 public class Config {
 
     public static String myCourseSlug = "";
@@ -16,5 +18,7 @@ public class Config {
     public static String webViewUrl = "";
     public static long time = 0;
     public static boolean isHalfScreen = false;
+    public static JsonList courseJsonList = null;
+    public static String courseTitle = "";
 
 }

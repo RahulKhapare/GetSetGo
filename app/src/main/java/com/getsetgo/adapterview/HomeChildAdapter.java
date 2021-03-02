@@ -1,4 +1,4 @@
-package com.getsetgo.Adapter;
+package com.getsetgo.adapterview;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,66 +17,56 @@ import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
 import com.getsetgo.Fragment.CourseDetailFragment;
 import com.getsetgo.R;
-import com.getsetgo.util.P;
+import com.getsetgo.activity.BaseScreenActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
-public class ViewAllCategoriesAdapter extends RecyclerView.Adapter<ViewAllCategoriesAdapter.ViewAllCategoriesViewHolder> {
+public class HomeChildAdapter extends RecyclerView.Adapter<HomeChildAdapter.ChildViewHolder> {
 
     Context context;
     JsonList jsonList;
     CourseDetailFragment courseDetailFragment;
-    Boolean isAdded = false;
 
-    Bundle bundle = new Bundle();
-    Json json = new Json();
-    String string = null;
-    int it;
 
-    public ViewAllCategoriesAdapter(Context context, JsonList jsonList) {
+    HomeChildAdapter(Context context, JsonList jsonList) {
         this.context = context;
         this.jsonList = jsonList;
     }
 
     @NonNull
     @Override
-    public ViewAllCategoriesAdapter.ViewAllCategoriesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_viewall_categories, parent, false);
-        return new ViewAllCategoriesViewHolder(view);
+    public ChildViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_best_selling_course_vertical, viewGroup, false);
+        return new ChildViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewAllCategoriesAdapter.ViewAllCategoriesViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ChildViewHolder holder, int position) {
 
-        final Json json = jsonList.get(position);
+        Json childItem = jsonList.get(position);
 
-        holder.txtCourse.setText(jsonList.get(position).getString("course_name"));
-        holder.txtProfName.setText(jsonList.get(position).getString("instructor_name"));
-        holder.txtOldPrice.setText("₹ " + jsonList.get(position).getString("price"));
-        holder.txtNewPrice.setText("₹ " + jsonList.get(position).getString("sale_price"));
-        holder.txtReview.setText(jsonList.get(position).getString("rating"));
-        setReview(jsonList.get(position).getString("rating"),holder);
+        holder.txtCourseName.setText(childItem.getString("course_name"));
+        holder.txtOldPrice.setText("₹ " + childItem.getString("price"));
+        holder.txtNewPrice.setText("₹ " + childItem.getString("sale_price"));
+        holder.txtProfName.setText("Prof. " + childItem.getString("instructor_name"));
+        String review = childItem.getString("rating");
+        Log.e("TAG", "onBindViewHolderWWWWW: "+ review );
+        holder.txtReview.setText(review);
+        setReview(review, holder);
 
-        Picasso.get().load(json.getString("image")).placeholder(R.drawable.ic_wp).error(R.drawable.ic_wp).into(holder.imgCategory);
-
-
-        /*holder.chkFav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                holder.chkFav.setSelected(true);
-
-
-            }
-        });*/
+//        String imagePath = childItem.getString("image_path")+"";
+//        if (imagePath.equals("null") || imagePath.isEmpty())
+//            imagePath = "pathMustNotBeEmpty";
+//
+//        LoadImage.picasso(holder.ivCourseImage, imagePath);
+        Picasso.get().load(childItem.getString("image")).placeholder(R.drawable.ic_wp).error(R.drawable.ic_wp).into(holder.ivCourseImage);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                loadFragment(view, childItem.getString("course_name"),childItem.getString("slug"));
 
-        String courseSlug = jsonList.get(position).getString("slug");
-                Log.d("Hardik","slug: "+courseSlug);
-                loadFragment(view,courseSlug);
             }
         });
     }
@@ -87,36 +76,32 @@ public class ViewAllCategoriesAdapter extends RecyclerView.Adapter<ViewAllCatego
         return jsonList.size();
     }
 
-    public class ViewAllCategoriesViewHolder extends RecyclerView.ViewHolder {
+    class ChildViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtCourse, txtProfName, txtReview,
-                txtNewPrice, txtOldPrice, txtBestSeller;
-        RoundedImageView imgCategory;
-        CheckBox chkFav;
+        TextView txtCourseName, txtProfName, txtReview, txtNewPrice, txtOldPrice, txtBestSeller;
+        RoundedImageView ivCourseImage;
         ImageView imgReview1, imgReview2, imgReview3, imgReview4, imgReview5;
 
-        public ViewAllCategoriesViewHolder(@NonNull View itemView) {
+        public ChildViewHolder(View itemView) {
             super(itemView);
-
-            txtCourse = itemView.findViewById(R.id.txtViewCategory);
-            txtProfName = itemView.findViewById(R.id.txtViewCategoryProfName);
-            txtReview = itemView.findViewById(R.id.txtViewCategoryReview);
-            txtNewPrice = itemView.findViewById(R.id.txtViewCategoryNewPrice);
-            txtOldPrice = itemView.findViewById(R.id.txtViewCategoryOldPrice);
-            txtBestSeller = itemView.findViewById(R.id.txtViewCategoryBestSeller);
-            txtBestSeller.setVisibility(View.INVISIBLE);
-            imgCategory = itemView.findViewById(R.id.imvViewCategory);
-            chkFav = itemView.findViewById(R.id.chkViewCategoryFavourites);
+            txtCourseName = itemView.findViewById(R.id.txtCourseName);
+            ivCourseImage = itemView.findViewById(R.id.ivCourseImage);
+            txtProfName = itemView.findViewById(R.id.txtProfName);
+            txtReview = itemView.findViewById(R.id.txtReview);
+            txtNewPrice = itemView.findViewById(R.id.txtNewPrice);
+            txtOldPrice = itemView.findViewById(R.id.txtOldPrice);
+            txtOldPrice.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.strike_line));
             imgReview1 = itemView.findViewById(R.id.imgReview1);
             imgReview2 = itemView.findViewById(R.id.imgReview2);
             imgReview3 = itemView.findViewById(R.id.imgReview3);
             imgReview4 = itemView.findViewById(R.id.imgReview4);
             imgReview5 = itemView.findViewById(R.id.imgReview5);
-
+            txtBestSeller = itemView.findViewById(R.id.txtBestSeller);
+            txtBestSeller.setVisibility(View.GONE);
         }
     }
 
-    private void setReview(String review, ViewAllCategoriesViewHolder viewHolder) {
+    private void setReview(String review, ChildViewHolder viewHolder) {
         if (review.equalsIgnoreCase("1.00")) {
             viewHolder.imgReview1.setVisibility(View.VISIBLE);
         } else if (review.equalsIgnoreCase("1.50")) {
@@ -161,21 +146,20 @@ public class ViewAllCategoriesAdapter extends RecyclerView.Adapter<ViewAllCatego
             viewHolder.imgReview5.setVisibility(View.VISIBLE);
         } else {
             viewHolder.imgReview1.setVisibility(View.VISIBLE);
-            viewHolder.imgReview2.setVisibility(View.VISIBLE);
-            viewHolder.imgReview3.setVisibility(View.VISIBLE);
         }
     }
 
-    private void loadFragment(View v, String courseSlug) {
-//        string = P.baseUrl + "series_check/" + json.getString(P.series_slug) + "/" + json.getString(P.video_slug);
-//        it = json.getInt(P.time);
-//        it *= 1000;
-//        bundle.putString(P.url, string);
-//        bundle.putInt("videoProgress", it);
-        bundle.putString("slug",courseSlug);
+    private void loadFragment(View v, String title,String slug) {
+        Bundle bundle = new Bundle();
+        BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
+        BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);
+        BaseScreenActivity.binding.incFragmenttool.content.setVisibility(View.VISIBLE);
+        BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
+        bundle.putString("title", title);
+        bundle.putString("slug", slug);
+        bundle.putBoolean("isFromHome", true);
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
-        if (courseDetailFragment == null)
-            courseDetailFragment = new CourseDetailFragment();
+        courseDetailFragment = new CourseDetailFragment();
         courseDetailFragment.setArguments(bundle);
         activity.getSupportFragmentManager()
                 .beginTransaction()

@@ -111,6 +111,8 @@ public class ViewAllCategoriesFragment extends Fragment {
             BaseScreenActivity.callBack();
         } else {
             getFragmentManager().popBackStackImmediate();
+//            getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//            BaseScreenActivity.callBack();
         }
     }
 
