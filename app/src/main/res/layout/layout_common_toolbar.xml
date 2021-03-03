@@ -26,13 +26,14 @@
                 android:src="@drawable/ic_ham_menu" />
 
 
-            <ImageView
+            <pl.droidsonroids.gif.GifImageView
                 android:id="@+id/ivLogo"
                 android:layout_width="97dp"
                 android:layout_height="match_parent"
+                android:src="@drawable/appicon_anim"
                 android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_splash_logo" />
+                />
 
             <RelativeLayout
                 android:layout_width="wrap_content"

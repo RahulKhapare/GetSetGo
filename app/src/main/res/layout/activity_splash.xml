@@ -6,19 +6,13 @@
         android:layout_height="match_parent"
         android:background="@drawable/ic_bg">
 
-        <!--        <ImageView
-                    android:layout_width="224dp"
-                    android:layout_height="82dp"
-                    android:src="@drawable/ic_splash_logo"
-                    android:layout_above="@+id/iv"
-                    android:layout_centerInParent="true"/>-->
-
-        <ImageView
+        <pl.droidsonroids.gif.GifImageView
             android:id="@+id/ivSplash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/appicon_anim"
             android:layout_centerInParent="true"
-            android:src="@drawable/ic_splash_logo" />
+            />
 
     </RelativeLayout>
 

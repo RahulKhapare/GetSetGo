@@ -3,6 +3,7 @@ package com.getsetgo.Fragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.nfc.tech.TagTechnology;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,10 +18,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import com.adoisstudio.helper.Session;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentDashboardBinding;
 import com.getsetgo.util.Click;
+import com.getsetgo.util.P;
 
 public class DashBoardFragment extends Fragment {
 
@@ -114,6 +118,14 @@ public class DashBoardFragment extends Fragment {
             }
         });
 
+        binding.rlShareApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                shareApp(getActivity(),new Session(getActivity()).getString(P.app_link));
+            }
+        });
+
         BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,6 +136,15 @@ public class DashBoardFragment extends Fragment {
                 }
             }
         });
+    }
+
+    public void shareApp(Context context,String link)
+    {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, link);
+        sendIntent.setType("text/plain");
+        context.startActivity(sendIntent);
     }
 
     private void loadFragment(Fragment fragment,View v){

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:paddingRight="30dp"
+                    android:paddingLeft="30dp">
+
+
+                    <pl.droidsonroids.gif.GifImageView
+                        android:layout_width="166dp"
+                        android:layout_height="62dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/appicon_anim"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="24sp"
+                        android:text="Enter Code"
+                        android:layout_marginTop="35dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:textColor="@color/colorTextDark">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/txtOTPMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorGray"
+                        android:text="@string/app_name"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:textSize="16sp">
+
+                    </TextView>
+
+                    <com.getsetgo.util.OtpEditText
+                        android:id="@+id/etxOtp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="false"
+                        android:digits="1234567890"
+                        android:maxLength="6"
+                        android:hint="0"
+                        android:text=""
+                        android:textSize="20sp"
+                        android:textIsSelectable="false"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textColorHint="@color/colorPrimaryDark"
+                        android:backgroundTint="@color/colorPrimaryDark"
+                        android:layout_marginTop="50dp"
+                        android:inputType="number" />
+
+
+                    <TextView
+                        android:id="@+id/txtProceed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:padding="20dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginTop="30dp"
+                        android:text="Verify Code"
+                        android:background="@drawable/button_dark_bg"
+                        android:fontFamily="@font/nunit_sans_bold"
+                        android:textColor="@color/colorWhite">
+                    </TextView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+                        android:layout_marginTop="20dp">
+
+                        <TextView
+                            android:id="@+id/txtResend"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:text="Resend code in"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:visibility="gone"
+                            android:fontFamily="@font/nunito_sans_semibold"
+                            android:textSize="16sp">
+
+                        </TextView>
+
+
+                        <TextView
+                            android:id="@+id/txtSeconds"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:text="Seconds"
+                            android:fontFamily="@font/nunito_sans_semibold"
+                            android:textSize="16sp">
+
+                        </TextView>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
+
+</layout>

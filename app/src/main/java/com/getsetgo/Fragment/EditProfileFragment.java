@@ -179,7 +179,10 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
     }
 
     private void setProfileData(){
-        binding.etxDate.setText(session.getString(P.dob));
+        String date = session.getString(P.dob);
+        if (!TextUtils.isEmpty(date) && !date.equals("null")){
+            binding.etxDate.setText(date);
+        }
         String profile_picture = session.getString(P.profile_picture);
         if (!TextUtils.isEmpty(profile_picture)){
             Picasso.get().load(profile_picture).placeholder(R.drawable.ic_profile_imag).error(R.drawable.ic_profile_imag).into(binding.imgProfileImage);

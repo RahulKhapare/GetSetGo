@@ -15,9 +15,11 @@ public class P {
     public static String data = "data";
     public static String msg = "msg";
     public static String userdata = "userdata";
+    public static String registered_as = "registered_as";
     public static String name = "name";
     public static String lastname = "lastname";
     public static String email = "email";
+    public static String verification_code = "verification_code";
     public static String contact = "contact";
     public static String password = "password";
     public static String confirm_password = "confirm_password";
@@ -123,6 +125,8 @@ public class P {
     public static String marital_status_id = "marital_status_id";
     public static String gender = "gender";
     public static String profile_picture = "profile_picture";
+    public static String app_link = "app_link";
+    public static String referral_link = "referral_link";
     public static String occupation_list = "occupation_list";
     public static String marital_status_list = "marital_status_list";
     public static String gender_list = "gender_list";

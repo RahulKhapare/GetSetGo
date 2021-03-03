@@ -265,19 +265,28 @@ public class LoginActivity extends AppCompatActivity {
                         if (isLoading)
                             loadingDialog.show("loading...");
                         else
-                            loadingDialog.hide();
+                            loadingDialog.dismiss();
                     }
                 })
                 .onError(() ->
                         MessageBox.showOkMessage(this, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
-                        JumpToLogin.call(Json1,this);
+                        JumpToLogin.call(Json1, this);
                         loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(activity, Json1.getString(P.err));
-                        } else {
+                        }
+                        else if (Json1.getInt(P.status) == 2){
+                            Intent mainIntent = new Intent(activity, OTPVerficationActivity.class);
+                            mainIntent.putExtra(P.email,binding.etxEmailAddress.getText().toString());
+                            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(mainIntent);
+                            finish();
+                        }
+                        else if (Json1.getInt(P.status) == 1){
                             Json1 = Json1.getJson(P.data);
                             Json1 = Json1.getJson(P.userdata);
                             Session session = new Session(this);
@@ -289,15 +298,21 @@ public class LoginActivity extends AppCompatActivity {
                             session.addString(P.name, Json1.getString(P.name) + "");
                             session.addString(P.lastname, Json1.getString(P.lastname) + "");
                             session.addString(P.email, Json1.getString(P.email) + "");
+                            session.addString(P.contact, Json1.getString(P.contact) + "");
                             session.addString(P.dob, Json1.getString(P.dob) + "");
                             session.addString(P.occupation_id, Json1.getString(P.occupation_id) + "");
                             session.addString(P.marital_status_id, Json1.getString(P.marital_status_id) + "");
                             session.addString(P.gender, Json1.getString(P.gender) + "");
                             session.addString(P.profile_picture, Json1.getString(P.profile_picture) + "");
+                            session.addString(P.app_link, Json1.getString(P.app_link) + "");
+                            session.addString(P.referral_link, Json1.getString(P.referral_link) + "");
+
                             App.authToken = token;
                             App.user_id = user_id;
+
                             App.startHomeActivity(activity);
                             finish();
+
                         }
                     }
 

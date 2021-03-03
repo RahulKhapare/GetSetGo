@@ -20,5 +20,6 @@ public class Config {
     public static boolean isHalfScreen = false;
     public static JsonList courseJsonList = null;
     public static String courseTitle = "";
+    public static String EMAIL_ID = "EMAIL_ID";
 
 }

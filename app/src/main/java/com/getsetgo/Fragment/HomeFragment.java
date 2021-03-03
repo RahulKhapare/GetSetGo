@@ -4,12 +4,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,8 +27,6 @@ import com.adoisstudio.helper.MessageBox;
 import com.getsetgo.Adapter.ActiveCourseAdapter;
 import com.getsetgo.Adapter.BestSellingCourseAdapter;
 import com.getsetgo.Adapter.OtherCategoriesAdapter;
-import com.getsetgo.Adapter.ParentItemAdapter;
-import com.getsetgo.Adapter.ViewAllCategoriesAdapter;
 import com.getsetgo.Model.BestSellingCourseModel;
 import com.getsetgo.Model.SliderModel;
 import com.getsetgo.R;
@@ -43,7 +39,6 @@ import com.getsetgo.util.Click;
 import com.getsetgo.util.Config;
 import com.getsetgo.util.JumpToLogin;
 import com.getsetgo.util.P;
-import com.getsetgo.util.Utilities;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -80,8 +75,8 @@ public class HomeFragment extends Fragment {
     boolean isActive = false;
     boolean isBest = false;
 
-    public static  JsonList bestselling_course_list = new JsonList();
-    public static  JsonList top_searches = new JsonList();
+    public static JsonList bestselling_course_list = new JsonList();
+    public static JsonList top_searches = new JsonList();
 
     MyCourseDetailFragment courseDetailFragment;
     Bundle bundle = new Bundle();
@@ -105,6 +100,7 @@ public class HomeFragment extends Fragment {
 
         return rootView;
     }
+
 
     private void init() {
         setupSliderView();
@@ -205,7 +201,7 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void setupSliderView(){
+    private void setupSliderView() {
         sliderModelList = new ArrayList<>();
         sliderImageAdapter = new SliderImageAdapter(context, sliderModelList);
         binding.pager.setAdapter(sliderImageAdapter);
@@ -227,15 +223,15 @@ public class HomeFragment extends Fragment {
 
     private void setupRecyclerViewForBestSellingCourse() {
         bestSellingCourseModelList = new ArrayList<>();
-        bestSellingCourseAdapter = new BestSellingCourseAdapter(getActivity(), bestSellingCourseModelList,1);
+        bestSellingCourseAdapter = new BestSellingCourseAdapter(getActivity(), bestSellingCourseModelList, 1);
         binding.recyclerBestSellingCources.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerBestSellingCources.setAdapter(bestSellingCourseAdapter);
         bestSellingCourseAdapter.notifyDataSetChanged();
     }
 
     private void setupHomeExternalCourse() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
-        parentItemAdapter = new HomeParentCourseAdapter(getActivity(),parentJsonList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        parentItemAdapter = new HomeParentCourseAdapter(getActivity(), parentJsonList);
         binding.recyclerHomeCourse.setAdapter(parentItemAdapter);
         binding.recyclerHomeCourse.setLayoutManager(layoutManager);
     }
@@ -258,7 +254,7 @@ public class HomeFragment extends Fragment {
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
-                        JumpToLogin.call(Json1,context);
+                        JumpToLogin.call(Json1, context);
                         loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(context, Json1.getString(P.err));
@@ -272,8 +268,9 @@ public class HomeFragment extends Fragment {
                             top_searches = json.getJsonList("top_searches");
 //                            Json currently_learning = json.getJson("currently_learning");
                             JsonList home_course_list = json.getJsonList("home_course_list");
+                            JsonList banner_list = json.getJsonList("banner_list");
 
-                            setUpSliderList(new JsonList());
+                            setUpSliderList(banner_list);
                             setupBestSellingCourseData(bestselling_course_list);
                             setupHomeCourseData(home_course_list);
 //                            setUpCurrentLearningData(currently_learning);
@@ -283,15 +280,14 @@ public class HomeFragment extends Fragment {
                                 otherCategoriesJsonList.addAll(categories);
                                 otherCategoriesAdapter.notifyDataSetChanged();
                             }
-//:[{"category_id":"1","category_name":"Brain & Memory","category_slug":"brain-memory","course_list":[{"id":"1","course_name":"Student's Brain Booster","slug":"super-brain-booster","image":"https:\/\/getsetgoworld.com\/dev_env\/uploads\/course\/course-1\/geometric-1732847_1920.jpg","category_name":"Brain & Memory","instructor_name":"Sanjay Rahate","price":"9999","sale_price":"100","rating":"0"},{"id":"19","course_name":"Smart School","slug":"smart-school","image":null,"category_name":"Brain & Memory","instructor_name":"Sanjay Rahate","price":"100","sale_price":"100","rating":"0"}]},
 
                             if (totalCourses != null && !totalCourses.isEmpty()) {
                                 activeCourseJsonList.clear();
                                 activeCourseJsonList.addAll(totalCourses);
                                 activeCourseAdapter.notifyDataSetChanged();
-                                if (activeCourseJsonList!=null && activeCourseJsonList.size()!=0){
+                                if (activeCourseJsonList != null && activeCourseJsonList.size() != 0) {
                                     binding.lnrActiveCourse.setVisibility(View.VISIBLE);
-                                }else {
+                                } else {
                                     binding.lnrActiveCourse.setVisibility(View.GONE);
                                 }
                             }
@@ -301,9 +297,9 @@ public class HomeFragment extends Fragment {
                 }).run("dashbord");
     }
 
-    private void setUpCurrentLearningData(Json json){
+    private void setUpCurrentLearningData(Json json) {
 
-        if (!json.toString().equals("") && !json.toString().equals("null") && !json.toString().equals("{}")){
+        if (!json.toString().equals("") && !json.toString().equals("null") && !json.toString().equals("{}")) {
             String id = json.getString(P.id);
             String course_name = json.getString(P.course_name);
             String slug = json.getString(P.slug);
@@ -311,7 +307,7 @@ public class HomeFragment extends Fragment {
             String category_name = json.getString(P.category_name);
             String completion_percent = json.getString(P.completion_percent);
 
-            if(TextUtils.isEmpty(image)){
+            if (TextUtils.isEmpty(image)) {
                 image = "empty_image";
             }
 
@@ -320,7 +316,7 @@ public class HomeFragment extends Fragment {
             binding.txtCategoryName.setText(category_name);
             binding.txtStatus.setText(completion_percent + "% Complete");
 
-            if (!TextUtils.isEmpty(completion_percent) && !completion_percent.equals("null")){
+            if (!TextUtils.isEmpty(completion_percent) && !completion_percent.equals("null")) {
                 int progress = Integer.parseInt(completion_percent);
                 binding.progressBar.setProgress(progress);
             }
@@ -332,11 +328,11 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Click.preventTwoClick(v);
-                    loadFragment(v,slug,course_name);
+                    loadFragment(v, slug, course_name);
                 }
             });
 
-        }else {
+        } else {
             binding.txtCurrentLEarning.setVisibility(View.GONE);
             binding.cardViewCurrentLearning.setVisibility(View.GONE);
         }
@@ -347,24 +343,19 @@ public class HomeFragment extends Fragment {
 
         sliderModelList.clear();
 
-//        if (jsonList!=null){
-//            for (Json json : jsonList){
-//                SliderModel model = new SliderModel();
-//                model.setBanner_image();
-//                sliderModelList.add(model);
-//            }
-//        }
-
-        sliderModelList.add(new SliderModel("https://elearningindustry.com/wp-content/uploads/2016/09/online-course-development-process-must-know-outsource.jpeg"));
-        sliderModelList.add(new SliderModel("https://scholarship-positions.com/wp-content/uploads/2020/02/Free-Online-Course-2.jpg"));
-        sliderModelList.add(new SliderModel("https://mk0thinkificig8baqk3.kinstacdn.com/wp-content/uploads/2016/06/Create-Online-Courses-10.jpg"));
-        sliderModelList.add(new SliderModel("https://www.studyingram.com/wp-content/uploads/2020/07/onlineedu-960x540-1.jpg"));
+        if (jsonList != null && jsonList.size() != 0) {
+            for (Json json : jsonList) {
+                SliderModel model = new SliderModel();
+                model.setBanner_image(json.getString(P.banner_image));
+                sliderModelList.add(model);
+            }
+        }
 
         sliderImageAdapter.notifyDataSetChanged();
 
-        if (sliderModelList.isEmpty()){
+        if (sliderModelList.isEmpty()) {
             binding.lnrSlider.setVisibility(View.GONE);
-        }else {
+        } else {
             binding.lnrSlider.setVisibility(View.VISIBLE);
         }
 
@@ -387,13 +378,13 @@ public class HomeFragment extends Fragment {
     }
 
 
-    private void setupBestSellingCourseData(JsonList jsonList){
+    private void setupBestSellingCourseData(JsonList jsonList) {
         bestSellingCourseModelList.clear();
-        if (jsonList==null || jsonList.size()==0){
+        if (jsonList == null || jsonList.size() == 0) {
             binding.lnrBestSellingCourse.setVisibility(View.GONE);
             bestSellingCourseAdapter.notifyDataSetChanged();
-        }else {
-            for (Json json : jsonList){
+        } else {
+            for (Json json : jsonList) {
                 BestSellingCourseModel model = new BestSellingCourseModel();
                 model.setId(json.getString(P.id));
                 model.setCourse_name(json.getString(P.course_name));
@@ -411,20 +402,20 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void setupHomeCourseData(JsonList jsonList){
+    private void setupHomeCourseData(JsonList jsonList) {
         parentJsonList.clear();
         parentJsonList.addAll(jsonList);
         parentItemAdapter.notifyDataSetChanged();
     }
 
-    private void loadFragment(View v, String courseSlug,String courseName) {
+    private void loadFragment(View v, String courseSlug, String courseName) {
         BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
         BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);
         BaseScreenActivity.binding.incFragmenttool.content.setVisibility(View.VISIBLE);
         BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
         Config.myCourseSlug = courseSlug;
         Config.myCourseTitle = courseName;
-        bundle.putString("slug",courseSlug);
+        bundle.putString("slug", courseSlug);
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
         if (courseDetailFragment == null)
             courseDetailFragment = new MyCourseDetailFragment();

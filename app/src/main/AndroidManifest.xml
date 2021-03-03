@@ -19,10 +19,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activity.OTPVerficationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" ></activity>
         <activity
             android:name=".activity.VideoPlayActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.NoActionBarVideo"/>
+            android:theme="@style/AppTheme.NoActionBarVideo" />
         <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait"

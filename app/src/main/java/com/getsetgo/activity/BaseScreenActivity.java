@@ -313,8 +313,8 @@ public class BaseScreenActivity extends AppCompatActivity {
 
     private void checkAffiliate(){
 
-//        String is_affiliate = new Session(this).getString(P.is_affiliate);
-        String is_affiliate = "1";
+        String is_affiliate = new Session(this).getString(P.is_affiliate);
+//        String is_affiliate = "1";
 
         if (is_affiliate.equals("0")){
             lnrDashboard.setVisibility(View.GONE);

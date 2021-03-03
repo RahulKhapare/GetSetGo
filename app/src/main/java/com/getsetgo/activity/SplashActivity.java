@@ -58,15 +58,6 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void initView() {
-     /*   new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(activity, LoginActivity.class);
-                startActivity(intent);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                finish();
-            }
-        }, 3000);*/
         generateFcmToken();
         startNextActivity();
 
@@ -108,8 +99,7 @@ public class SplashActivity extends AppCompatActivity {
                 deviceWidth = H.getDeviceWidth(this);
                 deviceHeight = H.getDeviceHeight(this);
             }
-
             finish();
-        }, 1230);
+        }, 3000);
     }
 }

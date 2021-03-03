@@ -28,7 +28,6 @@ import com.getsetgo.util.App;
 import com.getsetgo.util.Click;
 import com.getsetgo.util.JumpToLogin;
 import com.getsetgo.util.P;
-import com.getsetgo.util.Utilities;
 import com.getsetgo.util.Validation;
 import com.getsetgo.util.WindowView;
 
@@ -95,18 +94,14 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Click.preventTwoClick(v);
                 if (checkValidation()) {
-//                    Intent intent = new Intent(activity, BaseScreenActivity.class);
-//                    startActivity(intent);
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                    finish();
                     String registerAs;
-                    if(binding.radioCompany.isSelected()){
-                        registerAs = binding.radioCompany.getText().toString();
+                    if(binding.radioIndividual.isChecked()){
+                        registerAs = "1";
                     }else{
-                        registerAs = binding.radioIndividual.getText().toString();
+                        registerAs = "2";
                     }
                     Json json = new Json();
-                    json.addString("registered_as", registerAs);
+                    json.addString(P.registered_as, registerAs);
                     json.addString(P.name, binding.etxFirstName.getText().toString() + "");
                     json.addString(P.lastname, binding.etxLastName.getText().toString() + "");
                     json.addString(P.email, binding.etxEmailAddress.getText().toString() + "");
@@ -114,7 +109,7 @@ public class SignUpActivity extends AppCompatActivity {
                     json.addString(P.password, binding.etxPassword.getText().toString() + "");
                     json.addString(P.confirm_password, binding.etxConfirmPassword.getText().toString() + "");
                     json.addString(P.sponsor_id, binding.etxSponserId.getText().toString() + "");
-                    callSignUpApi(json);
+                    callRegisterApi(json);
                 }
             }
         });
@@ -200,45 +195,41 @@ public class SignUpActivity extends AppCompatActivity {
         return value;
     }
 
-    private void callSignUpApi(Json json) {
-        loadingDialog = new LoadingDialog(this,false);
-
-        Api.newApi(this, P.baseUrl + "register").addJson(json)
+    private void callRegisterApi(Json json) {
+        loadingDialog = new LoadingDialog(activity, false);
+        Api.newApi(activity, P.baseUrl + "register")
+                .addJson(json)
                 .setMethod(Api.POST)
+                .onHeaderRequest(App::getHeaders)
                 .onLoading(isLoading -> {
                     if (!isDestroyed()) {
                         if (isLoading)
                             loadingDialog.show("loading...");
                         else
-                            loadingDialog.hide();
+                            loadingDialog.dismiss();
                     }
-
                 })
                 .onError(() ->
-                        MessageBox.showOkMessage(this, "Message", "Registration failed. Please try again", () -> {
+                        MessageBox.showOkMessage(this, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
                         }))
-                .onSuccess(json1 -> {
-                    JumpToLogin.call(json1,this);
-                    loadingDialog.dismiss();
-                    if (json1.getInt(P.status) == 0)
-                        H.showMessage(activity, json1.getString(P.err));
-                    else {
-                        json1 = json1.getJson(P.data);
-                        Session session = new Session(this);
-                        String token = json1.getString(P.token);
-                        String user_id = json1.getString(P.user_id);
-                        session.addString(P.token, token + "");
-                        session.addString(P.user_id, user_id + "");
-                        session.addString(P.name, json1.getString(P.name) + "");
-                        session.addString(P.lastname, json1.getString(P.lastname) + "");
-                        session.addString(P.email, json1.getString(P.email) + "");
-                        session.addString(P.contact, json1.getString(P.contact) + "");
-                        App.authToken = token;
-                        App.user_id = user_id;
-                        App.startHomeActivity(activity);
-                        finish();
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        JumpToLogin.call(Json1, this);
+                        loadingDialog.dismiss();
+                        if (Json1.getInt(P.status) == 1){
+                            Intent mainIntent = new Intent(activity,OTPVerficationActivity.class);
+                            mainIntent.putExtra(P.email,binding.etxEmailAddress.getText().toString());
+                            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(mainIntent);
+                            finish();
+                        }else {
+                            H.showMessage(activity, Json1.getString(P.err));
+                        }
                     }
+
                 }).run("register");
     }
+
 
 }

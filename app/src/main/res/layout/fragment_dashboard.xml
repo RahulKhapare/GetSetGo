@@ -559,6 +559,40 @@
 
                             </RelativeLayout>
 
+                            <RelativeLayout
+                                android:id="@+id/rlShareApp"
+                                android:layout_width="328dp"
+                                android:layout_height="68dp"
+                                android:layout_below="@id/rlReward"
+                                android:layout_marginTop="13dp"
+                                android:background="@drawable/bg_dash_elevation"
+                                android:backgroundTint="@color/textColor"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/ivApp"
+                                    android:layout_width="33dp"
+                                    android:layout_height="30dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="25dp"
+                                    android:src="@drawable/ic_share"
+                                    app:tint="@color/whiteColor" />
+
+                                <TextView
+                                    android:id="@+id/txtApp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="25dp"
+                                    android:layout_toRightOf="@+id/ivApp"
+                                    android:fontFamily="@font/nunito_sans_regular"
+                                    android:text="Share Application Link"
+                                    android:textColor="@color/colorWhite"
+                                    android:textSize="16sp" />
+
+                            </RelativeLayout>
+
 
                         </RelativeLayout>
                     </RelativeLayout>
@@ -694,6 +728,7 @@
                                 android:textSize="16sp" />
 
                         </RelativeLayout>
+
 
                         <View
                             android:id="@+id/viewAdviser"
