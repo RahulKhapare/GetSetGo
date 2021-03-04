@@ -10,9 +10,11 @@ public class P {
     public static String baseUrl = "https://getsetgoworld.com/dev_env/api/";
 
 
+    public static String ip = "ip";
     public static String status = "status";
     public static String err = "err";
     public static String data = "data";
+    public static String sponsor = "sponsor";
     public static String msg = "msg";
     public static String userdata = "userdata";
     public static String registered_as = "registered_as";
@@ -34,6 +36,7 @@ public class P {
     public static String buy_course_base_dev = "https://getsetgoworld.com/dev_env/courses/app_purchase/";
     public static String buy_course_base_prod = "https://getsetgoworld.com/courses/app_purchase/";
     public static String sponsor_id = "sponsor_id";
+    public static String sponsor_name = "sponsor_name";
 
 
 

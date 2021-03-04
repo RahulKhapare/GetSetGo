@@ -17,10 +17,10 @@
         android:title="Your Course"/>
 
     <item
-        android:id="@+id/menu_favourites"
-        android:icon="@drawable/ic_favourites_menu"
-        android:visible="false"
-        android:title="Favourites"/>
+        android:id="@+id/menu_freeCourse"
+        android:icon="@drawable/ic_your_course_menu"
+        android:title="Free Course"/>
+
     <item
         android:id="@+id/menu_Account"
         android:icon="@drawable/ic_account"

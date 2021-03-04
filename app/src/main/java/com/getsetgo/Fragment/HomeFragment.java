@@ -285,10 +285,10 @@ public class HomeFragment extends Fragment {
                                 activeCourseJsonList.clear();
                                 activeCourseJsonList.addAll(totalCourses);
                                 activeCourseAdapter.notifyDataSetChanged();
-                                if (activeCourseJsonList != null && activeCourseJsonList.size() != 0) {
-                                    binding.lnrActiveCourse.setVisibility(View.VISIBLE);
-                                } else {
+                                if (activeCourseJsonList == null || activeCourseJsonList.size() == 0) {
                                     binding.lnrActiveCourse.setVisibility(View.GONE);
+                                }else {
+                                    binding.lnrActiveCourse.setVisibility(View.VISIBLE);
                                 }
                             }
                         }

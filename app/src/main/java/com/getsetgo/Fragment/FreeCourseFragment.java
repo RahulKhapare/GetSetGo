@@ -12,7 +12,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
@@ -28,18 +27,18 @@ import com.getsetgo.util.App;
 import com.getsetgo.util.JumpToLogin;
 import com.getsetgo.util.P;
 
-public class YourCourseFragment extends Fragment {
+public class FreeCourseFragment extends Fragment {
 
     FragmentYourCourseBinding binding;
     MyCourseAdapter myCourseAdapter;
     JsonList activeCourseJsonList = new JsonList();
 
-    public YourCourseFragment() {
+    public FreeCourseFragment() {
         // Required empty public constructor
     }
 
-    public static YourCourseFragment newInstance() {
-        YourCourseFragment fragment = new YourCourseFragment();
+    public static FreeCourseFragment newInstance() {
+        FreeCourseFragment fragment = new FreeCourseFragment();
         return fragment;
     }
 
@@ -67,7 +66,7 @@ public class YourCourseFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_your_course, container, false);
         View rootView = binding.getRoot();
         init();
-        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Your Course");
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Free Course");
         return rootView;
     }
 

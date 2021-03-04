@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
-import android.text.format.Formatter;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -27,11 +25,6 @@ import com.getsetgo.util.Click;
 import com.getsetgo.util.P;
 import com.getsetgo.util.ProgressView;
 import com.getsetgo.util.WindowView;
-
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.util.Enumeration;
 
 public class OTPVerficationActivity extends AppCompatActivity {
 
@@ -175,24 +168,6 @@ public class OTPVerficationActivity extends AppCompatActivity {
                     }
                 })
                 .run("hitResendOtp");
-    }
-
-    public String getLocalIpAddress() {
-        try {
-            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
-                NetworkInterface intf = en.nextElement();
-                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
-                    InetAddress inetAddress = enumIpAddr.nextElement();
-                    if (!inetAddress.isLoopbackAddress()) {
-                        String ipAddress = Formatter.formatIpAddress(inetAddress.hashCode());
-                        return ipAddress;
-                    }
-                }
-            }
-        } catch (SocketException ex) {
-            Log.e("TAG", ex.toString());
-        }
-        return null;
     }
 
 

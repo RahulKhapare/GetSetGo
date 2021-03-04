@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.format.Formatter;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -31,7 +33,11 @@ import com.getsetgo.util.P;
 import com.getsetgo.util.Validation;
 import com.getsetgo.util.WindowView;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -49,12 +55,34 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        callSponsorIDApi();
         onClick();
         binding.actvIsdCode.setText("+91");
+
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                String newText = s.toString();
+                if (!TextUtils.isEmpty(newText) && newText.length()==9) {
+                    getSponsorIDApi(binding.etxSponserId.getText().toString().trim());
+                }else if (newText.length()<9 || newText.length()>9){
+                    binding.txtSponsorName.setText("Sponsor By");
+                }
+            }
+        };
+
+        binding.etxSponserId.addTextChangedListener(textWatcher);
     }
 
-    private void onClick() {
 
+    private void onClick() {
 
         binding.actvIsdCode.addTextChangedListener(new TextWatcher() {
             @Override
@@ -229,6 +257,102 @@ public class SignUpActivity extends AppCompatActivity {
                     }
 
                 }).run("register");
+    }
+
+
+    private void callSponsorIDApi() {
+        loadingDialog = new LoadingDialog(activity, false);
+        Json json = new Json();
+        json.addString(P.ip,getLocalIpAddress());
+//        json.addString(P.ip,"1.23.248.22");
+        Api.newApi(activity, P.baseUrl + "get_sponsor_from_ip")
+                .addJson(json)
+                .setMethod(Api.POST)
+                .onHeaderRequest(App::getHeaders)
+                .onLoading(isLoading -> {
+                    if (!isDestroyed()) {
+                        if (isLoading)
+                            loadingDialog.show("loading...");
+                        else
+                            loadingDialog.dismiss();
+                    }
+                })
+                .onError(() ->
+                        MessageBox.showOkMessage(this, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
+                        }))
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        JumpToLogin.call(Json1, this);
+                        loadingDialog.dismiss();
+                        if (Json1.getInt(P.status) == 1){
+                            Json1 = Json1.getJson(P.data);
+                            Json sponsorData = Json1.getJson(P.sponsor);
+                            String sponsor_id = sponsorData.getString(P.sponsor_id);
+                            String sponsor_name = sponsorData.getString(P.sponsor_name);
+                            binding.etxSponserId.setText(sponsor_id);
+                            binding.txtSponsorName.setText("Sponsor By "+sponsor_name);
+                        }
+                    }
+
+                }).run("callSponsorIDApi");
+    }
+
+    private void getSponsorIDApi(String sponsorId) {
+        loadingDialog = new LoadingDialog(activity, false);
+        Json json = new Json();
+        json.addString(P.sponsor_id,sponsorId);
+        Api.newApi(activity, P.baseUrl + "get_sponsor_details")
+                .addJson(json)
+                .setMethod(Api.POST)
+                .onHeaderRequest(App::getHeaders)
+                .onLoading(isLoading -> {
+                    if (!isDestroyed()) {
+                        if (isLoading)
+                            loadingDialog.show("loading...");
+                        else
+                            loadingDialog.dismiss();
+                    }
+                })
+                .onError(() ->
+                        MessageBox.showOkMessage(this, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
+                        }))
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        JumpToLogin.call(Json1, this);
+                        loadingDialog.dismiss();
+                        if (Json1.getInt(P.status) == 1){
+                            Json1 = Json1.getJson(P.data);
+                            Json sponsorData = Json1.getJson(P.sponsor);
+                            String sponsor_id = sponsorData.getString(P.sponsor_id);
+                            String sponsor_name = sponsorData.getString(P.sponsor_name);
+//                            binding.etxSponserId.setText(sponsor_id);
+                            binding.txtSponsorName.setText("Sponsor By "+sponsor_name);
+                        }else {
+                            binding.txtSponsorName.setText("Sponsor By");
+                        }
+                    }
+
+                }).run("getSponsorIDApi");
+    }
+
+    public String getLocalIpAddress() {
+        try {
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
+                NetworkInterface intf = en.nextElement();
+                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
+                    InetAddress inetAddress = enumIpAddr.nextElement();
+                    if (!inetAddress.isLoopbackAddress()) {
+                        String ipAddress = Formatter.formatIpAddress(inetAddress.hashCode());
+                        return ipAddress;
+                    }
+                }
+            }
+        } catch (SocketException ex) {
+            Log.e("TAG", ex.toString());
+        }
+        return null;
     }
 
 

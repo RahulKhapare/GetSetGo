@@ -6,9 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.Settings;
@@ -23,19 +21,15 @@ import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-
 import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
-
 import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
 import com.adoisstudio.helper.LoadingDialog;
@@ -43,40 +37,35 @@ import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
 import com.getsetgo.Fragment.AccountFragment;
 import com.getsetgo.Fragment.AddNewUserFragment;
-
 import com.getsetgo.Fragment.BankDetailsFragment;
 import com.getsetgo.Fragment.BestSellingCourseFragment;
 import com.getsetgo.Fragment.CurrentLearningFragment;
 import com.getsetgo.Fragment.DashBoardFragment;
 import com.getsetgo.Fragment.EarningsFragment;
-import com.getsetgo.Fragment.FavouritesFragment;
+import com.getsetgo.Fragment.FreeCourseFragment;
 import com.getsetgo.Fragment.HelpAndSupportFragment;
 import com.getsetgo.Fragment.HomeFragment;
 import com.getsetgo.Fragment.IncentivesFragment;
-
 import com.getsetgo.Fragment.KYCDocumentFragment;
 import com.getsetgo.Fragment.NomineeDetailsFragment;
 import com.getsetgo.Fragment.NotificationsFragment;
+import com.getsetgo.Fragment.ParentCategoriesFragment;
 import com.getsetgo.Fragment.SearchFragment;
 import com.getsetgo.Fragment.SearchUserIdFragment;
 import com.getsetgo.Fragment.TermsAndConditionFragment;
-
 import com.getsetgo.Fragment.TransactionsHistoryFragment;
 import com.getsetgo.Fragment.WebViewFragment;
 import com.getsetgo.Fragment.YourCourseFragment;
-import com.getsetgo.Fragment.ParentCategoriesFragment;
 import com.getsetgo.Model.CourseDocumentModel;
 import com.getsetgo.R;
 import com.getsetgo.databinding.ActivityBaseScreenBinding;
-
-
 import com.getsetgo.util.App;
 import com.getsetgo.util.Click;
 import com.getsetgo.util.Config;
+import com.getsetgo.util.DocumentDownloader;
 import com.getsetgo.util.JumpToLogin;
 import com.getsetgo.util.OpenFile;
 import com.getsetgo.util.P;
-import com.getsetgo.util.DocumentDownloader;
 import com.getsetgo.util.WindowView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -111,8 +100,8 @@ public class BaseScreenActivity extends AppCompatActivity {
     YourCourseFragment yourCourseFragment;
     WebViewFragment webViewFragment;
     CurrentLearningFragment currentLearningFragment;
-    LinearLayout lnrDashboard,lnrUser,lnrEarning,lnrBusiness,lnrTransaction,lnrInsentive,lnrPoints;
-    CheckBox cbMyEarning, cbUsers,cbBusiness,cbTransaction,cbPoints;
+    LinearLayout lnrDashboard, lnrUser, lnrEarning, lnrBusiness, lnrTransaction, lnrInsentive, lnrPoints;
+    CheckBox cbMyEarning, cbUsers, cbBusiness, cbTransaction, cbPoints;
     OnBackPressedCallback onBackPressedCallback;
     private LoadingDialog loadingDialog;
 
@@ -137,14 +126,14 @@ public class BaseScreenActivity extends AppCompatActivity {
         init();
     }
 
-    private void onItemClick(){
+    private void onItemClick() {
 
         lnrUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (cbUsers.isChecked()){
+                if (cbUsers.isChecked()) {
                     cbUsers.setChecked(false);
-                }else {
+                } else {
                     cbUsers.setChecked(true);
                 }
             }
@@ -153,9 +142,9 @@ public class BaseScreenActivity extends AppCompatActivity {
         lnrEarning.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (cbMyEarning.isChecked()){
+                if (cbMyEarning.isChecked()) {
                     cbMyEarning.setChecked(false);
-                }else {
+                } else {
                     cbMyEarning.setChecked(true);
                 }
             }
@@ -164,9 +153,9 @@ public class BaseScreenActivity extends AppCompatActivity {
         lnrBusiness.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (cbBusiness.isChecked()){
+                if (cbBusiness.isChecked()) {
                     cbBusiness.setChecked(false);
-                }else {
+                } else {
                     cbBusiness.setChecked(true);
                 }
             }
@@ -175,9 +164,9 @@ public class BaseScreenActivity extends AppCompatActivity {
         lnrTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (cbTransaction.isChecked()){
+                if (cbTransaction.isChecked()) {
                     cbTransaction.setChecked(false);
-                }else {
+                } else {
                     cbTransaction.setChecked(true);
                 }
             }
@@ -186,9 +175,9 @@ public class BaseScreenActivity extends AppCompatActivity {
         lnrPoints.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (cbPoints.isChecked()){
+                if (cbPoints.isChecked()) {
                     cbPoints.setChecked(false);
-                }else {
+                } else {
                     cbPoints.setChecked(true);
                 }
             }
@@ -196,7 +185,7 @@ public class BaseScreenActivity extends AppCompatActivity {
 
     }
 
-    protected void onCheckView(){
+    protected void onCheckView() {
 
         lnrDashboard = findViewById(R.id.lnrDashboard);
         lnrUser = findViewById(R.id.lnrUser);
@@ -311,12 +300,12 @@ public class BaseScreenActivity extends AppCompatActivity {
     }
 
 
-    private void checkAffiliate(){
+    private void checkAffiliate() {
 
         String is_affiliate = new Session(this).getString(P.is_affiliate);
 //        String is_affiliate = "1";
 
-        if (is_affiliate.equals("0")){
+        if (is_affiliate.equals("0")) {
             lnrDashboard.setVisibility(View.GONE);
             lnrUser.setVisibility(View.GONE);
             lnrEarning.setVisibility(View.GONE);
@@ -367,16 +356,18 @@ public class BaseScreenActivity extends AppCompatActivity {
                         fragment = new HomeFragment();
                         isHide = false;
                         break;
-                    case R.id.menu_favourites:
-                        fragment = new FavouritesFragment();
-                        isHide = true;
-                        break;
+
                     case R.id.menu_search:
                         fragment = new SearchFragment();
                         isHide = true;
                         break;
                     case R.id.menu_yourCourse:
                         fragment = new YourCourseFragment();
+                        isHide = true;
+                        break;
+
+                    case R.id.menu_freeCourse:
+                        fragment = new FreeCourseFragment();
                         isHide = true;
                         break;
 
@@ -416,20 +407,6 @@ public class BaseScreenActivity extends AppCompatActivity {
         txtName.setText(name + " " + lastName);
         txtEmail.setText(email);
     }
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void onFavouriteClick(View view) {
-        int i = view.getId();
-        switch (i) {
-            case R.id.llFavourite:
-                FavouritesFragment fragment = new FavouritesFragment();
-                binding.bottomNavigation.setSelectedItemId(R.id.menu_favourites);
-                loadFragment(fragment, true);
-                break;
-        }
-
-    }
-
 
     private void loadHomeFragment() {
         if (homeFragment == null)
@@ -878,7 +855,7 @@ public class BaseScreenActivity extends AppCompatActivity {
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
-                        JumpToLogin.call(Json1,context);
+                        JumpToLogin.call(Json1, context);
                         loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(context, Json1.getString(P.err));

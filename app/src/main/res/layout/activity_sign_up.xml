@@ -278,7 +278,7 @@
                         android:id="@+id/etxSponserId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Sponser Id"
+                        android:hint="Sponsor Id"
                         android:inputType="text"
                         android:imeOptions="actionDone"
                         android:textColorHint="@color/colorTextHint"
@@ -287,6 +287,18 @@
                         android:backgroundTint="@color/colorTextDark" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/txtSponsorName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:paddingLeft="5dp"
+                    android:text="Sponsor By"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:textColor="#70232323">
+
+                </TextView>
 
             </LinearLayout>
 
