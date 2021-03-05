@@ -73,6 +73,7 @@ public class BankDetailsFragment extends Fragment {
 
     LoadingDialog loadingDialog;
 
+    String bank_approve_status = "";
     String documentPath = "";
 
     public BankDetailsFragment() {
@@ -180,7 +181,12 @@ public class BankDetailsFragment extends Fragment {
             public void onClick(View v) {
                 Click.preventTwoClick(v);
                 if (checkValidation()){
-                    hitSaveBankData(getActivity());
+                    if (bank_approve_status.equals("1")){
+                        H.showMessage(getActivity(),"Bank details already uploaded");
+                    }else {
+                        hitSaveBankData(getActivity());
+                    }
+
                 }
             }
         });
@@ -442,7 +448,7 @@ public class BankDetailsFragment extends Fragment {
                         String bank_account_type = detailsJson.getString(P.bank_account_type);
                         String bank_document_file_name = detailsJson.getString(P.bank_document_file_name);
                         String bank_document_file_image = detailsJson.getString(P.bank_document_file_image);
-                        String bank_approve_status = detailsJson.getString(P.bank_approve_status);
+                        bank_approve_status = detailsJson.getString(P.bank_approve_status);
                         String bank_approve_remark = detailsJson.getString(P.bank_approve_remark);
 
                         binding.etAccHolderName.setText(checkString(acc_holder_name));
