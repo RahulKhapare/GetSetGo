@@ -66,13 +66,13 @@ public class BankDetailsFragment extends Fragment {
     private final int cameraClick = 0;
     private final int galleryClick = 1;
     private String imgString = "";
-
-    LoadingDialog loadingDialog;
+    private String accountType = "";
 
     private List<SpinnerModel> bankAccountList;
     SpinnerSelectionAdapter bankAccountAdapter;
 
-    String accountType = "";
+    LoadingDialog loadingDialog;
+
     String documentPath = "";
 
     public BankDetailsFragment() {
@@ -134,11 +134,11 @@ public class BankDetailsFragment extends Fragment {
 
     private void init(View view) {
         loadingDialog = new LoadingDialog(getActivity());
+
         bankAccountList = new ArrayList<>();
-        SpinnerModel bankModel = new SpinnerModel();
-        bankModel.setId("");
-        bankModel.setName("Select Account");
-        bankAccountList.add(bankModel);
+        bankAccountList.add(new SpinnerModel("","Select Account"));
+        bankAccountList.add(new SpinnerModel("1","SAVING"));
+        bankAccountList.add(new SpinnerModel("2","CURRENT"));
         bankAccountAdapter = new SpinnerSelectionAdapter(getActivity(), bankAccountList);
         binding.spinnerAccountType.setAdapter(bankAccountAdapter);
 
@@ -151,6 +151,8 @@ public class BankDetailsFragment extends Fragment {
 
         }
 
+        hitGetBankData(getActivity());
+
     }
 
     private void onClick() {
@@ -159,6 +161,11 @@ public class BankDetailsFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 SpinnerModel model = bankAccountList.get(position);
+                if (!model.getId().equals("")){
+                    accountType = model.getName();
+                }else {
+                    accountType = "";
+                }
             }
 
             @Override
@@ -166,6 +173,7 @@ public class BankDetailsFragment extends Fragment {
 
             }
         });
+
 
         binding.txtSaveNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -355,7 +363,7 @@ public class BankDetailsFragment extends Fragment {
             final InputStream imageStream = getActivity().getContentResolver().openInputStream(uri);
             final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
             imgString = encodeImage(selectedImage);
-            binding.txtDocument.setText("Re-Upload Document");
+            hitUploadImage(getActivity(),imgString);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             H.showMessage(getActivity(), "Unable to get image, try again.");
@@ -374,9 +382,15 @@ public class BankDetailsFragment extends Fragment {
         ProgressView.show(context,loadingDialog);
 
         Json j = new Json();
-//        j.addString(P.occupation_id,occupation);
+        j.addString(P.bank_name,binding.etBankName.getText().toString().trim());
+        j.addString(P.acc_holder_name,binding.etAccHolderName.getText().toString().trim());
+        j.addString(P.bank_ifsc_code,binding.etIFSCCode.getText().toString().trim());
+        j.addString(P.bank_account_number,binding.etAccNumber.getText().toString().trim());
+        j.addString(P.bank_account_type,accountType);
+        j.addString(P.bank_branch,binding.etBranch.getText().toString().trim());
+        j.addString(P.bank_document_file_name,documentPath);
 
-        Api.newApi(context, P.baseUrl + "").addJson(j)
+        Api.newApi(context, P.baseUrl + "bank_details").addJson(j)
                 .setMethod(Api.POST)
                 .onHeaderRequest(App::getHeaders)
                 .onError(() -> {
@@ -389,7 +403,7 @@ public class BankDetailsFragment extends Fragment {
                     JumpToLogin.call(json,context);
                     ProgressView.dismiss(loadingDialog);
                     if (json.getInt(P.status) == 1) {
-                        H.showMessage(context,"Details save successfully");
+                        H.showMessage(context,"Bank details save successfully");
                         final Handler handler = new Handler(Looper.getMainLooper());
                         handler.postDelayed(new Runnable() {
                             @Override
@@ -403,12 +417,117 @@ public class BankDetailsFragment extends Fragment {
                 .run("hitSaveBankData");
     }
 
+    private void hitGetBankData(Context context) {
+        ProgressView.show(context,loadingDialog);
+
+        Api.newApi(context, P.baseUrl + "bank_details")
+                .setMethod(Api.GET)
+                .onHeaderRequest(App::getHeaders)
+                .onError(() -> {
+                    ProgressView.dismiss(loadingDialog);
+                })
+                .onSuccess(json ->
+                {
+                    JumpToLogin.call(json,context);
+                    ProgressView.dismiss(loadingDialog);
+                    if (json.getInt(P.status) == 1) {
+
+                        Json data = json.getJson(P.data);
+                        Json detailsJson = data.getJson(P.bank_details);
+                        String acc_holder_name = detailsJson.getString(P.acc_holder_name);
+                        String bank_name = detailsJson.getString(P.bank_name);
+                        String bank_ifsc_code = detailsJson.getString(P.bank_ifsc_code);
+                        String bank_account_number = detailsJson.getString(P.bank_account_number);
+                        String bank_branch = detailsJson.getString(P.bank_branch);
+                        String bank_account_type = detailsJson.getString(P.bank_account_type);
+                        String bank_document_file_name = detailsJson.getString(P.bank_document_file_name);
+                        String bank_document_file_image = detailsJson.getString(P.bank_document_file_image);
+                        String bank_approve_status = detailsJson.getString(P.bank_approve_status);
+                        String bank_approve_remark = detailsJson.getString(P.bank_approve_remark);
+
+                        binding.etAccHolderName.setText(checkString(acc_holder_name));
+                        binding.etBankName.setText(checkString(bank_name));
+                        binding.etAccNumber.setText(checkString(bank_account_number));
+                        binding.etIFSCCode.setText(checkString(bank_ifsc_code));
+                        binding.etBranch.setText(checkString(bank_branch));
+
+                        if (bank_account_type.contains("SAVING")){
+                            binding.spinnerAccountType.setSelection(1);
+                        }else if (bank_account_type.contains("CURRENT")){
+                            binding.spinnerAccountType.setSelection(2);
+                        }
+
+                        documentPath = bank_document_file_name;
+                        if (!TextUtils.isEmpty(documentPath) && !documentPath.equals("null")){
+                            binding.txtMessage.setText("File Name : " +  documentPath);
+                            binding.txtDocument.setText("Re-Upload Document");
+                        }
+
+                        if (!TextUtils.isEmpty(bank_approve_status) && !bank_approve_status.equals("null")){
+                            if (bank_approve_status.equals("0")){
+                                binding.txtStatus.setText("Admin Status : " + "Pending");
+                            }else if (bank_approve_status.equals("1")){
+                                binding.txtStatus.setText("Admin Status : " + "Approved");
+                            }else if (bank_approve_status.equals("2")){
+                                binding.txtStatus.setText("Admin Status : " + "Rejected");
+                                binding.txtStatus.setTextColor(getResources().getColor(R.color.colorReward));
+                                if (!TextUtils.isEmpty(bank_approve_remark) && !bank_approve_remark.equals("null")){
+                                    binding.txtStatusMessage.setText("Remark : " + bank_approve_remark);
+                                }
+                            }
+                        }
+                    }
+                })
+                .run("hitGetBankData");
+    }
+
+
+    private void hitUploadImage(Context context,String base64Image) {
+        ProgressView.show(context,loadingDialog);
+
+        Json j = new Json();
+        j.addString(P.type,"kyc_docs");
+        j.addString(P.content,"data:image/jpeg;base64,"+base64Image);
+
+        Api.newApi(context, P.baseUrl + "upload").addJson(j)
+                .setMethod(Api.POST)
+                .onHeaderRequest(App::getHeaders)
+                .onError(() -> {
+                    ProgressView.dismiss(loadingDialog);
+                    MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                    });
+                })
+                .onSuccess(json ->
+                {
+                    JumpToLogin.call(json,context);
+                    ProgressView.dismiss(loadingDialog);
+                    if (json.getInt(P.status) == 1) {
+                        Json jsonData = json.getJson(P.data);
+                        String file_name = jsonData.getString(P.file_name);
+                        String file_path = jsonData.getString(P.file_path);
+                        documentPath = file_name;
+                        binding.txtMessage.setText("File Name : " +  documentPath);
+                        binding.txtDocument.setText("Re-Upload Document");
+                        H.showMessage(context,"Document uploaded successfully");
+                    }
+                })
+                .run("hitUploadImage");
+    }
+
 
     private void onBackPressClick(){
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             BaseScreenActivity.callBack();
         }
+    }
+
+    private String checkString(String string){
+        String value = "";
+        if (!TextUtils.isEmpty(string) || !string.equals("null")){
+            value =  string;
+        }
+        return  value;
     }
 
 }

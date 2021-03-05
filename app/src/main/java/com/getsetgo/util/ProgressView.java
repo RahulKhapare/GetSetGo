@@ -18,4 +18,19 @@ public class ProgressView {
         }
     }
 
+    public static void hide(LoadingDialog loadingDialog){
+        if (loadingDialog!=null){
+            loadingDialog.hide();
+        }
+    }
+
+
+    public static void killed(LoadingDialog loadingDialog){
+        try {
+            loadingDialog.dismiss();
+        }catch (Exception e){
+
+        }
+    }
+
 }

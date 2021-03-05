@@ -5,6 +5,15 @@ public class SpinnerModel {
     String id;
     String name;
 
+    public SpinnerModel(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public SpinnerModel() {
+
+    }
+
     public String getId() {
         return id;
     }

@@ -101,7 +101,7 @@ public class FreeCourseFragment extends Fragment {
 
     private void callActiveCourseAPI(Context context) {
         LoadingDialog loadingDialog = new LoadingDialog(context, false);
-        Api.newApi(context, P.baseUrl + "active_courses")
+        Api.newApi(context, P.baseUrl + "free_courses")
                 .setMethod(Api.GET)
                 .onHeaderRequest(App::getHeaders)
                 .onLoading(isLoading -> {
@@ -125,7 +125,7 @@ public class FreeCourseFragment extends Fragment {
                         } else {
                             Json json = Json1.getJson(P.data);
                             JsonList activeCourses = new JsonList();
-                            activeCourses = json.getJsonList("active_course_list");
+                            activeCourses = json.getJsonList("free_course_list");
 
                             if (activeCourses != null && !activeCourses.isEmpty()) {
                                 activeCourseJsonList.clear();
@@ -136,7 +136,7 @@ public class FreeCourseFragment extends Fragment {
                         checkData(activeCourseJsonList);
                     }
 
-                }).run("active_courses");
+                }).run("free_courses");
     }
 
 

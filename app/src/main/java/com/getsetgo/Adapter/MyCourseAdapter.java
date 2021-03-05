@@ -3,6 +3,7 @@ package com.getsetgo.Adapter;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +56,11 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.MyCour
 
         try {
             holder.txtCourseDes.setText(json.getString("course_name"));
-            Picasso.get().load(json.getString("image")).placeholder(R.drawable.ic_wp).error(R.drawable.ic_wp).into(holder.ivCourse);
+            if (!TextUtils.isEmpty(json.getString("image"))){
+                Picasso.get().load(json.getString("image")).placeholder(R.drawable.ic_no_image).error(R.drawable.ic_no_image).into(holder.ivCourse);
+            }else {
+                Picasso.get().load(R.drawable.ic_no_image).error(R.drawable.ic_no_image).into(holder.ivCourse);
+            }
             holder.progressCourse.setProgress(Integer.parseInt(json.getString("completion_percent")), true);
             holder.txtCourseTech.setText(json.getString("category_name"));
             holder.txtCourseStatus.setText(json.getString("completion_percent") + "% Complete");

@@ -44,7 +44,8 @@
                                 android:fontFamily="@font/nunito_sans_semibold"
                                 android:hint="PAN Card Number"
                                 android:imeOptions="actionNext"
-                                android:inputType="number"
+                                android:textAllCaps="true"
+                                android:inputType="textCapCharacters"
                                 android:textColor="@color/colorTextDark"
                                 android:textColorHint="@color/colorTextHint"
                                 android:textSize="16sp" />
@@ -80,6 +81,7 @@
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/txtPanMessage"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -139,6 +141,7 @@
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/txtAadharMessage"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -162,6 +165,26 @@
                             android:textColor="@color/colorWhite"
                             android:textSize="16sp" />
 
+
+                        <TextView
+                            android:id="@+id/txtStatus"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:text=""
+                            android:textColor="@color/colorTextDark"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/txtStatusMessage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:text=""
+                            android:textColor="@color/colorReward"
+                            android:textSize="12sp" />
 
                     </LinearLayout>
 

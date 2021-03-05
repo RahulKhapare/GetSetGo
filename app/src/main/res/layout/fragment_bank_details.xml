@@ -188,6 +188,7 @@
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/txtMessage"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -201,7 +202,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="50dp"
-                            android:layout_marginBottom="50dp"
+                            android:layout_marginBottom="20dp"
                             android:background="@drawable/button_dark_bg"
                             android:fontFamily="@font/nunit_sans_bold"
                             android:gravity="center"
@@ -210,6 +211,27 @@
                             android:text="Save &amp; Next"
                             android:textColor="@color/colorWhite"
                             android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/txtStatus"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:text="@string/app_name"
+                            android:textColor="@color/colorTextDark"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/txtStatusMessage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="50dp"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:text=""
+                            android:textColor="@color/colorReward"
+                            android:textSize="12sp" />
 
 
                     </LinearLayout>

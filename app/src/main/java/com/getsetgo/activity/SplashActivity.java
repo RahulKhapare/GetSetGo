@@ -4,24 +4,34 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.LoadingDialog;
+import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
+import com.getsetgo.BuildConfig;
 import com.getsetgo.R;
 import com.getsetgo.databinding.ActivitySplashBinding;
 import com.getsetgo.util.App;
+import com.getsetgo.util.CheckConnection;
+import com.getsetgo.util.JumpToLogin;
 import com.getsetgo.util.P;
 import com.getsetgo.util.WindowView;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -50,17 +60,21 @@ public class SplashActivity extends AppCompatActivity {
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
             );
         }
-//        WindowView.getWindow(activity);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
+
         initView();
+        if (CheckConnection.isVailable(activity)){
+            hitInitApi(activity);
+        }else {
+            MessageBox.showOkMessage(activity, "Message", "No internet connection available", () -> {
+            });
+        }
 
     }
 
     private void initView() {
         generateFcmToken();
-        startNextActivity();
-
         deviceWidth = H.getDeviceWidth(this);
         deviceHeight = H.getDeviceHeight(this);
     }
@@ -100,6 +114,83 @@ public class SplashActivity extends AppCompatActivity {
                 deviceHeight = H.getDeviceHeight(this);
             }
             finish();
-        }, 3000);
+        }, 2000);
+    }
+
+    private void showUpdatePopUP()
+    {
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        adb.setTitle("Message");
+        adb.setMessage("New Update available.");
+        adb.setCancelable(false);
+        adb.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startNextActivity();
+            }
+        });
+        adb.setPositiveButton("update", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                redirectToPlayStore();
+            }
+        }).show();
+    }
+
+    private void redirectToPlayStore()
+    {
+        final String appPackageName = this.getPackageName();
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+        }
+    }
+
+    private void hitInitApi(Context context) {
+        LoadingDialog loadingDialog = new LoadingDialog(context, false);
+        Api.newApi(context, P.baseUrl + "init")
+                .setMethod(Api.GET)
+                .onHeaderRequest(App::getHeaders)
+                .onLoading(isLoading -> {
+                    if (isLoading)
+                        loadingDialog.show("loading...");
+                    else
+                        loadingDialog.hide();
+                })
+                .onError(() ->
+                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
+                        }))
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        JumpToLogin.call(Json1, context);
+                        loadingDialog.dismiss();
+                        if (Json1.getInt(P.status) == 0) {
+                            H.showMessage(context, Json1.getString(P.err));
+                        } else if (Json1.getInt(P.status) == 1) {
+                            Json1 = Json1.getJson(P.data);
+                            String android_min_version = Json1.getString(P.android_min_version);
+                            String android_current_version = Json1.getString(P.android_current_version);
+                            if (!TextUtils.isEmpty(android_min_version) || !android_min_version.equals("null")){
+                                int versionCode = BuildConfig.VERSION_CODE;
+                                String versionName = BuildConfig.VERSION_NAME;
+                                try {
+                                    int currentVersion = Integer.parseInt(android_min_version);
+                                    if (versionCode<currentVersion){
+                                        showUpdatePopUP();
+                                    }else {
+                                        startNextActivity();
+                                    }
+                                }catch (Exception e){
+                                    startNextActivity();
+                                }
+                            }else {
+                                startNextActivity();
+                            }
+                        }
+                    }
+
+                }).run("hitInitApi");
     }
 }

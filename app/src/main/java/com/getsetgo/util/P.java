@@ -10,6 +10,8 @@ public class P {
     public static String baseUrl = "https://getsetgoworld.com/dev_env/api/";
 
 
+    public static String android_min_version = "android_min_version";
+    public static String android_current_version = "android_current_version";
     public static String ip = "ip";
     public static String status = "status";
     public static String err = "err";
@@ -143,6 +145,26 @@ public class P {
     public static String nominee1_relation = "nominee1_relation";
     public static String nominee2 = "nominee2";
     public static String nominee2_relation = "nominee2_relation";
+    public static String aadhar_pan_details = "aadhar_pan_details";
+    public static String pan_card_number = "pan_card_number";
+    public static String user_pan_card_file_name = "user_pan_card_file_name";
+    public static String user_pan_card_file_image = "user_pan_card_file_image";
+    public static String aadhar_card_number = "aadhar_card_number";
+    public static String user_aadhar_card_file_name = "user_aadhar_card_file_name";
+    public static String user_aadhar_card_file_image = "user_aadhar_card_file_image";
+    public static String document_approve_status = "document_approve_status";
+    public static String document_approve_remark = "document_approve_remark";
+    public static String bank_name = "bank_name";
+    public static String acc_holder_name = "acc_holder_name";
+    public static String bank_ifsc_code = "bank_ifsc_code";
+    public static String bank_account_number = "bank_account_number";
+    public static String bank_account_type = "bank_account_type";
+    public static String bank_branch = "bank_branch";
+    public static String bank_document_file_name = "bank_document_file_name";
+    public static String bank_document_file_image = "bank_document_file_image";
+    public static String bank_approve_status = "bank_approve_status";
+    public static String bank_approve_remark = "bank_approve_remark";
+    public static String bank_details = "bank_details";
 
 
 

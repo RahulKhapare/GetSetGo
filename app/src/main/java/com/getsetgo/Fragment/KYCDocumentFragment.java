@@ -45,6 +45,7 @@ import com.getsetgo.util.Click;
 import com.getsetgo.util.JumpToLogin;
 import com.getsetgo.util.P;
 import com.getsetgo.util.ProgressView;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -68,6 +69,14 @@ public class KYCDocumentFragment extends Fragment {
     LoadingDialog loadingDialog;
     String aadharImage = "";
     String panImage = "";
+    String pan_card_number = "";
+    String user_pan_card_file_name = "";
+    String user_pan_card_file_image = "";
+    String aadhar_card_number = "";
+    String user_aadhar_card_file_name = "";
+    String user_aadhar_card_file_image = "";
+    String document_approve_status = "";
+    String document_approve_remark = "";
 
     public KYCDocumentFragment() {
     }
@@ -133,6 +142,7 @@ public class KYCDocumentFragment extends Fragment {
     private void init(){
         loadingDialog = new LoadingDialog(getActivity());
         onClick();
+        hitGetKYCData(getActivity());
     }
 
 
@@ -169,7 +179,12 @@ public class KYCDocumentFragment extends Fragment {
             public void onClick(View v) {
                 Click.preventTwoClick(v);
                 if (checkValidation()){
-                    hitSaveKYCData(getActivity());
+                    if (document_approve_status.equals("1")){
+                        H.showMessage(getActivity(),"KYC document already uploaded");
+                    }else {
+                        hitSaveKYCData(getActivity());
+                    }
+
                 }
             }
         });
@@ -340,11 +355,7 @@ public class KYCDocumentFragment extends Fragment {
             InputStream imageStream = getContext().getContentResolver().openInputStream(uri);
             Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
             base64Image = encodeImage(selectedImage);
-            if (clickFor==AadharClick){
-                binding.txtAadharCardUpload.setText("Re-Upload Aadhar Card Image");
-            }else if (clickFor==PANClick){
-                binding.txtPAnCardUpload.setText("Re-Upload PAN Card Image");
-            }
+            hitUploadImage(getActivity(),base64Image);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             Log.e("TAG", "setImageDataEE: "+ e.getMessage() );
@@ -364,9 +375,12 @@ public class KYCDocumentFragment extends Fragment {
         ProgressView.show(context,loadingDialog);
 
         Json j = new Json();
-//        j.addString(P.occupation_id,occupation);
+        j.addString(P.pan_card_number,binding.etxPanCardNumber.getText().toString().trim());
+        j.addString(P.user_pan_card_file_name,panImage);
+        j.addString(P.aadhar_card_number,binding.etxAdharCardNumber.getText().toString().trim());
+        j.addString(P.user_aadhar_card_file_name,aadharImage);
 
-        Api.newApi(context, P.baseUrl + "").addJson(j)
+        Api.newApi(context, P.baseUrl + "kyc_details").addJson(j)
                 .setMethod(Api.POST)
                 .onHeaderRequest(App::getHeaders)
                 .onError(() -> {
@@ -379,7 +393,7 @@ public class KYCDocumentFragment extends Fragment {
                     JumpToLogin.call(json,context);
                     ProgressView.dismiss(loadingDialog);
                     if (json.getInt(P.status) == 1) {
-                        H.showMessage(context,"Details save successfully");
+                        H.showMessage(context,"KYC details save successfully");
                         final Handler handler = new Handler(Looper.getMainLooper());
                         handler.postDelayed(new Runnable() {
                             @Override
@@ -391,6 +405,105 @@ public class KYCDocumentFragment extends Fragment {
                     }
                 })
                 .run("hitSaveKYCData");
+    }
+
+
+    private void hitGetKYCData(Context context) {
+        ProgressView.show(context,loadingDialog);
+
+        Api.newApi(context, P.baseUrl + "kyc_details")
+                .setMethod(Api.GET)
+                .onHeaderRequest(App::getHeaders)
+                .onError(() -> {
+                    ProgressView.dismiss(loadingDialog);
+                })
+                .onSuccess(json ->
+                {
+                    JumpToLogin.call(json,context);
+                    ProgressView.dismiss(loadingDialog);
+                    if (json.getInt(P.status) == 1) {
+                        Json data = json.getJson(P.data);
+                        Json detailsJson = data.getJson(P.aadhar_pan_details);
+
+                        pan_card_number = detailsJson.getString(P.pan_card_number);
+                        user_pan_card_file_name = detailsJson.getString(P.user_pan_card_file_name);
+                        user_pan_card_file_image = detailsJson.getString(P.user_pan_card_file_image);
+                        aadhar_card_number = detailsJson.getString(P.aadhar_card_number);
+                        user_aadhar_card_file_name = detailsJson.getString(P.user_aadhar_card_file_name);
+                        user_aadhar_card_file_image = detailsJson.getString(P.user_aadhar_card_file_image);
+                        document_approve_status = detailsJson.getString(P.document_approve_status);
+                        document_approve_remark = detailsJson.getString(P.document_approve_remark);
+
+                        panImage = user_pan_card_file_name;
+                        aadharImage = user_aadhar_card_file_name;
+                        binding.etxPanCardNumber.setText(pan_card_number);
+                        binding.etxAdharCardNumber.setText(aadhar_card_number);
+
+                        if (!TextUtils.isEmpty(panImage) && !panImage.equals("null")){
+                            binding.txtPanMessage.setText("File Name : " + panImage);
+                            binding.txtPAnCardUpload.setText("Re-Upload PAN Card Image");
+                        }
+
+                        if (!TextUtils.isEmpty(aadharImage) && !aadharImage.equals("null")){
+                            binding.txtAadharMessage.setText("File Name : " + aadharImage);
+                            binding.txtAadharCardUpload.setText("Re-Upload Aadhar Card Image");
+                        }
+
+                        if (!TextUtils.isEmpty(document_approve_status) && !document_approve_status.equals("null")){
+                            if (document_approve_status.equals("0")){
+                                binding.txtStatus.setText("Admin Status : " + "Pending");
+                            }else if (document_approve_status.equals("1")){
+                                binding.txtStatus.setText("Admin Status : " + "Approved");
+                            }else if (document_approve_status.equals("2")){
+                                binding.txtStatus.setText("Admin Status : " + "Rejected");
+                                binding.txtStatus.setTextColor(getResources().getColor(R.color.colorReward));
+                                if (!TextUtils.isEmpty(document_approve_remark) && !document_approve_remark.equals("null")){
+                                    binding.txtStatusMessage.setText("Remark : " + document_approve_remark);
+                                }
+                            }
+                        }
+
+                    }
+                })
+                .run("hitGetKYCData");
+    }
+
+    private void hitUploadImage(Context context,String base64Image) {
+        ProgressView.show(context,loadingDialog);
+
+        Json j = new Json();
+        j.addString(P.type,"kyc_docs");
+        j.addString(P.content,"data:image/jpeg;base64,"+base64Image);
+
+        Api.newApi(context, P.baseUrl + "upload").addJson(j)
+                .setMethod(Api.POST)
+                .onHeaderRequest(App::getHeaders)
+                .onError(() -> {
+                    ProgressView.dismiss(loadingDialog);
+                    MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                    });
+                })
+                .onSuccess(json ->
+                {
+                    JumpToLogin.call(json,context);
+                    ProgressView.dismiss(loadingDialog);
+                    if (json.getInt(P.status) == 1) {
+                        Json jsonData = json.getJson(P.data);
+                        String file_name = jsonData.getString(P.file_name);
+                        String file_path = jsonData.getString(P.file_path);
+                        if (clickFor==AadharClick){
+                            aadharImage = file_name;
+                            binding.txtAadharMessage.setText("File Name : " + aadharImage);
+                            binding.txtAadharCardUpload.setText("Re-Upload Aadhar Card Image");
+                        }else if (clickFor==PANClick){
+                            panImage = file_name;
+                            binding.txtPanMessage.setText("File Name : " + panImage);
+                            binding.txtPAnCardUpload.setText("Re-Upload PAN Card Image");
+                        }
+                        H.showMessage(context,"Document uploaded successfully");
+                    }
+                })
+                .run("hitUploadImage");
     }
 
 
