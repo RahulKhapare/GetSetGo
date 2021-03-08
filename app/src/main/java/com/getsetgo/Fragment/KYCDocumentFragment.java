@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.EditText;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
@@ -161,7 +162,9 @@ public class KYCDocumentFragment extends Fragment {
             public void onClick(View v) {
                 Click.preventTwoClick(v);
                 clickFor = AadharClick;
-                onUploadClick();
+                if (!document_approve_status.equals("1")){
+                    onUploadClick();
+                }
             }
         });
 
@@ -170,7 +173,9 @@ public class KYCDocumentFragment extends Fragment {
             public void onClick(View v) {
                 Click.preventTwoClick(v);
                 clickFor = PANClick;
-                onUploadClick();
+                if (!document_approve_status.equals("1")){
+                    onUploadClick();
+                }
             }
         });
 
@@ -184,7 +189,6 @@ public class KYCDocumentFragment extends Fragment {
                     }else {
                         hitSaveKYCData(getActivity());
                     }
-
                 }
             }
         });
@@ -402,6 +406,8 @@ public class KYCDocumentFragment extends Fragment {
                                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, myFragment).addToBackStack(null).commit();
                             }
                         }, 500);
+                    }else {
+                        H.showMessage(context,json.getString(P.err));
                     }
                 })
                 .run("hitSaveKYCData");
@@ -453,6 +459,7 @@ public class KYCDocumentFragment extends Fragment {
                             if (document_approve_status.equals("0")){
                                 binding.txtStatus.setText("Admin Status : " + "Pending");
                             }else if (document_approve_status.equals("1")){
+                                disableData(document_approve_status);
                                 binding.txtStatus.setText("Admin Status : " + "Approved");
                             }else if (document_approve_status.equals("2")){
                                 binding.txtStatus.setText("Admin Status : " + "Rejected");
@@ -506,6 +513,20 @@ public class KYCDocumentFragment extends Fragment {
                 .run("hitUploadImage");
     }
 
+    private void disableData(String status){
+
+        if (status.equals("1")){
+            noEditable(binding.etxPanCardNumber);
+            noEditable(binding.etxAdharCardNumber);
+            binding.txtSaveNext.setVisibility(View.GONE);
+        }
+    }
+
+    private void noEditable(EditText editText){
+        editText.setFocusable(false);
+        editText.setFocusableInTouchMode(false); // user touches widget on phone with touch screen
+        editText.setClickable(false);
+    }
 
     private void onBackPressClick(){
         if (getFragmentManager().getBackStackEntryCount() > 0) {

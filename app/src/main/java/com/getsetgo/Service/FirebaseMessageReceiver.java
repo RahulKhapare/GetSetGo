@@ -7,10 +7,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
@@ -19,6 +22,7 @@ import com.adoisstudio.helper.H;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.util.P;
+import com.getsetgo.util.RemoveHtml;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -28,106 +32,129 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class FirebaseMessageReceiver
-        extends FirebaseMessagingService {
+public class FirebaseMessageReceiver extends FirebaseMessagingService {
+
     private static final String TAG = "FirebaseMessageReceiver";
     private Bitmap bitmap;
-    private static final ArrayList<Map<String, String>> arrayList = new ArrayList<>();
+    private ArrayList<Map<String, String>> arrayList = new ArrayList<>();
+    int count = 0;
+    int number = 0;
+    public FirebaseMessageReceiver() {
+    }
+
 
     @Override
-    public void
-    onMessageReceived(RemoteMessage remoteMessage) {
+    public void onMessageReceived(RemoteMessage remoteMessage) {
+
+        if (remoteMessage == null)
+            return;
 
         if (remoteMessage.getData().size() > 0) {
-            Log.e(TAG, "Message data payload: " + remoteMessage.getData());
-
+            arrayList.clear();
             Map data = remoteMessage.getData();
             arrayList.add(data);
+
             H.log("arrayListIs", arrayList + "");
+            Log.e(TAG, "onMessageReceivedData: " + data.toString());
 
-            for (Map map : arrayList) {
-                Object action = map.get(P.action);
-                Object title = map.get(P.title);
-                Object description = map.get(P.description);
-                Uri s = null;
+//            for (Map map : arrayList) {
+//                Object action = map.get(P.action);
+//                Object title = map.get(P.title);
+//                Object description = map.get(P.description);
+//                Object actionData = map.get(P.action_data);
+//                Object imageUrl = null;
+//
+//                try {
+//                    if (map.get(P.icon).equals("") || map.get(P.icon).equals("null")) {
+//                        imageUrl = null;
+//                    } else {
+//                        imageUrl = map.get(P.icon);
+//                    }
+//                } catch (Exception e) {
+//                    imageUrl = map.get(P.icon);
+//                }
+//
+//                if (title == null || description == null)
+//                    return;
+//
+//                if (action != null && actionData != null) {
+//                    int pendingNotificationsCount = AppName.getPendingNotificationsCount() + 1;
+//                    AppName.setPendingNotificationsCount(pendingNotificationsCount);
+//                    number = pendingNotificationsCount;
+//
+//                    if (imageUrl != null){
+//                        bitmap = getBitmapfromUrl(imageUrl.toString());
+//                    }
+//                    sendCustomNotification(action.toString(), title.toString(), description.toString(), actionData.toString(), 2);
+//                }
+//
+//            }
 
-                if (title == null || description == null)
-                    return;
-
-
-                if (action != null) {
-                    if (action.toString().equalsIgnoreCase("CATEGORY")) {
-                        showNotification(title.toString(), description.toString(), s);
-                    }
-                }
-            }
-        }
-
-        if (remoteMessage.getNotification() != null) {
-            showNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), remoteMessage.getNotification().getImageUrl());
         }
     }
 
-    public void showNotification(String title, String message, Uri imageUrl) {
-        Intent intent = new Intent(this, BaseScreenActivity.class);
-        String channel_id = "notification_channel";
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        NotificationCompat.Builder builder = new NotificationCompat
-                .Builder(getApplicationContext(), channel_id)
-                .setPriority(NotificationCompat.PRIORITY_MAX)
-                .setSmallIcon(R.drawable.ic_launcher_background)
-                .setOnlyAlertOnce(true)
-                .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000})
-                .setLights(Color.RED, 3000, 3000)
-                .setContentIntent(pendingIntent);
+    private void sendCustomNotification(String action, String title, String description, String actionData, int requestCode) {
 
-        if (Build.VERSION.SDK_INT
-                >= Build.VERSION_CODES.JELLY_BEAN) {
-                builder = builder.setContent(getCustomDesign(title, message, imageUrl));
-        } else {
-            builder = builder.setContentTitle(title)
-                    .setContentText(message)
-                    .setSmallIcon(R.drawable.ic_launcher_background);
-        }
+        Log.e(TAG, "sendCustomNotificationCount: "+ number + "" );
+
+        RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.custom_layout);
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        remoteViews.setImageViewBitmap(R.id.imageView, bitmap);
+        remoteViews.setTextViewText(R.id.titleTextView, title.trim());
+        remoteViews.setTextViewText(R.id.descriptionTextView, RemoveHtml.html2text(description.trim()));
+
+        try {
+            if (bitmap == null) {
+                remoteViews.setViewVisibility(R.id.imageView, View.GONE);
+            } else {
+                remoteViews.setViewVisibility(R.id.imageView, View.VISIBLE);
+            }
+        } catch (Exception e) {
+        }
+
+        Intent intent = new Intent(this, BaseScreenActivity.class);
+        intent.putExtra(P.action, action);
+        intent.putExtra(P.action_data, actionData);
+        intent.setFlags(Intent. FLAG_ACTIVITY_CLEAR_TOP | Intent. FLAG_ACTIVITY_SINGLE_TOP ) ;
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        String channelId = getString(R.string.app_name);
+
+        Bitmap icon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+
+        NotificationCompat.Builder notificationCompactBuilder = new NotificationCompat.Builder(this, channelId);
+        notificationCompactBuilder.setSmallIcon(getSmallIcon());
+
+        notificationCompactBuilder.setAutoCancel(true) ;
+        notificationCompactBuilder.setNumber(number) ;
+
+        notificationCompactBuilder.setLargeIcon(icon);
+        notificationCompactBuilder.setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL);
+        notificationCompactBuilder.setSound(defaultSoundUri);
+        notificationCompactBuilder.setContentTitle(convertFromHtml(title.trim()));
+        notificationCompactBuilder.setContentText(convertFromHtml(description.trim()));
+
+        if (Build.VERSION.SDK_INT >= 24)
+            notificationCompactBuilder.setCustomBigContentView(remoteViews);
+
+        // Since android Oreo notification channel is needed.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel(channel_id, "web_app", NotificationManager.IMPORTANCE_HIGH);
-            notificationManager.createNotificationChannel(notificationChannel);
+            NotificationChannel channel = new NotificationChannel(channelId, "Channel human readable title", NotificationManager.IMPORTANCE_HIGH);
+            channel.setShowBadge(true);
+            assert notificationManager != null;
+            notificationManager.createNotificationChannel(channel);
         }
-        notificationManager.notify(0, builder.build());
+
+        notificationCompactBuilder.setContentIntent(pendingIntent);
+
+//        showIconCount(notificationCompactBuilder);
+        assert notificationManager != null;
+        notificationManager.notify(number, notificationCompactBuilder.build());
+        count++;
     }
-
-    private RemoteViews getCustomDesign(String title,String message,Uri imageUrl) {
-        RemoteViews remoteViews = new RemoteViews(
-                getApplicationContext().getPackageName(),
-                R.layout.layout_notification_row);
-        remoteViews.setTextViewText(R.id.txtNotifyTitle, title);
-        remoteViews.setTextViewText(R.id.txtNotifyDetails, message);
-        if (imageUrl != null) {
-            bitmap = getBitmapfromUrl(imageUrl.toString());
-        }
-        remoteViews.setImageViewBitmap(R.id.imvNotification, bitmap);
-
-        return remoteViews;
-    }
-
-    private RemoteViews getSpecialDesign(String title,
-                                        String message, Uri imageUrl) {
-        RemoteViews remoteViews = new RemoteViews(
-                getApplicationContext().getPackageName(),
-                R.layout.layout_special_notification_row);
-        remoteViews.setTextViewText(R.id.txtSpecialTitle, title);
-        remoteViews.setTextViewText(R.id.txtSpecialDetails, message);
-        if (imageUrl != null) {
-            bitmap = getBitmapfromUrl(imageUrl.toString());
-        }
-        remoteViews.setImageViewBitmap(R.id.imvSpecial, bitmap);
-
-        return remoteViews;
-    }
-
 
     public Bitmap getBitmapfromUrl(String imageUrl) {
         try {
@@ -144,5 +171,17 @@ public class FirebaseMessageReceiver
             return null;
 
         }
+    }
+
+    private Spanned convertFromHtml(String text) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            return Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT);
+        else
+            return Html.fromHtml(text);
+    }
+
+    private int getSmallIcon() {
+        boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
+        return useWhiteIcon ? R.mipmap.ic_launcher : R.mipmap.ic_launcher;
     }
 }

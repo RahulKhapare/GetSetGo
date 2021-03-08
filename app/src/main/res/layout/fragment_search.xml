@@ -75,27 +75,9 @@
 
 
                     <TextView
-                        android:id="@+id/txtTopSearch"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/nunito_sans_semibold"
-                        android:text="Top Searches"
-                        android:textColor="@color/colorTextDark"
-                        android:textSize="16sp" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:layout_marginTop="10dp"
-                        android:id="@+id/recyclerTopSearch"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                    </androidx.recyclerview.widget.RecyclerView>
-
-                    <TextView
                         android:id="@+id/txtYourSearch"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
                         android:fontFamily="@font/nunito_sans_semibold"
                         android:text="Your Search"
                         android:visibility="gone"
@@ -104,7 +86,7 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="wrap_content">
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:layout_marginTop="10dp"
@@ -126,6 +108,25 @@
                             android:textSize="16sp" />
 
                     </RelativeLayout>
+
+
+                    <TextView
+                        android:layout_marginTop="20dp"
+                        android:id="@+id/txtTopSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:text="Top Searches"
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="16sp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/recyclerTopSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </androidx.recyclerview.widget.RecyclerView>
 
 
                 </LinearLayout>

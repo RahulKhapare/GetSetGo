@@ -266,6 +266,7 @@ public class HomeFragment extends Fragment {
                             categories = json.getJsonList("category_list");
                             bestselling_course_list = json.getJsonList("bestselling_course_list");
                             top_searches = json.getJsonList("top_searches");
+                            BaseScreenActivity.organization_chart_url = json.getString(P.organization_chart_url);
 //                            Json currently_learning = json.getJson("currently_learning");
                             JsonList home_course_list = json.getJsonList("home_course_list");
                             JsonList banner_list = json.getJsonList("banner_list");

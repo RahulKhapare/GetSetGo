@@ -9,79 +9,18 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/main_layout_bg">
 
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/nestedScroll"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginTop="30dp">
+            <WebView
+                android:id="@+id/webView"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="?actionBarSize"
-                            android:layout_marginTop="20dp"
-                            android:textColorHint="@color/colorTextHint">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etUserId"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:backgroundTint="@color/colorTextDark"
-                                android:fontFamily="@font/nunito_sans_semibold"
-                                android:hint="User Id"
-                                android:imeOptions="actionNext"
-                                android:inputType="textCapWords"
-                                android:textColor="@color/colorTextDark"
-                                android:textColorHint="@color/colorTextHint"
-                                android:textSize="16sp" />
-
-                        </com.google.android.material.textfield.TextInputLayout>
-
-
-                        <TextView
-                            android:id="@+id/txtSaveNext"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="30dp"
-                            android:background="@drawable/button_dark_bg"
-                            android:fontFamily="@font/nunit_sans_bold"
-                            android:gravity="center"
-                            android:paddingTop="20dp"
-                            android:paddingBottom="20dp"
-                            android:text="Search"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="16sp" />
-
-                        <ImageView
-                            android:id="@+id/imvUserId"
-                            android:layout_width="330dp"
-                            android:layout_height="200dp"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="50dp"
-                            android:layout_marginBottom="30dp" />
-
-
-                    </LinearLayout>
-
-
-                </RelativeLayout>
-
-
-            </androidx.core.widget.NestedScrollView>
-
+            </WebView>
 
         </RelativeLayout>
     </RelativeLayout>

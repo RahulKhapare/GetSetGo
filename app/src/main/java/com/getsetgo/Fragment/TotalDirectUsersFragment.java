@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +30,7 @@ import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentTotalUsersBinding;
 import com.getsetgo.util.App;
 import com.getsetgo.util.Click;
+import com.getsetgo.util.Config;
 import com.getsetgo.util.JumpToLogin;
 import com.getsetgo.util.P;
 
@@ -47,6 +49,11 @@ public class TotalDirectUsersFragment extends Fragment {
     static JsonList directUserJsonList = new JsonList();
     static Json directUserJson = new Json();
     static boolean NextPage = true;
+
+    public static TotalDirectUsersFragment newInstance() {
+        TotalDirectUsersFragment fragment = new TotalDirectUsersFragment();
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -67,11 +74,7 @@ public class TotalDirectUsersFragment extends Fragment {
             @Override
             public void handleOnBackPressed() {
                 // Handle the back button event
-
-                if (getFragmentManager().getBackStackEntryCount() > 0) {
-                    getFragmentManager().popBackStackImmediate();
-                    directUserJsonList.clear();
-                }
+                onBackPressClick();
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
@@ -135,10 +138,7 @@ public class TotalDirectUsersFragment extends Fragment {
         BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(getFragmentManager().getBackStackEntryCount() > 0){
-                    getFragmentManager().popBackStackImmediate();
-                    directUserJsonList.clear();
-                }
+                onBackPressClick();
             }
         });
 
@@ -248,5 +248,19 @@ public class TotalDirectUsersFragment extends Fragment {
                 }).run("regular_users/direct");
     }
 
+    private void onBackPressClick(){
+        if (Config.FROM_DASBOARD){
+            Config.FROM_DASBOARD = false;
+            if(getFragmentManager().getBackStackEntryCount() > 0){
+                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                BaseScreenActivity.callBack();
+            }
+        }else {
+            if (getFragmentManager().getBackStackEntryCount() > 0) {
+                getFragmentManager().popBackStackImmediate();
+                directUserJsonList.clear();
+            }
+        }
+    }
 
 }

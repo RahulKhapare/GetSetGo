@@ -23,6 +23,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
@@ -195,7 +197,9 @@ public class BankDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
-                onUploadClick();
+                if (!bank_approve_status.equals("1")){
+                    onUploadClick();
+                }
             }
         });
 
@@ -473,6 +477,7 @@ public class BankDetailsFragment extends Fragment {
                             if (bank_approve_status.equals("0")){
                                 binding.txtStatus.setText("Admin Status : " + "Pending");
                             }else if (bank_approve_status.equals("1")){
+                                disableData(bank_approve_status);
                                 binding.txtStatus.setText("Admin Status : " + "Approved");
                             }else if (bank_approve_status.equals("2")){
                                 binding.txtStatus.setText("Admin Status : " + "Rejected");
@@ -515,6 +520,8 @@ public class BankDetailsFragment extends Fragment {
                         binding.txtMessage.setText("File Name : " +  documentPath);
                         binding.txtDocument.setText("Re-Upload Document");
                         H.showMessage(context,"Document uploaded successfully");
+                    }else {
+                        H.showMessage(context,json.getString(P.err));
                     }
                 })
                 .run("hitUploadImage");
@@ -536,4 +543,27 @@ public class BankDetailsFragment extends Fragment {
         return  value;
     }
 
+    private void disableData(String status){
+
+        if (status.equals("1")){
+            noEditable(binding.etAccHolderName);
+            noEditable(binding.etBankName);
+            noEditable(binding.etAccNumber);
+            noEditable(binding.etIFSCCode);noEditable(binding.etBranch);
+            noSpinner(binding.spinnerAccountType);
+            binding.txtSaveNext.setVisibility(View.GONE);
+        }
+    }
+
+    private void noEditable(EditText editText){
+        editText.setFocusable(false);
+        editText.setFocusableInTouchMode(false); // user touches widget on phone with touch screen
+        editText.setClickable(false);
+    }
+
+    private void noSpinner(Spinner spinner){
+        spinner.setEnabled(false);
+        spinner.setClickable(false);
+    }
 }
+

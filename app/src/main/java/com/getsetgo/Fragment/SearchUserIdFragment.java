@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
@@ -11,10 +14,12 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.adoisstudio.helper.H;
 import com.getsetgo.R;
 import com.getsetgo.activity.BaseScreenActivity;
 import com.getsetgo.databinding.FragmentSearchUseridBinding;
 import com.getsetgo.util.Click;
+import com.getsetgo.util.Config;
 
 public class SearchUserIdFragment extends Fragment {
 
@@ -58,16 +63,11 @@ public class SearchUserIdFragment extends Fragment {
 
     private void init() {
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Organization Chart");
-
+        loadUrl(Config.ORGNIZE_URL);
         onClick();
     }
+
     private void onClick(){
-        binding.txtSaveNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Click.preventTwoClick(v);
-            }
-        });
 
         BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +81,22 @@ public class SearchUserIdFragment extends Fragment {
         });
     }
 
+    private void loadUrl(String url) {
+        binding.webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return false;
+            }
+        });
+
+        WebSettings webSettings = binding.webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setUseWideViewPort(true);
+//        webSettings.setBuiltInZoomControls(true);
+
+        binding.webView.loadUrl(url);
+    }
 
 
 }

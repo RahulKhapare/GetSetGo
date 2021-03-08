@@ -170,6 +170,7 @@ public class SearchFragment extends Fragment {
     }
 
     private void setYourSearchData(JsonList jsonList){
+        yourSearchModelList.clear();
         if (jsonList==null || jsonList.size()==0){
             checkSearch(yourSearchModelList);
         }else {

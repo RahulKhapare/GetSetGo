@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
@@ -36,6 +37,7 @@ public class NomineeDetailsFragment extends Fragment {
     LoadingDialog loadingDialog;
     String relationOne = "";
     String relationTwo = "";
+    String status = "";
 
 
 
@@ -124,7 +126,12 @@ public class NomineeDetailsFragment extends Fragment {
             public void onClick(View v) {
                 Click.preventTwoClick(v);
                 if (checkValidation()){
-                    hitSaveNomineeData(getActivity());
+                    if (status.equals("1")){
+                        H.showMessage(getActivity(),"Nominee details already uploaded");
+                    }else {
+                        hitSaveNomineeData(getActivity());
+                    }
+
                 }
             }
         });
@@ -207,9 +214,30 @@ public class NomineeDetailsFragment extends Fragment {
                         binding.etxNomineeOneRelation.setText(checkString(nomineeJson.getString(P.nominee1_relation)));
                         binding.etxNomineeTwo.setText(checkString(nomineeJson.getString(P.nominee2)));
                         binding.etxNomineeTwoRelation.setText(checkString(nomineeJson.getString(P.nominee2_relation)));
+                        status = "1";
+                        disableData(status);
+                    }else {
+                        H.showMessage(context,json.getString(P.err));
                     }
                 })
                 .run("hitGetNomineeData");
+    }
+
+    private void disableData(String status){
+
+        if (status.equals("1")){
+            noEditable(binding.etxNomineeOne);
+            noEditable(binding.etxNomineeOneRelation);
+            noEditable(binding.etxNomineeTwo);
+            noEditable(binding.etxNomineeTwoRelation);
+            binding.txtSaveNext.setVisibility(View.GONE);
+        }
+    }
+
+    private void noEditable(EditText editText){
+        editText.setFocusable(false);
+        editText.setFocusableInTouchMode(false); // user touches widget on phone with touch screen
+        editText.setClickable(false);
     }
 
     private String checkString(String string){

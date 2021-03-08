@@ -2,6 +2,7 @@ package com.getsetgo.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,12 @@ public class IncentivesAdapter extends RecyclerView.Adapter<IncentivesAdapter.In
         holder.txtDate.setText(date);
         holder.txtNetPayAmount.setText(json.getString("recive_amount"));
         String updateDate = json.getString("update_date") != null ? json.getString("update_date") : "";
-        holder.txtStatusDate.setText(Utilities.getShortMonthNames(updateDate));
+        String dateValue = Utilities.getShortMonthNames(updateDate);
+        if (!TextUtils.isEmpty(dateValue) && !dateValue.equals("null")){
+            holder.txtStatusDate.setText(dateValue);
+        }else {
+            holder.txtStatusDate.setText("");
+        }
         holder.txtApproveDate.setText("Approved Date - "+ Utilities.getShortMonthNames(json.getString("date")));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

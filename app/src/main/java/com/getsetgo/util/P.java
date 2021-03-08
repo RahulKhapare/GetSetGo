@@ -5,6 +5,8 @@ public class P {
     public static String action = "action";
     public static String title = "title";
     public static String description = "description";
+    public static String action_data = "action_data";
+    public static String icon = "icon";
 
 
     public static String baseUrl = "https://getsetgoworld.com/dev_env/api/";
@@ -16,6 +18,7 @@ public class P {
     public static String status = "status";
     public static String err = "err";
     public static String data = "data";
+    public static String user_details = "user_details";
     public static String sponsor = "sponsor";
     public static String msg = "msg";
     public static String userdata = "userdata";
@@ -140,6 +143,7 @@ public class P {
     public static String terms_and_conditions_url = "terms_and_conditions_url";
     public static String faq_url = "faq_url";
     public static String privacy_policy_url = "privacy_policy_url";
+    public static String organization_chart_url = "organization_chart_url";
     public static String nominee_details = "nominee_details";
     public static String nominee1 = "nominee1";
     public static String nominee1_relation = "nominee1_relation";
@@ -165,6 +169,17 @@ public class P {
     public static String bank_approve_status = "bank_approve_status";
     public static String bank_approve_remark = "bank_approve_remark";
     public static String bank_details = "bank_details";
+    public static String affiliate_link = "affiliate_link";
+    public static String affiliate_code = "affiliate_code";
+    public static String application_link = "application_link";
+    public static String direct_users = "direct_users";
+    public static String total_users = "total_users";
+    public static String profile_completion_percentage = "profile_completion_percentage";
+    public static String franchise = "franchise";
+    public static String master_franchise = "master_franchise";
+    public static String advisor = "advisor";
+    public static String hierarchy = "hierarchy";
+    public static String user_name = "user_name";
 
 
 

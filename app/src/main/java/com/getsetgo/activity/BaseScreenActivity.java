@@ -53,6 +53,8 @@ import com.getsetgo.Fragment.ParentCategoriesFragment;
 import com.getsetgo.Fragment.SearchFragment;
 import com.getsetgo.Fragment.SearchUserIdFragment;
 import com.getsetgo.Fragment.TermsAndConditionFragment;
+import com.getsetgo.Fragment.TotalDirectUsersFragment;
+import com.getsetgo.Fragment.TotalUsersFragment;
 import com.getsetgo.Fragment.TransactionsHistoryFragment;
 import com.getsetgo.Fragment.WebViewFragment;
 import com.getsetgo.Fragment.YourCourseFragment;
@@ -98,7 +100,8 @@ public class BaseScreenActivity extends AppCompatActivity {
     AddNewUserFragment addNewUserFragment;
     SearchUserIdFragment searchUserIdFragment;
     YourCourseFragment yourCourseFragment;
-    WebViewFragment webViewFragment;
+    TotalUsersFragment totalUsersFragment;
+    TotalDirectUsersFragment totalDirectUsersFragment;
     CurrentLearningFragment currentLearningFragment;
     LinearLayout lnrDashboard, lnrUser, lnrEarning, lnrBusiness, lnrTransaction, lnrInsentive, lnrPoints;
     CheckBox cbMyEarning, cbUsers, cbBusiness, cbTransaction, cbPoints;
@@ -115,6 +118,7 @@ public class BaseScreenActivity extends AppCompatActivity {
 
     public static String termConditionUrl = "";
     public static String privacyPolicyUrl = "";
+    public static String organization_chart_url = "";
     public static String faq_url = "";
 
     @Override
@@ -318,6 +322,7 @@ public class BaseScreenActivity extends AppCompatActivity {
     }
 
     private void init() {
+
         onCheckView();
         checkAffiliate();
 
@@ -572,9 +577,24 @@ public class BaseScreenActivity extends AppCompatActivity {
                 break;
 
             case R.id.txtOrganizationChart:
+                Config.ORGNIZE_URL = organization_chart_url;
                 if (searchUserIdFragment == null)
                     searchUserIdFragment = SearchUserIdFragment.newInstance();
                 fragmentLoader(searchUserIdFragment, true);
+                break;
+
+            case R.id.txtUsersList://
+                Config.FROM_DASBOARD = true;
+                if (totalUsersFragment == null)
+                    totalUsersFragment = TotalUsersFragment.newInstance();
+                fragmentLoader(totalUsersFragment, true);
+                break;
+
+            case R.id.txtDirectUserList://
+                Config.FROM_DASBOARD = true;
+                if (totalDirectUsersFragment == null)
+                    totalDirectUsersFragment = TotalDirectUsersFragment.newInstance();
+                fragmentLoader(totalDirectUsersFragment, true);
                 break;
 
             case R.id.txtLogout:
@@ -588,27 +608,23 @@ public class BaseScreenActivity extends AppCompatActivity {
                 break;
 
             case R.id.txttermCondition:
-                if (webViewFragment == null) {
-                    webViewFragment = WebViewFragment.newInstance();
-                }
+                WebViewFragment termConditionFragment = WebViewFragment.newInstance();
                 Bundle b = new Bundle();
                 b.putBoolean("isFromBottom", false);
-                webViewFragment.setArguments(b);
+                termConditionFragment.setArguments(b);
                 Config.flag = Config.term;
                 Config.webViewUrl = termConditionUrl;
-                fragmentLoader(webViewFragment, true);
+                fragmentLoader(termConditionFragment, true);
                 break;
 
             case R.id.txtPrivacy:
-                if (webViewFragment == null) {
-                    webViewFragment = WebViewFragment.newInstance();
-                }
+                WebViewFragment privacyFragment = WebViewFragment.newInstance();
                 Bundle b2 = new Bundle();
                 b2.putBoolean("isFromBottom", false);
-                webViewFragment.setArguments(b2);
+                privacyFragment.setArguments(b2);
                 Config.flag = Config.privacy;
                 Config.webViewUrl = privacyPolicyUrl;
-                fragmentLoader(webViewFragment, true);
+                fragmentLoader(privacyFragment, true);
                 break;
 
         }
@@ -869,7 +885,6 @@ public class BaseScreenActivity extends AppCompatActivity {
                             faq_url = Json1.getString(P.faq_url);
                         }
                     }
-
                 }).run("hitInitApi");
     }
 

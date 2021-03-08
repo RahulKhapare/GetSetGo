@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,6 +32,7 @@ import com.getsetgo.databinding.FragmentSearchUseridBinding;
 import com.getsetgo.databinding.FragmentTotalUsersBinding;
 import com.getsetgo.util.App;
 import com.getsetgo.util.Click;
+import com.getsetgo.util.Config;
 import com.getsetgo.util.JumpToLogin;
 import com.getsetgo.util.P;
 
@@ -52,6 +54,11 @@ public class TotalUsersFragment extends Fragment {
     static Json totalUserJson = new Json();
     static boolean NextPage = true;
 
+    public static TotalUsersFragment newInstance() {
+        TotalUsersFragment fragment = new TotalUsersFragment();
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,10 +78,7 @@ public class TotalUsersFragment extends Fragment {
             public void handleOnBackPressed() {
                 // Handle the back button event
 
-                if (getFragmentManager().getBackStackEntryCount() > 0) {
-                    getFragmentManager().popBackStackImmediate();
-                    totalUserJsonList.clear();
-                }
+                onBackPressClick();
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
@@ -138,10 +142,7 @@ public class TotalUsersFragment extends Fragment {
         BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(getFragmentManager().getBackStackEntryCount() > 0){
-                    getFragmentManager().popBackStackImmediate();
-                    totalUserJsonList.clear();
-                }
+                onBackPressClick();
             }
         });
 
@@ -251,5 +252,19 @@ public class TotalUsersFragment extends Fragment {
                 }).run("regular_users/all");
     }
 
+    private void onBackPressClick(){
+        if (Config.FROM_DASBOARD){
+            Config.FROM_DASBOARD = false;
+            if(getFragmentManager().getBackStackEntryCount() > 0){
+                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                BaseScreenActivity.callBack();
+            }
+        }else {
+            if (getFragmentManager().getBackStackEntryCount() > 0) {
+                getFragmentManager().popBackStackImmediate();
+                totalUserJsonList.clear();
+            }
+        }
+    }
 
 }

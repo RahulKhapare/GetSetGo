@@ -19,6 +19,7 @@ public class TotalUserAdapter extends RecyclerView.Adapter<TotalUserAdapter.Tota
 
     Context context;
     JsonList jsonList;
+    int lastCheckPosition = -1;
 
     public TotalUserAdapter(Context context,JsonList jsonList) {
         this.context = context;
@@ -47,16 +48,28 @@ public class TotalUserAdapter extends RecyclerView.Adapter<TotalUserAdapter.Tota
         holder.txtAddDate.setText(json.getString("add_timestamp"));
         holder.txtStatus.setText(json.getString("status"));
 
-        holder.chkShowHide.setOnClickListener(new View.OnClickListener() {
+        holder.rlyView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(holder.rlDetails.getVisibility() == View.VISIBLE){
+//                lastCheckPosition = holder.getAdapterPosition();
+//                notifyItemRangeChanged(0,jsonList.size());
+                if (holder.rlDetails.getVisibility()==View.VISIBLE){
                     holder.rlDetails.setVisibility(View.GONE);
-                }else{
+                    holder.chkShowHide.setChecked(false);
+                }else {
                     holder.rlDetails.setVisibility(View.VISIBLE);
+                    holder.chkShowHide.setChecked(true);
                 }
             }
         });
+
+//        if (lastCheckPosition==position){
+//            holder.rlDetails.setVisibility(View.VISIBLE);
+//            holder.chkShowHide.setChecked(true);
+//        }else {
+//            holder.rlDetails.setVisibility(View.GONE);
+//            holder.chkShowHide.setChecked(false);
+//        }
     }
 
     @Override
@@ -69,7 +82,7 @@ public class TotalUserAdapter extends RecyclerView.Adapter<TotalUserAdapter.Tota
         TextView txtDate,txtName,txtColor,txtUserAddDate,txtAddDate,
         txtPhone,txtEmail,txtParent,txtPEmail,txtPPhone,txtStatus;
         CheckBox chkShowHide;
-        RelativeLayout rlDetails;
+        RelativeLayout rlDetails,rlyView;
 
         public TotalUserViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -87,6 +100,7 @@ public class TotalUserAdapter extends RecyclerView.Adapter<TotalUserAdapter.Tota
             txtStatus = itemView.findViewById(R.id.txtStatus);
             chkShowHide = itemView.findViewById(R.id.chcShowHide);
             rlDetails = itemView.findViewById(R.id.rlDetails);
+            rlyView = itemView.findViewById(R.id.rlyView);
 
         }
     }

@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "85671962971",
-    "project_id": "getsetgo-e6948",
-    "storage_bucket": "getsetgo-e6948.appspot.com"
+    "project_number": "639390489635",
+    "project_id": "getsetgo-5c170",
+    "storage_bucket": "getsetgo-5c170.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:85671962971:android:69229cb9c0ef838322d27e",
+        "mobilesdk_app_id": "1:639390489635:android:637a1202470a3a8deea596",
         "android_client_info": {
           "package_name": "com.getsetgo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "85671962971-aa933eulpet3j7aas687qgicotufjrk6.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.getsetgo",
-            "certificate_hash": "31577131a43f629540bb0857b6e1f7ff2ab2b37c"
-          }
-        },
-        {
-          "client_id": "85671962971-i29fd8amdq24tkrjrd84roujpbt4bmgo.apps.googleusercontent.com",
+          "client_id": "639390489635-pgkp5a9mnd7p7hh6ipskkh6erfgh7g3m.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA8YSUHF_m20_niAFzMv-zKzvs0RDwDXfU"
+          "current_key": "AIzaSyDDY4sly3vLpICTbzu1wRcMZ_9xWvzWZjA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "85671962971-i29fd8amdq24tkrjrd84roujpbt4bmgo.apps.googleusercontent.com",
+              "client_id": "639390489635-pgkp5a9mnd7p7hh6ipskkh6erfgh7g3m.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
