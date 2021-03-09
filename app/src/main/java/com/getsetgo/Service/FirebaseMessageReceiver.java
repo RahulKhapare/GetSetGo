@@ -40,11 +40,14 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
     int count = 0;
     int number = 0;
     public FirebaseMessageReceiver() {
+
     }
 
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+
+//        Log.e(TAG, "onMessageReceivedData1: " + remoteMessage.getNotification().getBody());
 
         if (remoteMessage == null)
             return;
@@ -150,7 +153,6 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
 
         notificationCompactBuilder.setContentIntent(pendingIntent);
 
-//        showIconCount(notificationCompactBuilder);
         assert notificationManager != null;
         notificationManager.notify(number, notificationCompactBuilder.build());
         count++;
@@ -184,4 +186,5 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
         boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
         return useWhiteIcon ? R.mipmap.ic_launcher : R.mipmap.ic_launcher;
     }
+
 }

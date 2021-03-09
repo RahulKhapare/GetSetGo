@@ -1,31 +1,34 @@
 package com.getsetgo.Adapter;
 
 import android.content.Context;
-import android.util.Log;
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.daimajia.swipe.SwipeLayout;
+import com.adoisstudio.helper.H;
+import com.getsetgo.Fragment.CourseDetailFragment;
 import com.getsetgo.Model.NotificationModel;
-import com.getsetgo.Model.ResponseMessage;
 import com.getsetgo.R;
-import com.makeramen.roundedimageview.RoundedImageView;
+import com.getsetgo.activity.BaseScreenActivity;
+import com.getsetgo.util.CheckConnection;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class NotificationAdapter extends RecyclerView.Adapter {
+public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
 
     Context context;
     List<NotificationModel> notificationList;
-    private static final int VIEW_TYPE_SPECIAL_OFFER = 3;
-    private static final int VIEW_TYPE_CONGRATULATIONS = 2;
-    private static final int VIEW_TYPE_NOTIFICATION = 1;
+    CourseDetailFragment courseDetailFragment;
 
     public NotificationAdapter(Context context, List<NotificationModel> notificationList) {
         this.context = context;
@@ -34,52 +37,37 @@ public class NotificationAdapter extends RecyclerView.Adapter {
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view;
-        if (viewType == VIEW_TYPE_NOTIFICATION) {
-            view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.layout_notification_row, parent, false);
-            return new NotificationHolder(view);
-        } else if (viewType == VIEW_TYPE_SPECIAL_OFFER) {
-            view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.layout_special_notification_row, parent, false);
-            return new SpecailOfferHolder(view);
-        } else if (viewType == VIEW_TYPE_CONGRATULATIONS) {
-            view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.layout_congrats_notification_row, parent, false);
-            return new CongratulationsHolder(view);
-        }
-        return null;
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_notification_row, parent, false);
+        ViewHolder viewHolder = new ViewHolder(view);
+        return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        NotificationModel model = notificationList.get(position);
 
-        NotificationModel notifi = notificationList.get(position);
-        switch (holder.getItemViewType()) {
-            case VIEW_TYPE_SPECIAL_OFFER:
-                ((NotificationAdapter.SpecailOfferHolder) holder).bind(notifi);
-                break;
-            case VIEW_TYPE_CONGRATULATIONS:
-                ((NotificationAdapter.CongratulationsHolder) holder).bind(notifi);
-                break;
-            case VIEW_TYPE_NOTIFICATION:
-                ((NotificationAdapter.NotificationHolder) holder).bind(notifi);
+        String image = model.getImage();
+        if (image.equals("")){
+            Picasso.get().load(image).placeholder(R.drawable.ic_no_image).error(R.drawable.ic_no_image).into(holder.imgNotification);
+        }else {
+            Picasso.get().load(R.drawable.ic_no_image).error(R.drawable.ic_no_image).into(holder.imgNotification);
         }
-    }
+        holder.txtTitle.setText(model.getTitle());
+        holder.txtDescription.setText(model.getDescription());
 
-
-    @Override
-    public int getItemViewType(int position) {
-        NotificationModel notification = (NotificationModel) notificationList.get(position);
-        if (notification.getViewType() == 1) {
-            return VIEW_TYPE_NOTIFICATION;
-        } else if (notification.getViewType() == 2) {
-            return VIEW_TYPE_CONGRATULATIONS;
-        } else {
-            return VIEW_TYPE_SPECIAL_OFFER;
-        }
-
+        holder.lnrView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(model.getSlug()) && !model.getSlug().equals("null")){
+                    if (CheckConnection.isVailable(context)){
+                        loadFragment(v,model.getCourseName(),model.getSlug());
+                    }else {
+                        H.showMessage(context,"No internet connection available");
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -87,61 +75,38 @@ public class NotificationAdapter extends RecyclerView.Adapter {
         return notificationList.size();
     }
 
-    public class NotificationHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtDetails, txtTitle;
+        TextView txtTitle, txtDescription;
         ImageView imgNotification;
+        LinearLayout lnrView;
 
-
-        public NotificationHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            txtDetails = itemView.findViewById(R.id.txtNotifyDetails);
-            txtTitle = itemView.findViewById(R.id.txtNotifyTitle);
-            imgNotification = itemView.findViewById(R.id.imvNotification);
-
-        }
-
-        void bind(NotificationModel messageModel) {
-
+            txtTitle = itemView.findViewById(R.id.txtTitle);
+            txtDescription = itemView.findViewById(R.id.txtDescription);
+            imgNotification = itemView.findViewById(R.id.imgNotification);
+            lnrView = itemView.findViewById(R.id.lnrView);
         }
     }
 
-    private class SpecailOfferHolder extends RecyclerView.ViewHolder {
-
-        TextView title, details;
-
-
-        public SpecailOfferHolder(@NonNull View itemView) {
-            super(itemView);
-            title = (TextView) itemView.findViewById(R.id.txtSpecialTitle);
-            details = (TextView) itemView.findViewById(R.id.txtSpecialDetails);
-
-        }
-
-        void bind(NotificationModel messageModel) {
-
-        }
-
-    }
-
-    private class CongratulationsHolder extends RecyclerView.ViewHolder {
-
-        TextView title, details;
-        TextView time;
-
-
-        public CongratulationsHolder(@NonNull View itemView) {
-            super(itemView);
-            title = (TextView) itemView.findViewById(R.id.txttCongratsTitle);
-            details = (TextView) itemView.findViewById(R.id.txtCongratsDetails);
-
-        }
-
-        void bind(NotificationModel messageModel) {
-
-        }
-
+    private void loadFragment(View v, String title,String slug) {
+        Bundle bundle = new Bundle();
+        BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
+        BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);
+        BaseScreenActivity.binding.incFragmenttool.content.setVisibility(View.VISIBLE);
+        BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
+        bundle.putString("title", title);
+        bundle.putString("slug", slug);
+        bundle.putBoolean("isFromHome", false);
+        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        courseDetailFragment = new CourseDetailFragment();
+        courseDetailFragment.setArguments(bundle);
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, courseDetailFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
 

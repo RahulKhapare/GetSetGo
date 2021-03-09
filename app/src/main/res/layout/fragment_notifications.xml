@@ -9,13 +9,14 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/x8"
             android:background="@drawable/main_layout_bg">
 
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/nestedScroll"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_marginTop="30dp">
+                android:layout_marginTop="5dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -24,8 +25,6 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
                         android:id="@+id/recyclerViewNotifications"/>
 
                 </RelativeLayout>

@@ -427,4 +427,5 @@ public class HomeFragment extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
+
 }

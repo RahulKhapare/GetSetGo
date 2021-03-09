@@ -39,6 +39,7 @@ import com.getsetgo.Fragment.AccountFragment;
 import com.getsetgo.Fragment.AddNewUserFragment;
 import com.getsetgo.Fragment.BankDetailsFragment;
 import com.getsetgo.Fragment.BestSellingCourseFragment;
+import com.getsetgo.Fragment.CourseDetailFragment;
 import com.getsetgo.Fragment.CurrentLearningFragment;
 import com.getsetgo.Fragment.DashBoardFragment;
 import com.getsetgo.Fragment.EarningsFragment;
@@ -120,6 +121,9 @@ public class BaseScreenActivity extends AppCompatActivity {
     public static String privacyPolicyUrl = "";
     public static String organization_chart_url = "";
     public static String faq_url = "";
+    public static String action;
+    public static String action_data;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -395,7 +399,7 @@ public class BaseScreenActivity extends AppCompatActivity {
         }
 
         hitInitApi(this);
-
+        getNotificationAction();
     }
 
     private void setDrawerData() throws Exception {
@@ -886,6 +890,39 @@ public class BaseScreenActivity extends AppCompatActivity {
                         }
                     }
                 }).run("hitInitApi");
+    }
+
+
+    private void getNotificationAction(){
+        String action = getIntent().getStringExtra(P.action);
+        String action_data = getIntent().getStringExtra(P.action_data);
+
+//        action_data = "super-brain-booster";
+//        action = "ACTION_COURSE";
+
+        if (!TextUtils.isEmpty(action) && !action.equals("null") && !TextUtils.isEmpty(action_data) && !action_data.equals("null")){
+            if (action.contains(Config.ACTION_COURSE)){
+                loadNotificationFragment("Student's Brain Booster",action_data);
+            }
+        }
+    }
+
+    private void loadNotificationFragment(String title,String slug) {
+        Bundle bundle = new Bundle();
+        BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
+        BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);
+        BaseScreenActivity.binding.incFragmenttool.content.setVisibility(View.VISIBLE);
+        BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
+        bundle.putString("title", title);
+        bundle.putString("slug", slug);
+        bundle.putBoolean("isFromHome", true);
+        CourseDetailFragment courseDetailFragment = new CourseDetailFragment();
+        courseDetailFragment.setArguments(bundle);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, courseDetailFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
 }

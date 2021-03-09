@@ -2,17 +2,58 @@ package com.getsetgo.Model;
 
 public class NotificationModel {
 
-    private int viewType;
+   String id;
+   String title;
+   String image;
+   String description;
+   String slug;
+   String courseName;
 
-    public NotificationModel(int viewType) {
-        this.viewType = viewType;
+    public String getId() {
+        return id;
     }
 
-    public int getViewType() {
-        return viewType;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setViewType(int viewType) {
-        this.viewType = viewType;
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 }

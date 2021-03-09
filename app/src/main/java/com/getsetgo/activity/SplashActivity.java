@@ -63,6 +63,7 @@ public class SplashActivity extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
 
+        getFirebaseToken();
         initView();
         if (CheckConnection.isVailable(activity)){
             hitInitApi(activity);
@@ -192,5 +193,12 @@ public class SplashActivity extends AppCompatActivity {
                     }
 
                 }).run("hitInitApi");
+    }
+
+    public void getFirebaseToken() {
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
+            String newToken = instanceIdResult.getToken();
+            Log.e("TAG", "getFirebaseToken: " + newToken );
+        });
     }
 }

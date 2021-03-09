@@ -151,11 +151,10 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         return fragment;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_course_details, container, false);
+
         init(v);
         return v;
 
@@ -188,7 +187,6 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         super.onViewCreated(view, savedInstanceState);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void init(View view) {
 
         String title = this.getArguments().getString("title");
@@ -273,8 +271,9 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (getFragmentManager().getBackStackEntryCount() > 0) {
-                    getFragmentManager().popBackStackImmediate();
+                    callback();
                 }
             }
         });
@@ -287,7 +286,6 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void callCourseDetailsApi(Context context, String slug) {
 
         LoadingDialog loadingDialog = new LoadingDialog(context, false);
@@ -324,7 +322,6 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void setData(Json list) {
         Log.d("Hardik", "Reviews " + list);
 
@@ -966,6 +963,19 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
+//                    getFragmentManager().popBackStackImmediate();
+                    callback();
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
         H.log("onResume", "isExecuted");
     }
@@ -1662,4 +1672,5 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
             getFragmentManager().popBackStackImmediate();
         }
     }
+
 }

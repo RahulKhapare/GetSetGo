@@ -64,6 +64,7 @@
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"
                     android:text="99"
+                    android:visibility="invisible"
                     android:fontFamily="@font/nunito_sans_semibold"
                     android:textColor="@color/colorWhite"
                     android:textSize="9sp" />

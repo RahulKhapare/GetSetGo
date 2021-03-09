@@ -26,11 +26,13 @@ import com.getsetgo.databinding.FragmentNotificationsBinding;
 import com.getsetgo.databinding.FragmentSearchBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NotificationsFragment extends Fragment {
 
     FragmentNotificationsBinding binding;
     NotificationAdapter notificationAdapter;
+    List<NotificationModel> notificationModelList;
 
 
     public NotificationsFragment() {
@@ -79,9 +81,18 @@ public class NotificationsFragment extends Fragment {
     }
 
     private void init(){
+
+        notificationModelList = new ArrayList<>();
+        notificationAdapter = new NotificationAdapter(getContext(),notificationModelList);
+        binding.recyclerViewNotifications.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        binding.recyclerViewNotifications.setItemAnimator(new DefaultItemAnimator());
+        binding.recyclerViewNotifications.setAdapter(notificationAdapter);
+
         onClick();
-        setupRecyclerViewForNotification();
+        setData();
+
     }
+
     private void onClick(){
 
         BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
@@ -97,19 +108,22 @@ public class NotificationsFragment extends Fragment {
 
     }
 
-    private void setupRecyclerViewForNotification() {
-        ArrayList<NotificationModel> notificationModelArrayList = new ArrayList<>();
-        NotificationModel n = new NotificationModel(1);
-        NotificationModel no = new NotificationModel(2);
-        NotificationModel not = new NotificationModel(3);
-        notificationModelArrayList.add(n);
-        notificationModelArrayList.add(no);
-        notificationModelArrayList.add(not);
+    private void setData() {
 
-        binding.recyclerViewNotifications.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        notificationAdapter = new NotificationAdapter(getContext(),notificationModelArrayList);
-        binding.recyclerViewNotifications.setItemAnimator(new DefaultItemAnimator());
-        binding.recyclerViewNotifications.setAdapter(notificationAdapter);
+        NotificationModel model = new NotificationModel();
+        model.setId("1");
+        model.setTitle("Notification Title");
+        model.setDescription("Here will be notification description");
+        model.setImage("null");
+        model.setSlug("super-brain-booster");
+        model.setCourseName("Student's Brain Booster");
+
+        notificationModelList.add(model);
+        notificationModelList.add(model);
+        notificationModelList.add(model);
+        notificationModelList.add(model);
+        notificationModelList.add(model);
+
         notificationAdapter.notifyDataSetChanged();
     }
 
