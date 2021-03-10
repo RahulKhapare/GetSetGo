@@ -35,6 +35,19 @@
                 android:layout_centerVertical="true"
                 />
 
+            <ImageView
+                android:id="@+id/imageShare"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingTop="2dp"
+                android:onClick="OnShare"
+                app:tint="@color/black"
+                android:clickable="true"
+                android:layout_marginRight="60dp"
+                app:srcCompat="@drawable/ic_share" />
+
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -44,6 +57,7 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="end"
                 android:layout_marginRight="12dp">
+
 
                 <ImageView
                     android:id="@+id/imageView"

@@ -8,9 +8,13 @@ public class P {
     public static String action_data = "action_data";
     public static String icon = "icon";
 
-
     public static String baseUrl = "https://getsetgoworld.com/dev_env/api/";
+    public static String buy_course_base_dev = "https://getsetgoworld.com/dev_env/courses/app_purchase/";
+    public static String buy_course_base_prod = "https://getsetgoworld.com/courses/app_purchase/";
 
+//    public static String baseUrl = "https://getsetgoworld.com/api/";
+//    public static String buy_course_base_dev = "https://getsetgoworld.com/courses/app_purchase/";
+//    public static String buy_course_base_prod = "https://getsetgoworld.com/courses/app_purchase/";
 
     public static String android_min_version = "android_min_version";
     public static String android_current_version = "android_current_version";
@@ -38,8 +42,6 @@ public class P {
     public static String event_income = "event_income";
     public static String num_rows = "num_rows";
     public static String user_token = "user_token";
-    public static String buy_course_base_dev = "https://getsetgoworld.com/dev_env/courses/app_purchase/";
-    public static String buy_course_base_prod = "https://getsetgoworld.com/courses/app_purchase/";
     public static String sponsor_id = "sponsor_id";
     public static String sponsor_name = "sponsor_name";
 

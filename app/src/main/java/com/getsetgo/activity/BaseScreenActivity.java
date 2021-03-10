@@ -462,15 +462,7 @@ public class BaseScreenActivity extends AppCompatActivity {
                 fragmentLoader(accountFragment, true);
                 break;
             case R.id.txtNotifications:
-                if (notificationsFragment == null)
-                    notificationsFragment = NotificationsFragment.newInstance();
-                fragmentLoader(notificationsFragment, true);
-                break;
-
-            case R.id.llNotification:
-                if (notificationsFragment == null)
-                    notificationsFragment = NotificationsFragment.newInstance();
-                fragmentLoader(notificationsFragment, true);
+                loadNotificationFragment();
                 break;
 
 //            case R.id.txtEarning:
@@ -669,10 +661,20 @@ public class BaseScreenActivity extends AppCompatActivity {
     }
 
     public void OnNotifications(View view) {
-        BaseScreenActivity.binding.incBasetool.count.setText("99");
-        if (notificationsFragment == null)
-            notificationsFragment = NotificationsFragment.newInstance();
-        fragmentLoader(notificationsFragment, true);
+        loadNotificationFragment();
+    }
+
+    public void OnShare(View view) {
+        shareApp(activity,new Session(activity).getString(P.app_link));
+    }
+
+    public void shareApp(Context context,String link)
+    {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, link);
+        sendIntent.setType("text/plain");
+        context.startActivity(sendIntent);
     }
 
 
@@ -902,12 +904,12 @@ public class BaseScreenActivity extends AppCompatActivity {
 
         if (!TextUtils.isEmpty(action) && !action.equals("null") && !TextUtils.isEmpty(action_data) && !action_data.equals("null")){
             if (action.contains(Config.ACTION_COURSE)){
-                loadNotificationFragment("Student's Brain Booster",action_data);
+                loadNotificationClickFragment("Student's Brain Booster",action_data);
             }
         }
     }
 
-    private void loadNotificationFragment(String title,String slug) {
+    private void loadNotificationClickFragment(String title,String slug) {
         Bundle bundle = new Bundle();
         BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
         BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);
@@ -925,4 +927,12 @@ public class BaseScreenActivity extends AppCompatActivity {
                 .commit();
     }
 
+
+    private void loadNotificationFragment(){
+        NotificationsFragment notificationsFragment = NotificationsFragment.newInstance();
+        Bundle b2 = new Bundle();
+        b2.putBoolean("isFromBottom", false);
+        notificationsFragment.setArguments(b2);
+        fragmentLoader(notificationsFragment, true);
+    }
 }

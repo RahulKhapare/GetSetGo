@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.adoisstudio.helper.H;
 import com.getsetgo.Adapter.NotificationAdapter;
 import com.getsetgo.Model.NotificationModel;
 import com.getsetgo.R;
@@ -33,6 +34,7 @@ public class NotificationsFragment extends Fragment {
     FragmentNotificationsBinding binding;
     NotificationAdapter notificationAdapter;
     List<NotificationModel> notificationModelList;
+    boolean isFromBottom;
 
 
     public NotificationsFragment() {
@@ -49,6 +51,7 @@ public class NotificationsFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_notifications, container, false);
         View rootView = binding.getRoot();
 
+        isFromBottom = getArguments().getBoolean("isFromBottom");
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Notifications");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
 
@@ -63,10 +66,7 @@ public class NotificationsFragment extends Fragment {
             public void handleOnBackPressed() {
                 // Handle the back button event
 
-                if(getFragmentManager().getBackStackEntryCount() > 0){
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    BaseScreenActivity.callBack();
-                }
+               onBackClick();
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
@@ -99,10 +99,12 @@ public class NotificationsFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if (getFragmentManager().getBackStackEntryCount() > 0) {
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    BaseScreenActivity.callBack();
-                }
+//                if (getFragmentManager().getBackStackEntryCount() > 0) {
+//                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//                    BaseScreenActivity.callBack();
+//                }
+
+                onBackClick();
             }
         });
 
@@ -127,5 +129,18 @@ public class NotificationsFragment extends Fragment {
         notificationAdapter.notifyDataSetChanged();
     }
 
+
+    private void onBackClick(){
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            if (isFromBottom) {
+                getFragmentManager().popBackStackImmediate();
+                BaseScreenActivity.binding.bottomNavigation.setVisibility(View.VISIBLE);
+                BaseScreenActivity.binding.bottomNavigation.setSelectedItemId(R.id.menu_Account);
+            } else {
+                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                BaseScreenActivity.callBack();
+            }
+        }
+    }
 
 }

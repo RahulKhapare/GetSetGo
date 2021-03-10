@@ -278,6 +278,7 @@ CourseModuleAdapter.click{
 
 
     private void playVideo(String videoPath,boolean replay){
+        Log.e("TAG", "playVideo: " + videoPath );
         videoPlayPath = videoPath;
         exoPlayer = new SimpleExoPlayer.Builder(context).build();
         playerView = binding.playerView.findViewById(R.id.playerView);
@@ -514,6 +515,7 @@ CourseModuleAdapter.click{
         videoUrlModelList.clear();
 
         for (Json json : jsonList){
+            Log.e("TAG", "setVideoData122: "+ json.toString() );
             VideoUrlModel model = new VideoUrlModel();
             model.setType(json.getString(P.type));
             model.setLink(json.getString(P.link));

@@ -1,6 +1,7 @@
 package com.getsetgo.adapterview;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,6 +88,7 @@ public class CourseModuleAdapter extends RecyclerView.Adapter<CourseModuleAdapte
 
         if (model.getVideos()!=null || model.getVideos().size()!=0){
             for (Json json : model.getVideos()){
+                Log.e("TAG", "onBindViewHolder21133: " + json.toString() );
                 CourseChildModel childModel = new CourseChildModel();
                 childModel.setVideo_id(json.getString(P.video_id));
                 childModel.setVideo_title(json.getString(P.video_title));

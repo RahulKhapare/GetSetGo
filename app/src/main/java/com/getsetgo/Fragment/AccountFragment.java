@@ -36,6 +36,7 @@ public class AccountFragment extends Fragment {
 
     FragmentAccountBinding binding;
     BankDetailsFragment bankDetailsFragment;
+    NotificationsFragment notificationsFragment;
     ChangePasswordFragment changePasswordFragment;
     EditProfileFragment editProfileFragment;
     WebViewFragment webViewFragment;
@@ -93,6 +94,16 @@ public class AccountFragment extends Fragment {
 
     public void onClick() {
 
+
+        binding.llNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
+                notificationsFragment = new NotificationsFragment();
+                loadFragment(v,notificationsFragment);
+            }
+        });
 
         binding.lnrChnagePassword.setOnClickListener(new View.OnClickListener() {
             @Override
