@@ -26,14 +26,23 @@
                 android:src="@drawable/ic_ham_menu" />
 
 
-            <pl.droidsonroids.gif.GifImageView
+            <ImageView
                 android:id="@+id/ivLogo"
                 android:layout_width="97dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/appicon_anim"
+                android:src="@drawable/ic_splash_logo"
                 android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
                 />
+
+<!--            <pl.droidsonroids.gif.GifImageView-->
+<!--                android:id="@+id/ivLogo"-->
+<!--                android:layout_width="97dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:src="@drawable/appicon_anim"-->
+<!--                android:layout_centerInParent="true"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                />-->
 
             <ImageView
                 android:id="@+id/imageShare"

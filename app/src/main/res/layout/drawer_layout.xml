@@ -686,7 +686,7 @@
                                 android:fontFamily="@font/nunito_sans_regular"
                                 android:gravity="start|center"
                                 android:onClick="onDrawerItemClick"
-                                android:text="All Transactions"
+                                android:text="Course"
                                 android:textColor="@color/colorTextHighLight"
                                 android:textSize="14sp" />
 

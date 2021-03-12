@@ -64,7 +64,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="250dp">
 
-                            <com.getsetgo.others.CustomVideoView
+                            <com.getsetgoapp.others.CustomVideoView
                                 android:id="@+id/customVideoView"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.getsetgo">
+    package="com.getsetgoapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -19,16 +19,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.OTPVerficationActivity"
+        <activity android:name="com.getsetgoapp.activity.OTPVerficationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" ></activity>
         <activity
-            android:name=".activity.VideoPlayActivity"
+            android:name="com.getsetgoapp.activity.VideoPlayActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBarVideo" />
         <activity
-            android:name=".activity.SplashActivity"
+            android:name="com.getsetgoapp.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -38,17 +38,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.BaseScreenActivity"
+            android:name="com.getsetgoapp.activity.BaseScreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.SignUpActivity"
+            android:name="com.getsetgoapp.activity.SignUpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.LoginActivity"
+            android:name="com.getsetgoapp.activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
@@ -76,12 +76,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Others.VideoActivity"
+            android:name="com.getsetgoapp.Others.VideoActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
 
-        <service android:name=".Service.FirebaseMessageReceiver">
+        <service android:name="com.getsetgoapp.Service.FirebaseMessageReceiver">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -93,7 +93,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.getsetgo.fileProvider"
+            android:authorities="com.getsetgoapp.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
