@@ -730,6 +730,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:orientation="horizontal"
+                        android:onClick="onDrawerItemClick"
+                        android:clickable="true"
                         android:weightSum="10">
 
                         <ImageView
@@ -749,14 +751,6 @@
                             android:text="My Points"
                             android:textColor="@color/colorTextDark"
                             android:textSize="16sp" />
-
-                        <CheckBox
-                            android:id="@+id/cbPoints"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1.5"
-                            android:button="@drawable/chekcbox_up_down" />
-
 
                     </LinearLayout>
 

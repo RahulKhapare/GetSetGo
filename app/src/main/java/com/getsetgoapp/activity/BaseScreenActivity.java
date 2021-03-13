@@ -48,6 +48,7 @@ import com.getsetgoapp.Fragment.HelpAndSupportFragment;
 import com.getsetgoapp.Fragment.HomeFragment;
 import com.getsetgoapp.Fragment.IncentivesFragment;
 import com.getsetgoapp.Fragment.KYCDocumentFragment;
+import com.getsetgoapp.Fragment.MyPointsFragment;
 import com.getsetgoapp.Fragment.NomineeDetailsFragment;
 import com.getsetgoapp.Fragment.NotificationsFragment;
 import com.getsetgoapp.Fragment.ParentCategoriesFragment;
@@ -89,6 +90,7 @@ public class BaseScreenActivity extends AppCompatActivity {
     DashBoardFragment dashBoardFragment;
     AccountFragment accountFragment;
     NotificationsFragment notificationsFragment;
+    MyPointsFragment myPointsFragment;
     IncentivesFragment incentivesFragment;
     HelpAndSupportFragment helpAndSupportFragment;
     TermsAndConditionFragment termsAndConditionFragment;
@@ -105,7 +107,7 @@ public class BaseScreenActivity extends AppCompatActivity {
     TotalDirectUsersFragment totalDirectUsersFragment;
     CurrentLearningFragment currentLearningFragment;
     LinearLayout lnrDashboard, lnrUser, lnrEarning, lnrBusiness, lnrTransaction, lnrInsentive, lnrPoints;
-    CheckBox cbMyEarning, cbUsers, cbBusiness, cbTransaction, cbPoints;
+    CheckBox cbMyEarning, cbUsers, cbBusiness, cbTransaction;
     OnBackPressedCallback onBackPressedCallback;
     private LoadingDialog loadingDialog;
 
@@ -180,17 +182,6 @@ public class BaseScreenActivity extends AppCompatActivity {
             }
         });
 
-        lnrPoints.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (cbPoints.isChecked()) {
-                    cbPoints.setChecked(false);
-                } else {
-                    cbPoints.setChecked(true);
-                }
-            }
-        });
-
     }
 
     protected void onCheckView() {
@@ -208,14 +199,11 @@ public class BaseScreenActivity extends AppCompatActivity {
         cbMyEarning = findViewById(R.id.cbMyEarning);
         cbBusiness = findViewById(R.id.cbBusiness);
         cbTransaction = findViewById(R.id.cbTransaction);
-        cbPoints = findViewById(R.id.cbPoints);
 
         checkBoxUsers();
         checkBoxMyEarning();
         checkBoxBisness();
         checkBoxTransaction();
-        checkBoxPoints();
-
         onItemClick();
     }
 
@@ -229,7 +217,6 @@ public class BaseScreenActivity extends AppCompatActivity {
                     isCollapse(cbMyEarning);
                     isCollapse(cbBusiness);
                     isCollapse(cbTransaction);
-                    isCollapse(cbPoints);
                 } else {
                     llCbUsers.setVisibility(View.GONE);
                 }
@@ -247,7 +234,6 @@ public class BaseScreenActivity extends AppCompatActivity {
                     isCollapse(cbUsers);
                     isCollapse(cbBusiness);
                     isCollapse(cbTransaction);
-                    isCollapse(cbPoints);
                 } else {
                     llCbMyEarningExpand.setVisibility(View.GONE);
                 }
@@ -266,7 +252,6 @@ public class BaseScreenActivity extends AppCompatActivity {
                     isCollapse(cbUsers);
                     isCollapse(cbMyEarning);
                     isCollapse(cbTransaction);
-                    isCollapse(cbPoints);
                 } else {
                     llCbBusinessExpand.setVisibility(View.GONE);
                 }
@@ -284,29 +269,12 @@ public class BaseScreenActivity extends AppCompatActivity {
                     isCollapse(cbUsers);
                     isCollapse(cbMyEarning);
                     isCollapse(cbBusiness);
-                    isCollapse(cbPoints);
                 } else {
                     llCbTransactionExpand.setVisibility(View.GONE);
                 }
             }
         });
     }
-
-    private void checkBoxPoints() {
-        cbPoints.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked) {
-                    isCollapse(cbUsers);
-                    isCollapse(cbMyEarning);
-                    isCollapse(cbBusiness);
-                    isCollapse(cbTransaction);
-                } else {
-                }
-            }
-        });
-    }
-
 
     private void checkAffiliate() {
 
@@ -537,6 +505,12 @@ public class BaseScreenActivity extends AppCompatActivity {
                 if (nomineeDetailsFragment == null)
                     nomineeDetailsFragment = NomineeDetailsFragment.newInstance();
                 fragmentLoader(nomineeDetailsFragment, true);
+                break;
+
+            case R.id.lnrPoints:
+                if (myPointsFragment == null)
+                myPointsFragment = MyPointsFragment.newInstance();
+                fragmentLoader(myPointsFragment, true);
                 break;
 
             case R.id.lnrInsentive:

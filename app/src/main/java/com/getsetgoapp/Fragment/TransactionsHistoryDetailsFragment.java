@@ -14,6 +14,7 @@ import com.adoisstudio.helper.Json;
 import com.getsetgoapp.R;
 import com.getsetgoapp.activity.BaseScreenActivity;
 import com.getsetgoapp.databinding.FragmentTransactionsHistoryDetailsBinding;
+import com.getsetgoapp.util.Config;
 
 import org.json.JSONException;
 
@@ -68,6 +69,11 @@ public class TransactionsHistoryDetailsFragment extends Fragment {
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Transactions History");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
 
+        if (Config.MY_POINTS){
+            Config.MY_POINTS = false;
+            BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Point's History");
+            BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
+        }
 
 
         binding.btnGoBack.setOnClickListener(new View.OnClickListener() {

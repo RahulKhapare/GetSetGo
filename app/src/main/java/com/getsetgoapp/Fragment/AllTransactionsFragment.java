@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adoisstudio.helper.Json;
+import com.adoisstudio.helper.JsonList;
 import com.getsetgoapp.Adapter.AllTransactionsAdapter;
 import com.getsetgoapp.R;
 import com.getsetgoapp.activity.BaseScreenActivity;
@@ -26,6 +28,7 @@ public class AllTransactionsFragment extends Fragment {
     static AllTransactionsAdapter transactionsAdapter;
     boolean isScrolling = false;
     int currentItem, totalItems, scrollOutItems;
+
 
 
     @Nullable

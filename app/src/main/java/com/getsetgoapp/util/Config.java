@@ -24,6 +24,7 @@ public class Config {
     public static String ACTION_COURSE = "ACTION_COURSE";
     public static String ORGNIZE_URL = "";
     public static boolean FROM_DASBOARD = false;
+    public static boolean MY_POINTS = false;
 
 
 }
