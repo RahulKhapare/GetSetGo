@@ -48,8 +48,6 @@ public class AllTransactionsFragment extends Fragment {
 
     public void init(View view) {
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
-
-
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         binding.recyclerViewAllTransactions.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerViewAllTransactions.setLayoutManager(mLayoutManager);

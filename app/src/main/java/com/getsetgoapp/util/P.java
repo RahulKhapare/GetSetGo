@@ -183,6 +183,13 @@ public class P {
     public static String advisor = "advisor";
     public static String hierarchy = "hierarchy";
     public static String user_name = "user_name";
+    public static String points = "points";
+    public static String create_date_text = "create_date_text";
+    public static String action_type = "action_type";
+    public static String points_type = "points_type";
+    public static String username = "username";
+    public static String parent_username = "parent_username";
+    public static String courses = "courses";
 
 
 

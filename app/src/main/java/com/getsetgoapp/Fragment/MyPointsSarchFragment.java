@@ -2,14 +2,13 @@ package com.getsetgoapp.Fragment;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
-import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
@@ -19,7 +18,7 @@ import androidx.fragment.app.Fragment;
 import com.adoisstudio.helper.H;
 import com.getsetgoapp.R;
 import com.getsetgoapp.activity.BaseScreenActivity;
-import com.getsetgoapp.databinding.FragmentSearchTransactionBinding;
+import com.getsetgoapp.databinding.FragmentSearchMyPointsBinding;
 import com.getsetgoapp.util.Click;
 
 import java.text.ParseException;
@@ -28,17 +27,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class SearchTransactionsFragment extends Fragment {
+public class MyPointsSarchFragment extends Fragment {
 
-    FragmentSearchTransactionBinding binding;
-
-    public static int transPage = 1;
-    public static int CrashPage = 1;
+    FragmentSearchMyPointsBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_transaction, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_my_points, container, false);
         View rootView = binding.getRoot();
         init();
         return rootView;
@@ -66,12 +62,10 @@ public class SearchTransactionsFragment extends Fragment {
     }
 
     private void init() {
-        transPage = 1;
-        CrashPage = 1;
-        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Search Transaction");
+
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Search My Points");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         bindActionType();
-        bindIncomeType();
         initCalendar();
 
         binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -79,35 +73,26 @@ public class SearchTransactionsFragment extends Fragment {
             public void onClick(View v) {
                 Click.preventTwoClick(v);
                 if (checkDateValidation()) {
-                    if (TransactionsHistoryFragment.pos == 1) {
-                        TransactionsHistoryFragment.isFromSearch = true;
-                        getCrashData();
-                        TransactionsHistoryFragment.crashJsonList.clear();
-                        TransactionsHistoryFragment.callCrashTransactionApi(getActivity());
-                        if (getFragmentManager().getBackStackEntryCount() > 0) {
-                            getFragmentManager().popBackStackImmediate();
-                        }
-                    } else {
-                        getTransData();
-                        TransactionsHistoryFragment.isFromSearch = true;
-                        TransactionsHistoryFragment.transactionJsonList.clear();
-                        TransactionsHistoryFragment.callTransactionHistoryApi(getActivity());
-                        if (getFragmentManager().getBackStackEntryCount() > 0) {
-                            getFragmentManager().popBackStackImmediate();
-                        }
+                    MyPointsFragment.MY_POINTS_FILTER = true;
+                    MyPointsFragment.START_DATE = binding.etStartDate.getText().toString().trim();
+                    MyPointsFragment.END_DATE = binding.etEndDate.getText().toString().trim();
+                    if (getFragmentManager().getBackStackEntryCount() > 0) {
+                        getFragmentManager().popBackStackImmediate();
                     }
                 }
-
             }
         });
 
         binding.btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MyPointsFragment.MY_POINTS_FILTER = true;
                 binding.etStartDate.setText("");
                 binding.etEndDate.setText("");
                 binding.spnActionType.setSelection(0);
-                binding.spnIncomeType.setSelection(0);
+                MyPointsFragment.START_DATE = "";
+                MyPointsFragment.END_DATE = "";
+                MyPointsFragment.ACTION_TYPE = "";
             }
         });
 
@@ -119,45 +104,19 @@ public class SearchTransactionsFragment extends Fragment {
                 }
             }
         });
+
+        binding.etStartDate.setText(MyPointsFragment.START_DATE);
+        binding.etEndDate.setText(MyPointsFragment.END_DATE);
+
     }
 
-    private void getTransData() {
-        TransactionsHistoryFragment.startDate = binding.etStartDate.getText().toString();
-        TransactionsHistoryFragment.endDate = binding.etEndDate.getText().toString();
-        if (binding.spnActionType.getSelectedItem().toString().equalsIgnoreCase("Select")) {
-            TransactionsHistoryFragment.actionTransType = "";
-        } else {
-            TransactionsHistoryFragment.actionTransType = binding.spnActionType.getSelectedItem().toString();
-        }
 
-        if (binding.spnIncomeType.getSelectedItem().toString().equalsIgnoreCase("Select")) {
-            TransactionsHistoryFragment.incomeTransType = "";
-        } else {
-            TransactionsHistoryFragment.incomeTransType = binding.spnIncomeType.getSelectedItem().toString();
-        }
-    }
-
-    private void getCrashData() {
-        TransactionsHistoryFragment.crashstartDate = binding.etStartDate.getText().toString();
-        TransactionsHistoryFragment.crashendDate = binding.etEndDate.getText().toString();
-        if (binding.spnActionType.getSelectedItem().toString().equalsIgnoreCase("Select")) {
-            TransactionsHistoryFragment.actionType = "";
-        } else {
-            TransactionsHistoryFragment.actionType = binding.spnActionType.getSelectedItem().toString();
-        }
-
-        if (binding.spnIncomeType.getSelectedItem().toString().equalsIgnoreCase("Select")) {
-            TransactionsHistoryFragment.incomeType = "";
-        } else {
-            TransactionsHistoryFragment.incomeType = binding.spnIncomeType.getSelectedItem().toString();
-        }
-    }
 
     private boolean checkDateValidation() {
         boolean value = true;
 
-        if (!binding.etStartDate.getText().toString().isEmpty()
-                || !binding.etEndDate.getText().toString().isEmpty()) {
+        if (!TextUtils.isEmpty(binding.etStartDate.getText().toString())
+                && !TextUtils.isEmpty(binding.etEndDate.getText().toString())) {
 
             SimpleDateFormat dfDate = new SimpleDateFormat("yyyy-MM-dd");
             Date d1 = null;
@@ -224,18 +183,6 @@ public class SearchTransactionsFragment extends Fragment {
 
     }
 
-    public boolean isFormValidation() {
-        if (binding.etStartDate.getText().toString().isEmpty()) {
-            Toast.makeText(getActivity(), "Start Date should not be empty", Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (binding.etEndDate.getText().toString().isEmpty()) {
-            Toast.makeText(getActivity(), "End Date should not be empty", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
-    }
-
-
     private void bindActionType() {
 
         ArrayList<String> stringArrayList = new ArrayList<String>();
@@ -243,15 +190,18 @@ public class SearchTransactionsFragment extends Fragment {
         stringArrayList.add("D");
         stringArrayList.add("A");
 
-
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.spinner_display_text, stringArrayList);
         binding.spnActionType.setAdapter(stringArrayAdapter);
         binding.spnActionType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (binding.spnActionType.getSelectedItem() != "Action Type") {
-                    Log.d("Tag", "Action Type =" + binding.spnActionType.getSelectedItem().toString());
+                if (position==0){
+                    MyPointsFragment.ACTION_TYPE = "";
+                }else if (position==1){
+                    MyPointsFragment.ACTION_TYPE = "D";
+                }else if (position==2){
+                    MyPointsFragment.ACTION_TYPE = "A";
                 }
             }
 
@@ -261,35 +211,12 @@ public class SearchTransactionsFragment extends Fragment {
             }
         });
 
-    }
-
-    private void bindIncomeType() {
-
-        ArrayList<String> stringArrayList = new ArrayList<String>();
-        stringArrayList.add("Select");
-        stringArrayList.add("T");
-        stringArrayList.add("RF");
-        stringArrayList.add("MF");
-
-
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getActivity(),
-                R.layout.spinner_display_text, stringArrayList);
-        binding.spnIncomeType.setAdapter(stringArrayAdapter);
-        binding.spnIncomeType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (binding.spnIncomeType.getSelectedItem() != "Income Type") {
-                    Log.d("Tag", "Income Type =" + binding.spnIncomeType.getSelectedItem().toString());
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        if (MyPointsFragment.ACTION_TYPE.equals("D")){
+            binding.spnActionType.setSelection(1);
+        }else if (MyPointsFragment.ACTION_TYPE.equals("A")){
+            binding.spnActionType.setSelection(2);
+        }
 
     }
-
 
 }

@@ -67,14 +67,7 @@ public class TransactionsHistoryDetailsFragment extends Fragment {
             e.printStackTrace();
         }
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Transactions History");
-        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
-
-        if (Config.MY_POINTS){
-            Config.MY_POINTS = false;
-            BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Point's History");
-            BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
-        }
-
+        BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
 
         binding.btnGoBack.setOnClickListener(new View.OnClickListener() {
             @Override

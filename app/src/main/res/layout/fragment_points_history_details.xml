@@ -1,52 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/toolbar_backgound">
 
-
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/main_layout_bg"
-            android:paddingHorizontal="@dimen/x8">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerMyPoints"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/txtError"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_centerInParent="true"
-                android:textSize="22sp"
-                android:gravity="center"
-                android:visibility="gone"
-                android:text="No Data Found">
-
-            </TextView>
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_layout_bg">
 
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/nestedScroll"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:visibility="gone"
                 android:layout_marginTop="30dp">
 
                 <RelativeLayout
@@ -289,6 +258,8 @@
             </androidx.core.widget.NestedScrollView>
 
         </RelativeLayout>
+
+
     </RelativeLayout>
 </layout>
 
