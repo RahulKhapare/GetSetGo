@@ -123,9 +123,6 @@ public class BaseScreenActivity extends AppCompatActivity {
     public static String privacyPolicyUrl = "";
     public static String organization_chart_url = "";
     public static String faq_url = "";
-    public static String action;
-    public static String action_data;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -295,6 +292,13 @@ public class BaseScreenActivity extends AppCompatActivity {
 
     private void init() {
 
+        final String token = new Session(this).getString(P.token);
+        final String user_id = new Session(this).getString(P.user_id);
+        App.authToken = token;
+        App.user_id = user_id;
+        SplashActivity.deviceWidth = H.getDeviceWidth(this);
+        SplashActivity.deviceHeight = H.getDeviceHeight(this);
+
         onCheckView();
         checkAffiliate();
 
@@ -366,7 +370,7 @@ public class BaseScreenActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        hitInitApi(this);
+        hitInitApi(activity);
         getNotificationAction();
     }
 
@@ -510,6 +514,9 @@ public class BaseScreenActivity extends AppCompatActivity {
             case R.id.lnrPoints:
                 if (myPointsFragment == null)
                 myPointsFragment = MyPointsFragment.newInstance();
+                Bundle bm = new Bundle();
+                bm.putBoolean("isFromDashboard", false);
+                myPointsFragment.setArguments(bm);
                 fragmentLoader(myPointsFragment, true);
                 break;
 
@@ -868,22 +875,36 @@ public class BaseScreenActivity extends AppCompatActivity {
                 }).run("hitInitApi");
     }
 
-
     private void getNotificationAction(){
+
         String action = getIntent().getStringExtra(P.action);
         String action_data = getIntent().getStringExtra(P.action_data);
+        String title = getIntent().getStringExtra(P.title);
 
-//        action_data = "super-brain-booster";
-//        action = "ACTION_COURSE";
-
-        if (!TextUtils.isEmpty(action) && !action.equals("null") && !TextUtils.isEmpty(action_data) && !action_data.equals("null")){
-            if (action.contains(Config.ACTION_COURSE)){
-                loadNotificationClickFragment("Student's Brain Booster",action_data);
+        if (!TextUtils.isEmpty(action) && !action.equals("null")){
+            if (action.equals(Config.ACTION_COURSE)){
+                if (!TextUtils.isEmpty(action_data) && !action_data.equals("null")){
+                    loadCourseFragment(title,action_data);
+                }
+            }else if (action.equals(Config.ACTION_GENERAL)){
+                Bundle bundle = new Bundle();
+                BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
+                BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);
+                BaseScreenActivity.binding.incFragmenttool.content.setVisibility(View.VISIBLE);
+                BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
+                bundle.putBoolean("isFromBottom", false);
+                NotificationsFragment courseDetailFragment = new NotificationsFragment();
+                courseDetailFragment.setArguments(bundle);
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, courseDetailFragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         }
     }
 
-    private void loadNotificationClickFragment(String title,String slug) {
+    private void loadCourseFragment(String title,String slug) {
         Bundle bundle = new Bundle();
         BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
         BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);

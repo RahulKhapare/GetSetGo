@@ -20,6 +20,8 @@ import com.getsetgoapp.Model.NotificationModel;
 import com.getsetgoapp.R;
 import com.getsetgoapp.activity.BaseScreenActivity;
 import com.getsetgoapp.util.CheckConnection;
+import com.getsetgoapp.util.Config;
+import com.getsetgoapp.util.RemoveHtml;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -48,22 +50,26 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         NotificationModel model = notificationList.get(position);
 
         String image = model.getImage();
-        if (image.equals("")){
+        if (image.equals("")) {
             Picasso.get().load(image).placeholder(R.drawable.ic_no_image).error(R.drawable.ic_no_image).into(holder.imgNotification);
-        }else {
+        } else {
             Picasso.get().load(R.drawable.ic_no_image).error(R.drawable.ic_no_image).into(holder.imgNotification);
         }
         holder.txtTitle.setText(model.getTitle());
-        holder.txtDescription.setText(model.getDescription());
+        holder.txtDescription.setText(RemoveHtml.html2text(model.getDescription()));
 
         holder.lnrView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!TextUtils.isEmpty(model.getSlug()) && !model.getSlug().equals("null")){
-                    if (CheckConnection.isVailable(context)){
-                        loadFragment(v,model.getCourseName(),model.getSlug());
-                    }else {
-                        H.showMessage(context,"No internet connection available");
+
+                if (!TextUtils.isEmpty(model.getAction_data()) && !model.getAction_data().equals("null")
+                        && !TextUtils.isEmpty(model.getAction()) && !model.getAction().equals("null")) {
+                    if (model.getAction().equals(Config.ACTION_COURSE)) {
+                        if (CheckConnection.isVailable(context)) {
+                            loadFragment(v, model.getTitle(), model.getAction_data());
+                        } else {
+                            H.showMessage(context, "No internet connection available");
+                        }
                     }
                 }
             }
@@ -90,7 +96,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         }
     }
 
-    private void loadFragment(View v, String title,String slug) {
+    private void loadFragment(View v, String title, String slug) {
         Bundle bundle = new Bundle();
         BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
         BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);

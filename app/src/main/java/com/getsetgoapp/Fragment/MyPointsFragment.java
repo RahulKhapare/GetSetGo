@@ -58,6 +58,7 @@ public class MyPointsFragment extends Fragment implements MyPointsAdapter.onClic
     public static String START_DATE = "";
     public static String END_DATE = "";
     public static String ACTION_TYPE = "";
+    boolean isFromDashboard;
 
     public MyPointsFragment() {
     }
@@ -88,6 +89,7 @@ public class MyPointsFragment extends Fragment implements MyPointsAdapter.onClic
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_points, container, false);
         View rootView = binding.getRoot();
         context = inflater.getContext();
+        isFromDashboard = getArguments().getBoolean("isFromDashboard");
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("My Points");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.VISIBLE);
         init();
@@ -103,6 +105,7 @@ public class MyPointsFragment extends Fragment implements MyPointsAdapter.onClic
         binding.recyclerMyPoints.setLayoutManager(linearLayoutManager);
         binding.recyclerMyPoints.setAdapter(adapter);
 
+        pageCount = 1;
         callMyPointsDetailsApi(getActivity(),false,pageCount);
         setPagination();
 
@@ -271,10 +274,14 @@ public class MyPointsFragment extends Fragment implements MyPointsAdapter.onClic
         if (binding.nestedScroll.getVisibility()==View.VISIBLE){
             visibleMyPoints();
         }else {
-            if (getFragmentManager().getBackStackEntryCount() > 0) {
-                clearData();
-                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                BaseScreenActivity.callBack();
+            clearData();
+            if (isFromDashboard){
+                getFragmentManager().popBackStackImmediate();
+            }else {
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
+                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    BaseScreenActivity.callBack();
+                }
             }
         }
 

@@ -16,6 +16,7 @@ import android.view.WindowManager;
 
 import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.JsonList;
 import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
@@ -158,6 +159,7 @@ public class SplashActivity extends AppCompatActivity {
                             H.showMessage(context, Json1.getString(P.err));
                         } else if (Json1.getInt(P.status) == 1) {
                             Json1 = Json1.getJson(P.data);
+
                             String android_min_version = Json1.getString(P.android_min_version);
                             String android_current_version = Json1.getString(P.android_current_version);
                             if (!TextUtils.isEmpty(android_min_version) || !android_min_version.equals("null")){

@@ -43,7 +43,6 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
 
     }
 
-
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
@@ -60,38 +59,38 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
             H.log("arrayListIs", arrayList + "");
             Log.e(TAG, "onMessageReceivedData: " + data.toString());
 
-//            for (Map map : arrayList) {
-//                Object action = map.get(P.action);
-//                Object title = map.get(P.title);
-//                Object description = map.get(P.description);
-//                Object actionData = map.get(P.action_data);
-//                Object imageUrl = null;
-//
-//                try {
-//                    if (map.get(P.icon).equals("") || map.get(P.icon).equals("null")) {
-//                        imageUrl = null;
-//                    } else {
-//                        imageUrl = map.get(P.icon);
-//                    }
-//                } catch (Exception e) {
-//                    imageUrl = map.get(P.icon);
-//                }
-//
-//                if (title == null || description == null)
-//                    return;
-//
-//                if (action != null && actionData != null) {
-//                    int pendingNotificationsCount = AppName.getPendingNotificationsCount() + 1;
-//                    AppName.setPendingNotificationsCount(pendingNotificationsCount);
-//                    number = pendingNotificationsCount;
-//
-//                    if (imageUrl != null){
-//                        bitmap = getBitmapfromUrl(imageUrl.toString());
-//                    }
-//                    sendCustomNotification(action.toString(), title.toString(), description.toString(), actionData.toString(), 2);
-//                }
-//
-//            }
+            for (Map map : arrayList) {
+                Object action = map.get(P.action);
+                Object title = map.get(P.title);
+                Object description = map.get(P.description);
+                Object actionData = map.get(P.action_data);
+                Object imageUrl = null;
+
+                try {
+                    if (map.get(P.icon).equals("") || map.get(P.icon).equals("null")) {
+                        imageUrl = null;
+                    } else {
+                        imageUrl = map.get(P.icon);
+                    }
+                } catch (Exception e) {
+                    imageUrl = map.get(P.icon);
+                }
+
+                if (title == null || description == null)
+                    return;
+
+                if (action != null && actionData != null) {
+                    int pendingNotificationsCount = AppName.getPendingNotificationsCount() + 1;
+                    AppName.setPendingNotificationsCount(pendingNotificationsCount);
+                    number = pendingNotificationsCount;
+
+                    if (imageUrl != null){
+                        bitmap = getBitmapfromUrl(imageUrl.toString());
+                    }
+                    sendCustomNotification(action.toString(), title.toString(), description.toString(), actionData.toString(), 2);
+                }
+
+            }
 
         }
     }
@@ -120,6 +119,7 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
         Intent intent = new Intent(this, BaseScreenActivity.class);
         intent.putExtra(P.action, action);
         intent.putExtra(P.action_data, actionData);
+        intent.putExtra(P.title, title);
         intent.setFlags(Intent. FLAG_ACTIVITY_CLEAR_TOP | Intent. FLAG_ACTIVITY_SINGLE_TOP ) ;
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -132,7 +132,7 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
         notificationCompactBuilder.setSmallIcon(getSmallIcon());
 
         notificationCompactBuilder.setAutoCancel(true) ;
-        notificationCompactBuilder.setNumber(number) ;
+//        notificationCompactBuilder.setNumber(number) ;
 
         notificationCompactBuilder.setLargeIcon(icon);
         notificationCompactBuilder.setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL);

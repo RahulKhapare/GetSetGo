@@ -8,7 +8,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:paddingHorizontal="@dimen/x8"
             android:background="@drawable/main_layout_bg">
 
@@ -16,6 +16,7 @@
                 android:id="@+id/nestedScroll"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
+                android:fillViewport="true"
                 android:layout_marginTop="5dp">
 
                 <RelativeLayout
@@ -26,6 +27,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/recyclerViewNotifications"/>
+
+                    <TextView
+                        android:id="@+id/txtError"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:layout_centerInParent="true"
+                        android:textSize="22sp"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:text="No Notification Found">
+
+                    </TextView>
+
 
                 </RelativeLayout>
 

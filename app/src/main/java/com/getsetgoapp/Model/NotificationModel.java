@@ -2,20 +2,11 @@ package com.getsetgoapp.Model;
 
 public class NotificationModel {
 
-   String id;
    String title;
-   String image;
    String description;
-   String slug;
-   String courseName;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+   String action;
+   String action_data;
+   String image;
 
     public String getTitle() {
         return title;
@@ -23,14 +14,6 @@ public class NotificationModel {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public String getDescription() {
@@ -41,19 +24,27 @@ public class NotificationModel {
         this.description = description;
     }
 
-    public String getSlug() {
-        return slug;
+    public String getAction() {
+        return action;
     }
 
-    public void setSlug(String slug) {
-        this.slug = slug;
+    public void setAction(String action) {
+        this.action = action;
     }
 
-    public String getCourseName() {
-        return courseName;
+    public String getAction_data() {
+        return action_data;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
+    public void setAction_data(String action_data) {
+        this.action_data = action_data;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

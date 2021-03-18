@@ -21,7 +21,8 @@ public class Config {
     public static JsonList courseJsonList = null;
     public static String courseTitle = "";
     public static String EMAIL_ID = "EMAIL_ID";
-    public static String ACTION_COURSE = "ACTION_COURSE";
+    public static String ACTION_COURSE = "COURSE";
+    public static String ACTION_GENERAL = "GENERAL";
     public static String ORGNIZE_URL = "";
     public static boolean FROM_DASBOARD = false;
     public static boolean MY_POINTS = false;

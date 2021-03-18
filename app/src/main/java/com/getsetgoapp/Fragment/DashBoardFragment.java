@@ -134,6 +134,26 @@ public class DashBoardFragment extends Fragment {
             }
         });
 
+        binding.rlCourseBoard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                if(getFragmentManager().getBackStackEntryCount() > 0){
+                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    BaseScreenActivity.callBack();
+                }
+            }
+        });
+
+        binding.rlReward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                MyPointsFragment myPointsFragment = new MyPointsFragment();
+                loadFragment(myPointsFragment,v);
+            }
+        });
+
         BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -158,6 +178,9 @@ public class DashBoardFragment extends Fragment {
     private void loadFragment(Fragment fragment,View v){
         TotalUsersFragment.isSearch = false;
         TotalDirectUsersFragment.isSearch = false;
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isFromDashboard", true);
+        fragment.setArguments(bundle);
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
         activity.getSupportFragmentManager()
                 .beginTransaction()

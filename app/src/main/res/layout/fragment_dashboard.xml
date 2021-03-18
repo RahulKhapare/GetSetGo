@@ -402,6 +402,7 @@
                                 android:id="@+id/rlBusKit"
                                 android:layout_width="328dp"
                                 android:layout_height="68dp"
+                                android:visibility="gone"
                                 android:background="@drawable/bg_dash_elevation"
                                 android:backgroundTint="@color/colorBlueBusiness"
                                 android:gravity="center">
@@ -467,6 +468,7 @@
                                 android:id="@+id/rlFranchise"
                                 android:layout_width="328dp"
                                 android:layout_height="68dp"
+                                android:visibility="gone"
                                 android:layout_below="@id/rlCourseBoard"
                                 android:layout_marginTop="13dp"
                                 android:background="@drawable/bg_dash_elevation"
@@ -500,6 +502,7 @@
                                 android:id="@+id/rlInfo"
                                 android:layout_width="328dp"
                                 android:layout_height="68dp"
+                                android:visibility="gone"
                                 android:layout_below="@id/rlFranchise"
                                 android:layout_marginTop="13dp"
                                 android:background="@drawable/bg_dash_elevation"
@@ -556,7 +559,7 @@
                                     android:layout_marginLeft="25dp"
                                     android:layout_toRightOf="@+id/ivReward"
                                     android:fontFamily="@font/nunito_sans_regular"
-                                    android:text="Reward Points -"
+                                    android:text="Reward Points"
                                     android:textColor="@color/colorWhite"
                                     android:textSize="16sp" />
 
