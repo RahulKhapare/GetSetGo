@@ -65,7 +65,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
                                     android:layout_marginLeft="20dp"
-                                    android:layout_marginRight="15dp"
+                                    android:layout_marginRight="5dp"
                                     android:layout_toEndOf="@+id/imvViewProfile"
                                     android:layout_toRightOf="@+id/imvViewProfile"
                                     android:orientation="vertical">
@@ -593,7 +593,7 @@
                                     android:layout_marginLeft="25dp"
                                     android:layout_toRightOf="@+id/ivApp"
                                     android:fontFamily="@font/nunito_sans_regular"
-                                    android:text="Share Application Link"
+                                    android:text="Share &amp; Earn"
                                     android:textColor="@color/colorWhite"
                                     android:textSize="16sp" />
 
@@ -666,6 +666,9 @@
                                 android:layout_marginTop="5dp"
                                 android:fontFamily="@font/nunito_sans_regular"
                                 android:text=""
+                                android:autoLink="phone"
+                                android:drawableLeft="@drawable/whatsapp_bg"
+                                android:drawablePadding="5dp"
                                 android:textColor="@color/colorTextDark"
                                 android:textSize="16sp" />
 
@@ -730,6 +733,9 @@
                                 android:layout_marginTop="5dp"
                                 android:fontFamily="@font/nunito_sans_regular"
                                 android:text=""
+                                android:drawableLeft="@drawable/whatsapp_bg"
+                                android:drawablePadding="5dp"
+                                android:autoLink="phone"
                                 android:textColor="@color/colorTextDark"
                                 android:textSize="16sp" />
 
@@ -796,6 +802,9 @@
                                 android:layout_marginTop="5dp"
                                 android:fontFamily="@font/nunito_sans_regular"
                                 android:text=""
+                                android:autoLink="phone"
+                                android:drawableLeft="@drawable/whatsapp_bg"
+                                android:drawablePadding="5dp"
                                 android:textColor="@color/colorTextDark"
                                 android:textSize="16sp" />
 

@@ -138,6 +138,7 @@ public class P {
     public static String profile_picture = "profile_picture";
     public static String app_link = "app_link";
     public static String referral_link = "referral_link";
+    public static String qr_code = "qr_code";
     public static String occupation_list = "occupation_list";
     public static String marital_status_list = "marital_status_list";
     public static String gender_list = "gender_list";

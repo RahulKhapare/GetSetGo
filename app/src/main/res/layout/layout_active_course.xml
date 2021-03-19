@@ -80,6 +80,7 @@
             android:fontFamily="@font/nunito_sans_semibold"
             android:gravity="end"
             android:text="1K Student"
+            android:visibility="gone"
             android:textColor="@color/colorTextDark"
             android:textSize="12sp" />
 

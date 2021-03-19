@@ -129,6 +129,9 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_sans_regular"
                     android:text="91-9930485960"
+                    android:autoLink="phone"
+                    android:drawableLeft="@drawable/whatsapp_bg"
+                    android:drawablePadding="5dp"
                     android:textColor="@color/colorTextDark"
                     android:textSize="16sp" />
 
@@ -149,6 +152,9 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_sans_regular"
                     android:text="abhilasha.dani@gmail.com"
+                    android:autoLink="email"
+                    android:drawableLeft="@drawable/email_bg"
+                    android:drawablePadding="5dp"
                     android:textColor="@color/colorTextDark"
                     android:textSize="16sp" />
 
@@ -187,6 +193,9 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_sans_regular"
                     android:text="abhilasha.dani@gmail.com"
+                    android:autoLink="email"
+                    android:drawableLeft="@drawable/email_bg"
+                    android:drawablePadding="5dp"
                     android:textColor="@color/colorTextDark"
                     android:textSize="16sp" />
 
@@ -205,7 +214,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_sans_regular"
+                    android:drawableLeft="@drawable/whatsapp_bg"
+                    android:drawablePadding="5dp"
                     android:text="91-9322886646"
+                    android:autoLink="phone"
                     android:textColor="@color/colorTextDark"
                     android:textSize="16sp" />
 

@@ -127,6 +127,7 @@ public class OTPVerficationActivity extends AppCompatActivity {
                         session.addString(P.profile_picture, userData.getString(P.profile_picture) + "");
                         session.addString(P.app_link, userData.getString(P.app_link) + "");
                         session.addString(P.referral_link, userData.getString(P.referral_link) + "");
+                        session.addString(P.qr_code, userData.getString(P.qr_code) + "");
 
                         App.authToken = token;
                         App.user_id = user_id;

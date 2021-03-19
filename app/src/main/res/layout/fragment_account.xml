@@ -264,6 +264,35 @@
 
                         </LinearLayout>
 
+                        <LinearLayout
+                            android:id="@+id/lnrReferAndEarn"
+                            android:layout_width="match_parent"
+                            android:layout_height="26dp"
+                            android:layout_below="@+id/lnrEditProfile"
+                            android:layout_marginTop="15dp"
+                            android:orientation="horizontal"
+                            android:weightSum="10">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="9.3"
+                                android:fontFamily="@font/nunito_sans_regular"
+                                android:text="Refer &amp; Earn"
+                                android:textColor="@color/colorTextDark"
+                                android:textSize="16sp" />
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="22dp"
+                                android:layout_weight="0.7"
+                                android:rotationY="180"
+                                android:src="@drawable/ic_back"
+                                app:tint="@color/colorArrow" />
+
+
+                        </LinearLayout>
+
 
                     </RelativeLayout>
 

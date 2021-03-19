@@ -265,7 +265,6 @@ public class SignUpActivity extends AppCompatActivity {
         loadingDialog = new LoadingDialog(activity, false);
         Json json = new Json();
         json.addString(P.ip,getLocalIpAddress());
-//        json.addString(P.ip,"1.23.248.22");
         Api.newApi(activity, P.baseUrl + "get_sponsor_from_ip")
                 .addJson(json)
                 .setMethod(Api.POST)

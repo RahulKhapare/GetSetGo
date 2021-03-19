@@ -1,12 +1,21 @@
 package com.getsetgoapp.Fragment;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
@@ -14,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.viewpager.widget.ViewPager;
 
 import com.adoisstudio.helper.Session;
 import com.getsetgoapp.R;
@@ -25,6 +35,9 @@ import com.getsetgoapp.util.Click;
 import com.getsetgoapp.util.Config;
 import com.getsetgoapp.util.P;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class AccountFragment extends Fragment {
@@ -107,6 +120,14 @@ public class AccountFragment extends Fragment {
                 BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
                 changePasswordFragment = new ChangePasswordFragment();
                 loadFragment(v,changePasswordFragment);
+            }
+        });
+
+        binding.lnrReferAndEarn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                QRCodeDialog();
             }
         });
 
@@ -209,6 +230,48 @@ public class AccountFragment extends Fragment {
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+
+    private void QRCodeDialog() {
+
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.activity_qr_code);
+
+        ImageView imgQR = dialog.findViewById(R.id.imgQR);
+        TextView txtQR = dialog.findViewById(R.id.txtQR);
+
+        String qr_code = "qr_code";
+        String imagePath = new Session(getActivity()).getString(qr_code);
+        if (!imagePath.equals("")){
+            qr_code = imagePath;
+        }
+        Picasso.get().load(qr_code).error(R.drawable.ic_no_image).into(imgQR);
+
+        txtQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                dialog.dismiss();
+                shareApp(new Session(getActivity()).getString(P.app_link));
+            }
+        });
+
+        dialog.setCancelable(true);
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+
+    }
+
+    public void shareApp(String link)
+    {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, link);
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
     }
 
 }

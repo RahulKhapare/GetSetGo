@@ -307,6 +307,7 @@ public class LoginActivity extends AppCompatActivity {
                             session.addString(P.profile_picture, Json1.getString(P.profile_picture) + "");
                             session.addString(P.app_link, Json1.getString(P.app_link) + "");
                             session.addString(P.referral_link, Json1.getString(P.referral_link) + "");
+                            session.addString(P.qr_code, Json1.getString(P.qr_code) + "");
 
                             App.authToken = token;
                             App.user_id = user_id;

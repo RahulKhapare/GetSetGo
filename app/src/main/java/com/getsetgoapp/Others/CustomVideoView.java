@@ -44,7 +44,7 @@ public class CustomVideoView extends VideoView
 
         int width = getDefaultSize(SplashActivity.deviceHeight, widthMeasureSpec);
         int height = getDefaultSize(SplashActivity.deviceWidth, heightMeasureSpec);
-        H.log("widthAndHeightIs",width+"&"+height);
+//        H.log("widthAndHeightIs",width+"&"+height);
         if (SplashActivity.deviceHeight > 0 && SplashActivity.deviceWidth > 0) {
             if (SplashActivity.deviceHeight * height > width * SplashActivity.deviceWidth)
                 height = width * SplashActivity.deviceWidth / SplashActivity.deviceHeight;

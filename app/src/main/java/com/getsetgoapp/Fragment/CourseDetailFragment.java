@@ -65,6 +65,16 @@ import com.getsetgoapp.others.CustomVideoView;
 import com.getsetgoapp.util.App;
 import com.getsetgoapp.util.JumpToLogin;
 import com.getsetgoapp.util.P;
+import com.google.android.exoplayer2.C;
+import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.Player;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.ProgressiveMediaSource;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -80,7 +90,7 @@ import java.util.concurrent.TimeUnit;
 import static android.content.Context.AUDIO_SERVICE;
 import static com.getsetgoapp.util.Utilities.pxFromDp;
 
-public class CourseDetailFragment extends Fragment implements GestureDetector.OnGestureListener, Api.OnHeaderRequestListener {
+public class CourseDetailFragment extends Fragment implements GestureDetector.OnGestureListener, Api.OnHeaderRequestListener{
 
     CurriculumLectureAdapter curriculumLectureAdapter;
     StudentsFeedbackAdapter studentsFeedbackAdapter;
@@ -98,7 +108,6 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
     public static boolean videoIsRunning;
     public boolean isFromHome;
 
-
     //private CustomMediaController customMediaController;
     private CustomVideoView customVideoView;
     private MediaPlayer mediaPlayer;
@@ -110,8 +119,8 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
 
     private String checkUrl = "";
     private String apiUrl = "";
-    //    private String videoUrl = "https://player.vimeo.com/external/355047357.sd.mp4?s=70acd77556613cd48ac925134cac183d18287c45&profile_id=164";
-    private String videoUrl = "";
+        private String videoUrl = "https://player.vimeo.com/external/355047357.sd.mp4?s=70acd77556613cd48ac925134cac183d18287c45&profile_id=164";
+//    private String videoUrl = "";
     String id = "";
     private int videoProgress;
     private int isFavourite;
@@ -186,6 +195,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
+
 
     private void init(View view) {
 

@@ -47,6 +47,7 @@ public class DashBoardFragment extends Fragment {
 
         return fragment;
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,6 +60,23 @@ public class DashBoardFragment extends Fragment {
         hitBusinessDashboardApi(getActivity());
         onClick();
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+
+                if(getFragmentManager().getBackStackEntryCount() > 0){
+                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    BaseScreenActivity.callBack();
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override

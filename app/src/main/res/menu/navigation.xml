@@ -14,12 +14,12 @@
     <item
         android:id="@+id/menu_yourCourse"
         android:icon="@drawable/ic_your_course_menu"
-        android:title="Your Course"/>
+        android:title="My Courses"/>
 
     <item
         android:id="@+id/menu_freeCourse"
         android:icon="@drawable/ic_your_course_menu"
-        android:title="Free Course"/>
+        android:title="Free Courses"/>
 
     <item
         android:id="@+id/menu_Account"
