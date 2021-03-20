@@ -47,9 +47,48 @@
                             android:textSize="18sp" />
                     </RelativeLayout>
 
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardPlayVideo"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/x200"
+                        app:cardCornerRadius="@dimen/x10"
+                        android:layout_marginTop="@dimen/x16"
+                        android:layout_marginLeft="@dimen/x16"
+                        android:layout_below="@id/rlCourseTitle"
+                        android:layout_marginRight="16dp"
+                        app:cardElevation="0dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/black">
+
+                            <com.google.android.exoplayer2.ui.PlayerView
+                                android:id="@+id/playerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:animation_enabled="true"
+                                app:controller_layout_id="@layout/exo_playback_control_view_without_setting"
+                                app:show_buffering="when_playing" />
+
+                            <ProgressBar
+                                android:id="@+id/pbVideoPlayer"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="invisible"
+                                android:indeterminateDrawable="@drawable/progress"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardMain"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="250dp"
                         android:layout_below="@id/rlCourseTitle"
@@ -205,7 +244,7 @@
                         android:id="@+id/llDetails"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/cardMain"
+                        android:layout_below="@+id/cardPlayVideo"
                         android:layout_centerVertical="true"
                         android:layout_marginTop="2dp"
                         android:orientation="vertical"

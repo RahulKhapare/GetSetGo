@@ -3,6 +3,7 @@ package com.getsetgoapp.Fragment;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
@@ -61,8 +62,11 @@ import com.getsetgoapp.Adapter.StudentsFeedbackAdapter;
 import com.getsetgoapp.R;
 import com.getsetgoapp.activity.BaseScreenActivity;
 import com.getsetgoapp.activity.SplashActivity;
+import com.getsetgoapp.activity.VideoPlayActivity;
+import com.getsetgoapp.activity.VideoPlayNewActivity;
 import com.getsetgoapp.others.CustomVideoView;
 import com.getsetgoapp.util.App;
+import com.getsetgoapp.util.Config;
 import com.getsetgoapp.util.JumpToLogin;
 import com.getsetgoapp.util.P;
 import com.google.android.exoplayer2.C;
@@ -71,6 +75,7 @@ import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
@@ -88,9 +93,10 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static android.content.Context.AUDIO_SERVICE;
+import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.getsetgoapp.util.Utilities.pxFromDp;
 
-public class CourseDetailFragment extends Fragment implements GestureDetector.OnGestureListener, Api.OnHeaderRequestListener{
+public class CourseDetailFragment extends Fragment implements GestureDetector.OnGestureListener, Api.OnHeaderRequestListener, Player.EventListener {
 
     CurriculumLectureAdapter curriculumLectureAdapter;
     StudentsFeedbackAdapter studentsFeedbackAdapter;
@@ -119,8 +125,8 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
 
     private String checkUrl = "";
     private String apiUrl = "";
-        private String videoUrl = "https://player.vimeo.com/external/355047357.sd.mp4?s=70acd77556613cd48ac925134cac183d18287c45&profile_id=164";
-//    private String videoUrl = "";
+//    private String videoUrl = "https://player.vimeo.com/external/355047357.sd.mp4?s=70acd77556613cd48ac925134cac183d18287c45&profile_id=164";
+    private String videoUrl = "";
     String id = "";
     private int videoProgress;
     private int isFavourite;
@@ -151,6 +157,14 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
     Context context;
     CheckBox chkExpClp;
 //    ImageButton chkExpClp;
+
+
+    private SimpleExoPlayer exoPlayer;
+    private PlayerView playerView;
+    private ProgressBar pbVideoPlayer;
+    private ImageView imgFullScreen;
+    public static long lastVideoPosition = 0;
+    public static String videoPlayPath = "";
 
     public CourseDetailFragment() {
     }
@@ -196,8 +210,76 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (exoPlayer!=null){
+            exoPlayer.stop(true);
+        }
+    }
+
+
+    @Override
+    public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+
+        if (playbackState == Player.STATE_BUFFERING) {
+            pbVideoPlayer.setVisibility(View.VISIBLE);
+
+        } else if (playbackState == Player.STATE_READY || playbackState == Player.STATE_ENDED) {
+            pbVideoPlayer.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void playVideo(String videoPath,boolean replay){
+        Log.e("TAG", "playVideo: " + videoPath );
+        videoPlayPath = videoPath;
+        exoPlayer = new SimpleExoPlayer.Builder(getActivity()).build();
+        playerView.setPlayer(exoPlayer);
+        playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIXED_HEIGHT);
+        exoPlayer.setPlayWhenReady(true);
+        exoPlayer.addListener(this);
+
+        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(), Util.getUserAgent(getApplicationContext(), getApplicationContext().getString(R.string.app_name)));
+
+        MediaSource videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
+                .createMediaSource(Uri.parse(videoPath));
+
+        exoPlayer.prepare(videoSource);
+        exoPlayer.setMediaItem(MediaItem.fromUri(videoPath));
+
+        if (replay){
+            if (lastVideoPosition != C.TIME_UNSET) {
+                exoPlayer.seekTo(lastVideoPosition);
+            }
+            exoPlayer.play();
+        }else {
+            exoPlayer.play();
+        }
+
+    }
+
+    private void initializePlayer(View view){
+        lastVideoPosition = 0;
+        pbVideoPlayer = view.findViewById(R.id.pbVideoPlayer);
+        playerView = view.findViewById(R.id.playerView);
+        imgFullScreen = playerView.findViewById(R.id.exo_fullscreen_icon);
+
+        imgFullScreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(exoPlayer!=null){
+                    exoPlayer.pause();
+                    lastVideoPosition =  exoPlayer.getCurrentPosition();
+                    Intent intent = new Intent(getContext(), VideoPlayNewActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+    }
 
     private void init(View view) {
+
+        initializePlayer(view);
 
         String title = this.getArguments().getString("title");
         String slug = this.getArguments().getString("slug");
@@ -417,6 +499,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
 
             }
             videoUrl = list.getString("vimeo_url");
+            playVideo(videoUrl,false);
             videoInit(v, videoUrl);
 
             for (int i = 0; i < list.getJsonArray("course_testimonials").length(); i++)
@@ -952,6 +1035,11 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
     @Override
     public void onPause() {
         super.onPause();
+
+        if (exoPlayer!=null){
+            exoPlayer.pause();
+        }
+
         handler.removeCallbacks(runnable);
 
         try {
@@ -963,9 +1051,16 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         H.log("onPause", "isExecuted");
     }
 
+
+
     @Override
     public void onResume() {
         super.onResume();
+
+        if (Config.isHalfScreen){
+            Config.isHalfScreen = false;
+            playVideo(videoPlayPath,true);
+        }
 
         try {
             customVideoView.resume();

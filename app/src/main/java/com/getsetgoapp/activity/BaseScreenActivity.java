@@ -131,7 +131,9 @@ public class BaseScreenActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_base_screen);
         getAccess();
         init();
+        Log.e("TAG", "trackInstallReferrerURL: "+ new Session(activity).getString(P.referrerUrl));
     }
+
 
     private void onItemClick() {
 

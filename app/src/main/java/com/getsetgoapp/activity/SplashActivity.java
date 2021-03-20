@@ -11,7 +11,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.RemoteException;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.WindowManager;
 
 import com.adoisstudio.helper.Api;
@@ -20,6 +22,10 @@ import com.adoisstudio.helper.JsonList;
 import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
+import com.android.installreferrer.api.InstallReferrerClient;
+import com.android.installreferrer.api.InstallReferrerStateListener;
+import com.android.installreferrer.api.ReferrerDetails;
+import com.facebook.CampaignTrackingReceiver;
 import com.getsetgoapp.BuildConfig;
 import com.getsetgoapp.R;
 import com.getsetgoapp.databinding.ActivitySplashBinding;
@@ -30,6 +36,8 @@ import com.getsetgoapp.util.P;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Objects;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -37,6 +45,8 @@ public class SplashActivity extends AppCompatActivity {
     private ActivitySplashBinding binding;
     public static int deviceWidth;
     public static int deviceHeight;
+    private final Executor backgroundExecutor = Executors.newSingleThreadExecutor();
+    private final String prefKey = "checkedInstallReferrer";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +60,7 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
-
+        checkInstallReferrer();
         getFirebaseToken();
         initView();
         if (CheckConnection.isVailable(activity)){
@@ -60,7 +70,75 @@ public class SplashActivity extends AppCompatActivity {
             });
         }
 
+
     }
+
+    void checkInstallReferrer() {
+        if (getPreferences(MODE_PRIVATE).getBoolean(prefKey, false)) {
+            return;
+        }
+
+        InstallReferrerClient referrerClient = InstallReferrerClient.newBuilder(this).build();
+        backgroundExecutor.execute(() -> getInstallReferrerFromClient(referrerClient));
+    }
+
+    void getInstallReferrerFromClient(InstallReferrerClient referrerClient) {
+
+        referrerClient.startConnection(new InstallReferrerStateListener() {
+            @Override
+            public void onInstallReferrerSetupFinished(int responseCode) {
+                switch (responseCode) {
+                    case InstallReferrerClient.InstallReferrerResponse.OK:
+                        ReferrerDetails response = null;
+                        try {
+                            response = referrerClient.getInstallReferrer();
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                            return;
+                        }
+                        final String referrerUrl = response.getInstallReferrer();
+
+                        // TODO: If you're using GTM, call trackInstallReferrerforGTM instead.
+                        trackInstallReferrer(referrerUrl);
+
+                        // Only check this once.
+//                        getPreferences(MODE_PRIVATE).edit().putBoolean(prefKey, true).commit();
+
+                        // End the connection
+                        referrerClient.endConnection();
+
+                        break;
+                    case InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED:
+                        // API not available on the current Play Store app.
+                        break;
+                    case InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE:
+                        // Connection couldn't be established.
+                        break;
+                }
+            }
+
+            @Override
+            public void onInstallReferrerServiceDisconnected() {
+
+            }
+        });
+    }
+
+    // Tracker for Classic GA (call this if you are using Classic GA only)
+    private void trackInstallReferrer(final String referrerUrl) {
+        Log.e("TAG", "trackInstallReferrerURL: "+ referrerUrl );
+        new Session(activity).addString(P.referrerUrl,referrerUrl);
+        new Handler(getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                CampaignTrackingReceiver receiver = new CampaignTrackingReceiver();
+                Intent intent = new Intent("com.android.vending.INSTALL_REFERRER");
+                intent.putExtra("referrer", referrerUrl);
+                receiver.onReceive(getApplicationContext(), intent);
+            }
+        });
+    }
+
 
     private void initView() {
         generateFcmToken();

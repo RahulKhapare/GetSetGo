@@ -16,6 +16,7 @@ public class P {
 //    public static String buy_course_base_dev = "https://getsetgoworld.com/courses/app_purchase/";
 //    public static String buy_course_base_prod = "https://getsetgoworld.com/courses/app_purchase/";
 
+    public static String referrerUrl = "referrerUrl";
     public static String android_min_version = "android_min_version";
     public static String android_current_version = "android_current_version";
     public static String ip = "ip";

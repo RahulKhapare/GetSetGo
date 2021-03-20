@@ -24,6 +24,10 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" ></activity>
         <activity
+            android:name="com.getsetgoapp.activity.VideoPlayNewActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBarVideo" />
+        <activity
             android:name="com.getsetgoapp.activity.VideoPlayActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBarVideo" />
@@ -100,6 +104,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
     </application>
 
 </manifest>
