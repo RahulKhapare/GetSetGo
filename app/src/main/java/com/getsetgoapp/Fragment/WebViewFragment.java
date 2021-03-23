@@ -1,6 +1,7 @@
 package com.getsetgoapp.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +73,7 @@ public class WebViewFragment extends Fragment {
 
         init();
 
+        Log.e("TAG", "onCreateViewPP: "+ Config.webViewUrl );
         return rootView;
     }
 

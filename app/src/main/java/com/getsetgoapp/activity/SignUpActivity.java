@@ -48,6 +48,7 @@ public class SignUpActivity extends AppCompatActivity {
     private final SignUpActivity activity = this;
     private ActivitySignUpBinding binding;
     private LoadingDialog loadingDialog;
+    private String referrerUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,18 +56,14 @@ public class SignUpActivity extends AppCompatActivity {
         WindowView.getWindow(activity);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        initView();
 
-//        Log.e("TAG", "IP Address: " + getIpAddress() );
-//        Log.e("TAG", "Local IP Address: " + getLocalIpAddress() );
-//        Log.e("TAG", "Mobile IP Address: " + getMobileIPAddress() );
-//        Log.e("TAG", "Wifi IP Address: " + getWifiIPAddress() );
-//        Log.e("TAG", "Extra IP Address: " + getIPAddress(false));
+        referrerUrl = new Session(activity).getString(P.referrerUrl);
+        initView();
 
     }
 
     private void initView() {
-        callSponsorIDApi();
+//        callSponsorIDApi();
         onClick();
         binding.actvIsdCode.setText("+91");
 
@@ -90,6 +87,9 @@ public class SignUpActivity extends AppCompatActivity {
         };
 
         binding.etxSponserId.addTextChangedListener(textWatcher);
+        if (referrerUrl.matches("[0-9]+") && referrerUrl.length() == 9) {
+            binding.etxSponserId.setText(referrerUrl);
+        }
     }
 
 

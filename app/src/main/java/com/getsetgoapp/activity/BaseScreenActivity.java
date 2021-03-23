@@ -48,6 +48,7 @@ import com.getsetgoapp.Fragment.HelpAndSupportFragment;
 import com.getsetgoapp.Fragment.HomeFragment;
 import com.getsetgoapp.Fragment.IncentivesFragment;
 import com.getsetgoapp.Fragment.KYCDocumentFragment;
+import com.getsetgoapp.Fragment.MyOrderFragment;
 import com.getsetgoapp.Fragment.MyPointsFragment;
 import com.getsetgoapp.Fragment.NomineeDetailsFragment;
 import com.getsetgoapp.Fragment.NotificationsFragment;
@@ -131,7 +132,7 @@ public class BaseScreenActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_base_screen);
         getAccess();
         init();
-        Log.e("TAG", "trackInstallReferrerURL: "+ new Session(activity).getString(P.referrerUrl));
+
     }
 
 
@@ -435,6 +436,10 @@ public class BaseScreenActivity extends AppCompatActivity {
                 accountFragment.setArguments(bundle);
                 fragmentLoader(accountFragment, true);
                 break;
+            case R.id.txtMyOrder:
+                loadMyOrderFragment();
+                break;
+
             case R.id.txtNotifications:
                 loadNotificationFragment();
                 break;
@@ -927,6 +932,14 @@ public class BaseScreenActivity extends AppCompatActivity {
 
     private void loadNotificationFragment(){
         NotificationsFragment notificationsFragment = NotificationsFragment.newInstance();
+        Bundle b2 = new Bundle();
+        b2.putBoolean("isFromBottom", false);
+        notificationsFragment.setArguments(b2);
+        fragmentLoader(notificationsFragment, true);
+    }
+
+    private void loadMyOrderFragment(){
+        MyOrderFragment notificationsFragment = MyOrderFragment.newInstance();
         Bundle b2 = new Bundle();
         b2.putBoolean("isFromBottom", false);
         notificationsFragment.setArguments(b2);

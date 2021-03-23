@@ -8,13 +8,13 @@ public class P {
     public static String action_data = "action_data";
     public static String icon = "icon";
 
-    public static String baseUrl = "https://getsetgoworld.com/dev_env/api/";
-    public static String buy_course_base_dev = "https://getsetgoworld.com/dev_env/courses/app_purchase/";
-    public static String buy_course_base_prod = "https://getsetgoworld.com/courses/app_purchase/";
-
-//    public static String baseUrl = "https://getsetgoworld.com/api/";
-//    public static String buy_course_base_dev = "https://getsetgoworld.com/courses/app_purchase/";
+//    public static String baseUrl = "https://getsetgoworld.com/dev_env/api/";
+//    public static String buy_course_base_dev = "https://getsetgoworld.com/dev_env/courses/app_purchase/";
 //    public static String buy_course_base_prod = "https://getsetgoworld.com/courses/app_purchase/";
+
+    public static String baseUrl = "https://getsetgoworld.com/api/";
+    public static String buy_course_base_dev = "https://getsetgoworld.com/courses/app_purchase/";
+    public static String buy_course_base_prod = "https://getsetgoworld.com/courses/app_purchase/";
 
     public static String referrerUrl = "referrerUrl";
     public static String android_min_version = "android_min_version";
@@ -192,6 +192,8 @@ public class P {
     public static String username = "username";
     public static String parent_username = "parent_username";
     public static String courses = "courses";
+    public static String purchase_date = "purchase_date";
+    public static String amount = "amount";
 
 
 

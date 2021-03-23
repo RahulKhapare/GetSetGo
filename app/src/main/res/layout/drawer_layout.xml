@@ -176,6 +176,39 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center"
                             android:layout_weight="1"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_acc_order" />
+
+                        <TextView
+                            android:id="@+id/txtMyOrder"
+                            android:layout_width="0dp"
+                            android:layout_height="35dp"
+                            android:layout_marginLeft="25dp"
+                            android:layout_weight="9"
+                            android:clickable="true"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:gravity="start|center"
+                            android:onClick="onDrawerItemClick"
+                            android:text="My Order"
+                            android:textColor="@color/colorTextDark"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
                             android:src="@drawable/ic_notify" />
 
                         <TextView

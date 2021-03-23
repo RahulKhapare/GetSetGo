@@ -7,12 +7,16 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.WindowManager;
 
@@ -35,6 +39,8 @@ import com.getsetgoapp.util.JumpToLogin;
 import com.getsetgoapp.util.P;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -60,6 +66,7 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
+        printHashKey(activity);
         checkInstallReferrer();
         getFirebaseToken();
         initView();
@@ -72,6 +79,23 @@ public class SplashActivity extends AppCompatActivity {
 
 
     }
+
+    public void printHashKey(Context pContext) {
+        try {
+            PackageInfo info = pContext.getPackageManager().getPackageInfo(pContext.getPackageName(), PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String hashKey = new String(Base64.encode(md.digest(), 0));
+                Log.i("TAG", "printHashKey() Hash Key: " + hashKey);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            Log.e("TAG", "printHashKey()", e);
+        } catch (Exception e) {
+            Log.e("TAG", "printHashKey()", e);
+        }
+    }
+
 
     void checkInstallReferrer() {
         if (getPreferences(MODE_PRIVATE).getBoolean(prefKey, false)) {
@@ -137,10 +161,11 @@ public class SplashActivity extends AppCompatActivity {
                 receiver.onReceive(getApplicationContext(), intent);
             }
         });
+
     }
 
-
     private void initView() {
+
         generateFcmToken();
         deviceWidth = H.getDeviceWidth(this);
         deviceHeight = H.getDeviceHeight(this);

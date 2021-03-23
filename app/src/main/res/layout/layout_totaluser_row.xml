@@ -48,7 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_sans_semibold"
-                    android:text="Green"
+                    android:text=""
                     android:textColor="@color/colorTransferred"
                     android:textSize="14sp" />
 

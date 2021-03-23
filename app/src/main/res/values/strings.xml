@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">GetSetGo</string>
 
-    <string name="facebook_app_id">1338817783117401</string>
-    <string name="fb_login_protocol_scheme">fb1338817783117401</string>
+    <string name="facebook_app_id">149988207000623</string>
+    <string name="fb_login_protocol_scheme">fb149988207000623</string>
+
+    <string name="googleClientID">988982728689-nd6cg0af5o2c647tnk8rv3lsb2fgots5.apps.googleusercontent.com</string>
+    <string name="googleClientSecret">MKpVGLhP5J0IX_x0EKZIr9wu</string>
 
 
     <string name="title_crash_course">Crash Course</string>

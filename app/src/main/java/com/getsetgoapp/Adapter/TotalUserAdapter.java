@@ -1,6 +1,8 @@
 package com.getsetgoapp.Adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +40,8 @@ public class TotalUserAdapter extends RecyclerView.Adapter<TotalUserAdapter.Tota
 
         Json json = jsonList.get(position);
 
+        Log.e("TAG", "onBindViewHolderUSER: "+ json.toString() );
+
         holder.txtName.setText(json.getString("name") +" " + json.getString("lastname"));
         holder.txtDate.setText(json.getString("update_timestamp"));
         holder.txtPhone.setText(json.getString("contact"));
@@ -47,6 +51,17 @@ public class TotalUserAdapter extends RecyclerView.Adapter<TotalUserAdapter.Tota
         holder.txtPPhone.setText(json.getString("fp_contact"));
         holder.txtAddDate.setText(json.getString("add_timestamp"));
         holder.txtStatus.setText(json.getString("status"));
+
+        String has_purchased = json.getString("has_purchased");
+        if (!TextUtils.isEmpty(has_purchased)){
+            if (has_purchased.equals("0")){
+                holder.txtColor.setText("Red");
+                holder.txtColor.setTextColor(context.getResources().getColor(R.color.colorReward));
+            }else if (has_purchased.equals("1")){
+                holder.txtColor.setText("Green");
+                holder.txtColor.setTextColor(context.getResources().getColor(R.color.colorTransferred));
+            }
+        }
 
         holder.rlyView.setOnClickListener(new View.OnClickListener() {
             @Override
