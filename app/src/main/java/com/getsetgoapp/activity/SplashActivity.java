@@ -66,7 +66,8 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
-        printHashKey(activity);
+//        printHashKey(activity);
+//        hashFromSHA1("CF:9B:50:F2:BB:71:B9:C8:58:3B:DA:0F:F6:C7:50:CF:1D:BD:FA:F2");
         checkInstallReferrer();
         getFirebaseToken();
         initView();
@@ -78,6 +79,17 @@ public class SplashActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    public void hashFromSHA1(String sha1) {
+        String[] arr = sha1.split(":");
+        byte[] byteArr = new  byte[arr.length];
+
+        for (int i = 0; i< arr.length; i++) {
+            byteArr[i] = Integer.decode("0x" + arr[i]).byteValue();
+        }
+
+        Log.e("hashKKKKK : ", Base64.encodeToString(byteArr, Base64.NO_WRAP));
     }
 
     public void printHashKey(Context pContext) {

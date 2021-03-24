@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -134,7 +135,6 @@ public class BaseScreenActivity extends AppCompatActivity {
         init();
 
     }
-
 
     private void onItemClick() {
 
