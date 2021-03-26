@@ -55,10 +55,10 @@ public class TotalUserAdapter extends RecyclerView.Adapter<TotalUserAdapter.Tota
         String has_purchased = json.getString("has_purchased");
         if (!TextUtils.isEmpty(has_purchased)){
             if (has_purchased.equals("0")){
-                holder.txtColor.setText("Red");
+                holder.txtColor.setText("Inactive");
                 holder.txtColor.setTextColor(context.getResources().getColor(R.color.colorReward));
             }else if (has_purchased.equals("1")){
-                holder.txtColor.setText("Green");
+                holder.txtColor.setText("Active");
                 holder.txtColor.setTextColor(context.getResources().getColor(R.color.colorTransferred));
             }
         }

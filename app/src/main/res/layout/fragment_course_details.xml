@@ -672,7 +672,7 @@
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cardViewAllCategories"
                             android:layout_width="match_parent"
-                            android:layout_height="140dp"
+                            android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:layout_marginLeft="16dp"
                             android:layout_marginTop="20dp"
@@ -685,6 +685,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:paddingRight="5dp"
                                 android:paddingLeft="10dp">
 
                                 <TextView
@@ -726,33 +729,6 @@
                                         android:layout_toRightOf="@+id/imvViewCategory"
                                         android:orientation="vertical">
 
-                                        <RelativeLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="25dp"
-                                            android:layout_marginTop="2dp">
-
-                                            <ImageView
-                                                android:id="@+id/imvStudents"
-                                                android:layout_width="24dp"
-                                                android:layout_height="24dp"
-                                                android:layout_centerVertical="true"
-                                                android:src="@drawable/ic_student" />
-
-                                            <TextView
-                                                android:id="@+id/txtViewCategory"
-                                                android:layout_width="120dp"
-                                                android:layout_height="wrap_content"
-                                                android:layout_alignParentRight="true"
-                                                android:layout_centerVertical="true"
-                                                android:layout_marginLeft="10dp"
-                                                android:layout_toRightOf="@id/imvStudents"
-                                                android:fontFamily="@font/nunito_sans_regular"
-                                                android:text="20,000 Students"
-                                                android:textColor="@color/colorTextHighLight"
-                                                android:textSize="12sp" />
-
-
-                                        </RelativeLayout>
 
                                         <RelativeLayout
                                             android:layout_width="match_parent"
@@ -761,10 +737,12 @@
 
                                             <ImageView
                                                 android:id="@+id/imvCourse"
-                                                android:layout_width="24dp"
-                                                android:layout_height="24dp"
+                                                android:layout_width="14dp"
+                                                android:layout_height="14dp"
+                                                android:layout_marginLeft="5dp"
                                                 android:layout_centerVertical="true"
-                                                android:src="@drawable/ic_cours" />
+                                                android:src="@drawable/ic_date"
+                                                app:tint="@color/colorTextHighLight" />
 
                                             <TextView
                                                 android:id="@+id/txtCourses"
@@ -775,7 +753,7 @@
                                                 android:layout_marginLeft="10dp"
                                                 android:layout_toRightOf="@id/imvCourse"
                                                 android:fontFamily="@font/nunito_sans_regular"
-                                                android:text="10 Courses"
+                                                android:text=""
                                                 android:textColor="@color/colorTextHighLight"
                                                 android:textSize="12sp" />
 
@@ -792,10 +770,11 @@
                                                 android:layout_width="24dp"
                                                 android:layout_height="24dp"
                                                 android:layout_centerVertical="true"
-                                                android:src="@drawable/ic_rating" />
+                                                android:src="@drawable/ic_cours"
+                                                app:tint="@color/colorTextHighLight" />
 
                                             <TextView
-                                                android:id="@+id/txtRating"
+                                                android:id="@+id/txtJoiningDate"
                                                 android:layout_width="120dp"
                                                 android:layout_height="wrap_content"
                                                 android:layout_alignParentRight="true"
@@ -803,7 +782,7 @@
                                                 android:layout_marginLeft="10dp"
                                                 android:layout_toRightOf="@id/imvRating"
                                                 android:fontFamily="@font/nunito_sans_regular"
-                                                android:text="4.8 Average Rating"
+                                                android:text=""
                                                 android:textColor="@color/colorTextHighLight"
                                                 android:textSize="12sp" />
 
@@ -818,6 +797,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@+id/rlMainDetails"
+                                    android:visibility="gone"
                                     android:gravity="end">
 
                                     <TextView

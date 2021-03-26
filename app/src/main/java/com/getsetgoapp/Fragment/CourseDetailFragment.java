@@ -151,7 +151,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
     TextView txtShowMore, txtViewMore, txtDesc, txtCourseTitle, txtTimeLect,
             txtViewCategoryNewPrice, txtViewCategoryOldPrice,
             txtCouseProfName,
-            txtProff, txtBuyNow, txtTitle, txtLectureTitle, txtVideoDetails, txtPreview;
+            txtProff, txtBuyNow, txtTitle, txtLectureTitle, txtVideoDetails, txtPreview,txtCourses,txtJoiningDate;
     RelativeLayout rlBuyNow;
     ImageView imvViewCategory;
     Context context;
@@ -301,6 +301,8 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         txtViewCategoryNewPrice = view.findViewById(R.id.txtViewCategoryNewPrice);
         txtCouseProfName = view.findViewById(R.id.txtCouseProfName);
         txtProff = view.findViewById(R.id.txtProff);
+        txtCourses = view.findViewById(R.id.txtCourses);
+        txtJoiningDate = view.findViewById(R.id.txtJoiningDate);
         txtViewCategoryOldPrice = view.findViewById(R.id.txtViewCategoryOldPrice);
         txtTimeLect = view.findViewById(R.id.txtTimeLect);
         txtBuyNow = view.findViewById(R.id.txtBuyNow);
@@ -437,7 +439,9 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
 
             if (!s.getJSONObject(0).getString("name").isEmpty()) {
                 txtCouseProfName.setText("Prof. " + s.getJSONObject(0).getString("name"));
-                txtProff.setText("Prof. " + s.getJSONObject(0).getString("name"));
+                txtProff.setText("SME. " + s.getJSONObject(0).getString("name"));
+                txtCourses.setText(s.getJSONObject(0).getString("joining_date"));
+                txtJoiningDate.setText(s.getJSONObject(0).getString("course_count") + " Courses");
             }
             Picasso.get().load(s.getJSONObject(0).getString("image")).placeholder(R.drawable.ic_wp).error(R.drawable.ic_wp).into(imvViewCategory);
 

@@ -69,7 +69,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         ProgressView.show(activity,loadingDialog);
         Json j = new Json();
         j.addString(P.email,binding.etxEmailAddress.getText().toString().trim());
-        Api.newApi(activity, P.baseUrl + "").addJson(j)
+        Api.newApi(activity, P.baseUrl + "forgot_password").addJson(j)
                 .setMethod(Api.POST)
                 .onHeaderRequest(App::getHeaders)
                 .onError(() -> {
@@ -81,15 +81,13 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                 {
                     ProgressView.dismiss(loadingDialog);
                     if (json.getInt(P.status) == 1) {
-                        json = json.getJson(P.data);
-
+                        H.showMessage(activity,json.getString(P.msg));
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 finish();
                             }
                         }, 500);
-
                     }else {
                         H.showMessage(activity,"Something went wrong, try again");
                     }

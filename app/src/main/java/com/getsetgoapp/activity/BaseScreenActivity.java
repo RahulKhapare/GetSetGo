@@ -205,6 +205,8 @@ public class BaseScreenActivity extends AppCompatActivity {
         checkBoxBisness();
         checkBoxTransaction();
         onItemClick();
+
+        Log.e("TAG", "onCheckViewTTT:  " + new Session(activity).getString(P.token)  );
     }
 
     private void checkBoxUsers() {
