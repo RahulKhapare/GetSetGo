@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
@@ -917,6 +918,40 @@
                             android:gravity="start|center"
                             android:onClick="onDrawerItemClick"
                             android:text="Privacy Policy"
+                            android:textColor="@color/colorTextDark"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lnrReferEarn"
+                        android:onClick="onDrawerItemClick"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_baseline_attach_money_24"
+                            app:tint="@color/colorBlackHighlight" />
+
+                        <TextView
+                            android:id="@+id/txtReferEarn"
+                            android:layout_width="0dp"
+                            android:layout_height="35dp"
+                            android:layout_marginLeft="25dp"
+                            android:layout_weight="9"
+                            android:clickable="true"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:gravity="start|center"
+                            android:onClick="onDrawerItemClick"
+                            android:text="Refer &amp; Earn"
                             android:textColor="@color/colorTextDark"
                             android:textSize="16sp" />
 

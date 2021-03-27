@@ -2,6 +2,7 @@ package com.getsetgoapp.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,8 +16,11 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -36,6 +40,7 @@ import com.adoisstudio.helper.JsonList;
 import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
+import com.getsetgoapp.BuildConfig;
 import com.getsetgoapp.Fragment.AccountFragment;
 import com.getsetgoapp.Fragment.AddNewUserFragment;
 import com.getsetgoapp.Fragment.BankDetailsFragment;
@@ -74,6 +79,7 @@ import com.getsetgoapp.util.OpenFile;
 import com.getsetgoapp.util.P;
 import com.getsetgoapp.util.WindowView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
@@ -612,6 +618,9 @@ public class BaseScreenActivity extends AppCompatActivity {
                 Config.webViewUrl = privacyPolicyUrl;
                 fragmentLoader(privacyFragment, true);
                 break;
+            case R.id.txtReferEarn:
+                hitReferralApi(activity);
+                break;
 
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START);
@@ -946,5 +955,71 @@ public class BaseScreenActivity extends AppCompatActivity {
         b2.putBoolean("isFromBottom", false);
         notificationsFragment.setArguments(b2);
         fragmentLoader(notificationsFragment, true);
+    }
+
+    private void QRCodeDialog(String count) {
+
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.activity_qr_code);
+
+        ImageView imgQR = dialog.findViewById(R.id.imgQR);
+        TextView txtQR = dialog.findViewById(R.id.txtQR);
+        TextView txtMessage = dialog.findViewById(R.id.txtMessage);
+
+
+        txtMessage.setText("Users registered using your referral - " + count);
+        String qr_code = "qr_code";
+        String imagePath = new Session(activity).getString(qr_code);
+        if (!imagePath.equals("")){
+            qr_code = imagePath;
+        }
+        Picasso.get().load(qr_code).error(R.drawable.ic_no_image).into(imgQR);
+
+        txtQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                dialog.dismiss();
+                shareApp(activity,new Session(activity).getString(P.app_link));
+            }
+        });
+
+        dialog.setCancelable(true);
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+
+    }
+
+    private void hitReferralApi(Context context) {
+        LoadingDialog loadingDialog = new LoadingDialog(context, false);
+        Api.newApi(context, P.baseUrl + "referral_users")
+                .setMethod(Api.GET)
+                .onHeaderRequest(App::getHeaders)
+                .onLoading(isLoading -> {
+                    if (isLoading)
+                        loadingDialog.show("loading...");
+                    else
+                        loadingDialog.hide();
+                })
+                .onError(() ->
+                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
+                        }))
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        JumpToLogin.call(Json1, context);
+                        loadingDialog.dismiss();
+                        if (Json1.getInt(P.status) == 0) {
+                            H.showMessage(context, Json1.getString(P.err));
+                        } else if (Json1.getInt(P.status) == 1) {
+                            Json1 = Json1.getJson(P.data);
+                            String referral_users = Json1.getString(P.referral_users);
+                            QRCodeDialog(referral_users);
+                        }
+                    }
+
+                }).run("hitReferralApi");
     }
 }

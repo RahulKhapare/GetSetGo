@@ -25,14 +25,20 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
+import com.adoisstudio.helper.Api;
+import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.LoadingDialog;
+import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
 import com.getsetgoapp.R;
 
 import com.getsetgoapp.activity.BaseScreenActivity;
 
 import com.getsetgoapp.databinding.FragmentAccountBinding;
+import com.getsetgoapp.util.App;
 import com.getsetgoapp.util.Click;
 import com.getsetgoapp.util.Config;
+import com.getsetgoapp.util.JumpToLogin;
 import com.getsetgoapp.util.P;
 import com.squareup.picasso.Picasso;
 
@@ -138,7 +144,7 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
-                QRCodeDialog();
+                hitReferralApi(getActivity());
             }
         });
 
@@ -243,8 +249,39 @@ public class AccountFragment extends Fragment {
                 .commit();
     }
 
+    private void hitReferralApi(Context context) {
+        LoadingDialog loadingDialog = new LoadingDialog(context, false);
+        Api.newApi(context, P.baseUrl + "referral_users")
+                .setMethod(Api.GET)
+                .onHeaderRequest(App::getHeaders)
+                .onLoading(isLoading -> {
+                    if (isLoading)
+                        loadingDialog.show("loading...");
+                    else
+                        loadingDialog.hide();
+                })
+                .onError(() ->
+                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
+                        }))
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        JumpToLogin.call(Json1, context);
+                        loadingDialog.dismiss();
+                        if (Json1.getInt(P.status) == 0) {
+                            H.showMessage(context, Json1.getString(P.err));
+                        } else if (Json1.getInt(P.status) == 1) {
+                            Json1 = Json1.getJson(P.data);
+                            String referral_users = Json1.getString(P.referral_users);
+                            QRCodeDialog(referral_users);
+                        }
+                    }
 
-    private void QRCodeDialog() {
+                }).run("hitReferralApi");
+    }
+
+
+    private void QRCodeDialog(String count) {
 
         final Dialog dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -252,7 +289,10 @@ public class AccountFragment extends Fragment {
 
         ImageView imgQR = dialog.findViewById(R.id.imgQR);
         TextView txtQR = dialog.findViewById(R.id.txtQR);
+        TextView txtMessage = dialog.findViewById(R.id.txtMessage);
 
+
+        txtMessage.setText("Users registered using your referral - " + count);
         String qr_code = "qr_code";
         String imagePath = new Session(getActivity()).getString(qr_code);
         if (!imagePath.equals("")){

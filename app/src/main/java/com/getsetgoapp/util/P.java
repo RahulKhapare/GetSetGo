@@ -23,6 +23,7 @@ public class P {
     public static String status = "status";
     public static String fcm_value = "fcm_value";
     public static String err = "err";
+    public static String referral_users = "referral_users";
     public static String data = "data";
     public static String user_details = "user_details";
     public static String sponsor = "sponsor";
