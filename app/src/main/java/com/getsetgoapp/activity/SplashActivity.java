@@ -65,6 +65,7 @@ public class SplashActivity extends AppCompatActivity {
             );
         }
 
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
 //        printHashKey(activity);
 //        hashFromSHA1("CF:9B:50:F2:BB:71:B9:C8:58:3B:DA:0F:F6:C7:50:CF:1D:BD:FA:F2");
@@ -77,7 +78,6 @@ public class SplashActivity extends AppCompatActivity {
             MessageBox.showOkMessage(activity, "Message", "No internet connection available", () -> {
             });
         }
-
 
     }
 

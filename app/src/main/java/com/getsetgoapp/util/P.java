@@ -193,5 +193,6 @@ public class P {
     public static String amount = "amount";
     public static String joining_date = "joining_date";
     public static String course_count = "course_count";
+    public static String welcome = "welcome";
 
 }

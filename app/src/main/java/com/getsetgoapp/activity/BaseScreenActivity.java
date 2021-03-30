@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -22,6 +23,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
@@ -78,6 +80,17 @@ import com.getsetgoapp.util.JumpToLogin;
 import com.getsetgoapp.util.OpenFile;
 import com.getsetgoapp.util.P;
 import com.getsetgoapp.util.WindowView;
+import com.google.android.exoplayer2.C;
+import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.Player;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.ProgressiveMediaSource;
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 
@@ -88,7 +101,7 @@ import static com.getsetgoapp.Fragment.CurrentLearningFragment.REQUEST_CODE;
 import static com.getsetgoapp.Fragment.CurrentLearningFragment.RESULT_CODE;
 
 
-public class BaseScreenActivity extends AppCompatActivity {
+public class BaseScreenActivity extends AppCompatActivity implements Player.EventListener{
 
 
     private final BaseScreenActivity activity = this;
@@ -132,6 +145,13 @@ public class BaseScreenActivity extends AppCompatActivity {
     public static String organization_chart_url = "";
     public static String faq_url = "";
 
+    private SimpleExoPlayer exoPlayer;
+    private PlayerView playerView;
+    private ProgressBar pbVideoPlayer;
+
+    String welcomeMessage = "Welcome to the team! We are thrilled to have you at our office. You're going to be a valuable asset to our company and we can't wait to see all that you accomplish. The entire team of [name of the company] is thrilled to welcome you on board. We hope you'll do some amazing works here!";
+    String videoUrl = "https://www.rmp-streaming.com/media/big-buck-bunny-360p.mp4";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,6 +159,11 @@ public class BaseScreenActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_base_screen);
         getAccess();
         init();
+
+        if (!new Session(activity).getBool(P.welcome)){
+            new Session(activity).addBool(P.welcome,true);
+            welcomeDialog(videoUrl,welcomeMessage);
+        }
 
     }
 
@@ -955,6 +980,81 @@ public class BaseScreenActivity extends AppCompatActivity {
         b2.putBoolean("isFromBottom", false);
         notificationsFragment.setArguments(b2);
         fragmentLoader(notificationsFragment, true);
+    }
+
+    private void welcomeDialog(String url,String message) {
+
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.activity_welcome);
+
+        pbVideoPlayer = dialog.findViewById(R.id.pbVideoPlayer);
+        playerView = dialog.findViewById(R.id.playerView);
+
+        TextView textView = dialog.findViewById(R.id.txtMessage);
+        textView.setText(message);
+
+        playVideo(url,false);
+
+         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if (exoPlayer!=null){
+                    exoPlayer.stop(true);
+                }
+            }
+        });
+
+        dialog.setCancelable(true);
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+
+    }
+
+    private void playVideo(String videoPath,boolean replay){
+        exoPlayer = new SimpleExoPlayer.Builder(activity).build();
+        playerView.setPlayer(exoPlayer);
+        playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIXED_HEIGHT);
+        exoPlayer.setPlayWhenReady(true);
+        exoPlayer.addListener(this);
+
+        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(), Util.getUserAgent(getApplicationContext(), getApplicationContext().getString(R.string.app_name)));
+
+        MediaSource videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
+                .createMediaSource(Uri.parse(videoPath));
+
+        exoPlayer.prepare(videoSource);
+        exoPlayer.setMediaItem(MediaItem.fromUri(videoPath));
+        exoPlayer.play();
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (exoPlayer!=null){
+            exoPlayer.stop(true);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (exoPlayer!=null){
+            exoPlayer.pause();
+        }
+    }
+
+    @Override
+    public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+
+        if (playbackState == Player.STATE_BUFFERING) {
+            pbVideoPlayer.setVisibility(View.VISIBLE);
+
+        } else if (playbackState == Player.STATE_READY || playbackState == Player.STATE_ENDED) {
+            pbVideoPlayer.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void QRCodeDialog(String count) {
