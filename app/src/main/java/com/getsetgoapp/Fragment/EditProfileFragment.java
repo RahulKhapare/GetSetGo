@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -28,6 +29,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
@@ -88,6 +90,7 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
     GenderAdapter genderAdapter;
 
     private static final int REQUEST_GALLARY = 9;
+    private static final int PIC_CROP = 22;
     private static final int REQUEST_CAMERA = 10;
     private static final int READ_WRIRE = 11;
     private Uri cameraURI;
@@ -125,6 +128,9 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_profile, container, false);
         View rootView = binding.getRoot();
+
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
 
         session = new Session(getActivity());
 
@@ -488,10 +494,10 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
         }
     }
 
+
     private void openCamera() {
         try {
-            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-            StrictMode.setVmPolicy(builder.build());
+
             String fileName = String.format("%d.jpg", System.currentTimeMillis());
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             File file = new File(Environment.getExternalStorageDirectory(),
@@ -500,15 +506,19 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
             intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraURI);
             startActivityForResult(intent, REQUEST_CAMERA);
         } catch (Exception e) {
+            H.showMessage(getActivity(),"Whoops - your device doesn't support capturing images!");
         }
     }
 
     private void openGallery() {
         try {
-            Intent i = new Intent(
+            Intent intent = new Intent(
                     Intent.ACTION_PICK,
                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(i, REQUEST_GALLARY);
+            intent.putExtra("crop", "true");
+            intent.putExtra("aspectX", 0);
+            intent.putExtra("aspectY", 0);
+            startActivityForResult(intent, REQUEST_GALLARY);
         } catch (Exception e) {
         }
     }
@@ -551,7 +561,22 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
             case REQUEST_CAMERA:
                 if (resultCode == Activity.RESULT_OK) {
                     try {
-                        setImageData(cameraURI);
+                        performCrop(cameraURI);
+//                        setImageData(cameraURI);
+                    } catch (Exception e) {
+                    }
+                }
+                break;
+            case PIC_CROP:
+                if (resultCode == Activity.RESULT_OK) {
+                    try {
+
+                        if (data != null) {
+                            Bundle extras = data.getExtras();
+                            Bitmap bitmap = extras.getParcelable("data");
+                            base64Image = encodeImage(bitmap);
+                            hitUploadImage(getActivity(),base64Image);
+                        }
                     } catch (Exception e) {
                     }
                 }
@@ -559,6 +584,24 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
         }
     }
 
+
+    private void performCrop(Uri picUri){
+        try {
+
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            cropIntent.setDataAndType(picUri, "image/*");
+            cropIntent.putExtra("crop", "true");
+            cropIntent.putExtra("aspectX", 1);
+            cropIntent.putExtra("aspectY", 1);
+            cropIntent.putExtra("outputX", 128);
+            cropIntent.putExtra("outputY", 128);
+            cropIntent.putExtra("return-data", true);
+            startActivityForResult(cropIntent, PIC_CROP);
+        }
+        catch (Error anfe) {
+           H.showMessage(getActivity(),"Whoops - your device doesn't support the crop action!");
+        }
+    }
 
     private void setImageData(Uri uri) {
         base64Image = "";

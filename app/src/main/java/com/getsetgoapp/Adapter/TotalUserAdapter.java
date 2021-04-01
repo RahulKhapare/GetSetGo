@@ -52,13 +52,24 @@ public class TotalUserAdapter extends RecyclerView.Adapter<TotalUserAdapter.Tota
         holder.txtAddDate.setText(json.getString("add_timestamp"));
         holder.txtStatus.setText(json.getString("status"));
 
+        String status = json.getString("status");
+
+        if (!TextUtils.isEmpty(status))
+        {
+            if (status.equals("0")){
+                holder.txtStatus.setText("Inactive");
+            }else if (status.equals("1")){
+                holder.txtStatus.setText("Active");
+            }
+        }
+
         String has_purchased = json.getString("has_purchased");
         if (!TextUtils.isEmpty(has_purchased)){
             if (has_purchased.equals("0")){
-                holder.txtColor.setText("Inactive");
+                holder.txtColor.setText("Red");
                 holder.txtColor.setTextColor(context.getResources().getColor(R.color.colorReward));
             }else if (has_purchased.equals("1")){
-                holder.txtColor.setText("Active");
+                holder.txtColor.setText("Green");
                 holder.txtColor.setTextColor(context.getResources().getColor(R.color.colorTransferred));
             }
         }

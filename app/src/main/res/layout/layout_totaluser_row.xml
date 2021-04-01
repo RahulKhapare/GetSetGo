@@ -49,7 +49,6 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_sans_semibold"
                     android:text=""
-                    android:textColor="@color/colorTransferred"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -128,7 +127,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_sans_regular"
-                    android:text="91-9930485960"
+                    android:text=""
                     android:autoLink="phone"
                     android:drawableLeft="@drawable/whatsapp_bg"
                     android:drawablePadding="5dp"
@@ -151,7 +150,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_sans_regular"
-                    android:text="abhilasha.dani@gmail.com"
+                    android:text=""
                     android:autoLink="email"
                     android:drawableLeft="@drawable/email_bg"
                     android:drawablePadding="5dp"
@@ -173,7 +172,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_sans_regular"
-                    android:text="Abhilasha Hanwante"
+                    android:text=""
                     android:textColor="@color/colorTextDark"
                     android:textSize="16sp" />
 
@@ -192,7 +191,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_sans_regular"
-                    android:text="abhilasha.dani@gmail.com"
+                    android:text=""
                     android:autoLink="email"
                     android:drawableLeft="@drawable/email_bg"
                     android:drawablePadding="5dp"
@@ -216,7 +215,7 @@
                     android:fontFamily="@font/nunito_sans_regular"
                     android:drawableLeft="@drawable/whatsapp_bg"
                     android:drawablePadding="5dp"
-                    android:text="91-9322886646"
+                    android:text=""
                     android:autoLink="phone"
                     android:textColor="@color/colorTextDark"
                     android:textSize="16sp" />
@@ -236,7 +235,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_sans_regular"
-                    android:text="01 Jan 2020"
+                    android:text=""
                     android:textColor="@color/colorTextDark"
                     android:textSize="16sp" />
 
@@ -255,7 +254,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_sans_regular"
-                    android:text="Active"
+                    android:text=""
                     android:textColor="@color/colorTextDark"
                     android:textSize="16sp" />
 

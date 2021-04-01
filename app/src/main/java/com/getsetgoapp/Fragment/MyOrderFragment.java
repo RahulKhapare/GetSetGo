@@ -63,7 +63,7 @@ public class MyOrderFragment extends Fragment {
         View rootView = binding.getRoot();
 
         isFromBottom = getArguments().getBoolean("isFromBottom");
-        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("My Order");
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("My Orders");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
 
         init();

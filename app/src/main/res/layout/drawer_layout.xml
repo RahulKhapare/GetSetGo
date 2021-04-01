@@ -64,6 +64,7 @@
                         android:layout_below="@+id/txtEmail"
                         android:fontFamily="@font/nunit_sans_bold"
                         android:text="Business Profile"
+                        android:visibility="gone"
                         android:textColor="@color/colorTextProfile"
                         android:textSize="10sp" />
 
