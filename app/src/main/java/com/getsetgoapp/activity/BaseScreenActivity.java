@@ -1,16 +1,20 @@
 package com.getsetgoapp.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -51,6 +55,7 @@ import com.getsetgoapp.Fragment.CourseDetailFragment;
 import com.getsetgoapp.Fragment.CurrentLearningFragment;
 import com.getsetgoapp.Fragment.DashBoardFragment;
 import com.getsetgoapp.Fragment.EarningsFragment;
+import com.getsetgoapp.Fragment.EditProfileFragment;
 import com.getsetgoapp.Fragment.FreeCourseFragment;
 import com.getsetgoapp.Fragment.HelpAndSupportFragment;
 import com.getsetgoapp.Fragment.HomeFragment;
@@ -94,7 +99,12 @@ import com.google.android.exoplayer2.util.Util;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.getsetgoapp.Fragment.CurrentLearningFragment.PLAYBACK_POSITION;
 import static com.getsetgoapp.Fragment.CurrentLearningFragment.REQUEST_CODE;
@@ -132,9 +142,23 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
     OnBackPressedCallback onBackPressedCallback;
     private LoadingDialog loadingDialog;
 
+    private static final int REQUEST_GALLARY = 9;
+    private static final int PIC_CROP = 22;
+    private static final int REQUEST_CAMERA = 10;
+    private Uri cameraURI;
+    private int click;
+    private int cameraClick = 0;
+    private int galleryClick = 1;
+    private String base64Image = "";
+
+    CircleImageView circleProfileImageView;
     private static final int READ_WRITE = 20;
     private String pdf_url = "";
     private String pdf_title = "";
+
+    private int clickFOR = 0;
+    private int clickPDF = 1;
+    private int clickIMAGE = 2;
 
     public static JsonList occupation_list = null;
     public static JsonList marital_status_list = null;
@@ -160,10 +184,10 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         getAccess();
         init();
 
-        if (!new Session(activity).getBool(P.welcome)){
-            new Session(activity).addBool(P.welcome,true);
-            welcomeDialog(videoUrl,welcomeMessage);
-        }
+//        if (!new Session(activity).getBool(P.welcome)){
+//            new Session(activity).addBool(P.welcome,true);
+//            welcomeDialog(videoUrl,welcomeMessage);
+//        }
 
     }
 
@@ -461,6 +485,9 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
                 if (dashBoardFragment == null)
                     dashBoardFragment = DashBoardFragment.newInstance();
                 fragmentLoader(dashBoardFragment, true);
+                break;
+            case R.id.txtUserProfile:
+                loadEditProfileFragment();
                 break;
             case R.id.txtAccount:
                 if (accountFragment == null)
@@ -798,6 +825,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE && resultCode == RESULT_CODE) {
+
             String testResult = data.getStringExtra(PLAYBACK_POSITION);
 
             long l = Long.parseLong(testResult);
@@ -809,9 +837,44 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
 
 //            Toast.makeText(getActivity(),"Playback position result "+testResult,Toast.LENGTH_SHORT).show();
         }
+
+        switch (requestCode) {
+            case REQUEST_GALLARY:
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    try {
+                        Uri selectedImage = data.getData();
+                        setImageData(selectedImage);
+                    } catch (Exception e) {
+                    }
+                }
+                break;
+            case REQUEST_CAMERA:
+                if (resultCode == Activity.RESULT_OK) {
+                    try {
+                        performCrop(cameraURI);
+                    } catch (Exception e) {
+                    }
+                }
+                break;
+            case PIC_CROP:
+                if (resultCode == Activity.RESULT_OK) {
+                    try {
+
+                        if (data != null) {
+                            Bundle extras = data.getExtras();
+                            Bitmap bitmap = extras.getParcelable("data");
+                            base64Image = encodeImage(bitmap);
+                            EditProfileFragment.newInstance().hitUploadImage(activity,base64Image,circleProfileImageView);
+                        }
+                    } catch (Exception e) {
+                    }
+                }
+                break;
+        }
     }
 
     public void checkPDFPath(CourseDocumentModel model) {
+        clickFOR = clickPDF;
         pdf_title = model.getFile_name();
         pdf_url = model.getFile();
         checkPDF();
@@ -836,7 +899,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
 
     private void getPermission() {
         ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
                 READ_WRITE);
     }
 
@@ -856,7 +919,15 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
             case READ_WRITE: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    checkDirectory(this, pdf_url, pdf_title);
+                    if (clickFOR==clickPDF){
+                        checkDirectory(this, pdf_url, pdf_title);
+                    }else if (clickFOR==clickIMAGE){
+                        if (click == cameraClick) {
+                            openCamera();
+                        } else if (click == galleryClick) {
+                            openGallery();
+                        }
+                    }
                 } else if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
                     jumpToSetting();
                 } else {
@@ -965,6 +1036,15 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
                 .commit();
     }
 
+
+    private void loadEditProfileFragment(){
+        Config.FROM_DASHBOARD = true;
+        EditProfileFragment editProfileFragment = EditProfileFragment.newInstance();
+        Bundle b2 = new Bundle();
+        b2.putBoolean("isFromBottom", false);
+        editProfileFragment.setArguments(b2);
+        fragmentLoader(editProfileFragment, true);
+    }
 
     private void loadNotificationFragment(){
         NotificationsFragment notificationsFragment = NotificationsFragment.newInstance();
@@ -1121,5 +1201,101 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
                     }
 
                 }).run("hitReferralApi");
+    }
+
+
+    public void onUploadClick(CircleImageView image) {
+        circleProfileImageView = image;
+        clickFOR = clickIMAGE;
+        Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.activity_upload_dialog);
+        dialog.findViewById(R.id.txtCamera).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                dialog.cancel();
+                click = cameraClick;
+                getPermission();
+            }
+        });
+        dialog.findViewById(R.id.txtGallary).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                dialog.cancel();
+                click = galleryClick;
+                getPermission();
+            }
+        });
+        dialog.setCancelable(true);
+        dialog.show();
+    }
+
+    private void openCamera() {
+        try {
+            String fileName = String.format("%d.jpg", System.currentTimeMillis());
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            File file = new File(Environment.getExternalStorageDirectory(),
+                    fileName);
+            cameraURI = Uri.fromFile(file);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraURI);
+            startActivityForResult(intent, REQUEST_CAMERA);
+        } catch (Exception e) {
+            H.showMessage(activity,"Whoops - your device doesn't support capturing images!");
+        }
+    }
+
+    private void openGallery() {
+        try {
+            Intent intent = new Intent(
+                    Intent.ACTION_PICK,
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            intent.putExtra("crop", "true");
+            intent.putExtra("aspectX", 0);
+            intent.putExtra("aspectY", 0);
+            startActivityForResult(intent, REQUEST_GALLARY);
+        } catch (Exception e) {
+        }
+    }
+
+    private void performCrop(Uri picUri){
+        try {
+
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            cropIntent.setDataAndType(picUri, "image/*");
+            cropIntent.putExtra("crop", "true");
+            cropIntent.putExtra("aspectX", 1);
+            cropIntent.putExtra("aspectY", 1);
+            cropIntent.putExtra("outputX", 128);
+            cropIntent.putExtra("outputY", 128);
+            cropIntent.putExtra("return-data", true);
+            startActivityForResult(cropIntent, PIC_CROP);
+        }
+        catch (Error anfe) {
+            H.showMessage(activity,"Whoops - your device doesn't support the crop action!");
+        }
+    }
+
+    private void setImageData(Uri uri) {
+        base64Image = "";
+        try {
+            InputStream imageStream = getContentResolver().openInputStream(uri);
+            Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+            base64Image = encodeImage(selectedImage);
+            EditProfileFragment.newInstance().hitUploadImage(activity,base64Image,circleProfileImageView);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Log.e("TAG", "setImageDataEE: "+ e.getMessage() );
+            H.showMessage(activity, "Unable to get image, try again.");
+        }
+    }
+
+    private String encodeImage(Bitmap bm) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String encImage = Base64.encodeToString(b, Base64.DEFAULT);
+        return encImage;
     }
 }

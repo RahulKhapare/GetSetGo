@@ -1,42 +1,26 @@
 package com.getsetgoapp.Fragment;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.StrictMode;
-import android.provider.MediaStore;
-import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.adoisstudio.helper.Api;
@@ -55,20 +39,19 @@ import com.getsetgoapp.activity.BaseScreenActivity;
 import com.getsetgoapp.databinding.FragmentEditProfileBinding;
 import com.getsetgoapp.util.App;
 import com.getsetgoapp.util.Click;
+import com.getsetgoapp.util.Config;
 import com.getsetgoapp.util.JumpToLogin;
 import com.getsetgoapp.util.P;
 import com.getsetgoapp.util.ProgressView;
 import com.squareup.picasso.Picasso;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditProfileFragment extends Fragment implements GenderAdapter.click {
 
@@ -79,8 +62,6 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
     String gender = "";
     String occupation = "";
     String maritalStatus = "";
-    String profilePic = "";
-    String file_path = "";
     private List<SpinnerModel> occupationList;
     private List<SpinnerModel> maritalStatusList;
     SpinnerSelectionAdapter statusAdapter;
@@ -89,15 +70,6 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
     List<GenderModel> genderModelList;
     GenderAdapter genderAdapter;
 
-    private static final int REQUEST_GALLARY = 9;
-    private static final int PIC_CROP = 22;
-    private static final int REQUEST_CAMERA = 10;
-    private static final int READ_WRIRE = 11;
-    private Uri cameraURI;
-    private int click;
-    private int cameraClick = 0;
-    private int galleryClick = 1;
-    private String base64Image = "";
     Session session;
 
     public EditProfileFragment() {
@@ -134,7 +106,6 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
 
         session = new Session(getActivity());
 
-        strictMode();
         loadingDialog = new LoadingDialog(getActivity());
 
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Edit Profile");
@@ -158,7 +129,7 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
         binding.spinnerMaritalStatus.setAdapter(statusAdapter);
 
         genderModelList = new ArrayList<>();
-        genderAdapter = new GenderAdapter(getActivity(),genderModelList,EditProfileFragment.this,true);
+        genderAdapter = new GenderAdapter(getActivity(), genderModelList, EditProfileFragment.this, true);
         binding.recyclerGender.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         binding.recyclerGender.setNestedScrollingEnabled(false);
         binding.recyclerGender.setAdapter(genderAdapter);
@@ -184,13 +155,13 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
         return rootView;
     }
 
-    private void setProfileData(){
+    private void setProfileData() {
         String date = session.getString(P.dob);
-        if (!TextUtils.isEmpty(date) && !date.equals("null")){
+        if (!TextUtils.isEmpty(date) && !date.equals("null")) {
             binding.etxDate.setText(date);
         }
         String profile_picture = session.getString(P.profile_picture);
-        if (!TextUtils.isEmpty(profile_picture)){
+        if (!TextUtils.isEmpty(profile_picture)) {
             Picasso.get().load(profile_picture).placeholder(R.drawable.ic_profile_imag).error(R.drawable.ic_profile_imag).into(binding.imgProfileImage);
         }
     }
@@ -200,15 +171,15 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
         gender = id;
     }
 
-    private void onClick(){
+    private void onClick() {
 
         binding.spinnerOccupation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 SpinnerModel model = occupationList.get(position);
-                if (TextUtils.isEmpty(model.getId())){
+                if (TextUtils.isEmpty(model.getId())) {
                     occupation = "";
-                }else {
+                } else {
                     occupation = model.getId();
                 }
             }
@@ -223,9 +194,9 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 SpinnerModel model = maritalStatusList.get(position);
-                if (TextUtils.isEmpty(model.getId())){
+                if (TextUtils.isEmpty(model.getId())) {
                     maritalStatus = "";
-                }else {
+                } else {
                     maritalStatus = model.getId();
                 }
             }
@@ -243,11 +214,11 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
             }
         });
 
-        binding.lnrUploadImage.setOnClickListener(new View.OnClickListener() {
+        binding.imgProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
-                onUploadClick();
+                ((BaseScreenActivity) getActivity()).onUploadClick(binding.imgProfileImage);
             }
         });
 
@@ -255,15 +226,15 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
-                if (TextUtils.isEmpty(occupation)){
-                    H.showMessage(getActivity(),"Please select occupation");
-                }else if (TextUtils.isEmpty(binding.etxDate.getText().toString().trim())){
-                    H.showMessage(getActivity(),"Please select date of birth");
-                }else if (TextUtils.isEmpty(maritalStatus)){
-                    H.showMessage(getActivity(),"Please select marital status");
-                }else if (TextUtils.isEmpty(gender)){
-                    H.showMessage(getActivity(),"Please select gender");
-                }else {
+                if (TextUtils.isEmpty(occupation)) {
+                    H.showMessage(getActivity(), "Please select occupation");
+                } else if (TextUtils.isEmpty(binding.etxDate.getText().toString().trim())) {
+                    H.showMessage(getActivity(), "Please select date of birth");
+                } else if (TextUtils.isEmpty(maritalStatus)) {
+                    H.showMessage(getActivity(), "Please select marital status");
+                } else if (TextUtils.isEmpty(gender)) {
+                    H.showMessage(getActivity(), "Please select gender");
+                } else {
                     hitUpdateProfile(getActivity());
                 }
             }
@@ -271,13 +242,17 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
 
     }
 
-    private void onBackClick(){
-        if(getFragmentManager().getBackStackEntryCount() > 0){
-            if(isFromBottom){
+    private void onBackClick() {
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            if (isFromBottom) {
                 getFragmentManager().popBackStackImmediate();
                 BaseScreenActivity.binding.bottomNavigation.setVisibility(View.VISIBLE);
                 BaseScreenActivity.binding.bottomNavigation.setSelectedItemId(R.id.menu_Account);
-            }else{
+            } else if (Config.FROM_DASHBOARD) {
+                Config.FROM_DASHBOARD = false;
+                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                BaseScreenActivity.callBack();
+            } else {
                 getFragmentManager().popBackStackImmediate();
             }
         }
@@ -302,18 +277,18 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
 
     }
 
-    private void setupOccupationData(JsonList jsonList){
+    private void setupOccupationData(JsonList jsonList) {
         String id = session.getString(P.occupation_id);
         int adapterPosition = 0;
-        if (jsonList!=null && jsonList.size()!=0){
-            for (int i=0; i<jsonList.size(); i++){
+        if (jsonList != null && jsonList.size() != 0) {
+            for (int i = 0; i < jsonList.size(); i++) {
                 Json json = jsonList.get(i);
                 SpinnerModel model = new SpinnerModel();
                 model.setId(json.getString(P.id));
                 model.setName(json.getString(P.occupation_name));
                 occupationList.add(model);
-                if (!TextUtils.isEmpty(id) && model.getId().equals(id)){
-                    adapterPosition = i+1;
+                if (!TextUtils.isEmpty(id) && model.getId().equals(id)) {
+                    adapterPosition = i + 1;
                 }
             }
             occupationAdapter.notifyDataSetChanged();
@@ -321,18 +296,18 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
         }
     }
 
-    private void setupStatusData(JsonList jsonList){
+    private void setupStatusData(JsonList jsonList) {
         String id = session.getString(P.marital_status_id);
         int adapterPosition = 0;
-        if (jsonList!=null && jsonList.size()!=0){
-            for (int i=0; i<jsonList.size(); i++){
+        if (jsonList != null && jsonList.size() != 0) {
+            for (int i = 0; i < jsonList.size(); i++) {
                 Json json = jsonList.get(i);
                 SpinnerModel model = new SpinnerModel();
                 model.setId(json.getString(P.id));
                 model.setName(json.getString(P.title));
                 maritalStatusList.add(model);
-                if (!TextUtils.isEmpty(id) && model.getId().equals(id)){
-                    adapterPosition = i+1;
+                if (!TextUtils.isEmpty(id) && model.getId().equals(id)) {
+                    adapterPosition = i + 1;
                 }
             }
             statusAdapter.notifyDataSetChanged();
@@ -340,9 +315,9 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
         }
     }
 
-    private void setupGenderData(JsonList jsonList){
-        if (jsonList!=null && jsonList.size()!=0){
-            for (int i=0; i<jsonList.size(); i++){
+    private void setupGenderData(JsonList jsonList) {
+        if (jsonList != null && jsonList.size() != 0) {
+            for (int i = 0; i < jsonList.size(); i++) {
                 Json json = jsonList.get(i);
                 GenderModel model = new GenderModel();
                 model.setName(json.getString(P.name));
@@ -354,14 +329,14 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
     }
 
     private void hitUpdateProfile(Context context) {
-        ProgressView.show(context,loadingDialog);
+        ProgressView.show(context, loadingDialog);
 
         Json j = new Json();
-        j.addString(P.occupation_id,occupation);
-        j.addString(P.dob,binding.etxDate.getText().toString().trim());
-        j.addString(P.marital_status_id,maritalStatus);
-        j.addString(P.gender,gender);
-        j.addString(P.profile_picture,profilePic);
+        j.addString(P.occupation_id, occupation);
+        j.addString(P.dob, binding.etxDate.getText().toString().trim());
+        j.addString(P.marital_status_id, maritalStatus);
+        j.addString(P.gender, gender);
+        j.addString(P.profile_picture, Config.profilePic);
 
         Api.newApi(context, P.baseUrl + "edit_profile").addJson(j)
                 .setMethod(Api.POST)
@@ -373,22 +348,22 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
                 })
                 .onSuccess(json ->
                 {
-                    JumpToLogin.call(json,context);
+                    JumpToLogin.call(json, context);
                     ProgressView.dismiss(loadingDialog);
                     if (json.getInt(P.status) == 1) {
-                        H.showMessage(context,"Profile save successfully");
-                        session.addString(P.dob,binding.etxDate.getText().toString().trim());
-                        session.addString(P.occupation_id,occupation);
-                        session.addString(P.marital_status_id,maritalStatus);
-                        session.addString(P.gender,gender);
-                        if (!TextUtils.isEmpty(file_path)){
-                            session.addString(P.profile_picture,file_path);
+                        H.showMessage(context, "Profile save successfully");
+                        session.addString(P.dob, binding.etxDate.getText().toString().trim());
+                        session.addString(P.occupation_id, occupation);
+                        session.addString(P.marital_status_id, maritalStatus);
+                        session.addString(P.gender, gender);
+                        if (!TextUtils.isEmpty(Config.file_path)) {
+                            session.addString(P.profile_picture, Config.file_path);
                         }
                         final Handler handler = new Handler(Looper.getMainLooper());
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                getFragmentManager().popBackStackImmediate();
+                                onBackClick();
                             }
                         }, 500);
                     }
@@ -396,12 +371,12 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
                 .run("hitUpdateProfile");
     }
 
-    private void hitUploadImage(Context context,String base64Image) {
-        ProgressView.show(context,loadingDialog);
+    public void hitUploadImage(Context context, String base64Image,CircleImageView circleProfileImageView) {
+        ProgressView.show(context, loadingDialog);
 
         Json j = new Json();
-        j.addString(P.type,"profile_picture");
-        j.addString(P.content,"data:image/jpeg;base64,"+base64Image);
+        j.addString(P.type, "profile_picture");
+        j.addString(P.content, "data:image/jpeg;base64," + base64Image);
 
         Api.newApi(context, P.baseUrl + "upload").addJson(j)
                 .setMethod(Api.POST)
@@ -413,216 +388,18 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
                 })
                 .onSuccess(json ->
                 {
-                    JumpToLogin.call(json,context);
+                    JumpToLogin.call(json, context);
                     ProgressView.dismiss(loadingDialog);
                     if (json.getInt(P.status) == 1) {
                         Json jsonData = json.getJson(P.data);
-                        profilePic = jsonData.getString(P.file_name);
-                        file_path = jsonData.getString(P.file_path);
-                        Picasso.get().load(file_path).placeholder(R.drawable.ic_profile_imag).error(R.drawable.ic_profile_imag).into(binding.imgProfileImage);
-                        binding.txtUpload.setText("Re-Upload Profile Image");
-                        H.showMessage(context,"Image Uploaded successfully");
+                        Config.profilePic = jsonData.getString(P.file_name);
+                        Config.file_path = jsonData.getString(P.file_path);
+                        Picasso.get().load(Config.file_path).placeholder(R.drawable.ic_profile_imag).error(R.drawable.ic_profile_imag).into(circleProfileImageView);
+//                        binding.txtUpload.setText("Re-Upload Profile Image");
+                        H.showMessage(context, "Image Uploaded successfully");
                     }
                 })
                 .run("hitUploadImage");
-    }
-
-
-    private void strictMode(){
-        try {
-            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-            StrictMode.setVmPolicy(builder.build());
-        }catch (Exception e){
-
-        }
-    }
-
-    private void onUploadClick() {
-        Dialog dialog = new Dialog(getActivity());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.activity_upload_dialog);
-        dialog.findViewById(R.id.txtCamera).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Click.preventTwoClick(v);
-                dialog.cancel();
-                click = cameraClick;
-                getPermission();
-            }
-        });
-        dialog.findViewById(R.id.txtGallary).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Click.preventTwoClick(v);
-                dialog.cancel();
-                click = galleryClick;
-                getPermission();
-            }
-        });
-        dialog.setCancelable(true);
-        dialog.show();
-    }
-
-
-    private void getPermission() {
-
-        int permissionCheck = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA);
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    READ_WRIRE);
-        } else {
-            //Do your work
-            if (click == cameraClick) {
-                openCamera();
-            } else if (click == galleryClick) {
-                openGallery();
-            }
-        }
-    }
-
-
-    private void jumpToSetting() {
-        H.showMessage(getActivity(), "Please allow permission from setting.");
-        try {
-            Intent intent = new Intent();
-            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
-            intent.setData(uri);
-            startActivity(intent);
-        } catch (Exception e) {
-        }
-    }
-
-
-    private void openCamera() {
-        try {
-
-            String fileName = String.format("%d.jpg", System.currentTimeMillis());
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            File file = new File(Environment.getExternalStorageDirectory(),
-                    fileName);
-            cameraURI = Uri.fromFile(file);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraURI);
-            startActivityForResult(intent, REQUEST_CAMERA);
-        } catch (Exception e) {
-            H.showMessage(getActivity(),"Whoops - your device doesn't support capturing images!");
-        }
-    }
-
-    private void openGallery() {
-        try {
-            Intent intent = new Intent(
-                    Intent.ACTION_PICK,
-                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            intent.putExtra("crop", "true");
-            intent.putExtra("aspectX", 0);
-            intent.putExtra("aspectY", 0);
-            startActivityForResult(intent, REQUEST_GALLARY);
-        } catch (Exception e) {
-        }
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case READ_WRIRE: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (click == cameraClick) {
-                        openCamera();
-                    } else if (click == galleryClick) {
-                        openGallery();
-                    }
-                } else if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
-                    jumpToSetting();
-                } else {
-                    getPermission();
-                }
-                return;
-            }
-        }
-    }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case REQUEST_GALLARY:
-                if (resultCode == Activity.RESULT_OK && data != null) {
-                    try {
-                        Uri selectedImage = data.getData();
-                        setImageData(selectedImage);
-                    } catch (Exception e) {
-                    }
-                }
-                break;
-            case REQUEST_CAMERA:
-                if (resultCode == Activity.RESULT_OK) {
-                    try {
-                        performCrop(cameraURI);
-//                        setImageData(cameraURI);
-                    } catch (Exception e) {
-                    }
-                }
-                break;
-            case PIC_CROP:
-                if (resultCode == Activity.RESULT_OK) {
-                    try {
-
-                        if (data != null) {
-                            Bundle extras = data.getExtras();
-                            Bitmap bitmap = extras.getParcelable("data");
-                            base64Image = encodeImage(bitmap);
-                            hitUploadImage(getActivity(),base64Image);
-                        }
-                    } catch (Exception e) {
-                    }
-                }
-                break;
-        }
-    }
-
-
-    private void performCrop(Uri picUri){
-        try {
-
-            Intent cropIntent = new Intent("com.android.camera.action.CROP");
-            cropIntent.setDataAndType(picUri, "image/*");
-            cropIntent.putExtra("crop", "true");
-            cropIntent.putExtra("aspectX", 1);
-            cropIntent.putExtra("aspectY", 1);
-            cropIntent.putExtra("outputX", 128);
-            cropIntent.putExtra("outputY", 128);
-            cropIntent.putExtra("return-data", true);
-            startActivityForResult(cropIntent, PIC_CROP);
-        }
-        catch (Error anfe) {
-           H.showMessage(getActivity(),"Whoops - your device doesn't support the crop action!");
-        }
-    }
-
-    private void setImageData(Uri uri) {
-        base64Image = "";
-        try {
-            InputStream imageStream = getContext().getContentResolver().openInputStream(uri);
-            Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-            base64Image = encodeImage(selectedImage);
-            hitUploadImage(getActivity(),base64Image);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            Log.e("TAG", "setImageDataEE: "+ e.getMessage() );
-            H.showMessage(getActivity(), "Unable to get image, try again.");
-        }
-    }
-
-    private String encodeImage(Bitmap bm) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] b = baos.toByteArray();
-        String encImage = Base64.encodeToString(b, Base64.DEFAULT);
-        return encImage;
     }
 
     @Override

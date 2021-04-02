@@ -14,6 +14,8 @@ public class Config {
     public static String flag = "";
     public static String term = "term";
     public static String faq = "faq";
+    public static String file_path = "";
+    public static String profilePic = "";
     public static String privacy = "privacy";
     public static String webViewUrl = "";
     public static long time = 0;
@@ -26,6 +28,7 @@ public class Config {
     public static String ORGNIZE_URL = "";
     public static boolean FROM_DASBOARD = false;
     public static boolean MY_POINTS = false;
+    public static boolean FROM_DASHBOARD = false;
 
 
 }

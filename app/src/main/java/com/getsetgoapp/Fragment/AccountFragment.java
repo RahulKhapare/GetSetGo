@@ -76,7 +76,6 @@ public class AccountFragment extends Fragment {
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("My Account");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         onClick();
-        setProfileData();
         isFromBottom = getArguments().getBoolean("isFromBottom");
         return rootView;
     }
@@ -86,6 +85,12 @@ public class AccountFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setProfileData();
     }
 
     private void setProfileData(){
@@ -108,7 +113,6 @@ public class AccountFragment extends Fragment {
     }
 
     public void onClick() {
-
 
         binding.llOrders.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -74,7 +74,8 @@
                     android:layout_height="wrap_content"
                     android:textColorHint="@color/colorTextHint"
                     android:layout_marginTop="15dp"
-                    app:passwordToggleEnabled="true">
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/colorPrimaryDark">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etxPassword"

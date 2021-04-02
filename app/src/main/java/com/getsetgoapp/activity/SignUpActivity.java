@@ -1,6 +1,5 @@
 package com.getsetgoapp.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -13,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -24,8 +22,8 @@ import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
-import com.getsetgoapp.Adapter.CountryCodeAdapter;
-import com.getsetgoapp.Model.CountryCode;
+import com.getsetgoapp.Adapter.CountryCodeSelectionAdapter;
+import com.getsetgoapp.Model.CountryCodeModel;
 import com.getsetgoapp.R;
 import com.getsetgoapp.databinding.ActivitySignUpBinding;
 import com.getsetgoapp.util.App;
@@ -49,6 +47,7 @@ public class SignUpActivity extends AppCompatActivity {
     private ActivitySignUpBinding binding;
     private LoadingDialog loadingDialog;
     private String referrerUrl;
+    private String countryCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,24 +62,51 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void initView() {
+
+        List<CountryCodeModel> countryCodeModelList = new ArrayList<>();
+
+        CountryCodeModel model = new CountryCodeModel();
+        model.setId("");
+        model.setCountry_name("");
+        model.setPhone_code("91");
+        countryCodeModelList.add(model);
+
+        CountryCodeSelectionAdapter adapter = new CountryCodeSelectionAdapter(activity, countryCodeModelList);
+        binding.spinnerCode.setAdapter(adapter);
+        binding.spinnerCode.setSelection(0);
+
+        binding.spinnerCode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                CountryCodeModel model = countryCodeModelList.get(position);
+                countryCode = model.getPhone_code();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 //        callSponsorIDApi();
         onClick();
-        binding.actvIsdCode.setText("+91");
 
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
+
             @Override
             public void afterTextChanged(Editable s) {
                 String newText = s.toString();
-                if (!TextUtils.isEmpty(newText) && newText.length()==9) {
+                if (!TextUtils.isEmpty(newText) && newText.length() == 9) {
                     getSponsorIDApi(binding.etxSponserId.getText().toString().trim());
-                }else if (newText.length()<9 || newText.length()>9){
+                } else if (newText.length() < 9 || newText.length() > 9) {
                     binding.txtSponsorName.setText("Sponsor By");
                 }
             }
@@ -89,35 +115,20 @@ public class SignUpActivity extends AppCompatActivity {
         binding.etxSponserId.addTextChangedListener(textWatcher);
         if (referrerUrl.matches("[0-9]+") && referrerUrl.length() == 9) {
             binding.etxSponserId.setText(referrerUrl);
+            binding.etxSponserId.setFocusable(false);
+            binding.etxSponserId.setFocusableInTouchMode(false);
+            binding.etxSponserId.setClickable(false);
         }
     }
 
 
     private void onClick() {
 
-        binding.actvIsdCode.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.toString().isEmpty()) {
-                    binding.actvIsdCode.append("+");
-                }
-            }
-        });
-        populateIsdCode(activity, binding.actvIsdCode);
-
         binding.radioIndividual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 binding.radioCompany.setChecked(false);
+                visibleIndividual();
             }
         });
 
@@ -125,6 +136,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 binding.radioIndividual.setChecked(false);
+                visibleCompany();
             }
         });
 
@@ -134,15 +146,22 @@ public class SignUpActivity extends AppCompatActivity {
                 Click.preventTwoClick(v);
                 if (checkValidation()) {
                     String registerAs;
-                    if(binding.radioIndividual.isChecked()){
+                    if (binding.radioIndividual.isChecked()) {
                         registerAs = "1";
-                    }else{
+                    } else {
                         registerAs = "2";
                     }
                     Json json = new Json();
                     json.addString(P.registered_as, registerAs);
-                    json.addString(P.name, binding.etxFirstName.getText().toString() + "");
-                    json.addString(P.lastname, binding.etxLastName.getText().toString() + "");
+
+                    if (binding.radioCompany.isChecked()) {
+                        json.addString(P.name, binding.etxCompanyName.getText().toString() + "");
+                        json.addString(P.lastname, "");
+                    } else if (binding.radioIndividual.isChecked()) {
+                        json.addString(P.name, binding.etxFirstName.getText().toString() + "");
+                        json.addString(P.lastname, binding.etxLastName.getText().toString() + "");
+                    }
+
                     json.addString(P.email, binding.etxEmailAddress.getText().toString() + "");
                     json.addString(P.contact, binding.etxPhone.getText().toString() + "");
                     json.addString(P.password, binding.etxPassword.getText().toString() + "");
@@ -163,49 +182,57 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    public void populateIsdCode(Context context, AutoCompleteTextView autoCompleteTextView) {
-        final ArrayList<CountryCode> country = new ArrayList<>();
+    private void visibleIndividual() {
+        binding.etxCompanyNameView.setVisibility(View.GONE);
 
-        //forSample
-        CountryCode code = new CountryCode();
-        code.setCode("+91");
-        country.add(code);
-
-        CountryCodeAdapter countryFlagAdapter = new CountryCodeAdapter(context,
-                R.layout.activity_sign_up, R.id.lbl_name, country);
-        autoCompleteTextView.setThreshold(2);         //will start working from first character
-        autoCompleteTextView.setAdapter(countryFlagAdapter);
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (view != null) {
-                    CountryCode county = (CountryCode) view.getTag();
-                    if (county.getCode() != null) {
-                        binding.actvIsdCode.setText(county.getCode());
-                    }
-                }
-            }
-        });
+        binding.etxFirstNameView.setVisibility(View.VISIBLE);
+        binding.etxLastNameView.setVisibility(View.VISIBLE);
     }
+
+    private void visibleCompany() {
+        binding.etxCompanyNameView.setVisibility(View.VISIBLE);
+
+        binding.etxFirstNameView.setVisibility(View.GONE);
+        binding.etxLastNameView.setVisibility(View.GONE);
+    }
+
 
     private boolean checkValidation() {
         boolean value = true;
-        if (TextUtils.isEmpty(binding.etxFirstName.getText().toString().trim())) {
-            H.showMessage(activity, "Enter first name");
-            value = false;
-        } else if (TextUtils.isEmpty(binding.etxLastName.getText().toString().trim())) {
-            H.showMessage(activity, "Enter last name");
-            value = false;
-        } else if (TextUtils.isEmpty(binding.etxEmailAddress.getText().toString().trim())) {
+
+        if (binding.radioCompany.isChecked()) {
+            if (TextUtils.isEmpty(binding.etxCompanyName.getText().toString().trim())) {
+                H.showMessage(activity, "Enter company name");
+                value = false;
+            } else {
+                value = performCheck(value);
+            }
+        } else if (binding.radioIndividual.isChecked()) {
+            if (TextUtils.isEmpty(binding.etxFirstName.getText().toString().trim())) {
+                H.showMessage(activity, "Enter first name");
+                value = false;
+            } else if (TextUtils.isEmpty(binding.etxLastName.getText().toString().trim())) {
+                H.showMessage(activity, "Enter last name");
+                value = false;
+            } else {
+                value = performCheck(value);
+            }
+        }
+        return value;
+    }
+
+
+    private boolean performCheck(boolean value) {
+        if (TextUtils.isEmpty(binding.etxEmailAddress.getText().toString().trim())) {
             H.showMessage(activity, "Enter email id");
             value = false;
-        } else if (binding.actvIsdCode.getText().toString().length() < 2) {
-            H.showMessage(activity, "Enter your isd code");
+        } else if (TextUtils.isEmpty(countryCode)) {
+            H.showMessage(activity, "Select your isd code");
             value = false;
         } else if (TextUtils.isEmpty(binding.etxPhone.getText().toString().trim())) {
             H.showMessage(activity, "Enter your phone number");
             value = false;
-        } else if (binding.actvIsdCode.getText().toString().equals("+91") &&
+        } else if (countryCode.equals("91") &&
                 binding.etxPhone.getText().toString().length() != 10) {
             H.showMessage(activity, "Enter valid phone number");
             value = false;
@@ -227,7 +254,7 @@ public class SignUpActivity extends AppCompatActivity {
         } else if (!binding.etxConfirmPassword.getText().toString().trim().equals(binding.etxPassword.getText().toString().trim())) {
             H.showMessage(activity, "Confirm password not matched with password");
             value = false;
-        }else if (TextUtils.isEmpty(binding.etxSponserId.getText().toString().trim())) {
+        } else if (TextUtils.isEmpty(binding.etxSponserId.getText().toString().trim())) {
             H.showMessage(activity, "Enter sponser id");
             value = false;
         }
@@ -257,13 +284,13 @@ public class SignUpActivity extends AppCompatActivity {
                     if (Json1 != null) {
                         JumpToLogin.call(Json1, this);
                         loadingDialog.dismiss();
-                        if (Json1.getInt(P.status) == 1){
-                            Intent mainIntent = new Intent(activity,OTPVerficationActivity.class);
-                            mainIntent.putExtra(P.email,binding.etxEmailAddress.getText().toString());
+                        if (Json1.getInt(P.status) == 1) {
+                            Intent mainIntent = new Intent(activity, OTPVerficationActivity.class);
+                            mainIntent.putExtra(P.email, binding.etxEmailAddress.getText().toString());
                             mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(mainIntent);
                             finish();
-                        }else {
+                        } else {
                             H.showMessage(activity, Json1.getString(P.err));
                         }
                     }
@@ -275,7 +302,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void callSponsorIDApi() {
         loadingDialog = new LoadingDialog(activity, false);
         Json json = new Json();
-        json.addString(P.ip,getLocalIpAddress());
+        json.addString(P.ip, getLocalIpAddress());
         Api.newApi(activity, P.baseUrl + "get_sponsor_from_ip")
                 .addJson(json)
                 .setMethod(Api.POST)
@@ -296,13 +323,15 @@ public class SignUpActivity extends AppCompatActivity {
                     if (Json1 != null) {
                         JumpToLogin.call(Json1, this);
                         loadingDialog.dismiss();
-                        if (Json1.getInt(P.status) == 1){
+                        if (Json1.getInt(P.status) == 1) {
                             Json1 = Json1.getJson(P.data);
                             Json sponsorData = Json1.getJson(P.sponsor);
                             String sponsor_id = sponsorData.getString(P.sponsor_id);
                             String sponsor_name = sponsorData.getString(P.sponsor_name);
                             binding.etxSponserId.setText(sponsor_id);
-                            binding.txtSponsorName.setText("Sponsor By "+sponsor_name);
+                            binding.txtSponsorName.setText("Sponsor By " + sponsor_name);
+                        } else {
+                            H.showMessage(activity, Json1.getString(P.err));
                         }
                     }
 
@@ -312,7 +341,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void getSponsorIDApi(String sponsorId) {
         loadingDialog = new LoadingDialog(activity, false);
         Json json = new Json();
-        json.addString(P.sponsor_id,sponsorId);
+        json.addString(P.sponsor_id, sponsorId);
         Api.newApi(activity, P.baseUrl + "get_sponsor_details")
                 .addJson(json)
                 .setMethod(Api.POST)
@@ -333,14 +362,14 @@ public class SignUpActivity extends AppCompatActivity {
                     if (Json1 != null) {
                         JumpToLogin.call(Json1, this);
                         loadingDialog.dismiss();
-                        if (Json1.getInt(P.status) == 1){
+                        if (Json1.getInt(P.status) == 1) {
                             Json1 = Json1.getJson(P.data);
                             Json sponsorData = Json1.getJson(P.sponsor);
                             String sponsor_id = sponsorData.getString(P.sponsor_id);
                             String sponsor_name = sponsorData.getString(P.sponsor_name);
 //                            binding.etxSponserId.setText(sponsor_id);
-                            binding.txtSponsorName.setText("Sponsor By "+sponsor_name);
-                        }else {
+                            binding.txtSponsorName.setText("Sponsor By " + sponsor_name);
+                        } else {
                             binding.txtSponsorName.setText("Sponsor By");
                         }
                     }
@@ -350,9 +379,9 @@ public class SignUpActivity extends AppCompatActivity {
 
     public String getLocalIpAddress() {
         try {
-            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
                 NetworkInterface intf = en.nextElement();
-                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
+                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
                     InetAddress inetAddress = enumIpAddr.nextElement();
                     if (!inetAddress.isLoopbackAddress()) {
                         String ipAddress = Formatter.formatIpAddress(inetAddress.hashCode());
@@ -404,11 +433,12 @@ public class SignUpActivity extends AppCompatActivity {
                 List<InetAddress> addrs = Collections.list(intf.getInetAddresses());
                 for (InetAddress addr : addrs) {
                     if (!addr.isLoopbackAddress()) {
-                        return  addr.getHostAddress();
+                        return addr.getHostAddress();
                     }
                 }
             }
-        } catch (Exception ex) { } // for now eat exceptions
+        } catch (Exception ex) {
+        } // for now eat exceptions
         return "";
     }
 
@@ -416,7 +446,7 @@ public class SignUpActivity extends AppCompatActivity {
         WifiManager wifiMgr = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
         int ip = wifiInfo.getIpAddress();
-        return  Formatter.formatIpAddress(ip);
+        return Formatter.formatIpAddress(ip);
     }
 
     public static String getIPAddress(boolean useIPv4) {
@@ -428,7 +458,7 @@ public class SignUpActivity extends AppCompatActivity {
                     if (!addr.isLoopbackAddress()) {
                         String sAddr = addr.getHostAddress();
                         //boolean isIPv4 = InetAddressUtils.isIPv4Address(sAddr);
-                        boolean isIPv4 = sAddr.indexOf(':')<0;
+                        boolean isIPv4 = sAddr.indexOf(':') < 0;
 
                         if (useIPv4) {
                             if (isIPv4)
@@ -436,13 +466,14 @@ public class SignUpActivity extends AppCompatActivity {
                         } else {
                             if (!isIPv4) {
                                 int delim = sAddr.indexOf('%'); // drop ip6 zone suffix
-                                return delim<0 ? sAddr.toUpperCase() : sAddr.substring(0, delim).toUpperCase();
+                                return delim < 0 ? sAddr.toUpperCase() : sAddr.substring(0, delim).toUpperCase();
                             }
                         }
                     }
                 }
             }
-        } catch (Exception ex) { } // for now eat exceptions
+        } catch (Exception ex) {
+        } // for now eat exceptions
         return "";
     }
 

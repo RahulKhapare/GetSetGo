@@ -30,15 +30,31 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/imgProfileImage"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_centerInParent="true"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_profile_imag" />
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/imgProfileImage"
+                                android:layout_width="120dp"
+                                android:layout_height="120dp"
+                                android:layout_marginTop="20dp"
+                                android:layout_centerInParent="true"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/ic_profile_imag" />
+
+                            <ImageView
+                                android:layout_alignRight="@+id/imgProfileImage"
+                                android:layout_alignBottom="@+id/imgProfileImage"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginBottom="20dp"
+                                android:src="@drawable/ic_edit_photo">
+
+                            </ImageView>
+
+                        </RelativeLayout>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -136,6 +152,7 @@
                                 android:layout_marginTop="30dp"
                                 android:background="@drawable/bg_upload_docs"
                                 android:elevation="1dp"
+                                android:visibility="gone"
                                 android:gravity="center"
                                 android:orientation="horizontal">
 
