@@ -18,6 +18,7 @@ import com.getsetgoapp.R;
 import com.getsetgoapp.activity.BaseScreenActivity;
 import com.getsetgoapp.util.CheckConnection;
 import com.getsetgoapp.util.Click;
+import com.getsetgoapp.util.Config;
 
 import java.util.List;
 
@@ -76,6 +77,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyCourseVi
     }
 
     private void loadFragment(View v, String title,String slug) {
+        Config.POP_HOME = true;
         Bundle bundle = new Bundle();
         BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
         BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);

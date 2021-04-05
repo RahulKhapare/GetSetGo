@@ -2,20 +2,17 @@ package com.getsetgoapp.Model;
 
 public class CountryCodeModel {
 
-    String id;
+    String country_id;
+    String country_code;
     String country_name;
-    String phone_code;
+    String country_shortname;
 
-    public void CountryCodeModel(String phone_code){
-        this.phone_code = phone_code;
+    public String getCountry_code() {
+        return country_code;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setCountry_code(String country_code) {
+        this.country_code = country_code;
     }
 
     public String getCountry_name() {
@@ -26,11 +23,19 @@ public class CountryCodeModel {
         this.country_name = country_name;
     }
 
-    public String getPhone_code() {
-        return phone_code;
+    public String getCountry_shortname() {
+        return country_shortname;
     }
 
-    public void setPhone_code(String phone_code) {
-        this.phone_code = phone_code;
+    public void setCountry_shortname(String country_shortname) {
+        this.country_shortname = country_shortname;
+    }
+
+    public String getCountry_id() {
+        return country_id;
+    }
+
+    public void setCountry_id(String country_id) {
+        this.country_id = country_id;
     }
 }

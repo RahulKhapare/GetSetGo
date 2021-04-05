@@ -108,6 +108,7 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.MyCour
     }
 
     private void loadFragment(View v, String courseSlug,String courseName) {
+        Config.POP_HOME = true;
         Config.myCourseSlug = courseSlug;
         Config.myCourseTitle = courseName;
 //        string = P.baseUrl + "series_check/" + json.getString(P.series_slug) + "/" + json.getString(P.video_slug);

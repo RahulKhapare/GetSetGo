@@ -42,7 +42,6 @@ public class CourseLinkAdapter extends RecyclerView.Adapter<CourseLinkAdapter.Vi
         CourseLinkModel model = courseLinkModelList.get(position);
 
         holder.binding.txtTitle.setText(model.getLink_name());
-        holder.binding.txtUrl.setText(model.getLink());
 
         holder.binding.lnrLink.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -139,7 +139,7 @@ public class OTPVerficationActivity extends AppCompatActivity {
                         finish();
 
                     }else {
-                        H.showMessage(activity,"Something went wrong, try again");
+                        H.showMessage(activity,json.getString(P.err));
                     }
                 })
                 .run("hitVerifyOTP");

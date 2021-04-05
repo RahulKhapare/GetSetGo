@@ -66,7 +66,7 @@ public class YourCourseFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_your_course, container, false);
         View rootView = binding.getRoot();
         init();
-        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Your Course");
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("My Course");
         return rootView;
     }
 

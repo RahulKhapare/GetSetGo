@@ -18,6 +18,7 @@ public class P {
 
     public static String referrerUrl = "referrerUrl";
     public static String android_min_version = "android_min_version";
+    public static String country_list = "country_list";
     public static String android_current_version = "android_current_version";
     public static String ip = "ip";
     public static String status = "status";
@@ -194,5 +195,9 @@ public class P {
     public static String joining_date = "joining_date";
     public static String course_count = "course_count";
     public static String welcome = "welcome";
+    public static String country_code = "country_code";
+    public static String country_id = "country_id";
+    public static String country_name = "country_name";
+    public static String country_shortname = "country_shortname";
 
 }

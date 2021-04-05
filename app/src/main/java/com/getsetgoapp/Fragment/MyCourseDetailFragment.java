@@ -106,11 +106,7 @@ CourseModuleAdapter.click{
             @Override
             public void handleOnBackPressed() {
                 // Handle the back button event
-
-                if(getFragmentManager().getBackStackEntryCount() > 0){
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    BaseScreenActivity.callBack();
-                }
+                onBackClick();
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
@@ -137,11 +133,7 @@ CourseModuleAdapter.click{
         BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (getFragmentManager().getBackStackEntryCount() > 0) {
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    BaseScreenActivity.callBack();
-                }
+                onBackClick();
             }
         });
 
@@ -185,6 +177,16 @@ CourseModuleAdapter.click{
             Config.isHalfScreen = false;
             playVideo(videoPlayPath,true);
         }
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                onBackClick();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
     }
 
     private void onClick(){
@@ -631,6 +633,17 @@ CourseModuleAdapter.click{
         if (TextUtils.isEmpty(string) || string.equals("null")){
             value = false; }
         return value;
+    }
+
+    private void onBackClick(){
+        if (Config.POP_HOME){
+            Config.POP_HOME = false;
+            getFragmentManager().popBackStackImmediate();
+            BaseScreenActivity.binding.bottomNavigation.setVisibility(View.VISIBLE);
+        }else {
+            getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            BaseScreenActivity.callBack();
+        }
     }
 
 }

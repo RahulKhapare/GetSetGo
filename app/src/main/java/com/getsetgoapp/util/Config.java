@@ -29,6 +29,7 @@ public class Config {
     public static boolean FROM_DASBOARD = false;
     public static boolean MY_POINTS = false;
     public static boolean FROM_DASHBOARD = false;
+    public static boolean POP_HOME = false;
 
 
 }

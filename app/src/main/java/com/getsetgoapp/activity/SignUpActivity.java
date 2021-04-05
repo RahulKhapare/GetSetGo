@@ -19,6 +19,7 @@ import androidx.databinding.DataBindingUtil;
 import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
 import com.adoisstudio.helper.Json;
+import com.adoisstudio.helper.JsonList;
 import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
@@ -48,6 +49,7 @@ public class SignUpActivity extends AppCompatActivity {
     private LoadingDialog loadingDialog;
     private String referrerUrl;
     private String countryCode;
+    private String countryID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +67,17 @@ public class SignUpActivity extends AppCompatActivity {
 
         List<CountryCodeModel> countryCodeModelList = new ArrayList<>();
 
-        CountryCodeModel model = new CountryCodeModel();
-        model.setId("");
-        model.setCountry_name("");
-        model.setPhone_code("91");
-        countryCodeModelList.add(model);
-
+        JsonList country_list = SplashActivity.country_list;
+        if (country_list!=null && !country_list.isEmpty()){
+            for (Json json : country_list){
+                CountryCodeModel model = new CountryCodeModel();
+                model.setCountry_id(json.getString(P.country_id));
+                model.setCountry_code(json.getString(P.country_code));
+                model.setCountry_name(P.country_name);
+                model.setCountry_shortname(P.country_shortname);
+                countryCodeModelList.add(model);
+            }
+        }
         CountryCodeSelectionAdapter adapter = new CountryCodeSelectionAdapter(activity, countryCodeModelList);
         binding.spinnerCode.setAdapter(adapter);
         binding.spinnerCode.setSelection(0);
@@ -79,7 +86,8 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 CountryCodeModel model = countryCodeModelList.get(position);
-                countryCode = model.getPhone_code();
+                countryCode = model.getCountry_code();
+                countryID = model.getCountry_id();
             }
 
             @Override
@@ -163,6 +171,8 @@ public class SignUpActivity extends AppCompatActivity {
                     }
 
                     json.addString(P.email, binding.etxEmailAddress.getText().toString() + "");
+                    json.addString(P.country_id, countryID);
+                    json.addString(P.country_code, countryCode);
                     json.addString(P.contact, binding.etxPhone.getText().toString() + "");
                     json.addString(P.password, binding.etxPassword.getText().toString() + "");
                     json.addString(P.confirm_password, binding.etxConfirmPassword.getText().toString() + "");

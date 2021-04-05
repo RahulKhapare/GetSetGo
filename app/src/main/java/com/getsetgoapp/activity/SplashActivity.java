@@ -53,7 +53,7 @@ public class SplashActivity extends AppCompatActivity {
     public static int deviceHeight;
     private final Executor backgroundExecutor = Executors.newSingleThreadExecutor();
     private final String prefKey = "checkedInstallReferrer";
-
+    public static JsonList country_list = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -274,7 +274,7 @@ public class SplashActivity extends AppCompatActivity {
                             H.showMessage(context, Json1.getString(P.err));
                         } else if (Json1.getInt(P.status) == 1) {
                             Json1 = Json1.getJson(P.data);
-
+                            country_list = Json1.getJsonList(P.country_list);
                             String android_min_version = Json1.getString(P.android_min_version);
                             String android_current_version = Json1.getString(P.android_current_version);
                             if (!TextUtils.isEmpty(android_min_version) || !android_min_version.equals("null")){
