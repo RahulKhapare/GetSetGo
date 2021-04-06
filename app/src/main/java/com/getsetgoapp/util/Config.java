@@ -30,6 +30,11 @@ public class Config {
     public static boolean MY_POINTS = false;
     public static boolean FROM_DASHBOARD = false;
     public static boolean POP_HOME = false;
+    public static String SHARE_MESSAGE = "Hi, \n" +
+            "\n" +
+            "Download the GSG App and get 12 courses on Self Development worth ₹25,000 absolutely free.  Make the most of this learning opportunity. \n" +
+            "\n" +
+            "Click on the Link Below,  and Start your Journey to become a Better Version of yourself.";
 
 
 }

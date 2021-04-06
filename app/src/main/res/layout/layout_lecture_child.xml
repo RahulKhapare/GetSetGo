@@ -81,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:text="@string/preview"
+                android:text="Play"
                 android:gravity="end"
                 android:textColor="@color/viewall_text_color"
                 android:textSize="@dimen/font_size_x12" />

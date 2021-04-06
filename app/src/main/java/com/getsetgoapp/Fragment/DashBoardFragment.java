@@ -29,6 +29,7 @@ import com.getsetgoapp.activity.BaseScreenActivity;
 import com.getsetgoapp.databinding.FragmentDashboardBinding;
 import com.getsetgoapp.util.App;
 import com.getsetgoapp.util.Click;
+import com.getsetgoapp.util.Config;
 import com.getsetgoapp.util.JumpToLogin;
 import com.getsetgoapp.util.P;
 import com.squareup.picasso.Picasso;
@@ -186,9 +187,10 @@ public class DashBoardFragment extends Fragment {
 
     public void shareApp(Context context,String link)
     {
+        String shareMessage = Config.SHARE_MESSAGE  + "\n\n" + link;
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, link);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
         sendIntent.setType("text/plain");
         context.startActivity(sendIntent);
     }

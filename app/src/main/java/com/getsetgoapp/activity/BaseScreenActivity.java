@@ -721,9 +721,10 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
 
     public void shareApp(Context context,String link)
     {
+        String shareMessage = Config.SHARE_MESSAGE  + "\n\n" + link;
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, link);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
         sendIntent.setType("text/plain");
         context.startActivity(sendIntent);
     }
