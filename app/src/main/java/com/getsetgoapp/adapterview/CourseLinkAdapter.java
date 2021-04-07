@@ -3,6 +3,7 @@ package com.getsetgoapp.adapterview;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,15 +48,24 @@ public class CourseLinkAdapter extends RecyclerView.Adapter<CourseLinkAdapter.Vi
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
-                try{
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse(model.getLink()));
-                    context.startActivity(i);
-                }catch (Exception e){
-                    H.showMessage(context,"Something went wrong to open link");
-                }
+                openWebPage(model.getLink());
             }
         });
+    }
+
+    public void openWebPage(String url) {
+//        Log.e("TAG", "openWebPage: "+ url );
+        try{
+            Uri webpage = Uri.parse(url);
+            Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+            if (intent.resolveActivity(context.getPackageManager()) != null) {
+                context.startActivity(intent);
+            }else{
+                H.showMessage(context,"Something went wrong to open link");
+            }
+        }catch (Exception e){
+            H.showMessage(context,"Something went wrong to open link");
+        }
     }
 
     @Override

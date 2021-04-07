@@ -166,7 +166,6 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
     CheckBox chkExpClp;
 //    ImageButton chkExpClp;
 
-
     private SimpleExoPlayer exoPlayer;
     private PlayerView playerView;
     private ProgressBar pbVideoPlayer;
@@ -595,7 +594,9 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         txtBuyNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (exoPlayer!=null){
+                    exoPlayer.stop(true);
+                }
                 loadFragment(id);
             }
         });

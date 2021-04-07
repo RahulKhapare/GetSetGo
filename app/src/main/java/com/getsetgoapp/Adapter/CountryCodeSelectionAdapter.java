@@ -44,7 +44,13 @@ public class CountryCodeSelectionAdapter extends BaseAdapter {
         view = inflter.inflate(R.layout.activity_countr_code_bg, null);
         TextView txtName = view.findViewById(R.id.txtCode);
         CountryCodeModel model = itemListModels.get(i);
-        txtName.setText("+"+model.getCountry_code());
+        if (i == 0){
+            txtName.setText(model.getCountry_shortname());
+            txtName.setTextColor(context.getResources().getColor(R.color.colorTextHint));
+        }else {
+            txtName.setText(model.getCountry_shortname() + " (+"+model.getCountry_code()+")");
+        }
+
         return view;
     }
 

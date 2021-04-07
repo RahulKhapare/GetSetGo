@@ -11,6 +11,15 @@ public class CourseChildModel {
     JsonList video_urls;
     JsonList additional_links;
     JsonList additional_files;
+    JsonList mainVideoList;
+
+    public JsonList getMainVideoList() {
+        return mainVideoList;
+    }
+
+    public void setMainVideoList(JsonList mainVideoList) {
+        this.mainVideoList = mainVideoList;
+    }
 
     public String getVideo_id() {
         return video_id;

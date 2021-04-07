@@ -73,7 +73,7 @@ public class CourseModuleAdapter extends RecyclerView.Adapter<CourseModuleAdapte
                 holder.binding.imgTitle.setImageResource(R.drawable.ic_collapse);
                 if (model.getVideos().size()!=0){
                     holder.binding.lnrChildView.setVisibility(View.VISIBLE);
-                    ((MyCourseDetailFragment)fragment).moduleSelection(model);
+//                    ((MyCourseDetailFragment)fragment).moduleSelection(model);
                 }else {
                     holder.binding.lnrChildView.setVisibility(View.GONE);
                 }
@@ -90,6 +90,7 @@ public class CourseModuleAdapter extends RecyclerView.Adapter<CourseModuleAdapte
             for (Json json : model.getVideos()){
                 Log.e("TAG", "onBindViewHolder21133: " + json.toString() );
                 CourseChildModel childModel = new CourseChildModel();
+                childModel.setMainVideoList(model.getVideos());
                 childModel.setVideo_id(json.getString(P.video_id));
                 childModel.setVideo_title(json.getString(P.video_title));
                 childModel.setDuration(json.getString(P.duration));

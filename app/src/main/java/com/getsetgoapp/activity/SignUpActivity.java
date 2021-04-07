@@ -67,27 +67,47 @@ public class SignUpActivity extends AppCompatActivity {
 
         List<CountryCodeModel> countryCodeModelList = new ArrayList<>();
 
+        CountryCodeModel model1 = new CountryCodeModel();
+        model1.setCountry_id("");
+        model1.setCountry_code("");
+        model1.setCountry_name("");
+        model1.setCountry_shortname("Eg. (+91)");
+        countryCodeModelList.add(model1);
+
+        int selection = 0;
         JsonList country_list = SplashActivity.country_list;
         if (country_list!=null && !country_list.isEmpty()){
-            for (Json json : country_list){
+
+            for (int i=0; i<country_list.size(); i++){
+                Json json = country_list.get(i);
                 CountryCodeModel model = new CountryCodeModel();
                 model.setCountry_id(json.getString(P.country_id));
                 model.setCountry_code(json.getString(P.country_code));
-                model.setCountry_name(P.country_name);
-                model.setCountry_shortname(P.country_shortname);
+                model.setCountry_name(json.getString(P.country_name));
+                model.setCountry_shortname(json.getString(P.country_shortname));
                 countryCodeModelList.add(model);
+                if (model.getCountry_code().equals("91")){
+                    selection = i;
+                }
             }
         }
+
         CountryCodeSelectionAdapter adapter = new CountryCodeSelectionAdapter(activity, countryCodeModelList);
         binding.spinnerCode.setAdapter(adapter);
-        binding.spinnerCode.setSelection(0);
+//        binding.spinnerCode.setSelection(selection);
 
         binding.spinnerCode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 CountryCodeModel model = countryCodeModelList.get(position);
-                countryCode = model.getCountry_code();
-                countryID = model.getCountry_id();
+                if (!TextUtils.isEmpty(model.getCountry_id())){
+                    countryCode = model.getCountry_code();
+                    countryID = model.getCountry_id();
+                }else {
+                    countryCode = "";
+                    countryID = "";
+                }
+
             }
 
             @Override
@@ -237,7 +257,7 @@ public class SignUpActivity extends AppCompatActivity {
             H.showMessage(activity, "Enter email id");
             value = false;
         } else if (TextUtils.isEmpty(countryCode)) {
-            H.showMessage(activity, "Select your isd code");
+            H.showMessage(activity, "Select your ISD code");
             value = false;
         } else if (TextUtils.isEmpty(binding.etxPhone.getText().toString().trim())) {
             H.showMessage(activity, "Enter your phone number");

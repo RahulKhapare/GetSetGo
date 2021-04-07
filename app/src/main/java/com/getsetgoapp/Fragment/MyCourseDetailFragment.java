@@ -65,8 +65,8 @@ import java.util.List;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class MyCourseDetailFragment extends Fragment implements Player.EventListener, CourseChildAdapter.childAction, CourseDocumentAdapter.onClick,VideoQualityAdapter.onClick,
-CourseModuleAdapter.click{
+public class MyCourseDetailFragment extends Fragment implements Player.EventListener, CourseChildAdapter.childAction, CourseDocumentAdapter.onClick, VideoQualityAdapter.onClick,
+        CourseModuleAdapter.click {
 
     private FragmentMyCourseDetailsBinding binding;
     private Context context;
@@ -91,7 +91,8 @@ CourseModuleAdapter.click{
     private List<CourseDocumentModel> courseDocumentModelList;
     private List<CourseLinkModel> courseLinkModelList;
     public static List<VideoUrlModel> videoUrlModelList;
-    private List<VideoUrlModel> previewPlayUrlList;
+    private JsonList previewJsonList = new JsonList();
+    ;
 
     private int childVideoPosition;
     private int actualSize;
@@ -128,7 +129,7 @@ CourseModuleAdapter.click{
         return binding.getRoot();
     }
 
-    private void initView(){
+    private void initView() {
 
         BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,26 +147,25 @@ CourseModuleAdapter.click{
         lastSelectedPosition = 0;
         videoUrlModelList = new ArrayList<>();
 
-        previewPlayUrlList = new ArrayList<>();
         courseModuleModelList = new ArrayList<>();
-        courseModuleAdapter = new CourseModuleAdapter(context,courseModuleModelList,MyCourseDetailFragment.this,true);
+        courseModuleAdapter = new CourseModuleAdapter(context, courseModuleModelList, MyCourseDetailFragment.this, true);
         binding.recyclerModule.setLayoutManager(new LinearLayoutManager(context));
         binding.recyclerModule.setNestedScrollingEnabled(false);
         binding.recyclerModule.setAdapter(courseModuleAdapter);
 
         courseDocumentModelList = new ArrayList<>();
-        courseDocumentAdapter = new CourseDocumentAdapter(context,courseDocumentModelList,MyCourseDetailFragment.this);
+        courseDocumentAdapter = new CourseDocumentAdapter(context, courseDocumentModelList, MyCourseDetailFragment.this);
         binding.recyclerDocument.setLayoutManager(new LinearLayoutManager(context));
         binding.recyclerDocument.setNestedScrollingEnabled(false);
         binding.recyclerDocument.setAdapter(courseDocumentAdapter);
 
         courseLinkModelList = new ArrayList<>();
-        courseLinkAdapter = new CourseLinkAdapter(context,courseLinkModelList);
+        courseLinkAdapter = new CourseLinkAdapter(context, courseLinkModelList);
         binding.recyclerLink.setLayoutManager(new LinearLayoutManager(context));
         binding.recyclerLink.setNestedScrollingEnabled(false);
         binding.recyclerLink.setAdapter(courseLinkAdapter);
 
-        callCourseDetailsApi(context,courseSlug);
+        callCourseDetailsApi(context, courseSlug);
         onClick();
 
     }
@@ -173,9 +173,9 @@ CourseModuleAdapter.click{
     @Override
     public void onResume() {
         super.onResume();
-        if (Config.isHalfScreen){
+        if (Config.isHalfScreen) {
             Config.isHalfScreen = false;
-            playVideo(videoPlayPath,true);
+            playVideo(videoPlayPath, true);
         }
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
@@ -189,14 +189,14 @@ CourseModuleAdapter.click{
 
     }
 
-    private void onClick(){
+    private void onClick() {
 
         imgFullScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
                 exoPlayer.pause();
-                lastVideoPosition =  exoPlayer.getCurrentPosition();
+                lastVideoPosition = exoPlayer.getCurrentPosition();
                 Intent intent = new Intent(getContext(), VideoPlayActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
             }
@@ -206,7 +206,7 @@ CourseModuleAdapter.click{
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
-                if (videoUrlModelList!=null && !videoUrlModelList.isEmpty()){
+                if (videoUrlModelList != null && !videoUrlModelList.isEmpty()) {
                     qualityUrlDialog(videoUrlModelList);
                 }
             }
@@ -216,7 +216,7 @@ CourseModuleAdapter.click{
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
-                if(childVideoPosition>0){
+                if (childVideoPosition > 0) {
                     childVideoPosition--;
                     updateVideoData(childVideoPosition);
                 }
@@ -227,7 +227,7 @@ CourseModuleAdapter.click{
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
-                if(childVideoPosition<actualSize){
+                if (childVideoPosition < actualSize) {
                     childVideoPosition++;
                     updateVideoData(childVideoPosition);
                 }
@@ -243,41 +243,46 @@ CourseModuleAdapter.click{
         });
     }
 
-
-    private void updateVideoData(int position){
-        String path = previewPlayUrlList.get(position).getLink();
-        Log.e("TAG", "setVideoData: "+  path );
-        if (exoPlayer!=null){
-            exoPlayer.release();
-            exoPlayer = null;
+    private void updateVideoData(int position) {
+        lastSelectedPosition= 0;
+        lastVideoPosition = 0;
+        try {
+            Json json = previewJsonList.get(position);
+            JsonList video_urls = json.getJsonList(P.video_urls);
+            if (video_urls != null && video_urls.size() != 0) {
+                updateButton(position);
+                setVideoData(video_urls);
+            }
+        }catch (Exception e)
+        {
         }
-        playVideo(path,false);
-        updateButton(position);
+
     }
 
-    private void updateButton(int position){
-        if(position==0){
+    private void updateButton(int position) {
+
+        if (position == 0) {
             binding.btnPrevious.setBackground(getResources().getDrawable(R.drawable.bg_previous));
             binding.btnPrevious.setTextColor(getResources().getColor(R.color.colorPrimary));
             binding.btnNext.setBackground(getResources().getDrawable(R.drawable.bg_next));
             binding.btnNext.setTextColor(getResources().getColor(R.color.colorWhite));
-        }else if(position==actualSize) {
+        } else if (position == actualSize) {
             binding.btnPrevious.setBackground(getResources().getDrawable(R.drawable.bg_next));
             binding.btnPrevious.setTextColor(getResources().getColor(R.color.colorWhite));
             binding.btnNext.setBackground(getResources().getDrawable(R.drawable.bg_previous));
             binding.btnNext.setTextColor(getResources().getColor(R.color.colorPrimary));
-        }else if(position<actualSize) {
+        } else if (position < actualSize) {
             binding.btnPrevious.setBackground(getResources().getDrawable(R.drawable.bg_next));
             binding.btnPrevious.setTextColor(getResources().getColor(R.color.colorWhite));
             binding.btnNext.setBackground(getResources().getDrawable(R.drawable.bg_next));
             binding.btnNext.setTextColor(getResources().getColor(R.color.colorWhite));
         }
+
     }
 
 
-
-    private void playVideo(String videoPath,boolean replay){
-        Log.e("TAG", "playVideo: " + videoPath );
+    private void playVideo(String videoPath, boolean replay) {
+        Log.e("TAG", "playVideo: " + videoPath);
         videoPlayPath = videoPath;
         exoPlayer = new SimpleExoPlayer.Builder(context).build();
         playerView = binding.playerView.findViewById(R.id.playerView);
@@ -294,12 +299,12 @@ CourseModuleAdapter.click{
         exoPlayer.prepare(videoSource);
         exoPlayer.setMediaItem(MediaItem.fromUri(videoPath));
 
-        if (replay){
+        if (replay) {
             if (lastVideoPosition != C.TIME_UNSET) {
                 exoPlayer.seekTo(lastVideoPosition);
             }
             exoPlayer.play();
-        }else {
+        } else {
             exoPlayer.play();
         }
 
@@ -308,7 +313,7 @@ CourseModuleAdapter.click{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (exoPlayer!=null){
+        if (exoPlayer != null) {
             exoPlayer.stop(true);
         }
     }
@@ -316,7 +321,7 @@ CourseModuleAdapter.click{
     @Override
     public void onPause() {
         super.onPause();
-        if (exoPlayer!=null){
+        if (exoPlayer != null) {
             exoPlayer.pause();
         }
     }
@@ -351,7 +356,7 @@ CourseModuleAdapter.click{
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
-                        JumpToLogin.call(Json1,context);
+                        JumpToLogin.call(Json1, context);
                         loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(context, Json1.getString(P.err));
@@ -366,8 +371,7 @@ CourseModuleAdapter.click{
     }
 
 
-
-    private void setData(Json jsonData){
+    private void setData(Json jsonData) {
 
         Json courseObject = jsonData.getJson(P.course);
         JsonList module_list = jsonData.getJsonList(P.module_list);
@@ -376,15 +380,15 @@ CourseModuleAdapter.click{
         String courseName = courseObject.getString(P.course_name);
         String progress = courseObject.getString(P.complete_percentage);
 
-        if (checkString(progress,binding.txtCourseName)){
+        if (checkString(progress, binding.txtCourseName)) {
             binding.txtCourseName.setText(courseName);
         }
 
-        if (checkString(progress,binding.txtPercentage)){
+        if (checkString(progress, binding.txtPercentage)) {
             binding.txtPercentage.setText(progress + "%" + " " + "Completed");
         }
 
-        if (checkString(progress)){
+        if (checkString(progress)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 binding.progressBar.setProgress(Integer.parseInt(progress), true);
             }
@@ -395,11 +399,11 @@ CourseModuleAdapter.click{
     }
 
 
-    private void setModuleData(JsonList jsonList){
+    private void setModuleData(JsonList jsonList) {
 
         courseModuleModelList.clear();
 
-        for (Json json : jsonList){
+        for (Json json : jsonList) {
             CourseModuleModel moduleModel = new CourseModuleModel();
             moduleModel.setId(json.getString(P.module_id));
             moduleModel.setModule_name(json.getString(P.module_name));
@@ -408,51 +412,48 @@ CourseModuleAdapter.click{
             courseModuleModelList.add(moduleModel);
         }
 
-        if (courseModuleModelList.isEmpty()){
+        if (courseModuleModelList.isEmpty()) {
             binding.txtModule.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             binding.txtModule.setVisibility(View.VISIBLE);
         }
 
         courseModuleAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void moduleSelection(CourseModuleModel moduleModel) {
-        JsonList videoData = moduleModel.getVideos();
-        JsonList jsonList = null;
+    private void updateButtonView(JsonList jsonList){
+        if (jsonList==null || jsonList.size()<=1){
+            binding.lnrButtonView.setVisibility(View.GONE);
+        }else {
+            binding.lnrButtonView.setVisibility(View.VISIBLE);
+        }
+    }
 
-        if (videoData!=null && videoData.size()!=0){
-            for (Json json : videoData){
-                jsonList = json.getJsonList(P.video_urls);
+    private void updateVideoPREV_NEXTListData(JsonList videoData){
+        previewJsonList.clear();
+        if (videoData != null && videoData.size() != 0) {
+            for (Json json : videoData) {
+                previewJsonList.add(json);
             }
         }
 
-        if (jsonList!=null && jsonList.size()!=0){
-            binding.btnPrevious.setVisibility(View.VISIBLE);
-            binding.btnNext.setVisibility(View.VISIBLE);
-        }else {
-            binding.btnPrevious.setVisibility(View.GONE);
-            binding.btnNext.setVisibility(View.GONE);
-        }
-
-        previewPlayUrlList.clear();
-        for (Json json : jsonList){
-            VideoUrlModel model = new VideoUrlModel();
-            model.setType(json.getString(P.type));
-            model.setLink(json.getString(P.link));
-            model.setQuality(json.getString(P.quality));
-            previewPlayUrlList.add(model);
-        }
-        actualSize = previewPlayUrlList.size();
+        actualSize = previewJsonList.size();
         actualSize--;
     }
 
-    private void updateVideoStatus(String course_id,String video_id) {
+    @Override
+    public void moduleSelection(CourseModuleModel moduleModel) {
+
+//        NOT USING NOW
+//        updateVideoPREV_NEXTListData(moduleModel.getVideos());
+
+    }
+
+    private void updateVideoStatus(String course_id, String video_id) {
 //        ProgressView.show(context,loadingDialog);
         Json j = new Json();
-        j.addString(P.course_id,course_id);
-        j.addString(P.video_id,video_id);
+        j.addString(P.course_id, course_id);
+        j.addString(P.video_id, video_id);
         Api.newApi(context, P.baseUrl + "add_video_status").addJson(j)
                 .setMethod(Api.POST)
                 .onHeaderRequest(App::getHeaders)
@@ -461,9 +462,9 @@ CourseModuleAdapter.click{
                 })
                 .onSuccess(json ->
                 {
-                    JumpToLogin.call(json,context);
+                    JumpToLogin.call(json, context);
                     if (json.getInt(P.status) == 1) {
-                    }else {
+                    } else {
                     }
 //                    ProgressView.dismiss(loadingDialog);
                 })
@@ -471,50 +472,51 @@ CourseModuleAdapter.click{
     }
 
     @Override
-    public void calledChild(CourseChildModel model,int position) {
-        updateVideoStatus(courseId,model.getVideo_id());
-        childVideoPosition = position;
-        updateButton(childVideoPosition);
+    public void calledChild(CourseChildModel model, int position) {
+        updateVideoPREV_NEXTListData(model.getMainVideoList());
+        updateVideoStatus(courseId, model.getVideo_id());
         lastVideoPosition = 0;
         lastSelectedPosition = 0;
         JsonList videoUrlList = model.getVideo_urls();
         JsonList additionFileList = model.getAdditional_files();
         JsonList additionLinkList = model.getAdditional_links();
 
-        if(videoUrlList!=null && videoUrlList.size()!=0){
+        if (videoUrlList != null && videoUrlList.size() != 0) {
+            updateButtonView(previewJsonList);
+            childVideoPosition = position;
+            updateButton(childVideoPosition);
             binding.playerView.findViewById(R.id.ivVideoQuality).setVisibility(View.VISIBLE);
             setVideoData(videoUrlList);
-        }else {
+        } else {
             binding.playerView.findViewById(R.id.ivVideoQuality).setVisibility(View.GONE);
         }
 
-        if(additionFileList!=null && additionFileList.size()!=0){
+        if (additionFileList != null && additionFileList.size() != 0) {
             binding.txtAdditionalFiles.setVisibility(View.VISIBLE);
             setAdditionalFilesData(additionFileList);
-        }else {
+        } else {
             binding.txtAdditionalFiles.setVisibility(View.GONE);
             courseDocumentModelList.clear();
             courseDocumentAdapter.notifyDataSetChanged();
         }
 
-        if(additionLinkList!=null && additionLinkList.size()!=0){
+        if (additionLinkList != null && additionLinkList.size() != 0) {
             binding.txtAdditionalLinked.setVisibility(View.VISIBLE);
             setAdditionalLinkedData(additionLinkList);
-        }else {
+        } else {
             binding.txtAdditionalLinked.setVisibility(View.GONE);
             courseLinkModelList.clear();
             courseLinkAdapter.notifyDataSetChanged();
         }
 
-        binding.nestedScroll.scrollTo(0,0);
+        binding.nestedScroll.scrollTo(0, 0);
     }
 
-    private void setVideoData(JsonList jsonList){
+    private void setVideoData(JsonList jsonList) {
 
         videoUrlModelList.clear();
 
-        for (Json json : jsonList){
-            Log.e("TAG", "setVideoData122: "+ json.toString() );
+        for (Json json : jsonList) {
             VideoUrlModel model = new VideoUrlModel();
             model.setType(json.getString(P.type));
             model.setLink(json.getString(P.link));
@@ -523,22 +525,21 @@ CourseModuleAdapter.click{
         }
 
         String path = videoUrlModelList.get(0).getLink();
-        Log.e("TAG", "setVideoData: "+  path );
-        if (exoPlayer!=null){
+        if (exoPlayer != null) {
             exoPlayer.release();
             exoPlayer = null;
         }
-        playVideo(path,false);
+        playVideo(path, false);
     }
 
-    private void qualityUrlDialog(List<VideoUrlModel> videoUrlModelList){
+    private void qualityUrlDialog(List<VideoUrlModel> videoUrlModelList) {
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.activity_video_url_dialog);
 
         RecyclerView recyclerQuality = dialog.findViewById(R.id.recyclerQuality);
         recyclerQuality.setLayoutManager(new LinearLayoutManager(context));
-        VideoQualityAdapter adapter = new VideoQualityAdapter(context,videoUrlModelList,MyCourseDetailFragment.this,lastSelectedPosition,1);
+        VideoQualityAdapter adapter = new VideoQualityAdapter(context, videoUrlModelList, MyCourseDetailFragment.this, lastSelectedPosition, 1);
         recyclerQuality.setAdapter(adapter);
 
         dialog.setCancelable(true);
@@ -548,25 +549,24 @@ CourseModuleAdapter.click{
     }
 
     @Override
-    public void qualityClick(VideoUrlModel model,int position) {
-        if (dialog!=null){
+    public void qualityClick(VideoUrlModel model, int position) {
+        if (dialog != null) {
             dialog.dismiss();
         }
-        if (exoPlayer!=null){
+        if (exoPlayer != null) {
             lastSelectedPosition = position;
             lastVideoPosition = exoPlayer.getCurrentPosition();
             exoPlayer.release();
             exoPlayer = null;
         }
-        Log.e("TAG", "setVideoData: "+  model.getLink() );
-        playVideo(model.getLink(),true);
+        playVideo(model.getLink(), true);
     }
 
-    private void setAdditionalFilesData(JsonList jsonList){
+    private void setAdditionalFilesData(JsonList jsonList) {
 
         courseDocumentModelList.clear();
 
-        for (Json json : jsonList){
+        for (Json json : jsonList) {
             CourseDocumentModel model = new CourseDocumentModel();
             model.setFile(json.getString(P.file));
             model.setFile_name(json.getString(P.file_name));
@@ -576,11 +576,11 @@ CourseModuleAdapter.click{
         courseDocumentAdapter.notifyDataSetChanged();
     }
 
-    private void setAdditionalLinkedData(JsonList jsonList){
+    private void setAdditionalLinkedData(JsonList jsonList) {
 
         courseLinkModelList.clear();
 
-        for (Json json : jsonList){
+        for (Json json : jsonList) {
             CourseLinkModel model = new CourseLinkModel();
             model.setLink(json.getString(P.link));
             model.setLink_name(json.getString(P.link_name));
@@ -593,18 +593,15 @@ CourseModuleAdapter.click{
 
     @Override
     public void downloadPDF(CourseDocumentModel model) {
-        ((BaseScreenActivity)context).checkPDFPath(model);
+        ((BaseScreenActivity) context).checkPDFPath(model);
     }
 
     @Override
-    public void onDestroyView()
-    {
-        if (binding.getRoot() != null)
-        {
+    public void onDestroyView() {
+        if (binding.getRoot() != null) {
             ViewGroup parentViewGroup = (ViewGroup) binding.getRoot().getParent();
 
-            if (parentViewGroup != null)
-            {
+            if (parentViewGroup != null) {
                 parentViewGroup.removeAllViews();
             }
         }
@@ -617,30 +614,31 @@ CourseModuleAdapter.click{
         return fragment;
     }
 
-    private boolean checkString(String string, TextView textView){
+    private boolean checkString(String string, TextView textView) {
         boolean value = true;
 
-        if (TextUtils.isEmpty(string) || string.equals("null")){
+        if (TextUtils.isEmpty(string) || string.equals("null")) {
             value = false;
             textView.setVisibility(View.GONE);
         }
         return value;
     }
 
-    private boolean checkString(String string){
+    private boolean checkString(String string) {
         boolean value = true;
 
-        if (TextUtils.isEmpty(string) || string.equals("null")){
-            value = false; }
+        if (TextUtils.isEmpty(string) || string.equals("null")) {
+            value = false;
+        }
         return value;
     }
 
-    private void onBackClick(){
-        if (Config.POP_HOME){
+    private void onBackClick() {
+        if (Config.POP_HOME) {
             Config.POP_HOME = false;
             getFragmentManager().popBackStackImmediate();
             BaseScreenActivity.binding.bottomNavigation.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             BaseScreenActivity.callBack();
         }

@@ -95,6 +95,19 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                onBackClick();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -356,9 +369,7 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
                         session.addString(P.occupation_id, occupation);
                         session.addString(P.marital_status_id, maritalStatus);
                         session.addString(P.gender, gender);
-                        if (!TextUtils.isEmpty(Config.file_path)) {
-                            session.addString(P.profile_picture, Config.file_path);
-                        }
+                        session.addString(P.profile_picture, Config.file_path);
                         final Handler handler = new Handler(Looper.getMainLooper());
                         handler.postDelayed(new Runnable() {
                             @Override
@@ -400,6 +411,13 @@ public class EditProfileFragment extends Fragment implements GenderAdapter.click
                     }
                 })
                 .run("hitUploadImage");
+    }
+
+    public void removePIC(CircleImageView circleProfileImageView){
+        Config.profilePic = "";
+        Config.file_path = "";
+        Picasso.get().load("no_image").placeholder(R.drawable.ic_profile_imag).error(R.drawable.ic_profile_imag).into(circleProfileImageView);
+
     }
 
     @Override

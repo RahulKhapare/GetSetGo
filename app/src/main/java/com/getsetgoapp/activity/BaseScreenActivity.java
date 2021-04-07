@@ -46,7 +46,6 @@ import com.adoisstudio.helper.JsonList;
 import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
-import com.getsetgoapp.BuildConfig;
 import com.getsetgoapp.Fragment.AccountFragment;
 import com.getsetgoapp.Fragment.AddNewUserFragment;
 import com.getsetgoapp.Fragment.BankDetailsFragment;
@@ -1211,6 +1210,14 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.activity_upload_dialog);
+        dialog.findViewById(R.id.txtRemove).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                dialog.cancel();
+                EditProfileFragment.newInstance().removePIC(image);
+            }
+        });
         dialog.findViewById(R.id.txtCamera).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
