@@ -595,7 +595,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
             @Override
             public void onClick(View view) {
                 if (exoPlayer!=null){
-                    exoPlayer.stop(true);
+                    exoPlayer.pause();
                 }
                 loadFragment(id);
             }
