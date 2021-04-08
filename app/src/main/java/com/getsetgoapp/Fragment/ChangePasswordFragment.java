@@ -118,7 +118,7 @@ public class ChangePasswordFragment extends Fragment {
                     JumpToLogin.call(json,context);
                     ProgressView.dismiss(loadingDialog);
                     if (json.getInt(P.status) == 1) {
-                        H.showMessage(context,"Password change successfully");
+                        H.showMessage(context,json.getString(P.msg));
                         final Handler handler = new Handler(Looper.getMainLooper());
                         handler.postDelayed(new Runnable() {
                             @Override
@@ -126,6 +126,8 @@ public class ChangePasswordFragment extends Fragment {
                                 getFragmentManager().popBackStackImmediate();
                             }
                         }, 1000);
+                    }else {
+                        H.showMessage(context,json.getString(P.err));
                     }
                 })
                 .run("hitChangePassword");
