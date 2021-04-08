@@ -48,7 +48,7 @@ public class CountryCodeSelectionAdapter extends BaseAdapter {
             txtName.setText(model.getCountry_shortname());
             txtName.setTextColor(context.getResources().getColor(R.color.colorTextHint));
         }else {
-            txtName.setText(model.getCountry_shortname() + " (+"+model.getCountry_code()+")");
+            txtName.setText("(+"+model.getCountry_code().trim()+") " + model.getCountry_shortname().trim());
         }
 
         return view;

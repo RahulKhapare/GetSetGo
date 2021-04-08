@@ -103,7 +103,28 @@ public class DashBoardFragment extends Fragment {
 
     }
 
+    private void loadEditFragment(View v,Fragment fragment){
+        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isFromBottom", false);
+        fragment.setArguments(bundle);
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
     public void onClick() {
+
+        binding.llMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                EditProfileFragment editProfileFragment = new EditProfileFragment();
+                loadEditFragment(v,editProfileFragment);
+            }
+        });
 
         binding.imvCopyCode.setOnClickListener(new View.OnClickListener() {
             @Override

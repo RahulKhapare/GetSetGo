@@ -134,7 +134,7 @@
                                     android:indeterminate="false"
                                     android:maxHeight="12dp"
                                     android:minHeight="12dp"
-                                    android:progress="10"
+                                    android:progress="5"
                                     android:progressDrawable="@drawable/progress_bar_rounded" />
 
                                 <TextView
@@ -144,7 +144,7 @@
                                     android:layout_below="@id/progressBarDash"
                                     android:layout_marginTop="5dp"
                                     android:fontFamily="@font/nunito_sans_semibold"
-                                    android:text="10% Completed"
+                                    android:text="5% Completed"
                                     android:layout_marginBottom="10dp"
                                     android:textColor="@color/colorTextHint"
                                     android:textSize="10sp" />
@@ -160,7 +160,7 @@
                     <RelativeLayout
                         android:id="@+id/rlAffliate"
                         android:layout_width="match_parent"
-                        android:layout_height="140dp"
+                        android:layout_height="wrap_content"
                         android:layout_below="@id/rlCard"
                         android:layout_marginTop="10dp"
                         android:gravity="center">
@@ -168,9 +168,11 @@
                         <RelativeLayout
                             android:id="@+id/llAffliate"
                             android:layout_width="328dp"
-                            android:layout_height="128dp"
+                            android:layout_height="wrap_content"
                             android:background="@drawable/bg_dash_elevation"
                             android:elevation="3dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginBottom="2dp"
                             android:orientation="vertical"
                             android:paddingLeft="16dp"
                             android:paddingRight="16dp">
@@ -227,6 +229,7 @@
                                 android:layout_below="@id/rlAfflink"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
                                 android:gravity="center_vertical">
 
                                 <TextView
