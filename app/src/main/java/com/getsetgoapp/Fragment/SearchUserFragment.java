@@ -16,12 +16,15 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.adoisstudio.helper.H;
 import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
+import com.adoisstudio.helper.Session;
 import com.getsetgoapp.R;
 import com.getsetgoapp.activity.BaseScreenActivity;
 import com.getsetgoapp.databinding.FragmentSearchUserBinding;
 import com.getsetgoapp.util.Click;
+import com.getsetgoapp.util.P;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -65,10 +68,14 @@ public class SearchUserFragment extends Fragment {
     }
 
     private void init() {
+
+        setData();
+
         page = 1;
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Search User");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
         bindColorType();
+        bindPurchaseType();
 
         initCalendar(binding.etPshFrom);
         initCalendar(binding.etPshTo);
@@ -76,6 +83,8 @@ public class SearchUserFragment extends Fragment {
         initCalendar(binding.etRegTo);
 
         onClick();
+
+        Log.e("TAG", "initDSDSD: "+TotalDirectUsersFragment.directUserJson.toString() );
 
         if (!isFromTotalUser) {
             if (TotalDirectUsersFragment.directUserJson != null) {
@@ -90,6 +99,20 @@ public class SearchUserFragment extends Fragment {
                 bindRegdPurposeList(TotalUsersFragment.totalUserJson.getJsonList("registration_purpose_list"));
             }
         }
+
+    }
+
+
+    private void setData(){
+
+        binding.etUserName.setText(name);
+        binding.etEmailId.setText(email);
+        binding.etPhoneNumber.setText(contact);
+        binding.etRegFrom.setText(start_date);
+        binding.etRegTo.setText(end_date);
+        binding.etPshFrom.setText(purchase_start_date);
+        binding.etPshTo.setText(purchase_end_date);
+        binding.etParentName.setText(parent_name);
 
     }
 
@@ -143,19 +166,70 @@ public class SearchUserFragment extends Fragment {
 
     private void bindColorType() {
         ArrayList<String> stringArrayList = new ArrayList<String>();
-        stringArrayList.add("Select");
+        stringArrayList.add("Select User");
         stringArrayList.add("Red");
         stringArrayList.add("Green");
 
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.spinner_display_text, stringArrayList);
         binding.spnColorType.setAdapter(stringArrayAdapter);
+
+        if (has_purchased.equals("0")){
+            binding.spnColorType.setSelection(1);
+        }else if (has_purchased.equals("1")){
+            binding.spnColorType.setSelection(2);
+        }
+
         binding.spnColorType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (binding.spnColorType.getSelectedItem().toString() != "Green") {
-                    Log.d("Tag", "Selected Item is = " + binding.spnColorType.getSelectedItem().toString());
+                if (binding.spnColorType.getSelectedItem().toString().equals("Green")) {
+                    has_purchased = "1";
+                }else if (binding.spnColorType.getSelectedItem().toString().equals("Red")){
+                    has_purchased = "0";
+                }else {
+                    has_purchased = "";
                 }
+
+                Log.e("TAG", "onItemSelected_has_purchased: "+ has_purchased );
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+    }
+
+    private void bindPurchaseType() {
+        ArrayList<String> stringArrayList = new ArrayList<String>();
+        stringArrayList.add("Select User Type");
+        stringArrayList.add("Affiliate");
+        stringArrayList.add("Non-Affiliate");
+
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getActivity(),
+                R.layout.spinner_display_text, stringArrayList);
+        binding.spnAffUser.setAdapter(stringArrayAdapter);
+
+        if (is_affiliate.equals("0")){
+            binding.spnAffUser.setSelection(1);
+        }else if (is_affiliate.equals("1")){
+            binding.spnAffUser.setSelection(2);
+        }
+
+        binding.spnAffUser.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (binding.spnAffUser.getSelectedItem().toString().equals("Affiliate")) {
+                    is_affiliate = "1";
+                }else if (binding.spnAffUser.getSelectedItem().toString().equals("Non-Affiliate")){
+                    is_affiliate = "0";
+                }else {
+                    is_affiliate = "";
+                }
+
+                Log.e("TAG", "onItemSelected_is_affiliate: "+ is_affiliate );
             }
 
             @Override
@@ -193,21 +267,26 @@ public class SearchUserFragment extends Fragment {
 
     private void bindCourseList(JsonList jsonList) {
 
+        int selection = 0;
         ArrayList<String> stringArrayList = new ArrayList<>();
-        stringArrayList.add("Select");
+        stringArrayList.add("Select Course");
         for (int i = 0; i < jsonList.size(); i++) {
             Json json = jsonList.get(i);
             stringArrayList.add(json.getString("course_name"));
+            if (courseId.equals(json.getString("id"))){
+                selection = i+1;
+            }
         }
 
 
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.spinner_display_text, stringArrayList);
         binding.spnCourse.setAdapter(stringArrayAdapter);
+        binding.spnCourse.setSelection(selection);
         binding.spnCourse.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (binding.spnCourse.getSelectedItem().toString() != "Select") {
+                if (binding.spnCourse.getSelectedItem().toString() != "Select Course") {
                     Log.d("Tag", "Selected Item is = " + binding.spnCourse.getSelectedItem().toString());
                     for (Json json : jsonList) {
                         if (binding.spnCourse.getSelectedItem().toString().equalsIgnoreCase(json.getString("course_name"))) {
@@ -215,6 +294,8 @@ public class SearchUserFragment extends Fragment {
                         }
                     }
 
+                }else {
+                    courseId = "";
                 }
             }
 
@@ -227,22 +308,26 @@ public class SearchUserFragment extends Fragment {
     }
 
     private void bindRegdPurposeList(JsonList jsonList) {
-
+        int selection = 0;
         ArrayList<String> stringArrayList = new ArrayList<>();
-        stringArrayList.add("Select");
+        stringArrayList.add("Select Purpose");
         for (int i = 0; i < jsonList.size(); i++) {
             Json json = jsonList.get(i);
             stringArrayList.add(json.getString("purpose_name"));
+            if (regdPurposeId.equals(json.getString("id"))){
+                selection = i+1;
+            }
         }
 
 
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.spinner_display_text, stringArrayList);
         binding.spnRegdPurpose.setAdapter(stringArrayAdapter);
+        binding.spnRegdPurpose.setSelection(selection);
         binding.spnRegdPurpose.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (binding.spnRegdPurpose.getSelectedItem().toString() != "Select") {
+                if (binding.spnRegdPurpose.getSelectedItem().toString() != "Select Purpose") {
                     Log.d("Tag", "Selected Item is = " + binding.spnRegdPurpose.getSelectedItem().toString());
                     for (Json json : jsonList) {
                         if (binding.spnRegdPurpose.getSelectedItem().toString().equalsIgnoreCase(json.getString("purpose_name"))) {
@@ -250,6 +335,8 @@ public class SearchUserFragment extends Fragment {
                         }
                     }
 
+                }else {
+                    regdPurposeId = "";
                 }
             }
 
@@ -262,29 +349,37 @@ public class SearchUserFragment extends Fragment {
     }
 
     private void bindCrashCourseList(JsonList jsonList) {
-
+        int selection = 0;
         ArrayList<String> stringArrayList = new ArrayList<>();
-        stringArrayList.add("Select");
+        stringArrayList.add("Select Crash Course");
         for (int i = 0; i < jsonList.size(); i++) {
             Json json = jsonList.get(i);
             stringArrayList.add(json.getString("name"));
+            if (program_service_id.equals(json.getString("id"))){
+                selection = i+1;
+            }
         }
-
 
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.spinner_display_text, stringArrayList);
         binding.spnCrashCourse.setAdapter(stringArrayAdapter);
+        binding.spnCrashCourse.setSelection(selection);
         binding.spnCrashCourse.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (binding.spnCrashCourse.getSelectedItem().toString() != "Select") {
+                if (binding.spnCrashCourse.getSelectedItem().toString() != "Select Crash Course") {
                     Log.d("Tag", "Selected Item is = " + binding.spnCrashCourse.getSelectedItem().toString());
                     for (Json json : jsonList) {
                         if (binding.spnCrashCourse.getSelectedItem().toString().equalsIgnoreCase(json.getString("name"))) {
                             crashId = json.getString("id");
+                            program_service_id = json.getString("id");
                         }
                     }
 
+
+                }else {
+                    crashId = "";
+                    program_service_id = "";
                 }
             }
 

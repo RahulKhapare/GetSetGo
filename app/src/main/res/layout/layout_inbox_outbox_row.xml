@@ -25,16 +25,17 @@
             <LinearLayout
                 android:id="@+id/rlMain"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="10">
+                android:orientation="horizontal">
 
                 <TextView
+                    android:layout_weight="1"
                     android:id="@+id/txtSupportTitle"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="7.5"
+                    android:singleLine="true"
+                    android:paddingRight="10dp"
                     android:fontFamily="@font/nunito_sans_semibold"
                     android:text="GetSetGo Support"
                     android:textColor="@color/colorBlueGetSetGo"
@@ -42,14 +43,14 @@
 
                 <TextView
                     android:id="@+id/txtDate"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2.5"
                     android:fontFamily="@font/nunito_sans_semibold"
                     android:gravity="end"
                     android:text="Jan 01, 2020"
                     android:textColor="@color/colorBlueGetSetGo"
                     android:textSize="10sp" />
+
             </LinearLayout>
 
             <TextView

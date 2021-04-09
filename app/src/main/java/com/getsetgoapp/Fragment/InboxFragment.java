@@ -46,6 +46,7 @@ public class InboxFragment extends Fragment {
 
     private void init()
     {
+
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         binding.recyclerViewInboxOutbox.setLayoutManager(layoutManager);
         binding.recyclerViewInboxOutbox.setItemAnimator(new DefaultItemAnimator());
@@ -71,7 +72,7 @@ public class InboxFragment extends Fragment {
                 if (isScrolling && (currentItem + scrollOutItems) >= totalItems) {
                     if (HelpAndSupportFragment.nextPageForinbox) {
                         isScrolling = false;
-                        HelpAndSupportFragment.callSupportInboxApi(context);
+                        HelpAndSupportFragment.callSupportInboxApi(getActivity());
                     }
                 }
             }

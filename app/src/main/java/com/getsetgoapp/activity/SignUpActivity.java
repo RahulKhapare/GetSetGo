@@ -92,7 +92,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         }
 
-        CountryCodeSelectionAdapter adapter = new CountryCodeSelectionAdapter(activity, countryCodeModelList);
+        CountryCodeSelectionAdapter adapter = new CountryCodeSelectionAdapter(activity, countryCodeModelList,1);
         binding.spinnerCode.setAdapter(adapter);
 //        binding.spinnerCode.setSelection(selection);
 
@@ -256,7 +256,10 @@ public class SignUpActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(binding.etxEmailAddress.getText().toString().trim())) {
             H.showMessage(activity, "Enter email id");
             value = false;
-        } else if (TextUtils.isEmpty(countryCode)) {
+        } else if (!Validation.validEmail(binding.etxEmailAddress.getText().toString().trim())) {
+            H.showMessage(activity, "Enter valid email");
+            value = false;
+        }  else if (TextUtils.isEmpty(countryCode)) {
             H.showMessage(activity, "Select your ISD code");
             value = false;
         } else if (TextUtils.isEmpty(binding.etxPhone.getText().toString().trim())) {
@@ -266,10 +269,7 @@ public class SignUpActivity extends AppCompatActivity {
                 binding.etxPhone.getText().toString().length() != 10) {
             H.showMessage(activity, "Enter valid phone number");
             value = false;
-        } else if (!Validation.validEmail(binding.etxEmailAddress.getText().toString().trim())) {
-            H.showMessage(activity, "Enter valid email");
-            value = false;
-        } else if (TextUtils.isEmpty(binding.etxPassword.getText().toString().trim())) {
+        }else if (TextUtils.isEmpty(binding.etxPassword.getText().toString().trim())) {
             H.showMessage(activity, "Enter password");
             value = false;
         } else if (binding.etxPassword.getText().toString().length() < 3) {

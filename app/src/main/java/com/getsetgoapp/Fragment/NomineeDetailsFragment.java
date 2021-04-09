@@ -35,11 +35,6 @@ public class NomineeDetailsFragment extends Fragment {
     private FragmentNomineeDocumentBinding binding;
 
     LoadingDialog loadingDialog;
-    String relationOne = "";
-    String relationTwo = "";
-    String status = "";
-
-
 
     public NomineeDetailsFragment() {
     }
@@ -93,7 +88,7 @@ public class NomineeDetailsFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_nominee_document, container, false);
         View rootView = binding.getRoot();
 
-        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Nominee Documents");
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Nominee Details");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
 
         init();
@@ -107,6 +102,7 @@ public class NomineeDetailsFragment extends Fragment {
         hitGetNomineeData(getActivity());
 
         onClick();
+
     }
 
 
@@ -126,12 +122,7 @@ public class NomineeDetailsFragment extends Fragment {
             public void onClick(View v) {
                 Click.preventTwoClick(v);
                 if (checkValidation()){
-                    if (status.equals("1")){
-                        H.showMessage(getActivity(),"Nominee details already uploaded");
-                    }else {
-                        hitSaveNomineeData(getActivity());
-                    }
-
+                    hitSaveNomineeData(getActivity());
                 }
             }
         });
@@ -214,8 +205,6 @@ public class NomineeDetailsFragment extends Fragment {
                         binding.etxNomineeOneRelation.setText(checkString(nomineeJson.getString(P.nominee1_relation)));
                         binding.etxNomineeTwo.setText(checkString(nomineeJson.getString(P.nominee2)));
                         binding.etxNomineeTwoRelation.setText(checkString(nomineeJson.getString(P.nominee2_relation)));
-                        status = "1";
-                        disableData(status);
                     }else {
                         H.showMessage(context,json.getString(P.err));
                     }

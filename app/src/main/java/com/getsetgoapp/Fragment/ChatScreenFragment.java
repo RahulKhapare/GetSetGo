@@ -3,6 +3,7 @@ package com.getsetgoapp.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +35,12 @@ import com.getsetgoapp.util.JumpToLogin;
 import com.getsetgoapp.util.P;
 import com.getsetgoapp.util.Utilities;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ChatScreenFragment extends Fragment {
 
@@ -78,10 +83,15 @@ public class ChatScreenFragment extends Fragment {
                 if (!TextUtils.isEmpty(binding.etMessage.getText().toString().trim())) {
                     String msg = binding.etMessage.getText().toString().trim();
 
+                    Date c = Calendar.getInstance().getTime();
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    String currentDate = df.format(c);
+
                     ResponseMessage responseMessage = new ResponseMessage();
                     responseMessage.setMessage(msg);
                     responseMessage.setDatetime(Utilities.getCurrentDateTime());
                     responseMessage.setMsg_from(Config.user);
+                    responseMessage.setDate(currentDate);
 
                     if (CheckConnection.isVailable(getActivity())){
                         responseMessages.add(responseMessage);
@@ -105,6 +115,22 @@ public class ChatScreenFragment extends Fragment {
                 }
             }
         });
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
+                    getFragmentManager().popBackStackImmediate();
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override

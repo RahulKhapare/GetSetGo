@@ -7,6 +7,15 @@ public class CountryCodeModel {
     String country_name;
     String country_shortname;
 
+    public CountryCodeModel(String country_shortname,String country_id) {
+        this.country_shortname = country_shortname;
+        this.country_id = country_id;
+    }
+
+    public CountryCodeModel() {
+
+    }
+
     public String getCountry_code() {
         return country_code;
     }

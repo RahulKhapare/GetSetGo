@@ -4,6 +4,15 @@ public class ResponseMessage {
     String message;
     String datetime;
     String msg_from;
+    String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public String getMessage() {
         return message;

@@ -1,6 +1,8 @@
 package com.getsetgoapp.Adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,13 +46,18 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         ResponseMessage model = responseMessages.get(position);
 
         String TIME = "";
+        String DATE = "";
+
 
         if (!model.getDatetime().contains("AM") || !model.getDatetime().contains("PM")){
 
             StringTokenizer tk = new StringTokenizer(model.getDatetime());
             String date = tk.nextToken();
             String time = tk.nextToken();
-
+            DATE  = date;
+            if (TextUtils.isEmpty(model.getDate()) || model.getDate().equals("null")){
+                model.setDate(DATE);
+            }
             SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss",Locale.US);
             SimpleDateFormat sdfs = new SimpleDateFormat("hh:mm aa", Locale.US);
 
@@ -65,6 +72,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
         }else {
             TIME = model.getDatetime();
+            if (TextUtils.isEmpty(model.getDate()) || model.getDate().equals("null")){
+                model.setDate(DATE);
+            }
+
         }
 
         if (model.getMsg_from().contains(Config.user)){
@@ -72,11 +83,24 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             holder.lnrAdmin.setVisibility(View.GONE);
             holder.txtUserMessage.setText(RemoveHtml.html2text(model.getMessage()));
             holder.txtUserTime.setText(TIME);
+            if (!TextUtils.isEmpty(model.getDate()) || !model.getDate().equals("null")){
+                holder.txtUserDate.setVisibility(View.VISIBLE);
+                holder.txtUserDate.setText(model.getDate());
+            }else {
+                holder.txtUserDate.setVisibility(View.GONE);
+            }
         }else if (model.getMsg_from().contains(Config.admin)){
             holder.lnrAdmin.setVisibility(View.VISIBLE);
             holder.lnrUser.setVisibility(View.GONE);
             holder.txtAdminMessage.setText(RemoveHtml.html2text(model.getMessage()));
             holder.txtAdminTime.setText(TIME);
+            if (!TextUtils.isEmpty(model.getDate()) || !model.getDate().equals("null")){
+                holder.txtAdminDate.setVisibility(View.VISIBLE);
+                holder.txtAdminDate.setText(model.getDate());
+            }else {
+                holder.txtAdminDate.setVisibility(View.GONE);
+            }
+
         }
 
     }
@@ -91,10 +115,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         RelativeLayout lnrAdmin;
         TextView txtAdminMessage;
         TextView txtAdminTime;
+        TextView txtAdminDate;
 
         RelativeLayout lnrUser;
         TextView txtUserMessage;
         TextView txtUserTime;
+        TextView txtUserDate;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -103,8 +129,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             lnrUser = itemView.findViewById(R.id.lnrUser);
             txtAdminMessage = itemView.findViewById(R.id.txtAdminMessage);
             txtAdminTime = itemView.findViewById(R.id.txtAdminTime);
+            txtAdminDate = itemView.findViewById(R.id.txtAdminDate);
             txtUserMessage = itemView.findViewById(R.id.txtUserMessage);
             txtUserTime = itemView.findViewById(R.id.txtUserTime);
+            txtUserDate = itemView.findViewById(R.id.txtUserDate);
 
         }
     }

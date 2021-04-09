@@ -16,10 +16,12 @@ public class CountryCodeSelectionAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflter;
     private List<CountryCodeModel> itemListModels;
+    private int status = 0;
 
-    public CountryCodeSelectionAdapter(Context context, List<CountryCodeModel> itemListModelList) {
+    public CountryCodeSelectionAdapter(Context context, List<CountryCodeModel> itemListModelList,int status) {
         this.context = context;
         this.itemListModels = itemListModelList;
+        this.status = status;
         inflter = (LayoutInflater.from(context));
     }
 
@@ -48,7 +50,12 @@ public class CountryCodeSelectionAdapter extends BaseAdapter {
             txtName.setText(model.getCountry_shortname());
             txtName.setTextColor(context.getResources().getColor(R.color.colorTextHint));
         }else {
-            txtName.setText("(+"+model.getCountry_code().trim()+") " + model.getCountry_name().trim());
+            if (status==1){
+                txtName.setText("(+"+model.getCountry_code().trim()+") " + model.getCountry_name().trim());
+            }else if (status==2){
+                txtName.setText(model.getCountry_shortname());
+            }
+
         }
 
         return view;

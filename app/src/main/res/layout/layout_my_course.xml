@@ -16,9 +16,9 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/ivMyCourse"
-            android:layout_width="@dimen/x72"
-            android:layout_height="@dimen/x72"
-            android:scaleType="centerCrop"
+            android:layout_width="@dimen/x100"
+            android:layout_height="@dimen/x64"
+            android:scaleType="fitXY"
             android:src="@drawable/download"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

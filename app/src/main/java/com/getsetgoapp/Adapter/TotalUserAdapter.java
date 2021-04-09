@@ -1,6 +1,8 @@
 package com.getsetgoapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,9 +15,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adoisstudio.helper.H;
 import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
 import com.getsetgoapp.R;
+import com.getsetgoapp.util.Click;
 
 public class TotalUserAdapter extends RecyclerView.Adapter<TotalUserAdapter.TotalUserViewHolder> {
 
@@ -89,6 +93,28 @@ public class TotalUserAdapter extends RecyclerView.Adapter<TotalUserAdapter.Tota
             }
         });
 
+        holder.txtPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                String number = holder.txtPhone.getText().toString().trim();
+                if (!TextUtils.isEmpty(number)){
+                    jumpWhatspp(number);
+                }
+            }
+        });
+
+        holder.txtPPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                String number = holder.txtPPhone.getText().toString().trim();
+                if (!TextUtils.isEmpty(number)){
+                    jumpWhatspp(number);
+                }
+            }
+        });
+
 //        if (lastCheckPosition==position){
 //            holder.rlDetails.setVisibility(View.VISIBLE);
 //            holder.chkShowHide.setChecked(true);
@@ -129,6 +155,20 @@ public class TotalUserAdapter extends RecyclerView.Adapter<TotalUserAdapter.Tota
             rlyView = itemView.findViewById(R.id.rlyView);
 
         }
+    }
+
+
+    private void jumpWhatspp(String number){
+        try{
+            Uri uri = Uri.parse("smsto:" + number);
+            Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+            intent.putExtra(Intent.EXTRA_TEXT, "");
+            intent.setPackage("com.whatsapp");
+            context.startActivity(Intent.createChooser(intent, ""));
+        }catch (Exception e){
+            H.showMessage(context,"Unable to reach contact, try again");
+        }
+
     }
 }
 

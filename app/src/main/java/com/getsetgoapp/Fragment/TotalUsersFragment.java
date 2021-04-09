@@ -2,6 +2,7 @@ package com.getsetgoapp.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -190,6 +191,7 @@ public class TotalUsersFragment extends Fragment {
         String apiParam;
         LoadingDialog loadingDialog = new LoadingDialog(context);
         if (isSearch) {
+//            isSearch = false;
             String name = SearchUserFragment.name;
             String email = SearchUserFragment.email;
             String contact = SearchUserFragment.contact;
@@ -241,6 +243,7 @@ public class TotalUsersFragment extends Fragment {
                             Json1 = Json1.getJson(P.data);
                             int numRows = Json1.getInt(P.num_rows);
                             JsonList jsonList = Json1.getJsonList(P.list);
+                            Log.e("TAG", "callTotalUserApiLSLLSLS: " +jsonList.toString() );
                             if (jsonList != null && !jsonList.isEmpty()) {
                                 totalUserJsonList.addAll(jsonList);
                                 totalUserJson = Json1;
@@ -256,6 +259,8 @@ public class TotalUsersFragment extends Fragment {
                                     NextPage = false;
                                     page = 1;
                                 }
+                            }else {
+
                             }
 
                         }
@@ -279,4 +284,26 @@ public class TotalUsersFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        clearData();
+    }
+
+    private void clearData(){
+       SearchUserFragment.name = "";
+        SearchUserFragment.email = "";
+        SearchUserFragment.contact = "";
+        SearchUserFragment.has_purchased = "";
+       SearchUserFragment.courseId = "";
+        SearchUserFragment.crashId = "";
+        SearchUserFragment.start_date = "";
+         SearchUserFragment.end_date = "";
+        SearchUserFragment.is_affiliate = "";
+        SearchUserFragment.parent_name = "";
+        SearchUserFragment.program_service_id = "";
+        SearchUserFragment.regdPurposeId = "";
+        SearchUserFragment.purchase_start_date = "";
+        SearchUserFragment.purchase_end_date = "";
+    }
 }

@@ -35,9 +35,22 @@
             android:layout_below="@+id/txtAdminMessage"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="0dp"
             android:fontFamily="@font/nunito_sans_regular"
             android:text="6:06 PM"
+            android:textColor="@color/colorBlackTime"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/txtAdminDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtAdminTime"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/nunito_sans_regular"
+            android:text="00/00/0000"
             android:textColor="@color/colorBlackTime"
             android:textSize="12sp" />
 
@@ -73,11 +86,26 @@
             android:layout_below="@+id/txtUserMessage"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="0dp"
             android:fontFamily="@font/nunito_sans_regular"
             android:text="6:06 PM"
             android:textColor="@color/colorWhiteTime"
             android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/txtUserDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtUserTime"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/nunito_sans_regular"
+            android:text="00/00/0000"
+            android:textColor="@color/colorWhiteTime"
+            android:textSize="12sp" />
+
+
 
     </RelativeLayout>
 

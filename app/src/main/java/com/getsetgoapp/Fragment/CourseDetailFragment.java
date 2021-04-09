@@ -60,12 +60,14 @@ import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
 import com.getsetgoapp.Adapter.CurriculumLectureAdapter;
 import com.getsetgoapp.Adapter.StudentsFeedbackAdapter;
+import com.getsetgoapp.Model.InstructorModel;
 import com.getsetgoapp.Model.VideoUrlModel;
 import com.getsetgoapp.R;
 import com.getsetgoapp.activity.BaseScreenActivity;
 import com.getsetgoapp.activity.SplashActivity;
 import com.getsetgoapp.activity.VideoPlayActivity;
 import com.getsetgoapp.activity.VideoPlayNewActivity;
+import com.getsetgoapp.adapterview.InstructorAdapter;
 import com.getsetgoapp.adapterview.VideoCourseQualityAdapter;
 import com.getsetgoapp.adapterview.VideoQualityAdapter;
 import com.getsetgoapp.others.CustomVideoView;
@@ -157,11 +159,8 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
     private ProgressBar brightnessProgressBar, volumeProgressBar;
     View v;
     TextView txtShowMore, txtViewMore, txtDesc, txtCourseTitle, txtTimeLect,
-            txtViewCategoryNewPrice, txtViewCategoryOldPrice,
-            txtCouseProfName,
-            txtProff, txtBuyNow, txtTitle, txtLectureTitle, txtVideoDetails, txtPreview,txtCourses,txtJoiningDate;
+            txtViewCategoryNewPrice, txtViewCategoryOldPrice, txtBuyNow, txtTitle, txtLectureTitle, txtVideoDetails, txtPreview;
     RelativeLayout rlBuyNow;
-    ImageView imvViewCategory;
     Context context;
     CheckBox chkExpClp;
 //    ImageButton chkExpClp;
@@ -176,6 +175,10 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
     public static long lastVideoPosition = 0;
     public static int lastSelectedPosition = 0;
     public static String videoPlayPath = "";
+
+    private List<InstructorModel> instructorModelList;
+    private InstructorAdapter instructorAdapter;
+    private RecyclerView recyclerInstructor;
 
     public CourseDetailFragment() {
     }
@@ -359,21 +362,23 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         txtDesc = view.findViewById(R.id.txtDesc);
         txtCourseTitle = view.findViewById(R.id.txtCourseTitle);
         txtViewCategoryNewPrice = view.findViewById(R.id.txtViewCategoryNewPrice);
-        txtCouseProfName = view.findViewById(R.id.txtCouseProfName);
-        txtProff = view.findViewById(R.id.txtProff);
-        txtCourses = view.findViewById(R.id.txtCourses);
-        txtJoiningDate = view.findViewById(R.id.txtJoiningDate);
         txtViewCategoryOldPrice = view.findViewById(R.id.txtViewCategoryOldPrice);
         txtTimeLect = view.findViewById(R.id.txtTimeLect);
         txtBuyNow = view.findViewById(R.id.txtBuyNow);
         rlBuyNow = view.findViewById(R.id.rlBuyNow);
         llCourseVideo = view.findViewById(R.id.llCourseVideo);
+        recyclerInstructor = view.findViewById(R.id.recyclerInstructor);
 
         imageView = v.findViewById(R.id.imageView);
-        imvViewCategory = v.findViewById(R.id.imvViewCategory);
 
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mLayoutManagerStudentFeedback = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+
+        instructorModelList = new ArrayList<>();
+        instructorAdapter = new InstructorAdapter(getActivity(),instructorModelList);
+        recyclerInstructor.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerInstructor.setHasFixedSize(true);
+        recyclerInstructor.setAdapter(instructorAdapter);
 
         callCourseDetailsApi(getActivity(), slug);
 
@@ -495,15 +500,29 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         try {
             ArrayList<String> mVideoList = new ArrayList<>();
 
-            JSONArray s = list.getJsonArray("instructor");
+            JSONArray instructorList = list.getJsonArray("instructor");
+            Log.e("TAG", "setDataDDDDDD: "+ instructorList.toString() );
+            if (instructorList!=null && instructorList.length()!=0){
+                for (int i = 0; i < instructorList.length(); i++) {
+                    JSONObject jsonObject = instructorList.getJSONObject(i);
+                    String id = jsonObject.getString("id");
+                    String name = jsonObject.getString("name");
+                    String image = jsonObject.getString("image");
+                    String joining_date = jsonObject.getString("joining_date");
+                    String course_count = jsonObject.getString("course_count");
 
-            if (!s.getJSONObject(0).getString("name").isEmpty()) {
-                txtCouseProfName.setText("Prof. " + s.getJSONObject(0).getString("name"));
-                txtProff.setText("SME. " + s.getJSONObject(0).getString("name"));
-                txtCourses.setText(s.getJSONObject(0).getString("joining_date"));
-                txtJoiningDate.setText(s.getJSONObject(0).getString("course_count") + " Courses");
+                    InstructorModel instructorModel = new InstructorModel();
+                    instructorModel.setId(id);
+                    instructorModel.setName(name);
+                    instructorModel.setImage(image);
+                    instructorModel.setJoining_date(joining_date);
+                    instructorModel.setCourse_count(course_count);
+                    instructorModelList.add(instructorModel);
+
+                }
+
+                instructorAdapter.notifyDataSetChanged();
             }
-            Picasso.get().load(s.getJSONObject(0).getString("image")).placeholder(R.drawable.ic_wp).error(R.drawable.ic_wp).into(imvViewCategory);
 
             JSONObject courseInclusion = list.getJsonObject("course_inclusion");
             String duration = courseInclusion.getString("duration");

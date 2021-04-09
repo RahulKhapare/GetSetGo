@@ -66,7 +66,7 @@ import java.util.List;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class MyCourseDetailFragment extends Fragment implements Player.EventListener, CourseChildAdapter.childAction, CourseDocumentAdapter.onClick, VideoQualityAdapter.onClick,
-        CourseModuleAdapter.click {
+        CourseModuleAdapter.click ,CourseLinkAdapter.onClick{
 
     private FragmentMyCourseDetailsBinding binding;
     private Context context;
@@ -160,7 +160,7 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
         binding.recyclerDocument.setAdapter(courseDocumentAdapter);
 
         courseLinkModelList = new ArrayList<>();
-        courseLinkAdapter = new CourseLinkAdapter(context, courseLinkModelList);
+        courseLinkAdapter = new CourseLinkAdapter(context, courseLinkModelList,MyCourseDetailFragment.this);
         binding.recyclerLink.setLayoutManager(new LinearLayoutManager(context));
         binding.recyclerLink.setNestedScrollingEnabled(false);
         binding.recyclerLink.setAdapter(courseLinkAdapter);
@@ -644,4 +644,8 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
         }
     }
 
+    @Override
+    public void onLinkClick(String link) {
+        ((BaseScreenActivity)getActivity()).openLink(link);
+    }
 }

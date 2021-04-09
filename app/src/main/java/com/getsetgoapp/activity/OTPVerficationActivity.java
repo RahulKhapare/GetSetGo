@@ -132,7 +132,7 @@ public class OTPVerficationActivity extends AppCompatActivity {
                         App.authToken = token;
                         App.user_id = user_id;
 
-                        H.showMessage(this,"Verification successfully done !");
+                        H.showMessage(activity,json.getString(P.msg));
                         Intent mainIntent = new Intent(activity,BaseScreenActivity.class);
                         mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(mainIntent);

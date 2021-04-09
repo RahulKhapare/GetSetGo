@@ -676,6 +676,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/rlCur"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:gravity="center">
 
                         <View
@@ -685,154 +686,15 @@
                             android:paddingTop="10dp" />
 
 
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/cardViewAllCategories"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_marginTop="10dp"
+                            android:id="@+id/recyclerInstructor"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginRight="16dp"
-                            android:layout_marginBottom="20dp"
-                            app:cardCornerRadius="10dp"
-                            app:cardElevation="2dp">
+                            >
 
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:paddingRight="5dp"
-                                android:paddingLeft="10dp">
+                        </androidx.recyclerview.widget.RecyclerView>
 
-                                <TextView
-                                    android:id="@+id/txtProff"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="8dp"
-                                    android:layout_marginTop="5dp"
-                                    android:fontFamily="@font/nunit_sans_bold"
-                                    android:text="Created by Prof. John Doe"
-                                    android:textColor="@color/colorTextDark"
-                                    android:textSize="16sp" />
-
-                                <RelativeLayout
-                                    android:id="@+id/rlMainDetails"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@+id/txtProff"
-                                    android:layout_gravity="center"
-                                    android:layout_marginTop="3dp"
-                                    android:gravity="center_vertical"
-                                    android:paddingLeft="7dp"
-                                    android:paddingRight="3dp">
-
-                                    <com.makeramen.roundedimageview.RoundedImageView
-                                        android:id="@+id/imvViewCategory"
-                                        android:layout_width="66dp"
-                                        android:layout_height="66dp"
-                                        android:layout_centerVertical="true"
-                                        android:src="@drawable/download"
-                                        app:riv_corner_radius="5dp" />
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_centerVertical="true"
-                                        android:layout_marginLeft="10dp"
-                                        android:layout_toEndOf="@+id/imvViewCategory"
-                                        android:layout_toRightOf="@+id/imvViewCategory"
-                                        android:orientation="vertical">
-
-
-                                        <RelativeLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="25dp"
-                                            android:layout_marginTop="2dp">
-
-                                            <ImageView
-                                                android:id="@+id/imvCourse"
-                                                android:layout_width="14dp"
-                                                android:layout_height="14dp"
-                                                android:layout_marginLeft="5dp"
-                                                android:layout_centerVertical="true"
-                                                android:src="@drawable/ic_date"
-                                                app:tint="@color/colorTextHighLight" />
-
-                                            <TextView
-                                                android:id="@+id/txtCourses"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_alignParentRight="true"
-                                                android:layout_centerVertical="true"
-                                                android:layout_marginLeft="10dp"
-                                                android:layout_toRightOf="@id/imvCourse"
-                                                android:fontFamily="@font/nunito_sans_regular"
-                                                android:text=""
-                                                android:textColor="@color/colorTextHighLight"
-                                                android:textSize="12sp" />
-
-
-                                        </RelativeLayout>
-
-                                        <RelativeLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="25dp"
-                                            android:layout_marginTop="2dp">
-
-                                            <ImageView
-                                                android:id="@+id/imvRating"
-                                                android:layout_width="24dp"
-                                                android:layout_height="24dp"
-                                                android:layout_centerVertical="true"
-                                                android:src="@drawable/ic_cours"
-                                                app:tint="@color/colorTextHighLight" />
-
-                                            <TextView
-                                                android:id="@+id/txtJoiningDate"
-                                                android:layout_width="120dp"
-                                                android:layout_height="wrap_content"
-                                                android:layout_alignParentRight="true"
-                                                android:layout_centerVertical="true"
-                                                android:layout_marginLeft="10dp"
-                                                android:layout_toRightOf="@id/imvRating"
-                                                android:fontFamily="@font/nunito_sans_regular"
-                                                android:text=""
-                                                android:textColor="@color/colorTextHighLight"
-                                                android:textSize="12sp" />
-
-
-                                        </RelativeLayout>
-
-                                    </LinearLayout>
-
-                                </RelativeLayout>
-
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@+id/rlMainDetails"
-                                    android:visibility="gone"
-                                    android:gravity="end">
-
-                                    <TextView
-                                        android:id="@+id/txtViewProfile"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginRight="15dp"
-                                        android:fontFamily="@font/nunit_sans_bold"
-                                        android:gravity="center"
-                                        android:text="View Profile"
-                                        android:textColor="@color/viewall_text_color"
-                                        android:textSize="10sp" />
-
-                                </RelativeLayout>
-
-
-                            </RelativeLayout>
-
-                        </androidx.cardview.widget.CardView>
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -840,14 +702,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/rlProfile"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="0dp"
                         android:gravity="center">
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@color/colorStrokeView"
-                            android:paddingTop="10dp" />
+                            android:background="@color/colorStrokeView" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"

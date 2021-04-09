@@ -39,6 +39,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
         </activity>
         <activity
@@ -117,6 +118,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAcIh1VB5d1hyFD48PdqOFNfEOYZy4-Lls" />
 
+
+        <uses-library android:name="org.apache.http.legacy"
+            android:required="false"></uses-library>
 
     </application>
 

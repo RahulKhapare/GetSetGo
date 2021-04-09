@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -116,6 +117,39 @@ public class DashBoardFragment extends Fragment {
     }
 
     public void onClick() {
+
+        binding.txtMasterContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                String number = binding.txtMasterContact.getText().toString().trim();
+                if (!TextUtils.isEmpty(number)){
+                    jumpWhatspp(number);
+                }
+            }
+        });
+
+        binding.txtFranchiseConatct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                String number = binding.txtFranchiseConatct.getText().toString().trim();
+                if (!TextUtils.isEmpty(number)){
+                    jumpWhatspp(number);
+                }
+            }
+        });
+
+        binding.txtAvisorContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                String number = binding.txtAvisorContact.getText().toString().trim();
+                if (!TextUtils.isEmpty(number)){
+                    jumpWhatspp(number);
+                }
+            }
+        });
 
         binding.llMain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -325,6 +359,19 @@ public class DashBoardFragment extends Fragment {
             textView.setVisibility(View.GONE);
         }
         return value;
+    }
+
+    private void jumpWhatspp(String number){
+        try{
+            Uri uri = Uri.parse("smsto:" + number);
+            Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+            intent.putExtra(Intent.EXTRA_TEXT, "");
+            intent.setPackage("com.whatsapp");
+            startActivity(Intent.createChooser(intent, ""));
+        }catch (Exception e){
+            H.showMessage(getActivity(),"Unable to reach contact, try again");
+        }
+
     }
 
 }

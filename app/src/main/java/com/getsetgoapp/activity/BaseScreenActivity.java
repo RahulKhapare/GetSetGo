@@ -13,6 +13,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -60,6 +62,7 @@ import com.getsetgoapp.Fragment.HelpAndSupportFragment;
 import com.getsetgoapp.Fragment.HomeFragment;
 import com.getsetgoapp.Fragment.IncentivesFragment;
 import com.getsetgoapp.Fragment.KYCDocumentFragment;
+import com.getsetgoapp.Fragment.MyCourseDetailFragment;
 import com.getsetgoapp.Fragment.MyOrderFragment;
 import com.getsetgoapp.Fragment.MyPointsFragment;
 import com.getsetgoapp.Fragment.NomineeDetailsFragment;
@@ -110,7 +113,7 @@ import static com.getsetgoapp.Fragment.CurrentLearningFragment.REQUEST_CODE;
 import static com.getsetgoapp.Fragment.CurrentLearningFragment.RESULT_CODE;
 
 
-public class BaseScreenActivity extends AppCompatActivity implements Player.EventListener{
+public class BaseScreenActivity extends AppCompatActivity implements Player.EventListener {
 
 
     private final BaseScreenActivity activity = this;
@@ -260,7 +263,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         checkBoxTransaction();
         onItemClick();
 
-        Log.e("TAG", "onCheckViewTTT:  " + new Session(activity).getString(P.token)  );
+        Log.e("TAG", "onCheckViewTTT:  " + new Session(activity).getString(P.token));
     }
 
     private void checkBoxUsers() {
@@ -579,7 +582,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
 
             case R.id.lnrPoints:
                 if (myPointsFragment == null)
-                myPointsFragment = MyPointsFragment.newInstance();
+                    myPointsFragment = MyPointsFragment.newInstance();
                 Bundle bm = new Bundle();
                 bm.putBoolean("isFromDashboard", false);
                 myPointsFragment.setArguments(bm);
@@ -715,12 +718,11 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
     }
 
     public void OnShare(View view) {
-        shareApp(activity,new Session(activity).getString(P.app_link));
+        shareApp(activity, new Session(activity).getString(P.app_link));
     }
 
-    public void shareApp(Context context,String link)
-    {
-        String shareMessage = Config.SHARE_MESSAGE  + "\n\n" + link;
+    public void shareApp(Context context, String link) {
+        String shareMessage = Config.SHARE_MESSAGE + "\n\n" + link;
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
@@ -864,7 +866,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
                             Bundle extras = data.getExtras();
                             Bitmap bitmap = extras.getParcelable("data");
                             base64Image = encodeImage(bitmap);
-                            EditProfileFragment.newInstance().hitUploadImage(activity,base64Image,circleProfileImageView);
+                            EditProfileFragment.newInstance().hitUploadImage(activity, base64Image, circleProfileImageView);
                         }
                     } catch (Exception e) {
                     }
@@ -899,7 +901,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
 
     private void getPermission() {
         ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
                 READ_WRITE);
     }
 
@@ -919,9 +921,9 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
             case READ_WRITE: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (clickFOR==clickPDF){
+                    if (clickFOR == clickPDF) {
                         checkDirectory(this, pdf_url, pdf_title);
-                    }else if (clickFOR==clickIMAGE){
+                    } else if (clickFOR == clickIMAGE) {
                         if (click == cameraClick) {
                             openCamera();
                         } else if (click == galleryClick) {
@@ -989,18 +991,18 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
                 }).run("hitInitApi");
     }
 
-    private void getNotificationAction(){
+    private void getNotificationAction() {
 
         String action = getIntent().getStringExtra(P.action);
         String action_data = getIntent().getStringExtra(P.action_data);
         String title = getIntent().getStringExtra(P.title);
 
-        if (!TextUtils.isEmpty(action) && !action.equals("null")){
-            if (action.equals(Config.ACTION_COURSE)){
-                if (!TextUtils.isEmpty(action_data) && !action_data.equals("null")){
-                    loadCourseFragment(title,action_data);
+        if (!TextUtils.isEmpty(action) && !action.equals("null")) {
+            if (action.equals(Config.ACTION_COURSE)) {
+                if (!TextUtils.isEmpty(action_data) && !action_data.equals("null")) {
+                    loadCourseFragment(title, action_data);
                 }
-            }else if (action.equals(Config.ACTION_GENERAL)){
+            } else if (action.equals(Config.ACTION_GENERAL)) {
                 Bundle bundle = new Bundle();
                 BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
                 BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);
@@ -1018,7 +1020,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         }
     }
 
-    private void loadCourseFragment(String title,String slug) {
+    private void loadCourseFragment(String title, String slug) {
         Bundle bundle = new Bundle();
         BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
         BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);
@@ -1037,7 +1039,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
     }
 
 
-    private void loadEditProfileFragment(){
+    private void loadEditProfileFragment() {
         Config.FROM_DASHBOARD = true;
         EditProfileFragment editProfileFragment = EditProfileFragment.newInstance();
         Bundle b2 = new Bundle();
@@ -1046,7 +1048,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         fragmentLoader(editProfileFragment, true);
     }
 
-    private void loadNotificationFragment(){
+    private void loadNotificationFragment() {
         NotificationsFragment notificationsFragment = NotificationsFragment.newInstance();
         Bundle b2 = new Bundle();
         b2.putBoolean("isFromBottom", false);
@@ -1054,7 +1056,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         fragmentLoader(notificationsFragment, true);
     }
 
-    private void loadMyOrderFragment(){
+    private void loadMyOrderFragment() {
         MyOrderFragment notificationsFragment = MyOrderFragment.newInstance();
         Bundle b2 = new Bundle();
         b2.putBoolean("isFromBottom", false);
@@ -1062,7 +1064,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         fragmentLoader(notificationsFragment, true);
     }
 
-    private void welcomeDialog(String url,String message) {
+    private void welcomeDialog(String url, String message) {
 
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -1074,12 +1076,12 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         TextView textView = dialog.findViewById(R.id.txtMessage);
         textView.setText(message);
 
-        playVideo(url,false);
+        playVideo(url, false);
 
-         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                if (exoPlayer!=null){
+                if (exoPlayer != null) {
                     exoPlayer.stop(true);
                 }
             }
@@ -1092,7 +1094,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
 
     }
 
-    private void playVideo(String videoPath,boolean replay){
+    private void playVideo(String videoPath, boolean replay) {
         exoPlayer = new SimpleExoPlayer.Builder(activity).build();
         playerView.setPlayer(exoPlayer);
         playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIXED_HEIGHT);
@@ -1113,7 +1115,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (exoPlayer!=null){
+        if (exoPlayer != null) {
             exoPlayer.stop(true);
         }
     }
@@ -1121,7 +1123,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
     @Override
     protected void onPause() {
         super.onPause();
-        if (exoPlayer!=null){
+        if (exoPlayer != null) {
             exoPlayer.pause();
         }
     }
@@ -1151,7 +1153,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         txtMessage.setText("Users registered using your referral - " + count);
         String qr_code = "qr_code";
         String imagePath = new Session(activity).getString(qr_code);
-        if (!imagePath.equals("")){
+        if (!imagePath.equals("")) {
             qr_code = imagePath;
         }
         Picasso.get().load(qr_code).error(R.drawable.ic_no_image).into(imgQR);
@@ -1161,7 +1163,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
             public void onClick(View v) {
                 Click.preventTwoClick(v);
                 dialog.dismiss();
-                shareApp(activity,new Session(activity).getString(P.app_link));
+                shareApp(activity, new Session(activity).getString(P.app_link));
             }
         });
 
@@ -1250,7 +1252,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
             intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraURI);
             startActivityForResult(intent, REQUEST_CAMERA);
         } catch (Exception e) {
-            H.showMessage(activity,"Whoops - your device doesn't support capturing images!");
+            H.showMessage(activity, "Whoops - your device doesn't support capturing images!");
         }
     }
 
@@ -1267,7 +1269,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         }
     }
 
-    private void performCrop(Uri picUri){
+    private void performCrop(Uri picUri) {
         try {
 
             Intent cropIntent = new Intent("com.android.camera.action.CROP");
@@ -1279,9 +1281,8 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
             cropIntent.putExtra("outputY", 128);
             cropIntent.putExtra("return-data", true);
             startActivityForResult(cropIntent, PIC_CROP);
-        }
-        catch (Error anfe) {
-            H.showMessage(activity,"Whoops - your device doesn't support the crop action!");
+        } catch (Error anfe) {
+            H.showMessage(activity, "Whoops - your device doesn't support the crop action!");
         }
     }
 
@@ -1291,10 +1292,10 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
             InputStream imageStream = getContentResolver().openInputStream(uri);
             Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
             base64Image = encodeImage(selectedImage);
-            EditProfileFragment.newInstance().hitUploadImage(activity,base64Image,circleProfileImageView);
+            EditProfileFragment.newInstance().hitUploadImage(activity, base64Image, circleProfileImageView);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            Log.e("TAG", "setImageDataEE: "+ e.getMessage() );
+            Log.e("TAG", "setImageDataEE: " + e.getMessage());
             H.showMessage(activity, "Unable to get image, try again.");
         }
     }
@@ -1305,5 +1306,21 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         byte[] b = baos.toByteArray();
         String encImage = Base64.encodeToString(b, Base64.DEFAULT);
         return encImage;
+    }
+
+    public void openLink(String url) {
+        if (!TextUtils.isEmpty(url) && !url.equals("null")){
+            try {
+                Intent i = new Intent();
+                i.setAction(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url.trim()));
+                startActivity(i);
+            } catch (Exception e) {
+                H.showMessage(activity, "Something went wrong to open link");
+            }
+        }else {
+            H.showMessage(activity, "Path not present, try after some time");
+        }
+
     }
 }

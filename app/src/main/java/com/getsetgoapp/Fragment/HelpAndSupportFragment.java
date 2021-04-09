@@ -49,6 +49,13 @@ public class HelpAndSupportFragment extends Fragment {
         return fragment;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        inboxJsonList.clear();
+        outboxJsonList.clear();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,8 +64,23 @@ public class HelpAndSupportFragment extends Fragment {
         context = inflater.getContext();
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Support/Help");
         BaseScreenActivity.binding.incFragmenttool.ivFilter.setVisibility(View.GONE);
-
         return rootView;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
+                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    BaseScreenActivity.callBack();
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override

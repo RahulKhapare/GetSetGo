@@ -64,6 +64,7 @@
                 android:fontFamily="@font/nunito_sans_semibold"
                 android:gravity="start|center"
                 android:paddingHorizontal="@dimen/x4"
+                android:visibility="gone"
                 android:text="Video - 03:00 mins"
                 android:textColor="#60232323"
                 android:textSize="@dimen/font_size_x14" />
@@ -82,6 +83,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_sans_semibold"
                 android:text="Play"
+                android:visibility="gone"
                 android:gravity="end"
                 android:textColor="@color/viewall_text_color"
                 android:textSize="@dimen/font_size_x12" />

@@ -669,7 +669,6 @@
                                 android:layout_marginTop="5dp"
                                 android:fontFamily="@font/nunito_sans_regular"
                                 android:text=""
-                                android:autoLink="phone"
                                 android:drawableLeft="@drawable/whatsapp_bg"
                                 android:drawablePadding="5dp"
                                 android:textColor="@color/colorTextDark"
@@ -738,7 +737,6 @@
                                 android:text=""
                                 android:drawableLeft="@drawable/whatsapp_bg"
                                 android:drawablePadding="5dp"
-                                android:autoLink="phone"
                                 android:textColor="@color/colorTextDark"
                                 android:textSize="16sp" />
 
@@ -805,7 +803,6 @@
                                 android:layout_marginTop="5dp"
                                 android:fontFamily="@font/nunito_sans_regular"
                                 android:text=""
-                                android:autoLink="phone"
                                 android:drawableLeft="@drawable/whatsapp_bg"
                                 android:drawablePadding="5dp"
                                 android:textColor="@color/colorTextDark"
