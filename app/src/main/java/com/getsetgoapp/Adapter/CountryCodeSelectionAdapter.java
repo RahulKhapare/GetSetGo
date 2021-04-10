@@ -1,6 +1,7 @@
 package com.getsetgoapp.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,15 +48,15 @@ public class CountryCodeSelectionAdapter extends BaseAdapter {
         TextView txtName = view.findViewById(R.id.txtCode);
         CountryCodeModel model = itemListModels.get(i);
         if (i == 0){
-            txtName.setText(model.getCountry_shortname());
+            txtName.setText(model.getCountry_shortname().trim());
             txtName.setTextColor(context.getResources().getColor(R.color.colorTextHint));
         }else {
             if (status==1){
-                txtName.setText("(+"+model.getCountry_code().trim()+") " + model.getCountry_name().trim());
+                String name = "(+"+model.getCountry_code().trim()+") " + model.getCountry_name().trim();
+                txtName.setText(name.trim());
             }else if (status==2){
-                txtName.setText(model.getCountry_shortname());
+                txtName.setText(model.getCountry_shortname().trim());
             }
-
         }
 
         return view;
