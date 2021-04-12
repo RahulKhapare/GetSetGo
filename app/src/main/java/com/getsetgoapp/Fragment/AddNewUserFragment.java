@@ -45,7 +45,7 @@ public class AddNewUserFragment extends Fragment {
     Context context;
     private String countryCode;
     private String countryID;
-    private String userStatus;
+    private String userStatus = "1";
 
 
     public AddNewUserFragment() {
@@ -105,7 +105,7 @@ public class AddNewUserFragment extends Fragment {
         model1.setCountry_id("");
         model1.setCountry_code("");
         model1.setCountry_name("");
-        model1.setCountry_shortname("Eg. (+91)");
+        model1.setCountry_shortname("Country Code");
         countryCodeModelList.add(model1);
 
         int selection = 0;
@@ -142,26 +142,6 @@ public class AddNewUserFragment extends Fragment {
                     countryID = "";
                 }
 
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        List<CountryCodeModel> statusList = new ArrayList<>();
-        statusList.add(new CountryCodeModel("User Status","-"));
-        statusList.add(new CountryCodeModel("Active","1"));
-        statusList.add(new CountryCodeModel("Inactive","0"));
-
-        CountryCodeSelectionAdapter statusAdapter = new CountryCodeSelectionAdapter(context, statusList,2);
-        binding.spinnerActive.setAdapter(statusAdapter);
-        binding.spinnerActive.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                CountryCodeModel model = countryCodeModelList.get(position);
-                userStatus = model.getCountry_code();
             }
 
             @Override
@@ -303,9 +283,6 @@ public class AddNewUserFragment extends Fragment {
         } else if (binding.etxPassword.getText().toString().length() < 3) {
             H.showMessage(context, "Please enter valid password");
             value = false;
-        }else if (TextUtils.isEmpty(userStatus) || userStatus.equals("0")){
-            H.showMessage(context, "Please select user status");
-            value = false;
         }
         return value;
     }
@@ -359,9 +336,8 @@ public class AddNewUserFragment extends Fragment {
         binding.etxPhone.setText("");
         binding.etxPassword.setText("");
         binding.spinnerCode.setSelection(0);
-        binding.spinnerActive.setSelection(0);
-
     }
+
     private void onBackClick(){
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getActivity().getFragmentManager().popBackStack();

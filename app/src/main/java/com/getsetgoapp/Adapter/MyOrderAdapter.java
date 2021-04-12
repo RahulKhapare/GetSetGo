@@ -86,6 +86,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
     }
 
     private void loadFragment(View v, String courseSlug,String courseName) {
+        Config.POP_HOME = true;
         BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
         BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);
         BaseScreenActivity.binding.incFragmenttool.content.setVisibility(View.VISIBLE);

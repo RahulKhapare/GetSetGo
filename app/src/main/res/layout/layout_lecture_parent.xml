@@ -23,7 +23,7 @@
             android:paddingHorizontal="@dimen/x12"
             android:text="Front-End Web Development"
             android:textColor="@color/colorTextDark"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/ivExpClp"

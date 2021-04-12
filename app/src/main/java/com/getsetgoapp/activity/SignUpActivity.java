@@ -71,7 +71,7 @@ public class SignUpActivity extends AppCompatActivity {
         model1.setCountry_id("");
         model1.setCountry_code("");
         model1.setCountry_name("");
-        model1.setCountry_shortname("Eg. (+91)");
+        model1.setCountry_shortname("Country Code");
         countryCodeModelList.add(model1);
 
         int selection = 0;

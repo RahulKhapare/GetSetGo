@@ -286,6 +286,7 @@ public class TotalDirectUsersFragment extends Fragment {
     }
 
     private void clearData(){
+        isSearch = false;
         SearchUserFragment.name = "";
         SearchUserFragment.email = "";
         SearchUserFragment.contact = "";

@@ -239,16 +239,6 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <Spinner
-                        android:layout_marginTop="20dp"
-                        android:id="@+id/spinnerActive"
-                        android:layout_width="match_parent"
-                        android:layout_height="?actionBarSize"
-                        style="@style/Base.Widget.AppCompat.Spinner.Underlined"
-                        android:backgroundTint="@color/colorTextDark">
-
-                    </Spinner>
-
 
                     <TextView
                         android:id="@+id/txtSave"
@@ -257,7 +247,7 @@
                         android:textSize="16sp"
                         android:paddingTop="20dp"
                         android:paddingBottom="20dp"
-                        android:layout_marginTop="30dp"
+                        android:layout_marginTop="50dp"
                         android:layout_marginBottom="20dp"
                         android:gravity="center"
                         android:text="Save"

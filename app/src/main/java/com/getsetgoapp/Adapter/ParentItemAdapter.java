@@ -16,6 +16,7 @@ import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
 import com.getsetgoapp.Fragment.ViewAllCategoriesFragment;
 import com.getsetgoapp.R;
+import com.getsetgoapp.util.Config;
 
 public class ParentItemAdapter extends RecyclerView
         .Adapter<ParentItemAdapter.ParentViewHolder> {

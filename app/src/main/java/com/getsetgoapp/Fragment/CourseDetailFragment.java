@@ -76,6 +76,7 @@ import com.getsetgoapp.util.Click;
 import com.getsetgoapp.util.Config;
 import com.getsetgoapp.util.JumpToLogin;
 import com.getsetgoapp.util.P;
+import com.getsetgoapp.util.RemoveHtml;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
@@ -485,7 +486,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         Log.d("Hardik", "Reviews " + list);
 
         id = list.getString("id");
-        txtDesc.setText(list.getString("description"));
+        txtDesc.setText(RemoveHtml.html2text(list.getString("description")));
         txtCourseTitle.setText(list.getString("course_name"));
         txtViewCategoryNewPrice.setText("₹ " + list.getString("saleprice"));
         txtViewCategoryOldPrice.setText("₹ " + list.getString("price"));
@@ -565,7 +566,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
                     CourseDetailsChildViewHolder courseDetailsChildViewHolder = new CourseDetailsChildViewHolder();
 
                     courseDetailsChildViewHolder.txtLectureTitle.setText(mTempList.get(i).getString("video_name"));
-                    courseDetailsChildViewHolder.txtVideoDetails.setText("Video: " + mTempList.get(i).getString("video_duration") + " mins");
+                    courseDetailsChildViewHolder.txtVideoDetails.setText("Duration " + mTempList.get(i).getString("video_duration") + " mins");
                     courseDetailsChildViewHolder.txtCount.setText(String.valueOf(count));
                     count++;
                     courseDetailsParentViewHolder.llChild.addView(courseDetailsChildViewHolder.getViewGroup());

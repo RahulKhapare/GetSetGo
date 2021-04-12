@@ -473,6 +473,7 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
 
     @Override
     public void calledChild(CourseChildModel model, int position) {
+        binding.txtVideoTitle.setText(model.getVideo_title());
         updateVideoPREV_NEXTListData(model.getMainVideoList());
         updateVideoStatus(courseId, model.getVideo_id());
         lastVideoPosition = 0;

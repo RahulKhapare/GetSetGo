@@ -49,7 +49,7 @@ public class CourseChildAdapter extends RecyclerView.Adapter<CourseChildAdapter.
         int index = position+1;
         holder.binding.txtCount.setText(index + "");
         holder.binding.txtVideoTitle.setText(model.getVideo_title());
-        holder.binding.txtDuration.setText("Video "+ model.getDuration() + " mins");
+        holder.binding.txtDuration.setText("Duration "+ model.getDuration() + " mins");
 
         if (!TextUtils.isEmpty(model.getIs_completed()) && !model.getIs_completed().equals("null")){
             holder.binding.txtCompleted.setVisibility(View.VISIBLE);

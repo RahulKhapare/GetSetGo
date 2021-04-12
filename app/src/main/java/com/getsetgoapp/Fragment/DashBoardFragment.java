@@ -151,15 +151,6 @@ public class DashBoardFragment extends Fragment {
             }
         });
 
-        binding.llMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Click.preventTwoClick(v);
-                EditProfileFragment editProfileFragment = new EditProfileFragment();
-                loadEditFragment(v,editProfileFragment);
-            }
-        });
-
         binding.imvCopyCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -240,15 +231,15 @@ public class DashBoardFragment extends Fragment {
         });
     }
 
-    public void shareApp(Context context,String link)
-    {
-        String shareMessage = Config.SHARE_MESSAGE  + "\n\n" + link;
+    public void shareApp(Context context, String link) {
+        String shareMessage = Config.SHARE_MESSAGE + "\n\n" + link;
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
         sendIntent.setType("text/plain");
-        context.startActivity(sendIntent);
+        startActivity(Intent.createChooser(sendIntent, "Share Using"));
     }
+
 
     private void loadFragment(Fragment fragment,View v){
         TotalUsersFragment.isSearch = false;

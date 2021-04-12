@@ -17,6 +17,7 @@ import com.adoisstudio.helper.JsonList;
 import com.getsetgoapp.Fragment.CourseDetailFragment;
 import com.getsetgoapp.R;
 import com.getsetgoapp.activity.BaseScreenActivity;
+import com.getsetgoapp.util.Config;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
@@ -148,6 +149,7 @@ public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.Chil
     }
 
     private void loadFragment(View v, String title,String slug) {
+        Config.POP_HOME = true;
         Bundle bundle = new Bundle();
         BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
         BaseScreenActivity.binding.incBasetool.content.setVisibility(View.GONE);

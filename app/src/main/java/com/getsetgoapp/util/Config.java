@@ -37,4 +37,15 @@ public class Config {
             "Click on the Link Below,  and Start your Journey to become a Better Version of yourself.";
 
 
+    public static String WELCOME_VIDEO = "https://player.vimeo.com/external/535902905.sd.mp4?s=aef58d2760c00c9ef4d2650178907024695c4241&profile_id=165";
+
+    public static String WELCOME_MESSAGE =
+            "1.Any member will be able to access and download GSG APP by using the referral link by the existing members.\n" +
+            "2.It is FREE of cost for all. \n" +
+            "3.12-Courses worth INR 25K will be gifted FREE-OF-COST to all who will download the APP. Course will appear in their dashboard month-wise.\n" +
+            "4.Members, who will download the GSG APP will automatically become the members of GSG Family and GSG group companies. They will also become valued customer for GSG Online Portal and Apnashopper E Comm Portal. \n" +
+            "5.All members will be able to refer the link to number of their relatives, friends and well-wishers, and they will automatically join in the member who provided the APP Link.\n" +
+            "6.Members who will become GSG member by downloading the GSG APP, will start getting incentive & benefits, once they start transactions on either on GSG Platform or Apnashopper E comm Portal. There will not be any incentive only by referring the Link to any member.\n" +
+            "\n" +
+            "I am ready to accept Terms and Conditions as mentioned above.";
 }

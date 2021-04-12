@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:paddingRight="10dp"
-                    android:textSize="@dimen/x14"
+                    android:textSize="@dimen/x16"
                     android:textColor="@color/colorTextDark"
                     android:fontFamily="@font/nunito_sans_semibold"
                     android:text="@string/app_name">

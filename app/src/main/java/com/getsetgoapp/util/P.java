@@ -196,6 +196,7 @@ public class P {
     public static String joining_date = "joining_date";
     public static String course_count = "course_count";
     public static String welcome = "welcome";
+    public static String mobile_terms_accepted = "mobile_terms_accepted";
     public static String country_code = "country_code";
     public static String country_id = "country_id";
     public static String country_name = "country_name";

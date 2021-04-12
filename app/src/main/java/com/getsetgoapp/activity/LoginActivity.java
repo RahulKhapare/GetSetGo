@@ -213,6 +213,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             session.addString(P.app_link, Json1.getString(P.app_link) + "");
                             session.addString(P.referral_link, Json1.getString(P.referral_link) + "");
                             session.addString(P.qr_code, Json1.getString(P.qr_code) + "");
+                            session.addString(P.mobile_terms_accepted, Json1.getString(P.mobile_terms_accepted) + "");
 
                             App.authToken = token;
                             App.user_id = user_id;
@@ -513,6 +514,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             session.addString(P.app_link, Json1.getString(P.app_link) + "");
                             session.addString(P.referral_link, Json1.getString(P.referral_link) + "");
                             session.addString(P.qr_code, Json1.getString(P.qr_code) + "");
+                            session.addString(P.mobile_terms_accepted, Json1.getString(P.mobile_terms_accepted) + "");
 
                             App.authToken = token;
                             App.user_id = user_id;

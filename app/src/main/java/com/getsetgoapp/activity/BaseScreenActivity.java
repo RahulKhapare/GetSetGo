@@ -175,9 +175,6 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
     private PlayerView playerView;
     private ProgressBar pbVideoPlayer;
 
-    String welcomeMessage = "Welcome to the team! We are thrilled to have you at our office. You're going to be a valuable asset to our company and we can't wait to see all that you accomplish. The entire team of [name of the company] is thrilled to welcome you on board. We hope you'll do some amazing works here!";
-    String videoUrl = "https://www.rmp-streaming.com/media/big-buck-bunny-360p.mp4";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -186,10 +183,10 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         getAccess();
         init();
 
-//        if (!new Session(activity).getBool(P.welcome)){
-//            new Session(activity).addBool(P.welcome,true);
-//            welcomeDialog(videoUrl,welcomeMessage);
-//        }
+        String mobile_terms_accepted = new Session(activity).getString(P.mobile_terms_accepted);
+        if (TextUtils.isEmpty(mobile_terms_accepted) || mobile_terms_accepted.equals("0") || mobile_terms_accepted.equals("null")){
+            welcomeDialog(Config.WELCOME_VIDEO,Config.WELCOME_MESSAGE);
+        }
 
     }
 
@@ -727,7 +724,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
         sendIntent.setType("text/plain");
-        context.startActivity(sendIntent);
+        startActivity(Intent.createChooser(sendIntent, "Share Using"));
     }
 
 
@@ -1074,7 +1071,16 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         playerView = dialog.findViewById(R.id.playerView);
 
         TextView textView = dialog.findViewById(R.id.txtMessage);
+        TextView txtAgree = dialog.findViewById(R.id.txtAgree);
         textView.setText(message);
+
+        txtAgree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                updateFistVisitStatus();
+            }
+        });
 
         playVideo(url, false);
 
@@ -1087,12 +1093,13 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
             }
         });
 
-        dialog.setCancelable(true);
+        dialog.setCancelable(false);
         dialog.show();
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 
     }
+
 
     private void playVideo(String videoPath, boolean replay) {
         exoPlayer = new SimpleExoPlayer.Builder(activity).build();
@@ -1323,4 +1330,38 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         }
 
     }
+
+
+    private void updateFistVisitStatus() {
+        loadingDialog = new LoadingDialog(activity, false);
+        Json json = new Json();
+        Api.newApi(activity, P.baseUrl + "mobile_terms_accepted")
+                .addJson(json)
+                .setMethod(Api.POST)
+                .onHeaderRequest(App::getHeaders)
+                .onLoading(isLoading -> {
+                    if (!isDestroyed()) {
+                        if (isLoading)
+                            loadingDialog.show("loading...");
+                        else
+                            loadingDialog.dismiss();
+                    }
+                })
+                .onError(() ->
+                        MessageBox.showOkMessage(this, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
+                        }))
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        JumpToLogin.call(Json1, this);
+                        loadingDialog.dismiss();
+                        if (Json1.getInt(P.status) == 1) {
+                            new Session(activity).addString(P.mobile_terms_accepted,"1");
+                            H.showMessage(activity,Json1.getString(P.msg));
+                        }
+                    }
+
+                }).run("updateFistVisitStatus");
+    }
+
 }
