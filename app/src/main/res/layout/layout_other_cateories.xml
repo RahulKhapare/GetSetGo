@@ -29,10 +29,9 @@
             android:ellipsize="end"
             android:fontFamily="@font/nunito_sans_semibold"
             android:maxLines="2"
-            android:minLines="2"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="7dp"
             android:text="Basics of"
             android:textColor="@color/programme_text_color"
             android:textSize="@dimen/x14" />

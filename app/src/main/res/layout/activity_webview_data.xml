@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteColor"
+    android:layout_margin="20dp">
+
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/txtCancel"
+        android:layout_margin="12dp">
+
+    </WebView>
+
+    <TextView
+        android:id="@+id/txtCancel"
+        android:padding="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:fontFamily="@font/nunit_sans_bold"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimaryDark">
+
+    </TextView>
+
+</RelativeLayout>

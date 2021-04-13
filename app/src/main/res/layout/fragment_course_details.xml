@@ -278,6 +278,7 @@
                                 android:layout_centerVertical="true"
                                 android:fontFamily="@font/nunito_sans_regular"
                                 android:text="prof John Doe"
+                                android:visibility="gone"
                                 android:textColor="@color/main_highlighttext_color"
                                 android:textSize="12sp" />
 
@@ -311,6 +312,7 @@
                         </RelativeLayout>
 
                         <RelativeLayout
+                            android:layout_marginTop="10dp"
                             android:layout_width="wrap_content"
                             android:layout_height="15dp"
                             android:gravity="center">

@@ -1070,15 +1070,34 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         pbVideoPlayer = dialog.findViewById(R.id.pbVideoPlayer);
         playerView = dialog.findViewById(R.id.playerView);
 
-        TextView textView = dialog.findViewById(R.id.txtMessage);
         TextView txtAgree = dialog.findViewById(R.id.txtAgree);
-        textView.setText(message);
+        TextView txtClickTelegram = dialog.findViewById(R.id.txtClickTelegram);
+        TextView txtClickFacebook = dialog.findViewById(R.id.txtClickFacebook);
+
 
         txtAgree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
                 updateFistVisitStatus();
+            }
+        });
+        txtClickTelegram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (exoPlayer != null) {
+                    exoPlayer.pause();
+                }
+                openLink(Config.WELCOME_TELEGRAM);
+            }
+        });
+        txtClickFacebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (exoPlayer != null) {
+                    exoPlayer.pause();
+                }
+                openLink(Config.WELCOME_FACEBOOK);
             }
         });
 

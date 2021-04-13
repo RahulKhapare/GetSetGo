@@ -38,6 +38,8 @@ public class Config {
 
 
     public static String WELCOME_VIDEO = "https://player.vimeo.com/external/535902905.sd.mp4?s=aef58d2760c00c9ef4d2650178907024695c4241&profile_id=165";
+    public static String WELCOME_TELEGRAM = "https://t.me/joinchat/lzp7lC4WN1VkNGM1";
+    public static String WELCOME_FACEBOOK = "https://www.facebook.com/groups/935968223890515/";
 
     public static String WELCOME_MESSAGE =
             "1.Any member will be able to access and download GSG APP by using the referral link by the existing members.\n" +

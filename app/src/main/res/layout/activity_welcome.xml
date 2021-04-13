@@ -18,8 +18,10 @@
             android:fontFamily="@font/nunito_sans_semibold"
             android:textColor="@color/colorTextDark"
             android:text="Welcome"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:layout_margin="16dp"
-            android:textSize="22sp" />
+            android:textSize="24sp" />
 
 
         <androidx.cardview.widget.CardView
@@ -63,34 +65,80 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_sans_semibold"
+            android:fontFamily="@font/nunit_sans_bold"
             android:textColor="@color/colorTextDark"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="16dp"
             android:layout_marginRight="16dp"
-            android:text="Terms and Conditions"
+            android:text="Join the GetSetGo World Community group"
             android:layout_marginLeft="16dp"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
-        <ScrollView
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/txtMessage"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito_sans_regular"
+                android:fontFamily="@font/nunito_sans_semibold"
                 android:textColor="@color/colorTextDark"
-                android:scrollbars="vertical"
-                android:fadeScrollbars="false"
-                android:layout_marginBottom="16dp"
-                android:layout_marginTop="0dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
+                android:text="Telegram"
                 android:layout_marginLeft="16dp"
-                android:textSize="14sp" />
+                android:textSize="18sp" />
 
-        </ScrollView>
+            <TextView
+                android:id="@+id/txtClickTelegram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunit_sans_bold"
+                android:textColor="@color/colorTextBlue"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:text="Click Here"
+                android:layout_marginLeft="16dp"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:textColor="@color/colorTextDark"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:text="Facebook"
+                android:layout_marginLeft="16dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtClickFacebook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunit_sans_bold"
+                android:textColor="@color/colorTextBlue"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:text="Click Here"
+                android:layout_marginLeft="16dp"
+                android:textSize="20sp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -99,13 +147,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
         android:fontFamily="@font/nunit_sans_bold"
         android:textColor="@color/colorPrimaryDark"
         android:gravity="right"
         android:padding="16dp"
-        android:text="Agree"
+        android:text="Get Started >>"
         android:layout_gravity="right"
-        android:textSize="18sp" />
+        android:textSize="20sp" />
 
 </RelativeLayout>

@@ -1,5 +1,7 @@
 package com.getsetgoapp.activity;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -10,8 +12,14 @@ import android.text.TextWatcher;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -152,6 +160,14 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void onClick() {
 
+        binding.txtTermsMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                webDialog(SplashActivity.termConditionUrl);
+            }
+        });
+
         binding.radioIndividual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -287,6 +303,9 @@ public class SignUpActivity extends AppCompatActivity {
         } else if (TextUtils.isEmpty(binding.etxSponserId.getText().toString().trim())) {
             H.showMessage(activity, "Enter sponser id");
             value = false;
+        } else if (!binding.checkTermCondition.isChecked()){
+            H.showMessage(activity, "Please allow check for term and conditions");
+            value = false;
         }
 
         return value;
@@ -397,6 +416,7 @@ public class SignUpActivity extends AppCompatActivity {
                             Json sponsorData = Json1.getJson(P.sponsor);
                             String sponsor_id = sponsorData.getString(P.sponsor_id);
                             String sponsor_name = sponsorData.getString(P.sponsor_name);
+
 //                            binding.etxSponserId.setText(sponsor_id);
                             binding.txtSponsorName.setText("Sponsor By " + sponsor_name);
                         } else {
@@ -507,4 +527,45 @@ public class SignUpActivity extends AppCompatActivity {
         return "";
     }
 
+
+    private void webDialog(String url) {
+
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.activity_webview_data);
+
+        TextView txtCancel = dialog.findViewById(R.id.txtCancel);
+        WebView webView = dialog.findViewById(R.id.webView);
+        loadUrl(webView,url);
+
+        txtCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                dialog.dismiss();
+            }
+        });
+        dialog.setCancelable(false);
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+
+    }
+
+
+    private void loadUrl(WebView webView,String url) {
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return false;
+            }
+        });
+
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setUseWideViewPort(true);
+//        webSettings.setBuiltInZoomControls(true);
+        webView.loadUrl(url);
+    }
 }
