@@ -30,12 +30,31 @@ public class Config {
     public static boolean MY_POINTS = false;
     public static boolean FROM_DASHBOARD = false;
     public static boolean POP_HOME = false;
-    public static String SHARE_MESSAGE = "Hi, \n" +
-            "\n" +
-            "Download the GSG App and get 12 courses on Self Development worth ₹25,000 absolutely free.  Make the most of this learning opportunity. \n" +
-            "\n" +
-            "Click on the Link Below,  and Start your Journey to become a Better Version of yourself.";
 
+    public static String SHARE_MESSAGE_1 =
+            "Hi Friend,\n" +
+                    "\n" +
+                    "We are on a Mission to help 2 million people, to become a better version of themselves and help them to achieve their Dreams and Goals. \n" +
+                    "\n" +
+                    "In the same context we are giving 12 courses worth Rs. 25000/- absolutely Free. \n" +
+                    "\n" +
+                    "The Featured Courses will include:\n" +
+                    "1) Success Habits\n" +
+                    "2) Bulletproof Warrior Mindset\n" +
+                    "3) Laser Focus\n" +
+                    "4) Dominate your year\n" +
+                    "5) Self Discipline Mastery\n" +
+                    "6) Wealth Building Formula\n" +
+                    "\n" +
+                    "Hurry!  This is a Limited Time offer only, Make the most of this splendid learning opportunity.\n" +
+                    "\n" +
+                    "Click on the Link Below, to Download the GSG App and get FREE access to 12 Amazing Self Development Courses.";
+
+    public static String SHARE_MESSAGE_2 =
+            "Start your Journey to become a Better Version of yourself Today!\n" +
+                    "\n" +
+                    "Thanks & Regards \n" +
+                    "Team GSGW";
 
     public static String WELCOME_VIDEO = "https://player.vimeo.com/external/535902905.sd.mp4?s=aef58d2760c00c9ef4d2650178907024695c4241&profile_id=165";
     public static String WELCOME_TELEGRAM = "https://t.me/joinchat/lzp7lC4WN1VkNGM1";

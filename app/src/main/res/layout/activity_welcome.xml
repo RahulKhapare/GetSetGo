@@ -3,144 +3,158 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/whiteColor"
-    android:layout_margin="0dp">
+    android:paddingBottom="20dp"
+    android:background="@color/whiteColor">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_above="@+id/txtAgree"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_marginBottom="20dp"
+        android:fillViewport="true">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:textColor="@color/colorTextDark"
-            android:text="Welcome"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_margin="16dp"
-            android:textSize="24sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardPlayVideo"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/x200"
-            app:cardCornerRadius="@dimen/x10"
-            android:layout_marginLeft="@dimen/x16"
-            android:layout_below="@id/rlCourseTitle"
-            android:layout_marginRight="16dp"
-            app:cardElevation="0dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/black">
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextDark"
+                android:text="Welcome"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_margin="16dp"
+                android:textSize="30sp" />
 
-                <com.google.android.exoplayer2.ui.PlayerView
-                    android:id="@+id/playerView"
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardPlayVideo"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x200"
+                app:cardCornerRadius="@dimen/x10"
+                android:layout_marginLeft="@dimen/x16"
+                android:layout_below="@id/rlCourseTitle"
+                android:layout_marginRight="16dp"
+                app:cardElevation="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:animation_enabled="true"
-                    app:controller_layout_id="@layout/exo_playback_control_view_without_full"
-                    app:show_buffering="when_playing" />
+                    android:background="@android:color/black">
 
-                <ProgressBar
-                    android:id="@+id/pbVideoPlayer"
+                    <com.google.android.exoplayer2.ui.PlayerView
+                        android:id="@+id/playerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:animation_enabled="true"
+                        app:controller_layout_id="@layout/exo_playback_control_view_without_full"
+                        app:show_buffering="when_playing" />
+
+                    <ProgressBar
+                        android:id="@+id/pbVideoPlayer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="invisible"
+                        android:indeterminateDrawable="@drawable/progress"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_splash_logo" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/colorTextDark"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="16dp"
+                android:text="Join Our Community"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginLeft="16dp"
+                android:textSize="26sp" />
+
+
+            <LinearLayout
+                android:id="@+id/lnrTelegram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/ic_telegram_new">
+
+                </ImageView>
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    android:indeterminateDrawable="@drawable/progress"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textStyle="bold"
+                    android:textColor="@color/colorTextBlueLight"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginRight="16dp"
+                    android:text="Click Here"
+                    android:layout_marginLeft="0dp"
+                    android:textSize="24sp" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/nunit_sans_bold"
-            android:textColor="@color/colorTextDark"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="16dp"
-            android:text="Join the GetSetGo World Community group"
-            android:layout_marginLeft="16dp"
-            android:textSize="20sp" />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/lnrFacebook"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:textColor="@color/colorTextDark"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:text="Telegram"
-                android:layout_marginLeft="16dp"
-                android:textSize="18sp" />
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/txtClickTelegram"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nunit_sans_bold"
-                android:textColor="@color/colorTextBlue"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:text="Click Here"
-                android:layout_marginLeft="16dp"
-                android:textSize="20sp" />
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/ic_facebook_new">
+
+                </ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorTextBlueLight"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginRight="16dp"
+                    android:text="Click Here"
+                    android:layout_marginLeft="0dp"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:textColor="@color/colorTextDark"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:text="Facebook"
-                android:layout_marginLeft="16dp"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/txtClickFacebook"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nunit_sans_bold"
-                android:textColor="@color/colorTextBlue"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:text="Click Here"
-                android:layout_marginLeft="16dp"
-                android:textSize="20sp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <TextView
         android:id="@+id/txtAgree"
@@ -148,12 +162,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:fontFamily="@font/nunit_sans_bold"
-        android:textColor="@color/colorPrimaryDark"
-        android:gravity="right"
-        android:padding="16dp"
-        android:text="Get Started >>"
-        android:layout_gravity="right"
-        android:textSize="20sp" />
+        android:textColor="@color/whiteColor"
+        android:padding="12dp"
+        android:text="Get Started"
+        android:textStyle="bold"
+        android:background="@drawable/button_welcom_bg"
+        android:textSize="30sp" />
+
+
 
 </RelativeLayout>

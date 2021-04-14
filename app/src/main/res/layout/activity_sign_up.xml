@@ -329,22 +329,34 @@
                        android:id="@+id/checkTermCondition"
                        android:layout_width="30dp"
                        android:layout_height="30dp"
-                       android:buttonTint="@color/colorGreen">
+                       android:buttonTint="@color/colorTextDark">
 
                    </CheckBox>
 
+
                    <TextView
-                       android:id="@+id/txtTermsMessage"
+                       android:id="@+id/txtTermsMessage1"
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:textSize="14sp"
                        android:layout_marginLeft="10dp"
-                       android:text="I agree to the Term &amp; Conditions"
+                       android:text="I agree to the"
                        android:fontFamily="@font/nunito_sans_semibold"
-                       android:textColor="@color/colorGreen">
+                       android:textColor="@color/colorTextDark">
 
                    </TextView>
 
+                   <TextView
+                       android:id="@+id/txtTermsMessage2"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:textSize="14sp"
+                       android:layout_marginLeft="0dp"
+                       android:text=" Term &amp; Conditions"
+                       android:fontFamily="@font/nunit_sans_bold"
+                       android:textColor="@color/colorTextBlue">
+
+                   </TextView>
 
                </LinearLayout>
 

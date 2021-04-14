@@ -160,7 +160,15 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void onClick() {
 
-        binding.txtTermsMessage.setOnClickListener(new View.OnClickListener() {
+        binding.txtTermsMessage1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                webDialog(SplashActivity.termConditionUrl);
+            }
+        });
+
+        binding.txtTermsMessage2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);

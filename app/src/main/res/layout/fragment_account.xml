@@ -278,7 +278,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="9.3"
                                 android:fontFamily="@font/nunito_sans_regular"
-                                android:text="Refer &amp; Earn"
+                                android:text="Invite Friends"
                                 android:textColor="@color/colorTextDark"
                                 android:textSize="16sp" />
 

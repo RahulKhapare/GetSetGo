@@ -3,6 +3,7 @@ package com.getsetgoapp.Adapter;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,6 @@ public class ActiveCourseAdapter extends RecyclerView.Adapter<ActiveCourseAdapte
         return new ActiveCourseViewHolder(view);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull ActiveCourseAdapter.ActiveCourseViewHolder holder, int position) {
 
@@ -53,7 +53,16 @@ public class ActiveCourseAdapter extends RecyclerView.Adapter<ActiveCourseAdapte
         try {
             holder.txtCourseName.setText(json.getString("course_name"));
             Picasso.get().load(json.getString("image")).placeholder(R.drawable.ic_no_image).error(R.drawable.ic_no_image).into(holder.imvActiveCourse);
-            holder.progressActiveCourse.setProgress(Integer.parseInt(json.getString("completion_percent")), true);
+
+            String progress = json.getString("completion_percent");
+            if (checkString(progress)) {
+                try {
+                    holder.progressActiveCourse.setProgress(Integer.parseInt(progress));
+                }catch (Exception e){
+                    holder.progressActiveCourse.setProgress(0);
+                }
+            }
+
             holder.txtTech.setText(json.getString("category_name"));
             holder.txtStatus.setText(json.getString("completion_percent") + "% Complete");
 
@@ -156,6 +165,15 @@ public class ActiveCourseAdapter extends RecyclerView.Adapter<ActiveCourseAdapte
                 .replace(R.id.fragment_container, courseDetailFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    private boolean checkString(String string) {
+        boolean value = true;
+
+        if (TextUtils.isEmpty(string) || string.equals("null")) {
+            value = false;
+        }
+        return value;
     }
 }
 

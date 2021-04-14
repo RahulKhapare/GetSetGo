@@ -51,7 +51,7 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
         }else {
             Picasso.get().load(model.getImage()).placeholder(R.drawable.ic_no_image).error(R.drawable.ic_no_image).into(holder.binding.imvViewCategory);
         }
-        holder.binding.txtProff.setText("Prof. " + model.getName());
+        holder.binding.txtProff.setText("Curated by " + model.getName());
         holder.binding.txtCourse.setText(model.getCourse_count()+ " Courses");
         holder.binding.txtJoiningDate.setText(model.getJoining_date());
 

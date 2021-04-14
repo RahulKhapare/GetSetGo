@@ -93,7 +93,7 @@
             android:indeterminate="false"
             android:maxHeight="12dp"
             android:minHeight="12dp"
-            android:progress="20"
+            android:progress="5"
             android:progressDrawable="@drawable/progress_bar_rounded" />
 
 

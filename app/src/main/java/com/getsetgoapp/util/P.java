@@ -81,6 +81,8 @@ public class P {
     public static String id = "id";
     public static String video_id = "video_id";
     public static String course_id = "course_id";
+    public static String comment = "comment";
+    public static String initials = "initials";
     public static String time = "time";
     public static String is_favourite = "is_favourite";
     public static String is_purchased = "is_purchased";

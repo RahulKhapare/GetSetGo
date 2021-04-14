@@ -719,7 +719,8 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
     }
 
     public void shareApp(Context context, String link) {
-        String shareMessage = Config.SHARE_MESSAGE + "\n\n" + link;
+
+        String shareMessage = Config.SHARE_MESSAGE_1 + "\n\n" + link +  "\n\n"  + Config.SHARE_MESSAGE_2;
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
@@ -1071,8 +1072,8 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         playerView = dialog.findViewById(R.id.playerView);
 
         TextView txtAgree = dialog.findViewById(R.id.txtAgree);
-        TextView txtClickTelegram = dialog.findViewById(R.id.txtClickTelegram);
-        TextView txtClickFacebook = dialog.findViewById(R.id.txtClickFacebook);
+        LinearLayout lnrTelegram = dialog.findViewById(R.id.lnrTelegram);
+        LinearLayout lnrFacebook = dialog.findViewById(R.id.lnrFacebook);
 
 
         txtAgree.setOnClickListener(new View.OnClickListener() {
@@ -1082,7 +1083,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
                 updateFistVisitStatus();
             }
         });
-        txtClickTelegram.setOnClickListener(new View.OnClickListener() {
+        lnrTelegram.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (exoPlayer != null) {
@@ -1091,7 +1092,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
                 openLink(Config.WELCOME_TELEGRAM);
             }
         });
-        txtClickFacebook.setOnClickListener(new View.OnClickListener() {
+        lnrFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (exoPlayer != null) {

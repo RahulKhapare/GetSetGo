@@ -11,12 +11,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -29,6 +33,9 @@ import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
 import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
+import com.adoisstudio.helper.Session;
+import com.getsetgoapp.Adapter.CommentAdapter;
+import com.getsetgoapp.Model.CommentModel;
 import com.getsetgoapp.Model.CourseDocumentModel;
 import com.getsetgoapp.Model.CourseLinkModel;
 import com.getsetgoapp.Model.CourseModuleModel;
@@ -92,7 +99,8 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
     private List<CourseLinkModel> courseLinkModelList;
     public static List<VideoUrlModel> videoUrlModelList;
     private JsonList previewJsonList = new JsonList();
-    ;
+    private List<CommentModel> commentModelList;
+    private CommentAdapter commentAdapter;
 
     private int childVideoPosition;
     private int actualSize;
@@ -100,6 +108,14 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
     private Dialog dialog;
     private LoadingDialog loadingDialog;
     private String courseId = "";
+
+    private boolean loading = true;
+    int pastVisiblesItems, visibleItemCount, totalItemCount;
+    LinearLayoutManager linearLayoutManager;
+    int count;
+    int pageCount = 1;
+    boolean isPagination =  true;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -165,9 +181,35 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
         binding.recyclerLink.setNestedScrollingEnabled(false);
         binding.recyclerLink.setAdapter(courseLinkAdapter);
 
+        commentModelList = new ArrayList<>();
+        commentAdapter = new CommentAdapter(context,commentModelList);
+        linearLayoutManager = new LinearLayoutManager(context);
+        binding.recyclerComment.setLayoutManager(linearLayoutManager);
+        binding.recyclerComment.setHasFixedSize(true);
+        binding.recyclerComment.setNestedScrollingEnabled(false);
+        binding.recyclerComment.setAdapter(commentAdapter);
+
+        isPagination = true;
         callCourseDetailsApi(context, courseSlug);
         onClick();
+        callGetCommentAPI(context,pageCount);
 
+    }
+
+    private void setPagination(){
+
+        if (binding.nestedScroll != null) {
+            binding.nestedScroll.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                if (scrollY == ( v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight() )) {
+                    if (commentModelList!=null && !commentModelList.isEmpty()){
+                        if (commentModelList.size()<count){
+                            pageCount++;
+                            callGetCommentAPI(context,pageCount);
+                        }
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -190,6 +232,20 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
     }
 
     private void onClick() {
+
+        binding.btnSubmitComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                if (TextUtils.isEmpty(binding.etxComments.getText().toString().trim())){
+                    H.showMessage(context,"Please enter comment");
+                }else if (binding.etxComments.getText().toString().trim().length()<5){
+                    H.showMessage(context,"Please enter valid comment");
+                }else{
+                    callPostCommentAPI(context,courseId,binding.etxComments.getText().toString().trim());
+                }
+            }
+        });
 
         imgFullScreen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,12 +291,6 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
 
         });
 
-        binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Click.preventTwoClick(v);
-            }
-        });
     }
 
     private void updateVideoData(int position) {
@@ -389,8 +439,10 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
         }
 
         if (checkString(progress)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                binding.progressBar.setProgress(Integer.parseInt(progress), true);
+            try {
+                binding.progressBar.setProgress(Integer.parseInt(progress));
+            }catch (Exception e){
+                binding.progressBar.setProgress(0);
             }
         }
 
@@ -649,4 +701,95 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
     public void onLinkClick(String link) {
         ((BaseScreenActivity)getActivity()).openLink(link);
     }
+
+
+    private void callPostCommentAPI(Context context,String courseId,String comment) {
+        LoadingDialog loadingDialog = new LoadingDialog(context, false);
+
+        Json json = new Json();
+        json.addString(P.course_id, courseId);
+        json.addString(P.comment, comment);
+
+        Api.newApi(context, P.baseUrl + "add_course_comment")
+                .addJson(json)
+                .setMethod(Api.POST)
+                .onHeaderRequest(App::getHeaders)
+                .onLoading(isLoading -> {
+                    if (isLoading)
+                        loadingDialog.show("loading...");
+                    else
+                        loadingDialog.hide();
+                })
+                .onError(() ->
+                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
+                        }))
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        JumpToLogin.call(Json1, context);
+                        loadingDialog.dismiss();
+                        if (Json1.getInt(P.status) == 1) {
+                            binding.etxComments.setText("");
+                            H.showMessage(context, Json1.getString(P.msg));
+                            commentModelList.clear();
+                            pageCount = 1;
+                            callGetCommentAPI(context,pageCount);
+                        } else {
+                            H.showMessage(context, Json1.getString(P.err));
+                        }
+                    }
+
+                }).run("callPostCommentAPI");
+    }
+
+    private void callGetCommentAPI(Context context,int pageCount) {
+        LoadingDialog loadingDialog = new LoadingDialog(context, false);
+        Api.newApi(context, P.baseUrl + "active_course_comments/"+courseSlug+"?"+"page="+pageCount+"&per_page=10")
+                .setMethod(Api.GET)
+                .onHeaderRequest(App::getHeaders)
+                .onLoading(isLoading -> {
+                    if (isLoading)
+                        loadingDialog.show("loading...");
+                    else
+                        loadingDialog.hide();
+                })
+                .onError(() ->
+                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
+                            loadingDialog.dismiss();
+                        }))
+                .onSuccess(Json1 -> {
+                    if (Json1 != null) {
+                        JumpToLogin.call(Json1, context);
+                        loadingDialog.dismiss();
+                        if (Json1.getInt(P.status) == 1) {
+                            loading = false;
+                            Json json = Json1.getJson(P.data);
+                            count = json.getInt(P.num_rows);
+                            JsonList commentList = json.getJsonList(P.list);
+
+                            if (commentList!=null && commentList.size()!=0){
+                                for (Json jsonData : commentList){
+                                    CommentModel model = new CommentModel();
+                                    model.setInitials(jsonData.getString(P.initials));
+                                    model.setComment(jsonData.getString(P.comment));
+                                    commentModelList.add(model);
+                                }
+                            }
+                            commentAdapter.notifyDataSetChanged();
+                            if (commentModelList.isEmpty()){
+                                binding.txtUserComment.setVisibility(View.GONE);
+                            }
+
+                            if (isPagination){
+                                isPagination = false;
+                                setPagination();
+                            }
+                        }
+                    }
+
+                }).run("callGetCommentAPI");
+    }
+
+
+
 }

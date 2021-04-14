@@ -990,7 +990,7 @@
                             android:fontFamily="@font/nunito_sans_regular"
                             android:gravity="start|center"
                             android:onClick="onDrawerItemClick"
-                            android:text="Refer &amp; Earn"
+                            android:text="Invite Friends"
                             android:textColor="@color/colorTextDark"
                             android:textSize="16sp" />
 

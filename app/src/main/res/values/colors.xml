@@ -14,6 +14,7 @@
     <color name="colorTextHint60">#60232323</color>
     <color name="colorTextHighLight">#70232323</color>
     <color name="colorTextBlue">#4169E1</color>
+    <color name="colorTextBlueLight">#03A9F4</color>
     <color name="colorTextProfile">#00768C</color>
     <color name="colorArrow">#707070</color>
     <color name="colorNotification">#FF1515</color>

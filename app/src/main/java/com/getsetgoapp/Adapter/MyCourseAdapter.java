@@ -44,7 +44,6 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.MyCour
         return new  MyCourseViewHolder(view);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull MyCourseAdapter.MyCourseViewHolder holder, int position) {
 
@@ -57,7 +56,16 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.MyCour
             }else {
                 Picasso.get().load(R.drawable.ic_no_image).error(R.drawable.ic_no_image).into(holder.ivCourse);
             }
-            holder.progressCourse.setProgress(Integer.parseInt(json.getString("completion_percent")), true);
+
+            String progress = json.getString("completion_percent");
+            if (checkString(progress)) {
+                try {
+                    holder.progressCourse.setProgress(Integer.parseInt(progress));
+                }catch (Exception e){
+                    holder.progressCourse.setProgress(0);
+                }
+            }
+
             holder.txtCourseTech.setText(json.getString("category_name"));
             holder.txtCourseStatus.setText(json.getString("completion_percent") + "% Complete");
 
@@ -126,6 +134,15 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.MyCour
                 .replace(R.id.fragment_container, courseDetailFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    private boolean checkString(String string) {
+        boolean value = true;
+
+        if (TextUtils.isEmpty(string) || string.equals("null")) {
+            value = false;
+        }
+        return value;
     }
 }
 

@@ -232,7 +232,7 @@ public class DashBoardFragment extends Fragment {
     }
 
     public void shareApp(Context context, String link) {
-        String shareMessage = Config.SHARE_MESSAGE + "\n\n" + link;
+        String shareMessage = Config.SHARE_MESSAGE_1 + "\n\n" + link +  "\n\n"  + Config.SHARE_MESSAGE_2;
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
@@ -309,12 +309,16 @@ public class DashBoardFragment extends Fragment {
                             binding.txtName.setText(checkString(user_name,binding.txtName));
                             binding.txtEmail.setText(checkString(email,binding.txtEmail));
                             binding.txtUserId.setText(checkString("User Id - "+user_id,binding.txtUserId));
+
                             if (!TextUtils.isEmpty(profile_completion_percentage) && !profile_completion_percentage.equals("null")){
                                 binding.txtStatus.setText(profile_completion_percentage + "% Completed");
-                                int persent = Integer.parseInt(profile_completion_percentage);
-                                binding.progressBarDash.setProgress(persent);
+                                try {
+                                    int persent = Integer.parseInt(profile_completion_percentage);
+                                    binding.progressBarDash.setProgress(persent);
+                                }catch (Exception e){
+                                    binding.progressBarDash.setProgress(0);
+                                }
                             }
-
 
                             Json franchise_json = Json1.getJson(P.franchise);
                             String f_user_name = franchise_json.getString(P.user_name);
