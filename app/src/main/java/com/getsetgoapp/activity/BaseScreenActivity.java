@@ -720,12 +720,13 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
 
     public void shareApp(Context context, String link) {
 
-        String shareMessage = Config.SHARE_MESSAGE_1 + "\n\n" + link +  "\n\n"  + Config.SHARE_MESSAGE_2;
+        String shareMessage = Config.SHARE_MESSAGE_1 + "\n\n" + "Link: "+link  + "\nSponsor ID: " + new Session(activity).getString(P.referral_code) +  "\n\n"  + Config.SHARE_MESSAGE_2;
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
         sendIntent.setType("text/plain");
         startActivity(Intent.createChooser(sendIntent, "Share Using"));
+
     }
 
 

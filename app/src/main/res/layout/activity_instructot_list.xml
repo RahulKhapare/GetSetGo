@@ -23,17 +23,6 @@
             android:paddingRight="5dp"
             android:paddingLeft="10dp">
 
-            <TextView
-                android:id="@+id/txtProff"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/nunit_sans_bold"
-                android:text="Prof."
-                android:textColor="@color/colorTextDark"
-                android:textSize="16sp" />
-
             <RelativeLayout
                 android:id="@+id/rlMainDetails"
                 android:layout_width="match_parent"
@@ -62,6 +51,16 @@
                     android:layout_toRightOf="@+id/imvViewCategory"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/txtProff"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/nunit_sans_bold"
+                        android:text="Prof."
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="16sp" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"

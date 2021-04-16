@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="@dimen/x168"
+    android:layout_width="@dimen/x150"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/x4"
     android:elevation="@dimen/x6"
@@ -16,8 +16,8 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/imvCategory"
-            android:layout_width="@dimen/x100"
-            android:layout_height="@dimen/x100"
+            android:layout_width="@dimen/x120"
+            android:layout_height="@dimen/x120"
             android:layout_gravity="center"
             android:scaleType="centerCrop"
             app:riv_corner_radius="@dimen/x10" />

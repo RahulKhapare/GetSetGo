@@ -33,12 +33,11 @@ public class Config {
 
     public static String SHARE_MESSAGE_1 =
             "Hi Friend,\n" +
-                    "\n" +
                     "We are on a Mission to help 2 million people, to become a better version of themselves and help them to achieve their Dreams and Goals. \n" +
                     "\n" +
                     "In the same context we are giving 12 courses worth Rs. 25000/- absolutely Free. \n" +
                     "\n" +
-                    "The Featured Courses will include:\n" +
+                    "The Featured Courses includes:\n" +
                     "1) Success Habits\n" +
                     "2) Bulletproof Warrior Mindset\n" +
                     "3) Laser Focus\n" +

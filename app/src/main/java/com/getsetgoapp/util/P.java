@@ -203,5 +203,6 @@ public class P {
     public static String country_id = "country_id";
     public static String country_name = "country_name";
     public static String country_shortname = "country_shortname";
+    public static String referral_code = "referral_code";
 
 }
