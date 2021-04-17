@@ -49,9 +49,8 @@ public class HomeChildAdapter extends RecyclerView.Adapter<HomeChildAdapter.Chil
         holder.txtCourseName.setText(childItem.getString("course_name"));
         holder.txtOldPrice.setText("₹ " + childItem.getString("price"));
         holder.txtNewPrice.setText("₹ " + childItem.getString("sale_price"));
-        holder.txtProfName.setText("Prof. " + childItem.getString("instructor_name"));
+        holder.txtProfName.setText("Curated by " + childItem.getString("instructor_name"));
         String review = childItem.getString("rating");
-        Log.e("TAG", "onBindViewHolderWWWWW: "+ review );
         holder.txtReview.setText(review);
         setReview(review, holder);
 

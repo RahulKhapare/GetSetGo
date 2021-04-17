@@ -27,6 +27,7 @@ public class Config {
     public static String ACTION_GENERAL = "GENERAL";
     public static String ORGNIZE_URL = "";
     public static boolean FROM_DASBOARD = false;
+    public static boolean FROM_ACCOUNT = false;
     public static boolean MY_POINTS = false;
     public static boolean FROM_DASHBOARD = false;
     public static boolean POP_HOME = false;

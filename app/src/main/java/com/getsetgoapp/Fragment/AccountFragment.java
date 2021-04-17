@@ -5,10 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +21,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.viewpager.widget.ViewPager;
 
 import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
@@ -31,9 +28,7 @@ import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
 import com.getsetgoapp.R;
-
 import com.getsetgoapp.activity.BaseScreenActivity;
-
 import com.getsetgoapp.databinding.FragmentAccountBinding;
 import com.getsetgoapp.util.App;
 import com.getsetgoapp.util.Click;
@@ -42,14 +37,12 @@ import com.getsetgoapp.util.JumpToLogin;
 import com.getsetgoapp.util.P;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class AccountFragment extends Fragment {
 
     FragmentAccountBinding binding;
     BankDetailsFragment bankDetailsFragment;
+    TotalDirectUsersFragment totalDirectUsersFragment;
     NotificationsFragment notificationsFragment;
     MyOrderFragment myOrderFragment;
     ChangePasswordFragment changePasswordFragment;
@@ -93,10 +86,10 @@ public class AccountFragment extends Fragment {
         setProfileData();
     }
 
-    private void setProfileData(){
+    private void setProfileData() {
         Session session = new Session(getActivity());
         String profile_picture = session.getString(P.profile_picture);
-        if (!TextUtils.isEmpty(profile_picture)){
+        if (!TextUtils.isEmpty(profile_picture)) {
             Picasso.get().load(profile_picture).placeholder(R.drawable.ic_profile_imag).error(R.drawable.ic_profile_imag).into(binding.cvProfile);
         }
         binding.txtProfileName.setText(session.getString(P.name) + " " + session.getString(P.lastname));
@@ -105,7 +98,7 @@ public class AccountFragment extends Fragment {
         try {
             PackageInfo pInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
             String version = pInfo.versionName;
-            binding.txtVersionName.setText(getResources().getString(R.string.app_name) + " v"+version);
+            binding.txtVersionName.setText(getResources().getString(R.string.app_name) + " v" + version);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -120,7 +113,7 @@ public class AccountFragment extends Fragment {
                 Click.preventTwoClick(v);
                 BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
                 myOrderFragment = new MyOrderFragment();
-                loadFragment(v,myOrderFragment);
+                loadFragment(v, myOrderFragment);
             }
         });
 
@@ -130,7 +123,7 @@ public class AccountFragment extends Fragment {
                 Click.preventTwoClick(v);
                 BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
                 notificationsFragment = new NotificationsFragment();
-                loadFragment(v,notificationsFragment);
+                loadFragment(v, notificationsFragment);
             }
         });
 
@@ -140,7 +133,7 @@ public class AccountFragment extends Fragment {
                 Click.preventTwoClick(v);
                 BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
                 changePasswordFragment = new ChangePasswordFragment();
-                loadFragment(v,changePasswordFragment);
+                loadFragment(v, changePasswordFragment);
             }
         });
 
@@ -158,7 +151,7 @@ public class AccountFragment extends Fragment {
                 Click.preventTwoClick(v);
                 BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
                 editProfileFragment = new EditProfileFragment();
-                loadFragment(v,editProfileFragment);
+                loadFragment(v, editProfileFragment);
             }
         });
 
@@ -168,7 +161,7 @@ public class AccountFragment extends Fragment {
                 Click.preventTwoClick(v);
                 BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
                 editProfileFragment = new EditProfileFragment();
-                loadFragment(v,editProfileFragment);
+                loadFragment(v, editProfileFragment);
             }
         });
 
@@ -179,7 +172,7 @@ public class AccountFragment extends Fragment {
                 Config.flag = Config.faq;
                 Config.webViewUrl = BaseScreenActivity.faq_url;
                 webViewFragment = new WebViewFragment();
-                loadFragment(v,webViewFragment);
+                loadFragment(v, webViewFragment);
             }
         });
 
@@ -190,7 +183,7 @@ public class AccountFragment extends Fragment {
                 Config.flag = Config.term;
                 Config.webViewUrl = BaseScreenActivity.termConditionUrl;
                 webViewFragment = new WebViewFragment();
-                loadFragment(v,webViewFragment);
+                loadFragment(v, webViewFragment);
             }
         });
 
@@ -201,7 +194,7 @@ public class AccountFragment extends Fragment {
                 Config.flag = Config.privacy;
                 Config.webViewUrl = BaseScreenActivity.privacyPolicyUrl;
                 webViewFragment = new WebViewFragment();
-                loadFragment(v,webViewFragment);
+                loadFragment(v, webViewFragment);
             }
         });
 
@@ -219,7 +212,7 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
-                ((BaseScreenActivity)getActivity()).onLogout();
+                ((BaseScreenActivity) getActivity()).onLogout();
             }
         });
     }
@@ -241,7 +234,7 @@ public class AccountFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    private void loadFragment(View v,Fragment fragment){
+    private void loadFragment(View v, Fragment fragment) {
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
         Bundle bundle = new Bundle();
         bundle.putBoolean("isFromBottom", isFromBottom);
@@ -299,7 +292,7 @@ public class AccountFragment extends Fragment {
         txtMessage.setText("Users registered using your referral - " + count);
         String qr_code = "qr_code";
         String imagePath = new Session(getActivity()).getString(qr_code);
-        if (!imagePath.equals("")){
+        if (!imagePath.equals("")) {
             qr_code = imagePath;
         }
         Picasso.get().load(qr_code).error(R.drawable.ic_no_image).into(imgQR);
@@ -313,6 +306,21 @@ public class AccountFragment extends Fragment {
             }
         });
 
+        txtMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Config.FROM_ACCOUNT = true;
+                BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
+                totalDirectUsersFragment = TotalDirectUsersFragment.newInstance();
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, totalDirectUsersFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
         dialog.setCancelable(true);
         dialog.show();
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -320,8 +328,7 @@ public class AccountFragment extends Fragment {
 
     }
 
-    public void shareApp(String link)
-    {
+    public void shareApp(String link) {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, link);

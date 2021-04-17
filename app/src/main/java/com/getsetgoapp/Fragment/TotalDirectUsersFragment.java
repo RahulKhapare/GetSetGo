@@ -271,7 +271,13 @@ public class TotalDirectUsersFragment extends Fragment {
                 getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 BaseScreenActivity.callBack();
             }
-        }else {
+        }else if (Config.FROM_ACCOUNT){
+            Config.FROM_ACCOUNT = false;
+            getFragmentManager().popBackStackImmediate();
+            BaseScreenActivity.binding.bottomNavigation.setVisibility(View.VISIBLE);
+            BaseScreenActivity.binding.bottomNavigation.setSelectedItemId(R.id.menu_Account);
+        }
+        else {
             if (getFragmentManager().getBackStackEntryCount() > 0) {
                 getFragmentManager().popBackStackImmediate();
                 directUserJsonList.clear();

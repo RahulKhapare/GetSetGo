@@ -1195,6 +1195,18 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
             }
         });
 
+        txtMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Config.FROM_DASBOARD = true;
+                if (totalDirectUsersFragment == null)
+                    totalDirectUsersFragment = TotalDirectUsersFragment.newInstance();
+                fragmentLoader(totalDirectUsersFragment, true);
+                binding.drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
+
         dialog.setCancelable(true);
         dialog.show();
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -1379,6 +1391,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
                         if (Json1.getInt(P.status) == 1) {
                             new Session(activity).addString(P.mobile_terms_accepted,"1");
                             H.showMessage(activity,Json1.getString(P.msg));
+                            binding.bottomNavigation.setSelectedItemId(R.id.menu_freeCourse);
                         }
                     }
 
