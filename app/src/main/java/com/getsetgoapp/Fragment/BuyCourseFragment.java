@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.adoisstudio.helper.H;
 import com.adoisstudio.helper.Session;
 import com.getsetgoapp.R;
 import com.getsetgoapp.activity.BaseScreenActivity;
@@ -117,8 +118,10 @@ public class BuyCourseFragment extends Fragment {
                 try {
 
                     if (url.contains("/success")) {
+                        H.showMessage(getActivity(),"Payment successfully done...!");
                         loadActiveCourseFragment(view);
                     } else if (url.contains("/failure")) {
+                        H.showMessage(getActivity(),"Payment failed...!");
                         loadCourseDetailsFragment(view);
                     }
 
