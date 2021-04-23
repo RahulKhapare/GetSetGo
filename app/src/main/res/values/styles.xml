@@ -30,7 +30,7 @@
 
     <style name="BottomTextAppearanceActive" parent="Widget.AppCompat.TextView">
         <!-- reference our hint & error styles -->
-        <item name="android:textColor">@color/nav_item_state_list</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">12sp</item>
         <item name="fontFamily">@font/nunit_sans_bold</item>
     </style>

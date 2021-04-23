@@ -52,10 +52,6 @@
                 app:labelVisibilityMode="labeled"
                 app:menu="@menu/navigation"/>
 
-          <!--  <include android:id="@+id/bottom_navigation"
-                layout="@layout/layout_common"/>-->
-
-
 
         </RelativeLayout>
 
@@ -70,7 +66,6 @@
                 layout="@layout/drawer_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
 
         </RelativeLayout>
 

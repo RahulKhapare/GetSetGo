@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
 <item android:state_selected="true"
-    android:color="@color/nav_item_state_list"/>
+    android:color="@color/colorBlack"/>
 
 <item android:state_selected="false"
     android:color="@color/not_selected_icon"/>
