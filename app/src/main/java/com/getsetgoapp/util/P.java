@@ -33,6 +33,7 @@ public class P {
     public static String registered_as = "registered_as";
     public static String name = "name";
     public static String lastname = "lastname";
+    public static String add_date = "add_date";
     public static String email = "email";
     public static String verification_code = "verification_code";
     public static String contact = "contact";

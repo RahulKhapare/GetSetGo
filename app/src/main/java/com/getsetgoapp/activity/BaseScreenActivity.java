@@ -179,6 +179,12 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         WindowView.getWindow(activity);
+
+        try {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }catch (Exception e){
+        }
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_base_screen);
         getAccess();
         init();

@@ -772,6 +772,9 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
                                     CommentModel model = new CommentModel();
                                     model.setInitials(jsonData.getString(P.initials));
                                     model.setComment(jsonData.getString(P.comment));
+                                    model.setName(jsonData.getString(P.name));
+                                    model.setLastname(jsonData.getString(P.lastname));
+                                    model.setAdd_date(jsonData.getString(P.add_date));
                                     commentModelList.add(model);
                                 }
                             }

@@ -59,6 +59,8 @@ public class SignUpActivity extends AppCompatActivity {
     private String countryCode;
     private String countryID;
 
+    String relationShipManager = "Relationship Manager ";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,7 +145,7 @@ public class SignUpActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(newText) && newText.length() == 9) {
                     getSponsorIDApi(binding.etxSponserId.getText().toString().trim());
                 } else if (newText.length() < 9 || newText.length() > 9) {
-                    binding.txtSponsorName.setText("Sponsor By");
+                    binding.txtSponsorName.setText(relationShipManager);
                 }
             }
         };
@@ -309,7 +311,7 @@ public class SignUpActivity extends AppCompatActivity {
             H.showMessage(activity, "Confirm password not matched with password");
             value = false;
         } else if (TextUtils.isEmpty(binding.etxSponserId.getText().toString().trim())) {
-            H.showMessage(activity, "Enter sponser id");
+            H.showMessage(activity, "Enter relationship manager id");
             value = false;
         } else if (!binding.checkTermCondition.isChecked()){
             H.showMessage(activity, "Please allow check for term and conditions");
@@ -386,7 +388,7 @@ public class SignUpActivity extends AppCompatActivity {
                             String sponsor_id = sponsorData.getString(P.sponsor_id);
                             String sponsor_name = sponsorData.getString(P.sponsor_name);
                             binding.etxSponserId.setText(sponsor_id);
-                            binding.txtSponsorName.setText("Sponsor By " + sponsor_name);
+                            binding.txtSponsorName.setText( relationShipManager + sponsor_name);
                         } else {
                             H.showMessage(activity, Json1.getString(P.err));
                         }
@@ -426,9 +428,9 @@ public class SignUpActivity extends AppCompatActivity {
                             String sponsor_name = sponsorData.getString(P.sponsor_name);
 
 //                            binding.etxSponserId.setText(sponsor_id);
-                            binding.txtSponsorName.setText("Sponsor By " + sponsor_name);
+                            binding.txtSponsorName.setText(relationShipManager + sponsor_name);
                         } else {
-                            binding.txtSponsorName.setText("Sponsor By");
+                            binding.txtSponsorName.setText(relationShipManager);
                         }
                     }
 

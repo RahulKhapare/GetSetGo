@@ -296,7 +296,7 @@
                         android:id="@+id/etxSponserId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Sponsor Id"
+                        android:hint="Relationship Manager Id"
                         android:inputType="number"
                         android:imeOptions="actionDone"
                         android:textColorHint="@color/colorTextHint"
@@ -312,7 +312,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:paddingLeft="5dp"
-                    android:text="Sponsor By"
+                    android:text="Relationship Manager "
                     android:fontFamily="@font/nunito_sans_semibold"
                     android:textColor="#70232323">
 
