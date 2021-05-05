@@ -46,6 +46,12 @@ public class VideoPlayNewActivity extends AppCompatActivity implements Player.Ev
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        try {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }catch (Exception e){
+        }
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         activityVideoPlayBinding = ActivityVideoPlayNewBinding.inflate(getLayoutInflater());
@@ -53,6 +59,7 @@ public class VideoPlayNewActivity extends AppCompatActivity implements Player.Ev
         playVideo(CourseDetailFragment.videoPlayPath);
 
         onClick();
+
     }
 
     private void playVideo(String url){
