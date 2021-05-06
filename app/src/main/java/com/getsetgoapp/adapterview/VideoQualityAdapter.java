@@ -10,9 +10,11 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.getsetgoapp.Fragment.MyCourseDetailFragment;
+import com.getsetgoapp.Fragment.MyCrashCourseDetailFragment;
 import com.getsetgoapp.Model.VideoUrlModel;
 import com.getsetgoapp.R;
 import com.getsetgoapp.activity.VideoPlayActivity;
+import com.getsetgoapp.activity.VideoPlayMyCrashCourseActivity;
 import com.getsetgoapp.databinding.ActivityCourseUrlListBinding;
 
 import java.util.List;
@@ -22,8 +24,10 @@ public class VideoQualityAdapter extends RecyclerView.Adapter<VideoQualityAdapte
     Context context;
     List<VideoUrlModel> videoUrlModelList;
     MyCourseDetailFragment fragment;
+    MyCrashCourseDetailFragment crashCourseDetailFragment;
     private int lastCheckPosition;
     private int checkActivity;
+    boolean fromCrash = false;
 
     public interface onClick{
         void qualityClick(VideoUrlModel model,int position);
@@ -35,6 +39,17 @@ public class VideoQualityAdapter extends RecyclerView.Adapter<VideoQualityAdapte
         this.fragment = fragment;
         this.lastCheckPosition = lastSelectedPosition;
         this.checkActivity = checkActivity;
+        fromCrash = false;
+
+    }
+
+    public VideoQualityAdapter(Context context, List<VideoUrlModel> videoUrlModelList, MyCrashCourseDetailFragment fragment, int lastSelectedPosition, int checkActivity) {
+        this.context = context;
+        this.videoUrlModelList = videoUrlModelList;
+        this.crashCourseDetailFragment = fragment;
+        this.lastCheckPosition = lastSelectedPosition;
+        this.checkActivity = checkActivity;
+        fromCrash = true;
 
     }
 
@@ -43,7 +58,7 @@ public class VideoQualityAdapter extends RecyclerView.Adapter<VideoQualityAdapte
         this.videoUrlModelList = videoUrlModelList;
         this.lastCheckPosition = lastSelectedPosition;
         this.checkActivity = checkActivity;
-
+        fromCrash = false;
     }
 
     @NonNull
@@ -64,9 +79,15 @@ public class VideoQualityAdapter extends RecyclerView.Adapter<VideoQualityAdapte
             public void onClick(View v) {
                 lastCheckPosition = holder.getAdapterPosition();
                 if (checkActivity==1){
-                    ((MyCourseDetailFragment)fragment).qualityClick(model,position);
+                    if (fromCrash){
+                        ((MyCrashCourseDetailFragment)crashCourseDetailFragment).qualityClick(model,position);
+                    }else {
+                        ((MyCourseDetailFragment)fragment).qualityClick(model,position);
+                    }
                 }else if (checkActivity==2){
                     ((VideoPlayActivity)context).qualityClick(model,position);
+                }else if (checkActivity==3){
+                    ((VideoPlayMyCrashCourseActivity)context).qualityClick(model,position);
                 }
 
             }

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardViewMyCourse"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/x4"
+    app:cardCornerRadius="@dimen/x10"
+    app:cardElevation="@dimen/x4">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/x8">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/ivMyCourse"
+            android:layout_width="@dimen/x100"
+            android:layout_height="@dimen/x64"
+            android:scaleType="fitXY"
+            android:src="@drawable/download"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:riv_corner_radius="5dp" />
+
+        <LinearLayout
+            android:layout_width="@dimen/x0"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/ivMyCourse"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/x8"
+            android:paddingVertical="@dimen/x4"
+            app:layout_constraintBottom_toBottomOf="@id/ivMyCourse"
+            app:layout_constraintEnd_toStartOf="@id/imvCourseCircle"
+            app:layout_constraintStart_toEndOf="@id/ivMyCourse"
+            app:layout_constraintTop_toTopOf="@id/ivMyCourse">
+
+            <TextView
+                android:id="@+id/txtCourseTech"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="Technology"
+                android:textColor="@color/colorTextDark"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/txtCourseDes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="Easiest way to Learn"
+                android:textColor="@color/programme_text_color"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/txtCourseProgramme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunit_sans_bold"
+                android:text="Mobile App Designing"
+                android:textColor="@color/colorTextDark"
+                android:textSize="12sp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imvCourseCircle"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:background="@drawable/circle_stroke"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ivMyCourse" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

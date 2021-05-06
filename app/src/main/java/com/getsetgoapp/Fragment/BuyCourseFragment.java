@@ -85,17 +85,25 @@ public class BuyCourseFragment extends Fragment {
     private void init(View rootView) {
 
         String course_id = this.getArguments().getString("course_id");
+        String fromCrash = this.getArguments().getString("fromCrash");
 
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Purchase Course");
         BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
 
-        loadPurchaseView(course_id);
+        loadPurchaseView(course_id,fromCrash);
 
     }
 
-    private void loadPurchaseView(String course_id) {
+    private void loadPurchaseView(String course_id,String fromCrash) {
         final String token = new Session(getActivity()).getString(P.token);
-        String url = P.buy_course_base_dev + course_id + "/" + token;
+        String url = "";
+
+        if (fromCrash.equals("1")){
+            url = P.buy_course_base_dev + course_id + "/" + token;
+        }else {
+            url = P.buy_course_base_dev + course_id + "/" + token;
+        }
+
         mBuyCourseFragmentBinding.wvBuyCourse.getSettings().setJavaScriptEnabled(true);
         mBuyCourseFragmentBinding.wvBuyCourse.setHorizontalScrollBarEnabled(false);
 

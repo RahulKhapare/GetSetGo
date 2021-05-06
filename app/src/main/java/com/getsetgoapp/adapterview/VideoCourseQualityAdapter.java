@@ -10,10 +10,12 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.getsetgoapp.Fragment.CourseDetailFragment;
+import com.getsetgoapp.Fragment.CrashCourseDetailFragment;
 import com.getsetgoapp.Fragment.MyCourseDetailFragment;
 import com.getsetgoapp.Model.VideoUrlModel;
 import com.getsetgoapp.R;
 import com.getsetgoapp.activity.VideoPlayActivity;
+import com.getsetgoapp.activity.VideoPlayCrashCourseActivity;
 import com.getsetgoapp.activity.VideoPlayNewActivity;
 import com.getsetgoapp.databinding.ActivityCourseUrlListBinding;
 
@@ -24,6 +26,7 @@ public class VideoCourseQualityAdapter extends RecyclerView.Adapter<VideoCourseQ
     Context context;
     List<VideoUrlModel> videoUrlModelList;
     CourseDetailFragment fragment;
+    CrashCourseDetailFragment crashCourseDetailFragment;
     private int lastCheckPosition;
     private int checkActivity;
 
@@ -39,6 +42,16 @@ public class VideoCourseQualityAdapter extends RecyclerView.Adapter<VideoCourseQ
         this.checkActivity = checkActivity;
 
     }
+
+    public VideoCourseQualityAdapter(Context context, List<VideoUrlModel> videoUrlModelList, CrashCourseDetailFragment fragment, int lastSelectedPosition, int checkActivity) {
+        this.context = context;
+        this.videoUrlModelList = videoUrlModelList;
+        this.crashCourseDetailFragment = fragment;
+        this.lastCheckPosition = lastSelectedPosition;
+        this.checkActivity = checkActivity;
+
+    }
+
 
     public VideoCourseQualityAdapter(Context context, List<VideoUrlModel> videoUrlModelList, int lastSelectedPosition, int checkActivity) {
         this.context = context;
@@ -69,6 +82,10 @@ public class VideoCourseQualityAdapter extends RecyclerView.Adapter<VideoCourseQ
                     ((CourseDetailFragment)fragment).qualityClick(model,position);
                 }else if (checkActivity==2){
                     ((VideoPlayNewActivity)context).qualityClick(model,position);
+                }else if (checkActivity==3){
+                    ((CrashCourseDetailFragment)crashCourseDetailFragment).qualityClick(model,position);
+                }else if (checkActivity==4){
+                    ((VideoPlayCrashCourseActivity)context).qualityClick(model,position);
                 }
 
             }

@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.getsetgoapp.Fragment.MyCourseDetailFragment;
+import com.getsetgoapp.Fragment.MyCrashCourseDetailFragment;
 import com.getsetgoapp.Model.CourseDocumentModel;
 import com.getsetgoapp.R;
 import com.getsetgoapp.databinding.ActivityCourseDocumentListBinding;
@@ -22,6 +23,8 @@ public class CourseDocumentAdapter extends RecyclerView.Adapter<CourseDocumentAd
     Context context;
     List<CourseDocumentModel> courseDocumentModelList;
     MyCourseDetailFragment fragment;
+    MyCrashCourseDetailFragment crashCourseDetailFragment;
+    boolean fromCrash = false;
 
     public interface onClick{
         void downloadPDF(CourseDocumentModel model);
@@ -32,6 +35,14 @@ public class CourseDocumentAdapter extends RecyclerView.Adapter<CourseDocumentAd
         this.context = context;
         this.courseDocumentModelList = courseDocumentModelList;
         this.fragment = fragment;
+        fromCrash = false;
+    }
+
+    public CourseDocumentAdapter(Context context, List<CourseDocumentModel> courseDocumentModelList,MyCrashCourseDetailFragment fragment) {
+        this.context = context;
+        this.courseDocumentModelList = courseDocumentModelList;
+        this.crashCourseDetailFragment = fragment;
+        fromCrash = true;
     }
 
 
@@ -52,7 +63,11 @@ public class CourseDocumentAdapter extends RecyclerView.Adapter<CourseDocumentAd
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
-                ((MyCourseDetailFragment)fragment).downloadPDF(model);
+                if (fromCrash){
+                    ((MyCrashCourseDetailFragment)crashCourseDetailFragment).downloadPDF(model);
+                }else {
+                    ((MyCourseDetailFragment)fragment).downloadPDF(model);
+                }
             }
         });
     }

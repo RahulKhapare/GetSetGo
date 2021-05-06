@@ -50,6 +50,7 @@ import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
 import com.getsetgoapp.Fragment.AccountFragment;
 import com.getsetgoapp.Fragment.AddNewUserFragment;
+import com.getsetgoapp.Fragment.AllCrashCourseFragment;
 import com.getsetgoapp.Fragment.BankDetailsFragment;
 import com.getsetgoapp.Fragment.BestSellingCourseFragment;
 import com.getsetgoapp.Fragment.CourseDetailFragment;
@@ -63,6 +64,7 @@ import com.getsetgoapp.Fragment.HomeFragment;
 import com.getsetgoapp.Fragment.IncentivesFragment;
 import com.getsetgoapp.Fragment.KYCDocumentFragment;
 import com.getsetgoapp.Fragment.MyCourseDetailFragment;
+import com.getsetgoapp.Fragment.MyCrashCourseFragment;
 import com.getsetgoapp.Fragment.MyOrderFragment;
 import com.getsetgoapp.Fragment.MyPointsFragment;
 import com.getsetgoapp.Fragment.NomineeDetailsFragment;
@@ -132,15 +134,17 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
     BankDetailsFragment bankDetailsFragment;
 
     ParentCategoriesFragment parentCategoriesFragment;
+    AllCrashCourseFragment allCrashCourseFragment;
     BestSellingCourseFragment bestSellingCourseFragment;
     AddNewUserFragment addNewUserFragment;
     SearchUserIdFragment searchUserIdFragment;
     YourCourseFragment yourCourseFragment;
+    MyCrashCourseFragment myCrashCourseFragment;
     TotalUsersFragment totalUsersFragment;
     TotalDirectUsersFragment totalDirectUsersFragment;
     CurrentLearningFragment currentLearningFragment;
-    LinearLayout lnrDashboard, lnrUser, lnrEarning, lnrBusiness, lnrTransaction, lnrInsentive, lnrPoints;
-    CheckBox cbMyEarning, cbUsers, cbBusiness, cbTransaction;
+    LinearLayout lnrDashboard, lnrCrashCourse, lnrUser, lnrEarning, lnrBusiness, lnrTransaction, lnrInsentive, lnrPoints;
+    CheckBox cbMyEarning, cbCrashCourse,cbUsers, cbBusiness, cbTransaction;
     OnBackPressedCallback onBackPressedCallback;
     private LoadingDialog loadingDialog;
 
@@ -198,6 +202,17 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
 
     private void onItemClick() {
 
+        lnrCrashCourse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cbCrashCourse.isChecked()) {
+                    cbCrashCourse.setChecked(false);
+                } else {
+                    cbCrashCourse.setChecked(true);
+                }
+            }
+        });
+
         lnrUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -247,6 +262,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
     protected void onCheckView() {
 
         lnrDashboard = findViewById(R.id.lnrDashboard);
+        lnrCrashCourse = findViewById(R.id.lnrCrashCourse);
         lnrUser = findViewById(R.id.lnrUser);
         lnrEarning = findViewById(R.id.lnrEarning);
         lnrBusiness = findViewById(R.id.lnrBusiness);
@@ -255,11 +271,13 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         lnrInsentive = findViewById(R.id.lnrInsentive);
 
 
+        cbCrashCourse = findViewById(R.id.cbCrashCourse);
         cbUsers = findViewById(R.id.cbUsers);
         cbMyEarning = findViewById(R.id.cbMyEarning);
         cbBusiness = findViewById(R.id.cbBusiness);
         cbTransaction = findViewById(R.id.cbTransaction);
 
+        checkBoxCrashCourse();
         checkBoxUsers();
         checkBoxMyEarning();
         checkBoxBisness();
@@ -269,6 +287,24 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         Log.e("TAG", "onCheckViewTTT:  " + new Session(activity).getString(P.token));
     }
 
+    private void checkBoxCrashCourse() {
+        LinearLayout llCbCrashCourse = findViewById(R.id.llCbCrashCourseExpand);
+        cbCrashCourse.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    llCbCrashCourse.setVisibility(View.VISIBLE);
+                    isCollapse(cbUsers);
+                    isCollapse(cbMyEarning);
+                    isCollapse(cbBusiness);
+                    isCollapse(cbTransaction);
+                } else {
+                    llCbCrashCourse.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
     private void checkBoxUsers() {
         LinearLayout llCbUsers = findViewById(R.id.llCbUsersExpand);
         cbUsers.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -276,6 +312,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     llCbUsers.setVisibility(View.VISIBLE);
+                    isCollapse(cbCrashCourse);
                     isCollapse(cbMyEarning);
                     isCollapse(cbBusiness);
                     isCollapse(cbTransaction);
@@ -293,6 +330,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     llCbMyEarningExpand.setVisibility(View.VISIBLE);
+                    isCollapse(cbCrashCourse);
                     isCollapse(cbUsers);
                     isCollapse(cbBusiness);
                     isCollapse(cbTransaction);
@@ -311,6 +349,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     llCbBusinessExpand.setVisibility(View.VISIBLE);
+                    isCollapse(cbCrashCourse);
                     isCollapse(cbUsers);
                     isCollapse(cbMyEarning);
                     isCollapse(cbTransaction);
@@ -328,6 +367,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     llCbTransactionExpand.setVisibility(View.VISIBLE);
+                    isCollapse(cbCrashCourse);
                     isCollapse(cbUsers);
                     isCollapse(cbMyEarning);
                     isCollapse(cbBusiness);
@@ -345,6 +385,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
 
         if (is_affiliate.equals("0")) {
             lnrDashboard.setVisibility(View.GONE);
+            lnrCrashCourse.setVisibility(View.GONE);
             lnrUser.setVisibility(View.GONE);
             lnrEarning.setVisibility(View.GONE);
             lnrBusiness.setVisibility(View.GONE);
@@ -363,6 +404,8 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         App.user_id = user_id;
         SplashActivity.deviceWidth = H.getDeviceWidth(this);
         SplashActivity.deviceHeight = H.getDeviceHeight(this);
+
+        Log.e("TAG", "UserTokenInit: "+ token );
 
         onCheckView();
         checkAffiliate();
@@ -614,6 +657,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
                 break;
 
             case R.id.txtViewAllCategories:
+                Config.FROM_ALL_CRASH_COURSE = false;
                 if (parentCategoriesFragment == null)
                     parentCategoriesFragment = ParentCategoriesFragment.newInstance();
                 fragmentLoader(parentCategoriesFragment, true);
@@ -678,6 +722,19 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
             case R.id.txtReferEarn:
                 hitReferralApi(activity);
                 break;
+
+            case R.id.txtAllCrashCourse:
+                Config.FROM_ALL_CRASH_COURSE = true;
+                if (allCrashCourseFragment == null)
+                    allCrashCourseFragment = AllCrashCourseFragment.newInstance();
+                fragmentLoader(allCrashCourseFragment, true);
+                break;
+            case R.id.txtMyCrashCourse:
+                if (myCrashCourseFragment == null)
+                    myCrashCourseFragment = MyCrashCourseFragment.newInstance();
+                fragmentLoader(myCrashCourseFragment, true);
+                break;
+
 
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START);

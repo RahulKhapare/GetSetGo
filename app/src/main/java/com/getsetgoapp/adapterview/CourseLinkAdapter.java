@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.getsetgoapp.Fragment.MyCourseDetailFragment;
+import com.getsetgoapp.Fragment.MyCrashCourseDetailFragment;
 import com.getsetgoapp.Model.CourseLinkModel;
 import com.getsetgoapp.R;
 import com.getsetgoapp.databinding.ActivityCourseLinkListBinding;
@@ -23,6 +24,8 @@ public class CourseLinkAdapter extends RecyclerView.Adapter<CourseLinkAdapter.Vi
     List<CourseLinkModel> courseLinkModelList;
     String zoom = "us.zoom.videomeetings";
     MyCourseDetailFragment fragment;
+    MyCrashCourseDetailFragment crashCourseDetailFragment;
+    boolean fromCrash = false;
 
     public interface onClick{
         void onLinkClick(String link);
@@ -32,6 +35,14 @@ public class CourseLinkAdapter extends RecyclerView.Adapter<CourseLinkAdapter.Vi
         this.context = context;
         this.courseLinkModelList = courseLinkModelList;
         this.fragment = fragment;
+        fromCrash = false;
+    }
+
+    public CourseLinkAdapter(Context context, List<CourseLinkModel> courseLinkModelList, MyCrashCourseDetailFragment fragment) {
+        this.context = context;
+        this.courseLinkModelList = courseLinkModelList;
+        this.crashCourseDetailFragment = fragment;
+        fromCrash = true;
     }
 
     @NonNull
@@ -51,7 +62,11 @@ public class CourseLinkAdapter extends RecyclerView.Adapter<CourseLinkAdapter.Vi
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
-                ((MyCourseDetailFragment)fragment).onLinkClick(model.getLink());
+                if (fromCrash){
+                    ((MyCrashCourseDetailFragment)crashCourseDetailFragment).onLinkClick(model.getLink());
+                }else {
+                    ((MyCourseDetailFragment)fragment).onLinkClick(model.getLink());
+                }
             }
         });
     }

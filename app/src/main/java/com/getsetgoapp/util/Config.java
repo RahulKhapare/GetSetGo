@@ -31,6 +31,7 @@ public class Config {
     public static boolean MY_POINTS = false;
     public static boolean FROM_DASHBOARD = false;
     public static boolean POP_HOME = false;
+    public static boolean FROM_ALL_CRASH_COURSE = false;
 
     public static String SHARE_MESSAGE_1 =
             "Hi Friend,\n" +

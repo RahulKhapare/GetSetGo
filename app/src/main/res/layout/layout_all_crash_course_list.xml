@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/llSmartSchoolLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:weightSum="10"
+            android:orientation="horizontal"
+            android:paddingRight="16dp">
+
+            <TextView
+                android:id="@+id/txtCourseName"
+                android:layout_width="0dp"
+                android:layout_weight="8"
+                android:layout_height="22dp"
+                android:fontFamily="@font/nunit_sans_bold"
+                android:text="Smart School"
+                android:textColor="@color/colorTextDark"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewChild"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/llSmartSchoolLabel"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="20dp"
+            android:paddingLeft="16dp"
+            android:overScrollMode="never"/>
+
+    </RelativeLayout>
+
+
+</layout>
+

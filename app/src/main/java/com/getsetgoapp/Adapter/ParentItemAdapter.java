@@ -63,6 +63,7 @@ public class ParentItemAdapter extends RecyclerView
         holder.ChildRecyclerView.setLayoutManager(layoutManager);
         holder.ChildRecyclerView.setAdapter(childItemAdapter);
         holder.ChildRecyclerView.setRecycledViewPool(viewPool);
+
     }
 
     @Override

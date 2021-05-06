@@ -4,21 +4,17 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.Window;
-import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 import androidx.databinding.DataBindingUtil;
@@ -33,7 +29,6 @@ import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
 import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
-import com.adoisstudio.helper.Session;
 import com.getsetgoapp.Adapter.CommentAdapter;
 import com.getsetgoapp.Model.CommentModel;
 import com.getsetgoapp.Model.CourseDocumentModel;
@@ -43,7 +38,6 @@ import com.getsetgoapp.Model.VideoUrlModel;
 import com.getsetgoapp.R;
 import com.getsetgoapp.activity.BaseScreenActivity;
 import com.getsetgoapp.activity.VideoPlayActivity;
-import com.getsetgoapp.activity.VideoPlayMyCrashCourseActivity;
 import com.getsetgoapp.adapterview.CourseChildAdapter;
 import com.getsetgoapp.adapterview.CourseChildModel;
 import com.getsetgoapp.adapterview.CourseDocumentAdapter;
@@ -51,6 +45,7 @@ import com.getsetgoapp.adapterview.CourseLinkAdapter;
 import com.getsetgoapp.adapterview.CourseModuleAdapter;
 import com.getsetgoapp.adapterview.VideoQualityAdapter;
 import com.getsetgoapp.databinding.FragmentMyCourseDetailsBinding;
+import com.getsetgoapp.databinding.FragmentMyCrashCourseDetailsBinding;
 import com.getsetgoapp.util.App;
 import com.getsetgoapp.util.Click;
 import com.getsetgoapp.util.Config;
@@ -73,10 +68,10 @@ import java.util.List;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class MyCourseDetailFragment extends Fragment implements Player.EventListener, CourseChildAdapter.childAction, CourseDocumentAdapter.onClick, VideoQualityAdapter.onClick,
+public class MyCrashCourseDetailFragment extends Fragment implements Player.EventListener, CourseChildAdapter.childAction, CourseDocumentAdapter.onClick, VideoQualityAdapter.onClick,
         CourseModuleAdapter.click ,CourseLinkAdapter.onClick{
 
-    private FragmentMyCourseDetailsBinding binding;
+    private FragmentMyCrashCourseDetailsBinding binding;
     private Context context;
     private SimpleExoPlayer exoPlayer;
     private PlayerView playerView;
@@ -100,8 +95,7 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
     private List<CourseLinkModel> courseLinkModelList;
     public static List<VideoUrlModel> videoUrlModelList;
     private JsonList previewJsonList = new JsonList();
-    private List<CommentModel> commentModelList;
-    private CommentAdapter commentAdapter;
+
 
     private int childVideoPosition;
     private int actualSize;
@@ -109,14 +103,6 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
     private Dialog dialog;
     private LoadingDialog loadingDialog;
     private String courseId = "";
-
-    private boolean loading = true;
-    int pastVisiblesItems, visibleItemCount, totalItemCount;
-    LinearLayoutManager linearLayoutManager;
-    int count;
-    int pageCount = 1;
-    boolean isPagination =  true;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -135,10 +121,10 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         if (binding == null) {
-            binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_course_details, container, false);
+            binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_crash_course_details, container, false);
             context = inflater.getContext();
             courseSlug = Config.myCourseSlug;
-            BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Course Details");
+            BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Crash Course Details");
             BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
             BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
             initView();
@@ -165,53 +151,28 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
         videoUrlModelList = new ArrayList<>();
 
         courseModuleModelList = new ArrayList<>();
-        courseModuleAdapter = new CourseModuleAdapter(context, courseModuleModelList, MyCourseDetailFragment.this, true);
+        courseModuleAdapter = new CourseModuleAdapter(context, courseModuleModelList, MyCrashCourseDetailFragment.this, true);
         binding.recyclerModule.setLayoutManager(new LinearLayoutManager(context));
         binding.recyclerModule.setNestedScrollingEnabled(false);
         binding.recyclerModule.setAdapter(courseModuleAdapter);
 
         courseDocumentModelList = new ArrayList<>();
-        courseDocumentAdapter = new CourseDocumentAdapter(context, courseDocumentModelList, MyCourseDetailFragment.this);
+        courseDocumentAdapter = new CourseDocumentAdapter(context, courseDocumentModelList, MyCrashCourseDetailFragment.this);
         binding.recyclerDocument.setLayoutManager(new LinearLayoutManager(context));
         binding.recyclerDocument.setNestedScrollingEnabled(false);
         binding.recyclerDocument.setAdapter(courseDocumentAdapter);
 
         courseLinkModelList = new ArrayList<>();
-        courseLinkAdapter = new CourseLinkAdapter(context, courseLinkModelList,MyCourseDetailFragment.this);
+        courseLinkAdapter = new CourseLinkAdapter(context, courseLinkModelList, MyCrashCourseDetailFragment.this);
         binding.recyclerLink.setLayoutManager(new LinearLayoutManager(context));
         binding.recyclerLink.setNestedScrollingEnabled(false);
         binding.recyclerLink.setAdapter(courseLinkAdapter);
 
-        commentModelList = new ArrayList<>();
-        commentAdapter = new CommentAdapter(context,commentModelList);
-        linearLayoutManager = new LinearLayoutManager(context);
-        binding.recyclerComment.setLayoutManager(linearLayoutManager);
-        binding.recyclerComment.setHasFixedSize(true);
-        binding.recyclerComment.setNestedScrollingEnabled(false);
-        binding.recyclerComment.setAdapter(commentAdapter);
-
-        isPagination = true;
         callCourseDetailsApi(context, courseSlug);
         onClick();
-        callGetCommentAPI(context,pageCount);
 
     }
 
-    private void setPagination(){
-
-        if (binding.nestedScroll != null) {
-            binding.nestedScroll.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-                if (scrollY == ( v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight() )) {
-                    if (commentModelList!=null && !commentModelList.isEmpty()){
-                        if (commentModelList.size()<count){
-                            pageCount++;
-                            callGetCommentAPI(context,pageCount);
-                        }
-                    }
-                }
-            });
-        }
-    }
 
     @Override
     public void onResume() {
@@ -234,27 +195,13 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
 
     private void onClick() {
 
-        binding.btnSubmitComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Click.preventTwoClick(v);
-                if (TextUtils.isEmpty(binding.etxComments.getText().toString().trim())){
-                    H.showMessage(context,"Please enter comment");
-                }else if (binding.etxComments.getText().toString().trim().length()<5){
-                    H.showMessage(context,"Please enter valid comment");
-                }else{
-                    callPostCommentAPI(context,courseId,binding.etxComments.getText().toString().trim());
-                }
-            }
-        });
-
         imgFullScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
                 exoPlayer.pause();
                 lastVideoPosition = exoPlayer.getCurrentPosition();
-                Intent intent = new Intent(getContext(), VideoPlayMyCrashCourseActivity.class);
+                Intent intent = new Intent(getContext(), VideoPlayActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
@@ -392,7 +339,7 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
     private void callCourseDetailsApi(Context context, String slug) {
 
         LoadingDialog loadingDialog = new LoadingDialog(context, false);
-        Api.newApi(context, P.baseUrl + "active_course" + "/" + slug)
+        Api.newApi(context, P.baseUrl + "active_crash_course" + "/" + slug)
                 .setMethod(Api.GET)
                 .onHeaderRequest(App::getHeaders)
                 .onLoading(isLoading -> {
@@ -433,18 +380,6 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
 
         if (checkString(progress, binding.txtCourseName)) {
             binding.txtCourseName.setText(courseName);
-        }
-
-        if (checkString(progress, binding.txtPercentage)) {
-            binding.txtPercentage.setText(progress + "%" + " " + "Completed");
-        }
-
-        if (checkString(progress)) {
-            try {
-                binding.progressBar.setProgress(Integer.parseInt(progress));
-            }catch (Exception e){
-                binding.progressBar.setProgress(0);
-            }
         }
 
         setModuleData(module_list);
@@ -502,33 +437,10 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
 
     }
 
-    private void updateVideoStatus(String course_id, String video_id) {
-//        ProgressView.show(context,loadingDialog);
-        Json j = new Json();
-        j.addString(P.course_id, course_id);
-        j.addString(P.video_id, video_id);
-        Api.newApi(context, P.baseUrl + "add_video_status").addJson(j)
-                .setMethod(Api.POST)
-                .onHeaderRequest(App::getHeaders)
-                .onError(() -> {
-//                    ProgressView.dismiss(loadingDialog);
-                })
-                .onSuccess(json ->
-                {
-                    JumpToLogin.call(json, context);
-                    if (json.getInt(P.status) == 1) {
-                    } else {
-                    }
-//                    ProgressView.dismiss(loadingDialog);
-                })
-                .run("updateVideoStatus");
-    }
-
     @Override
     public void calledChild(CourseChildModel model, int position) {
         binding.txtVideoTitle.setText(model.getVideo_title());
         updateVideoPREV_NEXTListData(model.getMainVideoList());
-        updateVideoStatus(courseId, model.getVideo_id());
         lastVideoPosition = 0;
         lastSelectedPosition = 0;
         JsonList videoUrlList = model.getVideo_urls();
@@ -593,7 +505,7 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
 
         RecyclerView recyclerQuality = dialog.findViewById(R.id.recyclerQuality);
         recyclerQuality.setLayoutManager(new LinearLayoutManager(context));
-        VideoQualityAdapter adapter = new VideoQualityAdapter(context, videoUrlModelList, MyCourseDetailFragment.this, lastSelectedPosition, 1);
+        VideoQualityAdapter adapter = new VideoQualityAdapter(context, videoUrlModelList, MyCrashCourseDetailFragment.this, lastSelectedPosition, 1);
         recyclerQuality.setAdapter(adapter);
 
         dialog.setCancelable(true);
@@ -663,8 +575,8 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
         super.onDestroyView();
     }
 
-    public static MyCourseDetailFragment newInstance() {
-        MyCourseDetailFragment fragment = new MyCourseDetailFragment();
+    public static MyCrashCourseDetailFragment newInstance() {
+        MyCrashCourseDetailFragment fragment = new MyCrashCourseDetailFragment();
         return fragment;
     }
 
@@ -691,7 +603,7 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
         if (Config.POP_HOME) {
             Config.POP_HOME = false;
             getFragmentManager().popBackStackImmediate();
-            BaseScreenActivity.binding.bottomNavigation.setVisibility(View.VISIBLE);
+//            BaseScreenActivity.binding.bottomNavigation.setVisibility(View.VISIBLE);
         } else {
             getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             BaseScreenActivity.callBack();
@@ -701,97 +613,6 @@ public class MyCourseDetailFragment extends Fragment implements Player.EventList
     @Override
     public void onLinkClick(String link) {
         ((BaseScreenActivity)getActivity()).openLink(link);
-    }
-
-
-    private void callPostCommentAPI(Context context,String courseId,String comment) {
-        LoadingDialog loadingDialog = new LoadingDialog(context, false);
-
-        Json json = new Json();
-        json.addString(P.course_id, courseId);
-        json.addString(P.comment, comment);
-
-        Api.newApi(context, P.baseUrl + "add_course_comment")
-                .addJson(json)
-                .setMethod(Api.POST)
-                .onHeaderRequest(App::getHeaders)
-                .onLoading(isLoading -> {
-                    if (isLoading)
-                        loadingDialog.show("loading...");
-                    else
-                        loadingDialog.hide();
-                })
-                .onError(() ->
-                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
-                            loadingDialog.dismiss();
-                        }))
-                .onSuccess(Json1 -> {
-                    if (Json1 != null) {
-                        JumpToLogin.call(Json1, context);
-                        loadingDialog.dismiss();
-                        if (Json1.getInt(P.status) == 1) {
-                            binding.etxComments.setText("");
-                            H.showMessage(context, Json1.getString(P.msg));
-                            commentModelList.clear();
-                            pageCount = 1;
-                            callGetCommentAPI(context,pageCount);
-                        } else {
-                            H.showMessage(context, Json1.getString(P.err));
-                        }
-                    }
-
-                }).run("callPostCommentAPI");
-    }
-
-    private void callGetCommentAPI(Context context,int pageCount) {
-        LoadingDialog loadingDialog = new LoadingDialog(context, false);
-        Api.newApi(context, P.baseUrl + "active_course_comments/"+courseSlug+"?"+"page="+pageCount+"&per_page=10")
-                .setMethod(Api.GET)
-                .onHeaderRequest(App::getHeaders)
-                .onLoading(isLoading -> {
-                    if (isLoading)
-                        loadingDialog.show("loading...");
-                    else
-                        loadingDialog.hide();
-                })
-                .onError(() ->
-                        MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
-                            loadingDialog.dismiss();
-                        }))
-                .onSuccess(Json1 -> {
-                    if (Json1 != null) {
-                        JumpToLogin.call(Json1, context);
-                        loadingDialog.dismiss();
-                        if (Json1.getInt(P.status) == 1) {
-                            loading = false;
-                            Json json = Json1.getJson(P.data);
-                            count = json.getInt(P.num_rows);
-                            JsonList commentList = json.getJsonList(P.list);
-
-                            if (commentList!=null && commentList.size()!=0){
-                                for (Json jsonData : commentList){
-                                    CommentModel model = new CommentModel();
-                                    model.setInitials(jsonData.getString(P.initials));
-                                    model.setComment(jsonData.getString(P.comment));
-                                    model.setName(jsonData.getString(P.name));
-                                    model.setLastname(jsonData.getString(P.lastname));
-                                    model.setAdd_date(jsonData.getString(P.add_date));
-                                    commentModelList.add(model);
-                                }
-                            }
-                            commentAdapter.notifyDataSetChanged();
-                            if (commentModelList.isEmpty()){
-                                binding.txtUserComment.setVisibility(View.GONE);
-                            }
-
-                            if (isPagination){
-                                isPagination = false;
-                                setPagination();
-                            }
-                        }
-                    }
-
-                }).run("callGetCommentAPI");
     }
 
 

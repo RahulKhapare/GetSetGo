@@ -10,7 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adoisstudio.helper.H;
 import com.getsetgoapp.Fragment.MyCourseDetailFragment;
+import com.getsetgoapp.Fragment.MyCrashCourseDetailFragment;
+import com.getsetgoapp.Fragment.MyCrashCourseFragment;
 import com.getsetgoapp.R;
 import com.getsetgoapp.databinding.ActivityCourseChildListBinding;
 
@@ -22,6 +25,8 @@ public class CourseChildAdapter extends RecyclerView.Adapter<CourseChildAdapter.
     List<CourseChildModel> courseChildModelList;
     boolean flagValue = false;
     MyCourseDetailFragment fragment;
+    MyCrashCourseDetailFragment crashCourseDetailFragment;
+    boolean fromCrash = false;
 
     public interface childAction{
         void calledChild(CourseChildModel model,int childVideoPosition);
@@ -33,6 +38,15 @@ public class CourseChildAdapter extends RecyclerView.Adapter<CourseChildAdapter.
         this.courseChildModelList = courseChildModelList;
         this.flagValue = flagValue;
         this.fragment = fragment;
+        fromCrash = false;
+    }
+
+    public CourseChildAdapter(Context context, List<CourseChildModel> courseChildModelList, boolean flagValue,MyCrashCourseDetailFragment fragment) {
+        this.context = context;
+        this.courseChildModelList = courseChildModelList;
+        this.flagValue = flagValue;
+        this.crashCourseDetailFragment = fragment;
+        fromCrash = true;
     }
 
     @NonNull
@@ -58,13 +72,22 @@ public class CourseChildAdapter extends RecyclerView.Adapter<CourseChildAdapter.
 
         if (flagValue){
             flagValue = false;
-            ((MyCourseDetailFragment)fragment).calledChild(model,position);
+            if (fromCrash){
+                ((MyCrashCourseDetailFragment)crashCourseDetailFragment).calledChild(model,position);
+            }else {
+                ((MyCourseDetailFragment)fragment).calledChild(model,position);
+            }
+
         }
 
         holder.binding.lnrChild.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MyCourseDetailFragment)fragment).calledChild(model,position);
+                if (fromCrash){
+                    ((MyCrashCourseDetailFragment)crashCourseDetailFragment).calledChild(model,position);
+                }else {
+                    ((MyCourseDetailFragment)fragment).calledChild(model,position);
+                }
             }
         });
 

@@ -65,11 +65,10 @@ import com.getsetgoapp.Model.VideoUrlModel;
 import com.getsetgoapp.R;
 import com.getsetgoapp.activity.BaseScreenActivity;
 import com.getsetgoapp.activity.SplashActivity;
-import com.getsetgoapp.activity.VideoPlayActivity;
+import com.getsetgoapp.activity.VideoPlayCrashCourseActivity;
 import com.getsetgoapp.activity.VideoPlayNewActivity;
 import com.getsetgoapp.adapterview.InstructorAdapter;
 import com.getsetgoapp.adapterview.VideoCourseQualityAdapter;
-import com.getsetgoapp.adapterview.VideoQualityAdapter;
 import com.getsetgoapp.others.CustomVideoView;
 import com.getsetgoapp.util.App;
 import com.getsetgoapp.util.Click;
@@ -88,7 +87,6 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -105,7 +103,7 @@ import static android.content.Context.AUDIO_SERVICE;
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.getsetgoapp.util.Utilities.pxFromDp;
 
-public class CourseDetailFragment extends Fragment implements GestureDetector.OnGestureListener, Api.OnHeaderRequestListener, Player.EventListener,VideoCourseQualityAdapter.onClick {
+public class CrashCourseDetailFragment extends Fragment implements GestureDetector.OnGestureListener, Api.OnHeaderRequestListener, Player.EventListener,VideoCourseQualityAdapter.onClick {
 
     CurriculumLectureAdapter curriculumLectureAdapter;
     StudentsFeedbackAdapter studentsFeedbackAdapter;
@@ -115,7 +113,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
     BuyCourseFragment buyCourseFragment;
     public static List<VideoUrlModel> videoUrlModelList;
 
-    RecyclerView recyclerViewLecture, recyclerViewFeedback;
+    RecyclerView recyclerViewLecture;
     LinearLayout llCourseIncludes, llLearn, llCourseVideo, llCourseContent, llCourse, llCollapse;
 
     TextView txtVideoError;
@@ -181,26 +179,20 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
     private InstructorAdapter instructorAdapter;
     private RecyclerView recyclerInstructor;
 
-    public CourseDetailFragment() {
+    public CrashCourseDetailFragment() {
     }
 
-    public static CourseDetailFragment newInstance() {
-        CourseDetailFragment fragment = new CourseDetailFragment();
+    public static CrashCourseDetailFragment newInstance() {
+        CrashCourseDetailFragment fragment = new CrashCourseDetailFragment();
         return fragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_course_details, container, false);
+        v = inflater.inflate(R.layout.fragment_crash_course_details, container, false);
 
         init(v);
         return v;
-
-//        mBinding = FragmentCourseDetailsBinding.inflate(inflater, container, false);
-//        context = inflater.getContext();
-//        init(mBinding.getRoot());
-
-//        return mBinding.getRoot();
     }
 
     @Override
@@ -287,7 +279,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
                 if(exoPlayer!=null){
                     exoPlayer.pause();
                     lastVideoPosition =  exoPlayer.getCurrentPosition();
-                    Intent intent = new Intent(getContext(), VideoPlayNewActivity.class);
+                    Intent intent = new Intent(getContext(), VideoPlayCrashCourseActivity.class);
                     startActivity(intent);
                 }
             }
@@ -312,7 +304,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
 
         RecyclerView recyclerQuality = qualityDialog.findViewById(R.id.recyclerQuality);
         recyclerQuality.setLayoutManager(new LinearLayoutManager(context));
-        VideoCourseQualityAdapter adapter = new VideoCourseQualityAdapter(context,videoUrlModelList,CourseDetailFragment.this,lastSelectedPosition,1);
+        VideoCourseQualityAdapter adapter = new VideoCourseQualityAdapter(context,videoUrlModelList, CrashCourseDetailFragment.this,lastSelectedPosition,3);
         recyclerQuality.setAdapter(adapter);
 
         qualityDialog.setCancelable(true);
@@ -345,7 +337,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         String title = this.getArguments().getString("title");
         String slug = this.getArguments().getString("slug");
         isFromHome = this.getArguments().getBoolean("isFromHome");
-        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Course Details");
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Crash Course Details");
         BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
 //        BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.VISIBLE);
         BaseScreenActivity.binding.incFragmenttool.txtSubCat.setText(title);
@@ -353,7 +345,6 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         videoUrlModelList = new ArrayList<>();
 
         txtVideoError = view.findViewById(R.id.txtVideoError);
-        recyclerViewFeedback = view.findViewById(R.id.recyclerViewFeedback);
         txtMoreFeedback = view.findViewById(R.id.txtMoreFeedback);
         recyclerViewLecture = view.findViewById(R.id.recyclerViewLecture);
         llCourseIncludes = view.findViewById(R.id.llCourseIncludes);
@@ -383,30 +374,6 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
 
         callCourseDetailsApi(getActivity(), slug);
 
-//        setupRecyclerViewCurriculumLecture();
-//        setupRecyclerViewStudenrFeedback();
-
-
-        /*mBinding.recyclerViewFeedback.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-        *//*        int visibleItemCount = mLayoutManagerStudentFeedback.getChildCount();
-                int totalItemCount = mLayoutManagerStudentFeedback.getItemCount();
-                int pastVisibleItems = mLayoutManagerStudentFeedback.findFirstVisibleItemPosition();
-                if (pastVisibleItems + visibleItemCount >= totalItemCount) {
-                    //End of list*//*
-                fetch();
-
-                // }
-
-            }
-        });*/
 
         txtShowMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -441,16 +408,13 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         videoInit(view, "");
     }
 
-    private void setUpFullScreenPlayer() {
 
-
-    }
 
     private void callCourseDetailsApi(Context context, String slug) {
 
         LoadingDialog loadingDialog = new LoadingDialog(context, false);
 //        String apiParam = "?title" + title;
-        Api.newApi(context, P.baseUrl + "course_details" + "/" + slug)
+        Api.newApi(context, P.baseUrl + "crash_course_details" + "/" + slug)
                 .setMethod(Api.GET)
                 .onHeaderRequest(App::getHeaders)
                 .onLoading(isLoading -> {
@@ -471,10 +435,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
                             H.showMessage(context, Json1.getString(P.err));
                         } else {
                             Json1 = Json1.getJson(P.data);
-                            Json1.getJson("list");
-
                             setData(Json1.getJson("list"));
-
                         }
                     }
 
@@ -487,11 +448,11 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
 
         id = list.getString("id");
         txtDesc.setText(RemoveHtml.html2text(list.getString("description")));
-        txtCourseTitle.setText(list.getString("course_name"));
+        txtCourseTitle.setText(list.getString("name"));
         txtViewCategoryNewPrice.setText("₹ " + list.getString("saleprice"));
         txtViewCategoryOldPrice.setText("₹ " + list.getString("price"));
 
-        if (list.getString("has_purchased").equals("true")) {
+        if (list.getBoolean("has_purchased")) {
             rlBuyNow.setVisibility(View.GONE);
         } else {
             rlBuyNow.setVisibility(View.VISIBLE);
@@ -502,7 +463,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
             ArrayList<String> mVideoList = new ArrayList<>();
 
             JSONArray instructorList = list.getJsonArray("instructor");
-            Log.e("TAG", "setDataDDDDDD: "+ instructorList.toString() );
+
             if (instructorList!=null && instructorList.length()!=0){
                 for (int i = 0; i < instructorList.length(); i++) {
                     JSONObject jsonObject = instructorList.getJSONObject(i);
@@ -510,7 +471,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
                     String name = jsonObject.getString("name");
                     String image = jsonObject.getString("image");
                     String joining_date = jsonObject.getString("joining_date");
-                    String course_count = jsonObject.getString("course_count");
+                    String course_count = jsonObject.getString("crash_course_count");
 
                     InstructorModel instructorModel = new InstructorModel();
                     instructorModel.setId(id);
@@ -523,15 +484,19 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
                 }
 
                 instructorAdapter.notifyDataSetChanged();
+
+                Log.e("TAG", "sdsdsdsdsds: "+ instructorModelList.size() );
             }
 
-            JSONObject courseInclusion = list.getJsonObject("course_inclusion");
+            JSONObject courseInclusion = list.getJsonObject("crash_course_inclusion");
             String duration = courseInclusion.getString("duration");
             String newDuration = duration.replace(":", "").replace("H", "h").replace("M", "m");
 
-            txtTimeLect.setText("Lectures: " + courseInclusion.getString("videos") + " " + "Total time(" + newDuration + ")");
+            Log.e("TAG", "setDataSSDSD: " + duration );
+//            txtTimeLect.setText("Lectures: " + courseInclusion.getString("videos") + " " + "Total time(" + newDuration + ")");
+            txtTimeLect.setText("Total time ( " + newDuration + " )");
 
-            Json jsonObject = list.getJson("course_videos");
+            Json jsonObject = list.getJson("crash_course_videos");
             Log.e("TAG", "setDataOBJ: "+ jsonObject.toString() );
             JSONObject element;
             Iterator<?> keys = jsonObject.keys();
@@ -593,12 +558,10 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
             videoUrl = list.getString("vimeo_url");
             videoInit(v, videoUrl);
 
-            for (int i = 0; i < list.getJsonArray("course_testimonials").length(); i++)
-                jsonList.add(i, list);
 
-            setupRecyclerViewStudenrFeedback(jsonList);
-        } catch (
-                JSONException e) {
+        } catch (JSONException e) {
+
+            Log.e("TAG", "setDataWWEEE: " + e.getMessage() );
             e.printStackTrace();
         }
 
@@ -671,7 +634,6 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
                     textView.setTypeface(typeface);
                     textView.setTextSize(14f);
                     llCourseIncludes.addView(textView);
-
                 }
 
             } catch (Exception e) {
@@ -679,53 +641,6 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
             }
         }
     }
-
-    private void fetch() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                studentsFeedbackAdapter = new StudentsFeedbackAdapter(getContext(), jsonList);
-                txtMoreFeedback.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        recyclerViewFeedback.setAdapter(studentsFeedbackAdapter);
-                        studentsFeedbackAdapter.notifyDataSetChanged();
-                    }
-                });
-            }
-        }, 3000);
-    }
-
-    private void setupRecyclerViewCurriculumLecture(Json list) {
-//        recyclerViewLecture.setLayoutManager(layoutManager);
-        Json modules = list.getJson("course_videos");
-        JsonList jsonList = new JsonList();
-        for (int i = 0; i < modules.length(); i++)
-            jsonList.add(modules);
-
-        curriculumLectureAdapter = new CurriculumLectureAdapter(getActivity(), jsonList);
-
-        recyclerViewLecture.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewLecture.setAdapter(curriculumLectureAdapter);
-        curriculumLectureAdapter.notifyDataSetChanged();
-
-    }
-
-    private void setupRecyclerViewStudenrFeedback(JsonList reviewList) {
-//        recyclerViewFeedback.setLayoutManager(mLayoutManagerStudentFeedback);
-        studentsFeedbackAdapter = new StudentsFeedbackAdapter(getActivity(), reviewList);
-        recyclerViewFeedback.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewFeedback.setAdapter(studentsFeedbackAdapter);
-    }
-
- /*   public void PlayOnActivity(View v){
-         Json json = new Json();
-                String string = P.baseUrl + "series_check/" + json.getString(P.series_slug) + "/" + json.getString(P.video_slug);
-                int i = json.getInt(P.time);
-                i *= 1000;
-
-                App.app.startVideoActivity(getContext(), string, i);
-    }*/
 
     @SuppressLint("ClickableViewAccessibility")
     private void videoInit(View view, String checkUrl) {
@@ -789,141 +704,6 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
 
     }
 
-   /* private void hitSeriesApi() {
-
-        Api.newApi(getActivity(), apiUrl).addJson(new Json())
-                .setMethod(Api.GET)
-                .onHeaderRequest(getActivity())
-                .onLoading(this::onLoading)
-                .onError(this::onError)
-                .onSuccess(json -> {
-                    if (json.getInt(P.status) == 0)
-                        H.showMessage(getActivity(), json.getString(P.err));
-                    else {
-                        json = json.getJson(P.data);
-
-                        //setCurrentVideosData(json);
-                        //prepareUrlList(json);
-                        //makeEpisodeList(json);
-                        //setUpMoreLikeGrid(json);
-                    }
-                }).run("hitSeriesApi/videoScreen");
-    }*/
-
-
-
-    /*private void setCurrentVideosData(Json json) {
-        Json seriesJson = json.getJson(P.series);
-        isFavourite = seriesJson.getInt(P.is_favourite);
-        if (isFavourite == 1)
-            ((ImageView) findViewById(R.id.favouriteImageView)).setColorFilter(getColor(R.color.colorPrimary));
-        else
-            ((ImageView) findViewById(R.id.favouriteImageView)).setColorFilter(Color.parseColor("#707070"));
-
-        json = json.getJson(P.video);
-        String string = json.getString(P.banner_image) + "";
-        if (string.equals("null") || string.isEmpty())
-            string = "pathMustNotBeEmpty";
-        ImageView imageView = findViewById(R.id.iV);
-        Picasso.get().load(string).placeholder(getDrawable(R.drawable.ic_image_black_24dp)).error(getDrawable(R.drawable.ic_broken_image_black_24dp)).into(imageView);
-
-        string = json.getString(P.title) + "";
-        ((TextView) findViewById(R.id.videoTitleTextView)).setText(string);
-
-        string = json.getString(P.description) + "";
-        ((TextView) findViewById(R.id.videoDescriptionTextView)).setText(string);
-
-        string = json.getString(P.cast) + "";
-        ((TextView) findViewById(R.id.castTextView)).setText(string);
-
-        string = json.getString(P.director);
-        ((TextView) findViewById(R.id.directorTextView)).setText(string);
-    }*/
-
-    /*private void setUpMoreLikeGrid(Json json) {
-        JsonList jsonList = json.getJsonList(P.similar_series);
-        String string;
-
-        int j = 1;
-        LinearLayout linearLayout1 = findViewById(R.id.moreLikeContainer1);
-        LinearLayout linearLayout2 = findViewById(R.id.moreLikeContainer2);
-        LinearLayout linearLayout3 = findViewById(R.id.moreLikeContainer3);
-        linearLayout1.removeAllViews();
-        linearLayout2.removeAllViews();
-        linearLayout3.removeAllViews();
-
-        for (int i = 0; i < jsonList.size(); i++) {
-            json = jsonList.get(i);
-            string = json.getString(P.image) + "";
-            if (string.equals("null") || string.isEmpty())
-                string = "pathMustNotBeEmpty";
-
-            View view = getLayoutInflater().inflate(R.layout.gridview_item3, null, false);
-            ImageView imageView = view.findViewById(R.id.imageView);
-            Picasso.get().load(string).placeholder(getDrawable(R.drawable.ic_image_black_24dp)).error(getDrawable(R.drawable.ic_broken_image_black_24dp)).into(imageView);
-
-            view.setTag(json);
-            view.setOnClickListener((v) ->
-            {
-
-                String s = P.baseUrl + "series_check/";
-                Json js = (Json) v.getTag();
-                String str = js.getString(P.slug);
-                s = s + "/" + str;
-
-                js = js.getJson(P.video);
-                str = js.getString(P.slug);
-                s = s + "/" + str;
-                H.log("newApiIs", s);
-
-                App.app.startVideoActivity(this, s, 0);
-            });
-
-            if (j == 1) {
-                linearLayout1.addView(view);
-                j++;
-            } else if (j == 2) {
-                linearLayout2.addView(view);
-                j++;
-            } else if (j == 3) {
-                linearLayout3.addView(view);
-                j = 1;
-            }
-
-            string = json.getString(P.series_name);
-            ((TextView) view.findViewById(R.id.textView)).setText(string);
-        }
-    }*/
-
-    /* public void onBackClick(View view) {
-         onBackPressed();
-     }
- */
-    /* public void onFavouriteIconClick(View view) {
-     *//*Json json = new Json();
-        json.addString(P.series_id, seriesId);
-
-        String string = isFavourite == 1 ? P.baseUrl + "remove_favourite_series" : P.baseUrl + "add_favourite_series";
-
-        Api.newApi(this, string).addJson(json)
-                .setMethod(Api.POST)
-                .onHeaderRequest(this)
-                //.onLoading(this)
-                .onError(this::onError)
-                .onSuccess(json1 -> {
-                    if (json1.getInt(P.status) == 1) {
-                        if (isFavourite == 1) {
-                            ((ImageView) findViewById(R.id.favouriteImageView)).setColorFilter(Color.parseColor("#707070"));
-                            isFavourite = 0;
-                        } else {
-                            ((ImageView) findViewById(R.id.favouriteImageView)).setColorFilter(getResources().getColor(R.color.colorPrimary));
-                            isFavourite = 1;
-                        }
-                    } else
-                        H.showMessage(VideoActivity.this, json1.getString(P.err));
-                }).run("hitAddOrRemoveFavouriteApi");*//*
-    }
-*/
     public void onPlayClick() {
        /* Api.newApi(this, checkUrl).addJson(new Json())
                 .setMethod(Api.GET)
@@ -1095,58 +875,6 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         }
     }
 
-    /*private void makeFullScreen(boolean b) throws Exception {
-        LinearLayout linearLayout = findViewById(R.id.linearLayout);
-        int i = linearLayout.getChildCount();
-
-        FrameLayout frameLayout = findViewById(R.id.videoParentLayout);
-        LinearLayout.LayoutParams layoutParams;
-
-        // ViewGroup.LayoutParams lP = customMediaController.getLayoutParams();
-
-        if (b) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-            for (int j = 1; j < i; j++)
-                linearLayout.getChildAt(j).setVisibility(View.GONE);
-
-            //frameLayout.findViewById(R.id.frameLayout).setVisibility(View.GONE);
-
-            gestureDetectorCompat = new GestureDetectorCompat(this, this);
-
-            layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            layoutParams.height = H.getDeviceHeight(this);
-            layoutParams.width = H.getDeviceWidth(this);
-            frameLayout.setLayoutParams(layoutParams);
-
-            i = getResources().getIdentifier("status_bar_height", "dimen", "android");
-           *//* if (i > 0 && getResources().getDimensionPixelSize(i) > H.convertDpToPixel(24, this))
-                lP.width = SplashScreenActivity.deviceHeight - (int) H.convertDpToPixel(70, this);
-            else
-                lP.width = SplashScreenActivity.deviceHeight;*//*
-
-            if (!new Session(this).getBool("isViewed")) {
-                findViewById(R.id.includeLayout).setVisibility(View.VISIBLE);
-                if (customVideoView != null)
-                    customVideoView.pause();
-            }
-
-        } else {
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-            for (int j = 1; j < i; j++)
-                linearLayout.getChildAt(j).setVisibility(View.VISIBLE);
-
-            //frameLayout.findViewById(R.id.frameLayout).setVisibility(View.VISIBLE);
-
-            layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) H.convertDpToPixel(255, this));
-            frameLayout.setLayoutParams(layoutParams);
-
-            //lP.width = SplashScreenActivity.deviceWidth;
-        }
-
-        // customMediaController.setLayoutParams(lP);
-    }*/
 
     @Override
     public void onPause() {
@@ -1198,19 +926,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
-        H.log("onResume", "isExecuted");
     }
-
-/*    @Override
-    public void onBackPressed() {
-        //super.onBackPressed();
-        refreshHome = true;
-
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        else
-            finish();
-    }*/
 
     private Dialog dialog;
     private View view;
@@ -1271,50 +987,6 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         });
     }
 
-    public void onWatchTrailerClick(View view) {
-        H.log("onWatchTrailerClick", "isClicked");
-        this.view = null;
-        isTrailer = true;
-        if (view.getTag() instanceof String) {
-
-            videoUrl = view.getTag().toString();
-
-            customVideoView.stopPlayback();
-            if (mediaPlayer != null)
-                mediaPlayer.release();
-
-            v.findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
-
-            videoProgress = 0;
-            onPlayClick();
-
-            if (videoController != null)
-                videoController.handlePlayPause(true);
-        }
-    }
-
-    public void hitVideoProgressApi(float videoProgress) {
-        H.log("methodIs", "called");
-        if (isTrailer)
-            return;
-
-        /*Json json = new Json();
-        json.addString(P.video_id, videoId);
-        json.addString(P.series_id, seriesId);
-        json.addFloat(P.time, videoProgress);*/
-
-
-     /*   Api.newApi(this, P.baseUrl + "add_viewed_video")
-                .addJson(json)
-                .onHeaderRequest(this)
-                .setMethod(Api.POST)
-                //.onLoading(this::onLoading)
-                .onError(this::onError)
-                .onSuccess(json1 -> {
-                    if (json1.getInt(P.status) == 0)
-                        H.showMessage(activity, json1.getString(P.err));
-                }).run("hitVideoProgressApi");*/
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void onLoading(boolean isLoading) {
@@ -1467,9 +1139,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
 
     private int getDefaultBrightness() {
         int i = Settings.System.getInt(getActivity().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, 0);
-        H.log("currentBrightnessIs", i + "");
         //i = (i*100)/255;
-        H.log("brightnessInPercentIs", i + "");
         return i;
     }
 
@@ -1478,22 +1148,12 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
 
         if (audioManager != null) {
             int j = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-            H.log("maxVolumeIs", j + "");
             int k = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-            H.log("currentVolumeIs", k + "");
 
             i = k / j * 100;
         }
 
         return i;
-    }
-
-    public void onGotItClick(View view) {
-        Session session = new Session(getActivity());
-        session.addBool("isViewed", true);
-        v.findViewById(R.id.includeLayout).setVisibility(View.GONE);
-        //customVideoView.resume();
-        customVideoView.start();
     }
 
 
@@ -1783,7 +1443,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
     private void loadFragment(String course_id) {
         Bundle bundle = new Bundle();
         bundle.putString("course_id", course_id);
-        bundle.putString("fromCrash", "0");
+        bundle.putString("fromCrash", "1");
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
         buyCourseFragment = new BuyCourseFragment();
         buyCourseFragment.setArguments(bundle);
@@ -1793,7 +1453,6 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
                 .addToBackStack("")
                 .commit();
     }
-
 
     class CourseDetailsParentViewHolder {
 
@@ -1890,7 +1549,7 @@ public class CourseDetailFragment extends Fragment implements GestureDetector.On
         if (Config.POP_HOME){
             Config.POP_HOME = false;
             getFragmentManager().popBackStackImmediate();
-            BaseScreenActivity.binding.bottomNavigation.setVisibility(View.VISIBLE);
+//            BaseScreenActivity.binding.bottomNavigation.setVisibility(View.VISIBLE);
         }else if (isFromHome) {
             getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             BaseScreenActivity.callBack();

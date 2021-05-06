@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.adoisstudio.helper.Json;
 import com.getsetgoapp.Fragment.MyCourseDetailFragment;
+import com.getsetgoapp.Fragment.MyCrashCourseDetailFragment;
 import com.getsetgoapp.Model.CourseModuleModel;
 import com.getsetgoapp.R;
 import com.getsetgoapp.databinding.ActivityCourseModuleListBinding;
@@ -28,7 +29,9 @@ public class CourseModuleAdapter extends RecyclerView.Adapter<CourseModuleAdapte
     List<CourseModuleModel> courseModuleModelList;
     int lastCheckPosition = 0;
     MyCourseDetailFragment fragment;
+    MyCrashCourseDetailFragment crashCourseDetailFragment;
     boolean flagValue = false;
+    boolean fromCrashCourse = false;
 
     public interface click{
         void moduleSelection(CourseModuleModel moduleModel);
@@ -39,7 +42,17 @@ public class CourseModuleAdapter extends RecyclerView.Adapter<CourseModuleAdapte
         this.courseModuleModelList = courseModuleModelList;
         this.fragment = fragment;
         this.flagValue = flagValue;
+        fromCrashCourse = false;
     }
+
+    public CourseModuleAdapter(Context context, List<CourseModuleModel> courseModuleModelList, MyCrashCourseDetailFragment fragment, boolean flagValue) {
+        this.context = context;
+        this.courseModuleModelList = courseModuleModelList;
+        this.crashCourseDetailFragment = fragment;
+        this.flagValue = flagValue;
+        fromCrashCourse = true;
+    }
+
 
     @NonNull
     @Override
@@ -102,7 +115,13 @@ public class CourseModuleAdapter extends RecyclerView.Adapter<CourseModuleAdapte
             }
         }
 
-        CourseChildAdapter adapter = new CourseChildAdapter(context,courseChildModelList,flagValue,fragment);
+        CourseChildAdapter adapter = null;
+        if (fromCrashCourse){
+            adapter = new CourseChildAdapter(context,courseChildModelList,flagValue,crashCourseDetailFragment);
+        }else {
+            adapter = new CourseChildAdapter(context,courseChildModelList,flagValue,fragment);
+        }
+
         holder.binding.recyclerChild.setLayoutManager(new LinearLayoutManager(context));
         holder.binding.recyclerChild.setNestedScrollingEnabled(false);
         holder.binding.recyclerChild.setAdapter(adapter);

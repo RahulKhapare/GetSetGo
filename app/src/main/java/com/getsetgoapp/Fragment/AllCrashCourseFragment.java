@@ -15,37 +15,43 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
+import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
 import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
+import com.getsetgoapp.Adapter.AllCrashCourseAdapter;
 import com.getsetgoapp.Adapter.ParentItemAdapter;
+import com.getsetgoapp.Model.AllCrashCourseModel;
 import com.getsetgoapp.R;
 import com.getsetgoapp.activity.BaseScreenActivity;
+import com.getsetgoapp.databinding.FragmentAllCrashCourseBinding;
 import com.getsetgoapp.databinding.FragmentParentCategoriesBinding;
 import com.getsetgoapp.util.App;
-import com.getsetgoapp.util.Config;
 import com.getsetgoapp.util.JumpToLogin;
 import com.getsetgoapp.util.P;
 
-public class ParentCategoriesFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
 
-    FragmentParentCategoriesBinding binding;
-    JsonList parentJsonList = new JsonList();
-    ParentItemAdapter parentItemAdapter;
+public class AllCrashCourseFragment extends Fragment {
 
-
-    public ParentCategoriesFragment() {
+    FragmentAllCrashCourseBinding binding;
+    List<AllCrashCourseModel> allCrashCourseModelList;
+    AllCrashCourseAdapter adapter;
+    
+    public AllCrashCourseFragment() {
+        
     }
 
-    public static ParentCategoriesFragment newInstance() {
-        ParentCategoriesFragment fragment = new ParentCategoriesFragment();
+    public static AllCrashCourseFragment newInstance() {
+        AllCrashCourseFragment fragment = new AllCrashCourseFragment();
         return fragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_parent_categories, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_all_crash_course, container, false);
         View rootView = binding.getRoot();
         init(rootView);
         BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
@@ -57,16 +63,13 @@ public class ParentCategoriesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
     private void init(View view) {
-        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Categories");
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("All Crash Courses");
 
-        if(parentJsonList.size()<=0){
-            callOtherCategoriesAPI(getActivity());
-        }
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
-        parentItemAdapter = new ParentItemAdapter(getActivity(),parentJsonList);
-        binding.parentRecyclerview.setAdapter(parentItemAdapter);
-        binding.parentRecyclerview.setLayoutManager(layoutManager);
+        allCrashCourseModelList = new ArrayList<>();
+        adapter = new AllCrashCourseAdapter(getActivity(),allCrashCourseModelList);
+        binding.recyclerviewAllCrashCurse.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.recyclerviewAllCrashCurse.setHasFixedSize(true);
+        binding.recyclerviewAllCrashCurse.setAdapter(adapter);
 
         BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +77,8 @@ public class ParentCategoriesFragment extends Fragment {
                 onBackClick();
             }
         });
+
+        callAllCrashCourseAPI(getActivity());
 
     }
 
@@ -89,10 +94,11 @@ public class ParentCategoriesFragment extends Fragment {
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
         super.onCreate(savedInstanceState);
     }
-    private void callOtherCategoriesAPI(Context context) {
+
+    private void callAllCrashCourseAPI(Context context) {
 
         LoadingDialog loadingDialog = new LoadingDialog(context,false);
-        Api.newApi(context, P.baseUrl + "all_course_categories")
+        Api.newApi(context, P.baseUrl + "all_crash_course")
                 .setMethod(Api.GET)
                 .onHeaderRequest(App::getHeaders)
                 .onLoading(isLoading -> {
@@ -112,16 +118,22 @@ public class ParentCategoriesFragment extends Fragment {
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(context, Json1.getString(P.err));
                         } else {
-                            Json1 = Json1.getJson(P.data);
-                            JsonList jsonList = Json1.getJsonList("category_list");
-                            if (jsonList != null && !jsonList.isEmpty()) {
-                                parentJsonList.addAll(jsonList);
-                                parentItemAdapter.notifyDataSetChanged();
+                            JsonList jsonListData = Json1.getJsonList(P.data);
+                            if (jsonListData != null && !jsonListData.isEmpty()) {
+                               for (Json jsonData : jsonListData){
+                                   AllCrashCourseModel model = new AllCrashCourseModel();
+                                   model.setText(jsonData.getString("text"));
+                                   model.setCrash_courses(jsonData.getJsonList("crash_courses"));
+                                   if (model.getCrash_courses()!=null && !model.getCrash_courses().isEmpty()){
+                                       allCrashCourseModelList.add(model);
+                                   }
+                               }
+                               adapter.notifyDataSetChanged();
                             }
                         }
                     }
 
-                }).run("all_course_categories");
+                }).run("all_crash_course");
     }
 
     private void onBackClick(){
