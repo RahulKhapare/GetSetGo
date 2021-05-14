@@ -38,6 +38,7 @@ import com.getsetgoapp.Model.VideoUrlModel;
 import com.getsetgoapp.R;
 import com.getsetgoapp.activity.BaseScreenActivity;
 import com.getsetgoapp.activity.VideoPlayActivity;
+import com.getsetgoapp.activity.VideoPlayMyCrashCourseActivity;
 import com.getsetgoapp.adapterview.CourseChildAdapter;
 import com.getsetgoapp.adapterview.CourseChildModel;
 import com.getsetgoapp.adapterview.CourseDocumentAdapter;
@@ -201,7 +202,7 @@ public class MyCrashCourseDetailFragment extends Fragment implements Player.Even
                 Click.preventTwoClick(v);
                 exoPlayer.pause();
                 lastVideoPosition = exoPlayer.getCurrentPosition();
-                Intent intent = new Intent(getContext(), VideoPlayActivity.class);
+                Intent intent = new Intent(getContext(), VideoPlayMyCrashCourseActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });

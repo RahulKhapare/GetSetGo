@@ -24,6 +24,10 @@ public class BuyCourseFragment extends Fragment {
 
     private FragmentBuyCourseBinding mBuyCourseFragmentBinding;
     private YourCourseFragment yourCourseFragment;
+    private MyCrashCourseFragment myCrashCourseFragment;
+
+    String course_id;
+    String fromCrash;
 
     public BuyCourseFragment() {
     }
@@ -84,8 +88,8 @@ public class BuyCourseFragment extends Fragment {
 
     private void init(View rootView) {
 
-        String course_id = this.getArguments().getString("course_id");
-        String fromCrash = this.getArguments().getString("fromCrash");
+        course_id = this.getArguments().getString("course_id");
+        fromCrash = this.getArguments().getString("fromCrash");
 
         BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Purchase Course");
         BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
@@ -99,7 +103,7 @@ public class BuyCourseFragment extends Fragment {
         String url = "";
 
         if (fromCrash.equals("1")){
-            url = P.buy_course_base_dev + course_id + "/" + token;
+            url = P.buy_course_base_prod + course_id + "/" + token;
         }else {
             url = P.buy_course_base_dev + course_id + "/" + token;
         }
@@ -127,10 +131,18 @@ public class BuyCourseFragment extends Fragment {
 
                     if (url.contains("/success")) {
                         H.showMessage(getActivity(),"Payment successfully done...!");
-                        loadActiveCourseFragment(view);
+                        if (fromCrash.equals("1")){
+                            loadMyCrashCourseDetailsFragment(view);
+                        }else {
+                            loadActiveCourseFragment(view);
+                        }
                     } else if (url.contains("/failure")) {
                         H.showMessage(getActivity(),"Payment failed...!");
-                        loadCourseDetailsFragment(view);
+                        if (fromCrash.equals("1")){
+                            loadMyCrashCourseDetailsFragment(view);
+                        }else {
+                            loadCourseDetailsFragment(view);
+                        }
                     }
 
                 } catch (Exception exception) {
@@ -165,4 +177,17 @@ public class BuyCourseFragment extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
+
+    private void loadMyCrashCourseDetailsFragment(View v) {
+
+        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        if (myCrashCourseFragment == null)
+            myCrashCourseFragment = new MyCrashCourseFragment();
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, myCrashCourseFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
 }
