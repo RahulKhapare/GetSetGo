@@ -36,7 +36,7 @@
     </style>
     <style name="BottomTextAppearanceInActive" parent="Widget.AppCompat.TextView">
         <!-- reference our hint & error styles -->
-        <item name="android:textColor">@color/colorTextHint</item>
+        <item name="android:textColor">@color/colorBlackHighlight</item>
         <item name="android:textSize">12sp</item>
         <item name="fontFamily">@font/nunit_sans_bold</item>
     </style>

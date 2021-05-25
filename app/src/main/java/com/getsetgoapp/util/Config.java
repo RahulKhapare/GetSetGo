@@ -36,29 +36,29 @@ public class Config {
     public static String SHARE_MESSAGE_1 =
             "Hi Friend,\n" +
                     "\n" +
-                    "✅ Get 12 Courses worth Rs. 25000/- absolutely FREE \n" +
-                    "(One Course Every Month)\n" +
+                    "✅ Get 12 Courses worth Rs. 25,000/- absolutely FREE \n" +
+                    "(One course every month)\n" +
                     "\n" +
-                    "➡️ We are on a Mission to help 2 million people, to become a better version of themselves and help them to achieve their Dreams and Goals. \n" +
+                    "➡️ We are on a mission to help 2 million people to become a better version of themselves and help them to achieve their dreams and goals. \n" +
                     "\n" +
-                    "➡️ The Featured Courses includes:\n" +
+                    "➡️ The featured courses include:\n" +
                     "Month 1 - Success Habits\n" +
                     "Month 2 - Bulletproof Warrior Mindset\n" +
                     "Month 3 - Laser Focus\n" +
-                    "Month 4 - Dominate your Year\n" +
-                    "Month 5 - Self Discipline Mastery\n" +
+                    "Month 4 - Dominate Your Year\n" +
+                    "Month 5 - Self-Discipline Mastery\n" +
                     "Month 6 - Wealth Building Formula\n" +
-                    "Month 7 - Onward to Follow\n" +
+                    "(Month 7 onwards to be announced)\n" +
                     " \n" +
-                    "Hurry!  This is a Limited Time offer only.\n" +
+                    "Hurry!  This is a limited time offer only.\n" +
                     "Make the most of this splendid learning opportunity.\n" +
                     "\n" +
-                    "➡️ Click on the Link Below to Download the GSG App and get FREE access to One Amazing Self Development Course every month. \uD83D\uDC47\uD83C\uDFFB\uD83D\uDC47\uD83C\uDFFB";
+                    "➡️ Click on the link below to download the GSG App and get FREE access to one amazing self-development course every month. \uD83D\uDC47\uD83C\uDFFB\uD83D\uDC47\uD83C\uDFFB";
 
     public static String SHARE_MESSAGE_2 =
-            "Start your Journey to become Better Version of yourself Today!\n" +
+            "Start your journey today to become a better version of yourself!\n" +
                     "\n" +
-                    "Thanks & Regards\n" +
+                    "Thanks & Regards,\n" +
                     "Team GSGW";
 
     public static String WELCOME_VIDEO = "https://player.vimeo.com/external/535902905.sd.mp4?s=aef58d2760c00c9ef4d2650178907024695c4241&profile_id=165";

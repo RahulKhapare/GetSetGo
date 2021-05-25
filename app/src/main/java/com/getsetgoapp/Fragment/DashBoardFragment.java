@@ -232,7 +232,7 @@ public class DashBoardFragment extends Fragment {
     }
 
     public void shareApp(Context context, String link) {
-        String shareMessage = Config.SHARE_MESSAGE_1 + "\n\n" + "Link: "+link  + "\nSponsor ID: " + new Session(getActivity()).getString(P.referral_code) +  "\n\n"  + Config.SHARE_MESSAGE_2;
+        String shareMessage = Config.SHARE_MESSAGE_1 + "\n\n" + "Link: "+link  + "\nRelationship Manager ID: " + new Session(getActivity()).getString(P.referral_code) +  "\n\n"  + Config.SHARE_MESSAGE_2;
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
