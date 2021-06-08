@@ -91,6 +91,7 @@ public class P {
     public static String price = "price";
     public static String sale_price = "sale_price";
     public static String rating = "rating";
+    public static String share_link = "share_link";
     public static String series_pricing = "series_pricing";
     public static String plan_list = "plan_list";
     public static String duration_in_months = "duration_in_months";

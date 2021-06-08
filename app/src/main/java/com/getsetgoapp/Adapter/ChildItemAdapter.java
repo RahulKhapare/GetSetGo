@@ -1,7 +1,9 @@
 package com.getsetgoapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +12,19 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adoisstudio.helper.H;
 import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
+import com.adoisstudio.helper.Session;
 import com.getsetgoapp.Fragment.CourseDetailFragment;
 import com.getsetgoapp.R;
 import com.getsetgoapp.activity.BaseScreenActivity;
+import com.getsetgoapp.util.Click;
 import com.getsetgoapp.util.Config;
+import com.getsetgoapp.util.P;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
@@ -61,11 +68,19 @@ public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.Chil
 //        LoadImage.picasso(holder.ivCourseImage, imagePath);
         Picasso.get().load(childItem.getString("image")).placeholder(R.drawable.ic_wp).error(R.drawable.ic_wp).into(holder.ivCourseImage);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.llMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 loadFragment(view, childItem.getString("course_name"),childItem.getString("slug"));
 
+            }
+        });
+
+        holder.imgShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                shareApp(context,childItem.getString("share_link"));
             }
         });
     }
@@ -79,10 +94,12 @@ public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.Chil
 
         TextView txtCourseName, txtProfName, txtReview, txtNewPrice, txtOldPrice, txtBestSeller;
         RoundedImageView ivCourseImage;
-        ImageView imgReview1, imgReview2, imgReview3, imgReview4, imgReview5;
+        ImageView imgReview1, imgReview2, imgReview3, imgReview4, imgReview5,imgShare;
+        CardView llMain;
 
         public ChildViewHolder(View itemView) {
             super(itemView);
+            llMain = itemView.findViewById(R.id.llMain);
             txtCourseName = itemView.findViewById(R.id.txtCourseName);
             ivCourseImage = itemView.findViewById(R.id.ivCourseImage);
             txtProfName = itemView.findViewById(R.id.txtProfName);
@@ -95,6 +112,7 @@ public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.Chil
             imgReview3 = itemView.findViewById(R.id.imgReview3);
             imgReview4 = itemView.findViewById(R.id.imgReview4);
             imgReview5 = itemView.findViewById(R.id.imgReview5);
+            imgShare = itemView.findViewById(R.id.imgShare);
             txtBestSeller = itemView.findViewById(R.id.txtBestSeller);
             txtBestSeller.setVisibility(View.GONE);
         }
@@ -166,6 +184,15 @@ public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.Chil
                 .replace(R.id.fragment_container, courseDetailFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    private void shareApp(Context context, String link) {
+        String shareMessage = link;
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+        sendIntent.setType("text/plain");
+        context.startActivity(Intent.createChooser(sendIntent, "Share Using"));
     }
 }
 

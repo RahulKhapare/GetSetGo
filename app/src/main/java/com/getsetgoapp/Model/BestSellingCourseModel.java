@@ -11,6 +11,15 @@ public class BestSellingCourseModel {
     String price;
     String sale_price;
     String rating;
+    String share_link;
+
+    public String getShare_link() {
+        return share_link;
+    }
+
+    public void setShare_link(String share_link) {
+        this.share_link = share_link;
+    }
 
     public String getId() {
         return id;

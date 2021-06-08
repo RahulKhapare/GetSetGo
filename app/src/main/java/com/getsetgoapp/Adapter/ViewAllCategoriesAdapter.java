@@ -1,6 +1,7 @@
 package com.getsetgoapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,10 +15,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adoisstudio.helper.H;
 import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
 import com.getsetgoapp.Fragment.CourseDetailFragment;
 import com.getsetgoapp.R;
+import com.getsetgoapp.util.Click;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
@@ -50,35 +53,37 @@ public class ViewAllCategoriesAdapter extends RecyclerView.Adapter<ViewAllCatego
 
         final Json json = jsonList.get(position);
 
-        holder.txtCourse.setText(jsonList.get(position).getString("course_name"));
+        Log.e("TAG", "onBindViewHolder: "+json );
+
+        holder.txtCourseName.setText(jsonList.get(position).getString("course_name"));
         holder.txtProfName.setText(jsonList.get(position).getString("instructor_name"));
         holder.txtOldPrice.setText("₹ " + jsonList.get(position).getString("price"));
         holder.txtNewPrice.setText("₹ " + jsonList.get(position).getString("sale_price"));
         holder.txtReview.setText(jsonList.get(position).getString("rating"));
-        setReview(jsonList.get(position).getString("rating"),holder);
+        setReview(jsonList.get(position).getString("rating"), holder);
 
         Picasso.get().load(json.getString("image")).placeholder(R.drawable.ic_wp).error(R.drawable.ic_wp).into(holder.imgCategory);
-
-
-        /*holder.chkFav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                holder.chkFav.setSelected(true);
-
-
-            }
-        });*/
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-        String courseSlug = jsonList.get(position).getString("slug");
-                Log.d("Hardik","slug: "+courseSlug);
-                loadFragment(view,courseSlug);
+                String courseSlug = jsonList.get(position).getString("slug");
+
+                loadFragment(view, courseSlug);
             }
         });
+
+
+        holder.imgShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                shareApp(context, jsonList.get(position).getString("share_link"));
+            }
+        });
+
+
     }
 
     @Override
@@ -88,29 +93,26 @@ public class ViewAllCategoriesAdapter extends RecyclerView.Adapter<ViewAllCatego
 
     public class ViewAllCategoriesViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtCourse, txtProfName, txtReview,
-                txtNewPrice, txtOldPrice, txtBestSeller;
+        TextView txtCourseName, txtProfName, txtReview,
+                txtNewPrice, txtOldPrice;
         RoundedImageView imgCategory;
-        CheckBox chkFav;
-        ImageView imgReview1, imgReview2, imgReview3, imgReview4, imgReview5;
+        ImageView imgReview1, imgReview2, imgReview3, imgReview4, imgReview5, imgShare;
 
         public ViewAllCategoriesViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            txtCourse = itemView.findViewById(R.id.txtViewCategory);
-            txtProfName = itemView.findViewById(R.id.txtViewCategoryProfName);
-            txtReview = itemView.findViewById(R.id.txtViewCategoryReview);
-            txtNewPrice = itemView.findViewById(R.id.txtViewCategoryNewPrice);
-            txtOldPrice = itemView.findViewById(R.id.txtViewCategoryOldPrice);
-            txtBestSeller = itemView.findViewById(R.id.txtViewCategoryBestSeller);
-            txtBestSeller.setVisibility(View.INVISIBLE);
-            imgCategory = itemView.findViewById(R.id.imvViewCategory);
-            chkFav = itemView.findViewById(R.id.chkViewCategoryFavourites);
+            txtCourseName = itemView.findViewById(R.id.txtCourseName);
+            txtProfName = itemView.findViewById(R.id.txtProfName);
+            txtReview = itemView.findViewById(R.id.txtReview);
+            txtNewPrice = itemView.findViewById(R.id.txtNewPrice);
+            txtOldPrice = itemView.findViewById(R.id.txtOldPrice);
+            imgCategory = itemView.findViewById(R.id.ivCourseImage);
             imgReview1 = itemView.findViewById(R.id.imgReview1);
             imgReview2 = itemView.findViewById(R.id.imgReview2);
             imgReview3 = itemView.findViewById(R.id.imgReview3);
             imgReview4 = itemView.findViewById(R.id.imgReview4);
             imgReview5 = itemView.findViewById(R.id.imgReview5);
+            imgShare = itemView.findViewById(R.id.imgShare);
 
         }
     }
@@ -166,12 +168,7 @@ public class ViewAllCategoriesAdapter extends RecyclerView.Adapter<ViewAllCatego
     }
 
     private void loadFragment(View v, String courseSlug) {
-//        string = P.baseUrl + "series_check/" + json.getString(P.series_slug) + "/" + json.getString(P.video_slug);
-//        it = json.getInt(P.time);
-//        it *= 1000;
-//        bundle.putString(P.url, string);
-//        bundle.putInt("videoProgress", it);
-        bundle.putString("slug",courseSlug);
+        bundle.putString("slug", courseSlug);
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
         if (courseDetailFragment == null)
             courseDetailFragment = new CourseDetailFragment();
@@ -182,5 +179,15 @@ public class ViewAllCategoriesAdapter extends RecyclerView.Adapter<ViewAllCatego
                 .addToBackStack(null)
                 .commit();
     }
+
+    private void shareApp(Context context, String link) {
+        String shareMessage = link;
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+        sendIntent.setType("text/plain");
+        context.startActivity(Intent.createChooser(sendIntent, "Share Using"));
+    }
+
 }
 

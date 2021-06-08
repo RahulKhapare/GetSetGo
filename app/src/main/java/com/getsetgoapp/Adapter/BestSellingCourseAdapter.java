@@ -1,6 +1,7 @@
 package com.getsetgoapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adoisstudio.helper.H;
@@ -65,7 +67,7 @@ public class BestSellingCourseAdapter extends RecyclerView.Adapter<BestSellingCo
         holder.txtNewPrice.setText(rupees + model.getSale_price());
         holder.txtOldPrice.setText(rupees + model.getPrice());
 
-        holder.lnrBestSaller.setOnClickListener(new View.OnClickListener() {
+        holder.llMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
@@ -74,6 +76,14 @@ public class BestSellingCourseAdapter extends RecyclerView.Adapter<BestSellingCo
                 }else {
                     H.showMessage(context,"No internet connection available");
                 }
+            }
+        });
+
+        holder.imgShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                shareApp(context,model.getShare_link());
             }
         });
 
@@ -88,13 +98,15 @@ public class BestSellingCourseAdapter extends RecyclerView.Adapter<BestSellingCo
 
         TextView txtCourseName, txtProfName, txtReview, txtNewPrice, txtOldPrice;
         RoundedImageView ivCourseImage;
-        ImageView imgReview1, imgReview2, imgReview3, imgReview4, imgReview5;
+        ImageView imgReview1, imgReview2, imgReview3, imgReview4, imgReview5,imgShare;
         RelativeLayout lnrBestSaller;
+        CardView llMain;
 
 
         public BestSellingCourseViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            llMain = itemView.findViewById(R.id.llMain);
             txtCourseName = itemView.findViewById(R.id.txtCourseName);
             ivCourseImage = itemView.findViewById(R.id.ivCourseImage);
             txtProfName = itemView.findViewById(R.id.txtProfName);
@@ -109,6 +121,7 @@ public class BestSellingCourseAdapter extends RecyclerView.Adapter<BestSellingCo
             imgReview4 = itemView.findViewById(R.id.imgReview4);
             imgReview5 = itemView.findViewById(R.id.imgReview5);
             lnrBestSaller = itemView.findViewById(R.id.lnrBestSaller);
+            imgShare = itemView.findViewById(R.id.imgShare);
 
         }
     }
@@ -180,5 +193,14 @@ public class BestSellingCourseAdapter extends RecyclerView.Adapter<BestSellingCo
                 .commit();
     }
 
+
+    private void shareApp(Context context, String link) {
+        String shareMessage = link;
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+        sendIntent.setType("text/plain");
+        context.startActivity(Intent.createChooser(sendIntent, "Share Using"));
+    }
 }
 

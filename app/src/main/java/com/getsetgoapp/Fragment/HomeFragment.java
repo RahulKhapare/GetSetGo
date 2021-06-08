@@ -396,6 +396,7 @@ public class HomeFragment extends Fragment {
                 model.setPrice(json.getString(P.price));
                 model.setSale_price(json.getString(P.sale_price));
                 model.setRating(json.getString(P.rating));
+                model.setShare_link(json.getString(P.share_link));
                 bestSellingCourseModelList.add(model);
             }
             bestSellingCourseAdapter.notifyDataSetChanged();
