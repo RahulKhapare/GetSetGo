@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,8 +65,17 @@ public class BestSellingCourseAdapter extends RecyclerView.Adapter<BestSellingCo
         holder.txtProfName.setText(model.getInstructor_name());
         holder.txtReview.setText(model.getRating());
         setReview(model.getRating(),holder);
-        holder.txtNewPrice.setText(rupees + model.getSale_price());
-        holder.txtOldPrice.setText(rupees + model.getPrice());
+
+//        holder.txtNewPrice.setText(rupees + model.getSale_price());
+//        holder.txtOldPrice.setText(rupees + model.getPrice());
+
+        if (!TextUtils.isEmpty(model.getSale_price()) && !model.getSale_price().equals("null") ){
+            if (model.getSale_price().equals("0")){
+                holder.txtNewPrice.setText("FREE");
+            }else {
+                holder.txtNewPrice.setText("PAID");
+            }
+        }
 
         holder.llMain.setOnClickListener(new View.OnClickListener() {
             @Override

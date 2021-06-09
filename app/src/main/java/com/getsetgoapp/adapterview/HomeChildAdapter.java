@@ -3,6 +3,7 @@ package com.getsetgoapp.adapterview;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,12 +52,22 @@ public class HomeChildAdapter extends RecyclerView.Adapter<HomeChildAdapter.Chil
         Json childItem = jsonList.get(position);
 
         holder.txtCourseName.setText(childItem.getString("course_name"));
-        holder.txtOldPrice.setText("₹ " + childItem.getString("price"));
-        holder.txtNewPrice.setText("₹ " + childItem.getString("sale_price"));
-        holder.txtProfName.setText("Curated by " + childItem.getString("instructor_name"));
+        holder.txtProfName.setText(childItem.getString("instructor_name"));
         String review = childItem.getString("rating");
         holder.txtReview.setText(review);
         setReview(review, holder);
+
+//        holder.txtOldPrice.setText("₹ " + childItem.getString("price"));
+//        holder.txtNewPrice.setText("₹ " + childItem.getString("sale_price"));
+
+        String salePrice = childItem.getString("sale_price");
+        if (!TextUtils.isEmpty(salePrice) && !salePrice.equals("null") ){
+            if (salePrice.equals("0")){
+                holder.txtNewPrice.setText("FREE");
+            }else {
+                holder.txtNewPrice.setText("PAID");
+            }
+        }
 
 //        String imagePath = childItem.getString("image_path")+"";
 //        if (imagePath.equals("null") || imagePath.isEmpty())

@@ -33,7 +33,6 @@ public class ParentCategoriesFragment extends Fragment {
     JsonList parentJsonList = new JsonList();
     ParentItemAdapter parentItemAdapter;
 
-
     public ParentCategoriesFragment() {
     }
 

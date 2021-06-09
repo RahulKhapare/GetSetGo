@@ -3,6 +3,7 @@ package com.getsetgoapp.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,14 +54,22 @@ public class ViewAllCategoriesAdapter extends RecyclerView.Adapter<ViewAllCatego
 
         final Json json = jsonList.get(position);
 
-        Log.e("TAG", "onBindViewHolder: "+json );
-
         holder.txtCourseName.setText(jsonList.get(position).getString("course_name"));
         holder.txtProfName.setText(jsonList.get(position).getString("instructor_name"));
-        holder.txtOldPrice.setText("₹ " + jsonList.get(position).getString("price"));
-        holder.txtNewPrice.setText("₹ " + jsonList.get(position).getString("sale_price"));
         holder.txtReview.setText(jsonList.get(position).getString("rating"));
         setReview(jsonList.get(position).getString("rating"), holder);
+
+//        holder.txtOldPrice.setText("₹ " + jsonList.get(position).getString("price"));
+//        holder.txtNewPrice.setText("₹ " + jsonList.get(position).getString("sale_price"));
+
+        String salePrice = jsonList.get(position).getString("sale_price");
+        if (!TextUtils.isEmpty(salePrice) && !salePrice.equals("null") ){
+            if (salePrice.equals("0")){
+                holder.txtNewPrice.setText("FREE");
+            }else {
+                holder.txtNewPrice.setText("PAID");
+            }
+        }
 
         Picasso.get().load(json.getString("image")).placeholder(R.drawable.ic_wp).error(R.drawable.ic_wp).into(holder.imgCategory);
 
