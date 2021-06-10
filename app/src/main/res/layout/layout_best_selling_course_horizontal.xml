@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/llMain"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="105dp"
     android:layout_margin="@dimen/x4"
     app:cardCornerRadius="@dimen/x10"
     app:cardElevation="@dimen/x4">
@@ -127,22 +127,23 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:orientation="horizontal">
 
                     <RelativeLayout
                         android:layout_weight="1"
                         android:layout_width="match_parent"
-                        android:layout_height="23dp"
+                        android:layout_height="match_parent"
                         android:layout_marginTop="1dp">
 
                         <TextView
                             android:id="@+id/txtNewPrice"
                             android:layout_width="wrap_content"
-                            android:layout_height="23dp"
+                            android:layout_height="match_parent"
                             android:fontFamily="@font/nunit_sans_bold"
                             android:gravity="center"
                             android:text=""
+                            android:layout_marginTop="5dp"
                             android:textColor="@color/colorTextDark"
                             android:textSize="14sp" />
 
@@ -163,8 +164,8 @@
 
                     <ImageView
                         android:id="@+id/imgShare"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_gravity="right"
                         android:src="@drawable/ic_share_yellow"></ImageView>
 

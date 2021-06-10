@@ -134,21 +134,24 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:layout_marginTop="1dp"
                     android:orientation="horizontal">
 
                     <RelativeLayout
                         android:layout_weight="1"
                         android:layout_width="match_parent"
-                        android:layout_height="23dp">
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom"
+                        android:gravity="bottom">
 
                         <TextView
                             android:id="@+id/txtNewPrice"
                             android:layout_width="wrap_content"
-                            android:layout_height="23dp"
+                            android:layout_height="match_parent"
                             android:fontFamily="@font/nunit_sans_bold"
                             android:gravity="center"
+                            android:layout_marginTop="10dp"
                             android:text=""
                             android:textColor="@color/colorTextDark"
                             android:textSize="14sp" />
@@ -156,7 +159,7 @@
                         <TextView
                             android:id="@+id/txtOldPrice"
                             android:layout_width="wrap_content"
-                            android:layout_height="23dp"
+                            android:layout_height="wrap_content"
                             android:layout_marginLeft="7dp"
                             android:layout_marginTop="2dp"
                             android:layout_toRightOf="@+id/txtNewPrice"
@@ -167,13 +170,17 @@
                             android:textSize="12sp" />
 
                     </RelativeLayout>
+
                     <ImageView
                         android:id="@+id/imgShare"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
                         android:src="@drawable/ic_share_yellow">
 
                     </ImageView>
+
                 </LinearLayout>
 
                 <TextView
@@ -183,6 +190,7 @@
                     android:background="@drawable/bg_bestseller"
                     android:fontFamily="@font/nunito_sans_regular"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:text="BestSeller"
                     android:textColor="@color/colorTextDark"
                     android:textSize="12sp" />

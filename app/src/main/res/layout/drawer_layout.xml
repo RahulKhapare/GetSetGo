@@ -289,7 +289,7 @@
                             android:layout_weight="7.5"
                             android:fontFamily="@font/nunito_sans_regular"
                             android:gravity="start|center"
-                            android:text="Crash Course"
+                            android:text="Crash Courses"
                             android:textColor="@color/colorTextDark"
                             android:textSize="16sp" />
 
