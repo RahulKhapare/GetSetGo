@@ -1,6 +1,7 @@
 package com.getsetgoapp.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,7 @@ public class AllCrashCourseAdapter extends RecyclerView.Adapter<AllCrashCourseAd
                 courseModel.setCategory_name(json.getString("category_name"));
                 courseModel.setPrice(json.getString("price"));
                 courseModel.setSale_price(json.getString("sale_price"));
+                courseModel.setShare_link(json.getString("share_link"));
                 childCrashCourseModelList.add(courseModel);
             }
         }

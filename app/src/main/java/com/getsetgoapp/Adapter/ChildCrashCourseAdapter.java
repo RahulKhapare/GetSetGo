@@ -1,6 +1,7 @@
 package com.getsetgoapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,9 +15,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adoisstudio.helper.H;
 import com.getsetgoapp.Fragment.CourseDetailFragment;
 import com.getsetgoapp.Fragment.CrashCourseDetailFragment;
 import com.getsetgoapp.Model.AllCrashCourseModel;
@@ -63,11 +66,19 @@ public class ChildCrashCourseAdapter extends RecyclerView.Adapter<ChildCrashCour
         holder.txtOldPrice.setText("₹ " + model.getPrice());
         holder.txtNewPrice.setText("₹ " + model.getSale_price());
 
-        holder.lnrCourse.setOnClickListener(new View.OnClickListener() {
+        holder.llMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
                 loadFragment(v, model.getName(),model.getSlug());
+            }
+        });
+
+        holder.imgShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Click.preventTwoClick(v);
+                shareApp(context,model.getShare_link());
             }
         });
     }
@@ -85,14 +96,18 @@ public class ChildCrashCourseAdapter extends RecyclerView.Adapter<ChildCrashCour
         TextView txtCategoryName;
         TextView txtNewPrice;
         TextView txtOldPrice;
+        CardView llMain;
+        ImageView imgShare;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            llMain = itemView.findViewById(R.id.llMain);
             lnrCourse = itemView.findViewById(R.id.lnrCourse);
             ivCourseImage = itemView.findViewById(R.id.ivCourseImage);
             txtCourseName = itemView.findViewById(R.id.txtCourseName);
             txtCategoryName = itemView.findViewById(R.id.txtCategoryName);
             txtNewPrice = itemView.findViewById(R.id.txtNewPrice);
+            imgShare = itemView.findViewById(R.id.imgShare);
             txtOldPrice = itemView.findViewById(R.id.txtOldPrice);
             txtOldPrice.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.strike_line));
         }
@@ -117,6 +132,16 @@ public class ChildCrashCourseAdapter extends RecyclerView.Adapter<ChildCrashCour
                 .replace(R.id.fragment_container, courseDetailFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+
+    private void shareApp(Context context, String link) {
+        String shareMessage = link;
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+        sendIntent.setType("text/plain");
+        context.startActivity(Intent.createChooser(sendIntent, "Share Using"));
     }
 
 }

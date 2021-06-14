@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/llMain"
     android:layout_width="match_parent"
-    android:layout_height="105dp"
+    android:layout_height="100dp"
     android:layout_margin="@dimen/x4"
     app:cardCornerRadius="@dimen/x10"
     app:cardElevation="@dimen/x4">
@@ -128,6 +128,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
+                    android:layout_marginTop="-10dp"
                     android:orientation="horizontal">
 
                     <RelativeLayout
