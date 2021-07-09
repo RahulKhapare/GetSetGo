@@ -117,7 +117,6 @@ import static com.getsetgoapp.Fragment.CurrentLearningFragment.RESULT_CODE;
 
 public class BaseScreenActivity extends AppCompatActivity implements Player.EventListener {
 
-
     private final BaseScreenActivity activity = this;
     public static ActivityBaseScreenBinding binding;
 
@@ -385,7 +384,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
 
         if (is_affiliate.equals("0")) {
             lnrDashboard.setVisibility(View.GONE);
-            lnrCrashCourse.setVisibility(View.GONE);
+//            lnrCrashCourse.setVisibility(View.GONE);
             lnrUser.setVisibility(View.GONE);
             lnrEarning.setVisibility(View.GONE);
             lnrBusiness.setVisibility(View.GONE);
