@@ -397,8 +397,8 @@ public class SearchUserFragment extends Fragment {
         contact = binding.etPhoneNumber.getText().toString();
         purchase_start_date = initCalendar(binding.etPshFrom);
         purchase_end_date = initCalendar(binding.etPshTo);
-        start_date = initCalendar(binding.etRegTo);
-        end_date = initCalendar(binding.etRegFrom);
+        start_date = initCalendar(binding.etRegFrom);
+        end_date = initCalendar(binding.etRegTo);
         parent_name = binding.etParentName.getText().toString();
     }
 

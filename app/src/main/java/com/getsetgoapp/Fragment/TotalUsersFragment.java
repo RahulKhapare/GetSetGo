@@ -243,7 +243,6 @@ public class TotalUsersFragment extends Fragment {
                             Json1 = Json1.getJson(P.data);
                             int numRows = Json1.getInt(P.num_rows);
                             JsonList jsonList = Json1.getJsonList(P.list);
-                            Log.e("TAG", "callTotalUserApiLSLLSLS: " +jsonList.toString() );
                             if (jsonList != null && !jsonList.isEmpty()) {
                                 totalUserJsonList.addAll(jsonList);
                                 totalUserJson = Json1;
