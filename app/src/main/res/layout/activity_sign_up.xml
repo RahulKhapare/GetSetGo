@@ -286,11 +286,38 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:paddingLeft="5dp"
+                        android:text="I am registering for"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:textColor="@color/colorTextDark">
+
+                    </TextView>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/recyclerRegisterFor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                </LinearLayout>
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColorHint="@color/colorTextHint"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="10dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etxSponserId"

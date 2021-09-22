@@ -8,14 +8,15 @@ public class P {
     public static String action_data = "action_data";
     public static String icon = "icon";
 
-//    public static String baseUrl = "https://getsetgoworld.com/dev_env/api/";
-//    public static String buy_course_base_dev = "https://getsetgoworld.com/dev_env/courses/app_purchase/";
-//    public static String buy_course_base_prod = "https://getsetgoworld.com/dev_env/program_service/app_purchase/";
+    public static String baseUrl = "https://getsetgoworld.com/dev_env/api/";
+    public static String buy_course_base_dev = "https://getsetgoworld.com/dev_env/courses/app_purchase/";
+    public static String buy_course_base_prod = "https://getsetgoworld.com/dev_env/program_service/app_purchase/";
 
-    public static String baseUrl = "https://getsetgoworld.com/api/";
-    public static String buy_course_base_dev = "https://getsetgoworld.com/courses/app_purchase/";
-    public static String buy_course_base_prod = "https://getsetgoworld.com/program_service/app_purchase/";
+//    public static String baseUrl = "https://getsetgoworld.com/api/";
+//    public static String buy_course_base_dev = "https://getsetgoworld.com/courses/app_purchase/";
+//    public static String buy_course_base_prod = "https://getsetgoworld.com/program_service/app_purchase/";
 
+    public static String registration_purpose_list = "registration_purpose_list";
     public static String referrerUrl = "referrerUrl";
     public static String android_min_version = "android_min_version";
     public static String country_list = "country_list";
@@ -23,6 +24,7 @@ public class P {
     public static String ip = "ip";
     public static String status = "status";
     public static String fcm_value = "fcm_value";
+    public static String registration_purpose_id = "registration_purpose_id";
     public static String err = "err";
     public static String referral_users = "referral_users";
     public static String data = "data";
@@ -80,6 +82,7 @@ public class P {
     public static String series_list = "series_list";
     public static String series_id = "series_id";
     public static String id = "id";
+    public static String purpose_name = "purpose_name";
     public static String video_id = "video_id";
     public static String course_id = "course_id";
     public static String comment = "comment";

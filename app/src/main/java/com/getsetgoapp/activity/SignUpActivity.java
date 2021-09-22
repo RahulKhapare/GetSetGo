@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.adoisstudio.helper.Api;
 import com.adoisstudio.helper.H;
@@ -32,7 +33,9 @@ import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
 import com.adoisstudio.helper.Session;
 import com.getsetgoapp.Adapter.CountryCodeSelectionAdapter;
+import com.getsetgoapp.Adapter.RegisterForAdapter;
 import com.getsetgoapp.Model.CountryCodeModel;
+import com.getsetgoapp.Model.RegisterForModel;
 import com.getsetgoapp.R;
 import com.getsetgoapp.databinding.ActivitySignUpBinding;
 import com.getsetgoapp.util.App;
@@ -42,6 +45,9 @@ import com.getsetgoapp.util.P;
 import com.getsetgoapp.util.Validation;
 import com.getsetgoapp.util.WindowView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -50,7 +56,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity{
 
     private final SignUpActivity activity = this;
     private ActivitySignUpBinding binding;
@@ -58,8 +64,9 @@ public class SignUpActivity extends AppCompatActivity {
     private String referrerUrl;
     private String countryCode;
     private String countryID;
-
     String relationShipManager = "Relationship Manager ";
+    JSONArray registration_purpose_id;
+    List<RegisterForModel> registerForModelList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +81,9 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void initView() {
+
+        registration_purpose_id = new JSONArray();
+        registerForModelList = new ArrayList<>();
 
         List<CountryCodeModel> countryCodeModelList = new ArrayList<>();
 
@@ -157,8 +167,27 @@ public class SignUpActivity extends AppCompatActivity {
             binding.etxSponserId.setFocusableInTouchMode(false);
             binding.etxSponserId.setClickable(false);
         }
+
+        setRegisterForData();
     }
 
+    private void setRegisterForData(){
+        JsonList registration_purpose_list = SplashActivity.registration_purpose_list;
+        if (registration_purpose_list!=null && registration_purpose_list.size()!=0){
+            for (Json json : registration_purpose_list){
+                RegisterForModel model = new RegisterForModel();
+                model.setId(json.getString(P.id));
+                model.setPurpose_name(json.getString(P.purpose_name));
+                registerForModelList.add(model);
+            }
+        }
+
+        binding.recyclerRegisterFor.setLayoutManager(new LinearLayoutManager(activity));
+        binding.recyclerRegisterFor.setHasFixedSize(true);
+        binding.recyclerRegisterFor.setNestedScrollingEnabled(false);
+        RegisterForAdapter adapter = new RegisterForAdapter(activity,registerForModelList);
+        binding.recyclerRegisterFor.setAdapter(adapter);
+    }
 
     private void onClick() {
 
@@ -198,6 +227,14 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
+
+                registration_purpose_id = new JSONArray();
+                for (RegisterForModel model :registerForModelList ){
+                    if (model.getValue()==1){
+                        registration_purpose_id.put(Integer.parseInt(model.getId()));
+                    }
+                }
+
                 if (checkValidation()) {
                     String registerAs;
                     if (binding.radioIndividual.isChecked()) {
@@ -224,6 +261,7 @@ public class SignUpActivity extends AppCompatActivity {
                     json.addString(P.confirm_password, binding.etxConfirmPassword.getText().toString() + "");
                     json.addString(P.sponsor_id, binding.etxSponserId.getText().toString() + "");
                     json.addString(P.fcm_value, new Session(activity).getString(P.fcm_value));
+                    json.addJSONArray(P.registration_purpose_id, registration_purpose_id);
                     callRegisterApi(json);
                 }
             }
@@ -279,6 +317,7 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     private boolean performCheck(boolean value) {
+
         if (TextUtils.isEmpty(binding.etxEmailAddress.getText().toString().trim())) {
             H.showMessage(activity, "Enter email id");
             value = false;
@@ -310,7 +349,11 @@ public class SignUpActivity extends AppCompatActivity {
         } else if (!binding.etxConfirmPassword.getText().toString().trim().equals(binding.etxPassword.getText().toString().trim())) {
             H.showMessage(activity, "Confirm password not matched with password");
             value = false;
-        } else if (TextUtils.isEmpty(binding.etxSponserId.getText().toString().trim())) {
+        } else if (registration_purpose_id!=null && registration_purpose_id.length()==0){
+            H.showMessage(activity, "Select registering for");
+            value = false;
+        }
+        else if (TextUtils.isEmpty(binding.etxSponserId.getText().toString().trim())) {
             H.showMessage(activity, "Enter relationship manager id");
             value = false;
         } else if (!binding.checkTermCondition.isChecked()){
@@ -578,4 +621,5 @@ public class SignUpActivity extends AppCompatActivity {
 //        webSettings.setBuiltInZoomControls(true);
         webView.loadUrl(url);
     }
+
 }

@@ -54,6 +54,7 @@ public class SplashActivity extends AppCompatActivity {
     private final Executor backgroundExecutor = Executors.newSingleThreadExecutor();
     private final String prefKey = "checkedInstallReferrer";
     public static JsonList country_list = null;
+    public static JsonList registration_purpose_list = null;
     public static String termConditionUrl;
 
     @Override
@@ -277,6 +278,7 @@ public class SplashActivity extends AppCompatActivity {
                         } else if (Json1.getInt(P.status) == 1) {
                             Json1 = Json1.getJson(P.data);
                             country_list = Json1.getJsonList(P.country_list);
+                            registration_purpose_list = Json1.getJsonList(P.registration_purpose_list);
                             String android_min_version = Json1.getString(P.android_min_version);
                             String android_current_version = Json1.getString(P.android_current_version);
                             termConditionUrl = Json1.getString(P.terms_and_conditions_url);
