@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -91,6 +92,7 @@ public class HomeChildAdapter extends RecyclerView.Adapter<HomeChildAdapter.Chil
                 shareApp(context,childItem.getString(P.share_link));
             }
         });
+
     }
 
     @Override
@@ -104,6 +106,8 @@ public class HomeChildAdapter extends RecyclerView.Adapter<HomeChildAdapter.Chil
         RoundedImageView ivCourseImage;
         ImageView imgReview1, imgReview2, imgReview3, imgReview4, imgReview5,imgShare;
         CardView llMain;
+        RelativeLayout lnrBestSaller;
+
 
         public ChildViewHolder(View itemView) {
             super(itemView);
@@ -122,6 +126,7 @@ public class HomeChildAdapter extends RecyclerView.Adapter<HomeChildAdapter.Chil
             imgReview5 = itemView.findViewById(R.id.imgReview5);
             imgShare = itemView.findViewById(R.id.imgShare);
             txtBestSeller = itemView.findViewById(R.id.txtBestSeller);
+            lnrBestSaller = itemView.findViewById(R.id.lnrBestSaller);
             txtBestSeller.setVisibility(View.GONE);
         }
     }

@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/lnrCategoryView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/llSmartSchoolLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="10"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/txtCourseName"
-                android:layout_width="0dp"
-                android:layout_weight="8"
-                android:layout_height="22dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/nunit_sans_bold"
                 android:text="Smart School"
                 android:textColor="@color/colorTextDark"
@@ -25,8 +26,7 @@
 
             <TextView
                 android:id="@+id/txtViewAll"
-                android:layout_width="0dp"
-                android:layout_weight="2"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_sans_semibold"
                 android:gravity="end"
@@ -40,12 +40,9 @@
             android:id="@+id/recyclerViewChild"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/llSmartSchoolLabel"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="20dp"
-            android:overScrollMode="never"/>
+            android:layout_marginTop="8dp" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
 </layout>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import com.getsetgoapp.Adapter.ActiveCourseAdapter;
 import com.getsetgoapp.Adapter.BestSellingCourseAdapter;
 import com.getsetgoapp.Adapter.OtherCategoriesAdapter;
 import com.getsetgoapp.Model.BestSellingCourseModel;
+import com.getsetgoapp.Model.HomeParentModel;
 import com.getsetgoapp.Model.SliderModel;
 import com.getsetgoapp.R;
 import com.getsetgoapp.activity.BaseScreenActivity;
@@ -54,7 +56,7 @@ public class HomeFragment extends Fragment {
     private List<SliderModel> sliderModelList;
     private SliderImageAdapter sliderImageAdapter;
 
-    JsonList parentJsonList = new JsonList();
+    List<HomeParentModel> homeParentModelList;
     HomeParentCourseAdapter parentItemAdapter;
 
     LinearLayoutManager mLayoutManagerActiveCourse, mLayoutManagerBestSelling, mLayoutManagerOtherCategories;
@@ -209,31 +211,47 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupRecyclerViewForActiveCourse() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
+        binding.recyclerViewCources.setLayoutManager(linearLayoutManager);
+        binding.recyclerViewCources.setHasFixedSize(true);
+        binding.recyclerViewCources.setNestedScrollingEnabled(false);
         activeCourseAdapter = new ActiveCourseAdapter(getActivity(), activeCourseJsonList);
-        binding.recyclerViewCources.setItemAnimator(new DefaultItemAnimator());
+//        binding.recyclerViewCources.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerViewCources.setAdapter(activeCourseAdapter);
         activeCourseAdapter.notifyDataSetChanged();
     }
 
     private void setupRecyclerViewForOthersCategories() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
+//        binding.recyclerViewOtherCategories.setItemAnimator(new DefaultItemAnimator());
+        binding.recyclerViewOtherCategories.setLayoutManager(linearLayoutManager);
+        binding.recyclerViewOtherCategories.setHasFixedSize(true);
+        binding.recyclerViewOtherCategories.setNestedScrollingEnabled(false);
         otherCategoriesAdapter = new OtherCategoriesAdapter(getActivity(), otherCategoriesJsonList);
-        binding.recyclerViewOtherCategories.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerViewOtherCategories.setAdapter(otherCategoriesAdapter);
     }
 
     private void setupRecyclerViewForBestSellingCourse() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
+//        binding.recyclerBestSellingCources.setItemAnimator(new DefaultItemAnimator());
+        binding.recyclerBestSellingCources.setLayoutManager(linearLayoutManager);
+        binding.recyclerBestSellingCources.setHasFixedSize(true);
+        binding.recyclerBestSellingCources.setNestedScrollingEnabled(false);
         bestSellingCourseModelList = new ArrayList<>();
         bestSellingCourseAdapter = new BestSellingCourseAdapter(getActivity(), bestSellingCourseModelList, 1);
-        binding.recyclerBestSellingCources.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerBestSellingCources.setAdapter(bestSellingCourseAdapter);
         bestSellingCourseAdapter.notifyDataSetChanged();
     }
 
     private void setupHomeExternalCourse() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        parentItemAdapter = new HomeParentCourseAdapter(getActivity(), parentJsonList);
-        binding.recyclerHomeCourse.setAdapter(parentItemAdapter);
         binding.recyclerHomeCourse.setLayoutManager(layoutManager);
+        binding.recyclerHomeCourse.setHasFixedSize(true);
+        binding.recyclerHomeCourse.setNestedScrollingEnabled(false);
+        homeParentModelList = new ArrayList<>();
+        parentItemAdapter = new HomeParentCourseAdapter(getActivity(), homeParentModelList);
+        binding.recyclerHomeCourse.setAdapter(parentItemAdapter);
+        binding.recyclerHomeCourse.setItemViewCacheSize(homeParentModelList.size());
     }
 
 
@@ -282,15 +300,22 @@ public class HomeFragment extends Fragment {
                                 otherCategoriesAdapter.notifyDataSetChanged();
                             }
 
+                            if (otherCategoriesJsonList.isEmpty()){
+                                binding.lnrExploreOtherCategory.setVisibility(View.GONE);
+                            }else {
+                                binding.lnrExploreOtherCategory.setVisibility(View.VISIBLE);
+                            }
+
                             if (totalCourses != null && !totalCourses.isEmpty()) {
                                 activeCourseJsonList.clear();
                                 activeCourseJsonList.addAll(totalCourses);
                                 activeCourseAdapter.notifyDataSetChanged();
-                                if (activeCourseJsonList == null || activeCourseJsonList.size() == 0) {
-                                    binding.lnrActiveCourse.setVisibility(View.GONE);
-                                }else {
-                                    binding.lnrActiveCourse.setVisibility(View.VISIBLE);
-                                }
+                            }
+
+                            if (activeCourseJsonList == null || activeCourseJsonList.size() == 0) {
+                                binding.lnrActiveCourse.setVisibility(View.GONE);
+                            }else {
+                                binding.lnrActiveCourse.setVisibility(View.VISIBLE);
                             }
                         }
                     }
@@ -381,10 +406,7 @@ public class HomeFragment extends Fragment {
 
     private void setupBestSellingCourseData(JsonList jsonList) {
         bestSellingCourseModelList.clear();
-        if (jsonList == null || jsonList.size() == 0) {
-            binding.lnrBestSellingCourse.setVisibility(View.GONE);
-            bestSellingCourseAdapter.notifyDataSetChanged();
-        } else {
+        if (jsonList != null || jsonList.size() != 0) {
             for (Json json : jsonList) {
                 BestSellingCourseModel model = new BestSellingCourseModel();
                 model.setId(json.getString(P.id));
@@ -402,12 +424,36 @@ public class HomeFragment extends Fragment {
             bestSellingCourseAdapter.notifyDataSetChanged();
         }
 
+        if(bestSellingCourseModelList.isEmpty()){
+            binding.lnrBestSellingCourse.setVisibility(View.GONE);
+            binding.recyclerBestSellingCources.setVisibility(View.GONE);
+        }else {
+            binding.lnrBestSellingCourse.setVisibility(View.VISIBLE);
+            binding.recyclerBestSellingCources.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setupHomeCourseData(JsonList jsonList) {
-        parentJsonList.clear();
-        parentJsonList.addAll(jsonList);
+        homeParentModelList.clear();
+        if (jsonList!=null && jsonList.size()!=0){
+            for (Json json :  jsonList){
+                HomeParentModel model = new HomeParentModel();
+                model.setCategory_slug(json.getString("category_slug"));
+                model.setCategory_name(json.getString("category_name"));
+                model.setCourses(json.getJsonList("courses"));
+                if (!model.getCourses().toString().equals("[]")){
+                    homeParentModelList.add(model);
+                }
+
+            }
+        }
         parentItemAdapter.notifyDataSetChanged();
+
+        if (homeParentModelList.isEmpty()){
+            binding.recyclerHomeCourse.setVisibility(View.GONE);
+        }else {
+            binding.recyclerHomeCourse.setVisibility(View.VISIBLE);
+        }
     }
 
     private void loadFragment(View v, String courseSlug, String courseName) {

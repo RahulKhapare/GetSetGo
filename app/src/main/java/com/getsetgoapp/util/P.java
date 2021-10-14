@@ -8,13 +8,13 @@ public class P {
     public static String action_data = "action_data";
     public static String icon = "icon";
 
-    public static String baseUrl = "https://getsetgoworld.com/dev_env/api/";
-    public static String buy_course_base_dev = "https://getsetgoworld.com/dev_env/courses/app_purchase/";
-    public static String buy_course_base_prod = "https://getsetgoworld.com/dev_env/program_service/app_purchase/";
+//    public static String baseUrl = "https://getsetgoworld.com/dev_env/api/";
+//    public static String buy_course_base_dev = "https://getsetgoworld.com/dev_env/courses/app_purchase/";
+//    public static String buy_course_base_prod = "https://getsetgoworld.com/dev_env/program_service/app_purchase/";
 
-//    public static String baseUrl = "https://getsetgoworld.com/api/";
-//    public static String buy_course_base_dev = "https://getsetgoworld.com/courses/app_purchase/";
-//    public static String buy_course_base_prod = "https://getsetgoworld.com/program_service/app_purchase/";
+    public static String baseUrl = "https://getsetgoworld.com/api/";
+    public static String buy_course_base_dev = "https://getsetgoworld.com/courses/app_purchase/";
+    public static String buy_course_base_prod = "https://getsetgoworld.com/program_service/app_purchase/";
 
     public static String registration_purpose_list = "registration_purpose_list";
     public static String referrerUrl = "referrerUrl";
