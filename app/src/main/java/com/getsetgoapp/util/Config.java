@@ -35,7 +35,6 @@ public class Config {
 
     public static String SHARE_MESSAGE_1 =
             "Hi Friend,\n" +
-                    "\n" +
                     "✅ Get 12 Courses worth Rs. 25,000/- absolutely FREE \n" +
                     "(One course every month)\n" +
                     "\n" +
@@ -51,9 +50,16 @@ public class Config {
                     "(Month 7 onwards to be announced)\n" +
                     " \n" +
                     "Hurry!  This is a limited time offer only.\n" +
-                    "Make the most of this splendid learning opportunity.\n" +
                     "\n" +
-                    "➡️ Click on the link below to download the GSG App and get FREE access to one amazing self-development course every month. \uD83D\uDC47\uD83C\uDFFB\uD83D\uDC47\uD83C\uDFFB";
+                    "➡️ Click on the link below to download the GSG App and get FREE access to one amazing self-development course every month. \uD83D\uDC47\uD83C\uDFFB\uD83D\uDC47\uD83C\uDFFB\n" +
+                    "\n" +
+                    "Link: https://play.google.com/store/apps/details?id=com.getsetgoapp&referrer=981553239\n" +
+                    "Relationship Manager ID: 981553239\n" +
+                    "\n" +
+                    "Start your journey today to become a better version of yourself!\n" +
+                    "\n" +
+                    "Thanks & Regards,\n" +
+                    "Team GSGW";
 
     public static String SHARE_MESSAGE_2 =
             "Start your journey today to become a better version of yourself!\n" +

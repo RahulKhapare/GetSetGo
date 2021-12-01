@@ -5,15 +5,15 @@ apply plugin: 'com.google.firebase.crashlytics'
 
 android {
 
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.getsetgoapp"
         minSdkVersion 20
-        targetSdkVersion 29
-        versionCode 31
-        versionName "1.31"
+        targetSdkVersion 30
+        versionCode 32
+        versionName "1.32"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
