@@ -123,4 +123,17 @@ public class WebViewFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.webView.onResume();
+        binding.webView.resumeTimers();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        binding.webView.onPause();
+        binding.webView.pauseTimers();
+    }
 }

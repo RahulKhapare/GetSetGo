@@ -56,7 +56,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
-public class SignUpActivity extends AppCompatActivity{
+public class SignUpActivity extends AppCompatActivity {
 
     private final SignUpActivity activity = this;
     private ActivitySignUpBinding binding;
@@ -67,6 +67,7 @@ public class SignUpActivity extends AppCompatActivity{
     String relationShipManager = "Relationship Manager ";
     JSONArray registration_purpose_id;
     List<RegisterForModel> registerForModelList;
+    private WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,9 +97,9 @@ public class SignUpActivity extends AppCompatActivity{
 
         int selection = 0;
         JsonList country_list = SplashActivity.country_list;
-        if (country_list!=null && !country_list.isEmpty()){
+        if (country_list != null && !country_list.isEmpty()) {
 
-            for (int i=0; i<country_list.size(); i++){
+            for (int i = 0; i < country_list.size(); i++) {
                 Json json = country_list.get(i);
                 CountryCodeModel model = new CountryCodeModel();
                 model.setCountry_id(json.getString(P.country_id));
@@ -106,13 +107,13 @@ public class SignUpActivity extends AppCompatActivity{
                 model.setCountry_name(json.getString(P.country_name));
                 model.setCountry_shortname(json.getString(P.country_shortname));
                 countryCodeModelList.add(model);
-                if (model.getCountry_code().equals("91")){
+                if (model.getCountry_code().equals("91")) {
                     selection = i;
                 }
             }
         }
 
-        CountryCodeSelectionAdapter adapter = new CountryCodeSelectionAdapter(activity, countryCodeModelList,1);
+        CountryCodeSelectionAdapter adapter = new CountryCodeSelectionAdapter(activity, countryCodeModelList, 1);
         binding.spinnerCode.setAdapter(adapter);
 //        binding.spinnerCode.setSelection(selection);
 
@@ -120,10 +121,10 @@ public class SignUpActivity extends AppCompatActivity{
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 CountryCodeModel model = countryCodeModelList.get(position);
-                if (!TextUtils.isEmpty(model.getCountry_id())){
+                if (!TextUtils.isEmpty(model.getCountry_id())) {
                     countryCode = model.getCountry_code();
                     countryID = model.getCountry_id();
-                }else {
+                } else {
                     countryCode = "";
                     countryID = "";
                 }
@@ -171,10 +172,10 @@ public class SignUpActivity extends AppCompatActivity{
         setRegisterForData();
     }
 
-    private void setRegisterForData(){
+    private void setRegisterForData() {
         JsonList registration_purpose_list = SplashActivity.registration_purpose_list;
-        if (registration_purpose_list!=null && registration_purpose_list.size()!=0){
-            for (Json json : registration_purpose_list){
+        if (registration_purpose_list != null && registration_purpose_list.size() != 0) {
+            for (Json json : registration_purpose_list) {
                 RegisterForModel model = new RegisterForModel();
                 model.setId(json.getString(P.id));
                 model.setPurpose_name(json.getString(P.purpose_name));
@@ -185,7 +186,7 @@ public class SignUpActivity extends AppCompatActivity{
         binding.recyclerRegisterFor.setLayoutManager(new LinearLayoutManager(activity));
         binding.recyclerRegisterFor.setHasFixedSize(true);
         binding.recyclerRegisterFor.setNestedScrollingEnabled(false);
-        RegisterForAdapter adapter = new RegisterForAdapter(activity,registerForModelList);
+        RegisterForAdapter adapter = new RegisterForAdapter(activity, registerForModelList);
         binding.recyclerRegisterFor.setAdapter(adapter);
     }
 
@@ -229,8 +230,8 @@ public class SignUpActivity extends AppCompatActivity{
                 Click.preventTwoClick(v);
 
                 registration_purpose_id = new JSONArray();
-                for (RegisterForModel model :registerForModelList ){
-                    if (model.getValue()==1){
+                for (RegisterForModel model : registerForModelList) {
+                    if (model.getValue() == 1) {
                         registration_purpose_id.put(Integer.parseInt(model.getId()));
                     }
                 }
@@ -324,7 +325,7 @@ public class SignUpActivity extends AppCompatActivity{
         } else if (!Validation.validEmail(binding.etxEmailAddress.getText().toString().trim())) {
             H.showMessage(activity, "Enter valid email");
             value = false;
-        }  else if (TextUtils.isEmpty(countryCode)) {
+        } else if (TextUtils.isEmpty(countryCode)) {
             H.showMessage(activity, "Select your ISD code");
             value = false;
         } else if (TextUtils.isEmpty(binding.etxPhone.getText().toString().trim())) {
@@ -334,7 +335,7 @@ public class SignUpActivity extends AppCompatActivity{
                 binding.etxPhone.getText().toString().length() != 10) {
             H.showMessage(activity, "Enter valid phone number");
             value = false;
-        }else if (TextUtils.isEmpty(binding.etxPassword.getText().toString().trim())) {
+        } else if (TextUtils.isEmpty(binding.etxPassword.getText().toString().trim())) {
             H.showMessage(activity, "Enter password");
             value = false;
         } else if (binding.etxPassword.getText().toString().length() < 3) {
@@ -349,14 +350,13 @@ public class SignUpActivity extends AppCompatActivity{
         } else if (!binding.etxConfirmPassword.getText().toString().trim().equals(binding.etxPassword.getText().toString().trim())) {
             H.showMessage(activity, "Confirm password not matched with password");
             value = false;
-        } else if (registration_purpose_id!=null && registration_purpose_id.length()==0){
+        } else if (registration_purpose_id != null && registration_purpose_id.length() == 0) {
             H.showMessage(activity, "Select registering for");
             value = false;
-        }
-        else if (TextUtils.isEmpty(binding.etxSponserId.getText().toString().trim())) {
+        } else if (TextUtils.isEmpty(binding.etxSponserId.getText().toString().trim())) {
             H.showMessage(activity, "Enter relationship manager id");
             value = false;
-        } else if (!binding.checkTermCondition.isChecked()){
+        } else if (!binding.checkTermCondition.isChecked()) {
             H.showMessage(activity, "Please allow check for term and conditions");
             value = false;
         }
@@ -431,7 +431,7 @@ public class SignUpActivity extends AppCompatActivity{
                             String sponsor_id = sponsorData.getString(P.sponsor_id);
                             String sponsor_name = sponsorData.getString(P.sponsor_name);
                             binding.etxSponserId.setText(sponsor_id);
-                            binding.txtSponsorName.setText( relationShipManager + sponsor_name);
+                            binding.txtSponsorName.setText(relationShipManager + sponsor_name);
                         } else {
                             H.showMessage(activity, Json1.getString(P.err));
                         }
@@ -588,8 +588,8 @@ public class SignUpActivity extends AppCompatActivity{
         dialog.setContentView(R.layout.activity_webview_data);
 
         TextView txtCancel = dialog.findViewById(R.id.txtCancel);
-        WebView webView = dialog.findViewById(R.id.webView);
-        loadUrl(webView,url);
+        webView = dialog.findViewById(R.id.webView);
+        loadUrl(webView, url);
 
         txtCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -606,7 +606,7 @@ public class SignUpActivity extends AppCompatActivity{
     }
 
 
-    private void loadUrl(WebView webView,String url) {
+    private void loadUrl(WebView webView, String url) {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -622,4 +622,17 @@ public class SignUpActivity extends AppCompatActivity{
         webView.loadUrl(url);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        webView.onPause();
+        webView.pauseTimers();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        webView.onResume();
+        webView.resumeTimers();
+    }
 }

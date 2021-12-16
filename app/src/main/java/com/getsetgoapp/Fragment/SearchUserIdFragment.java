@@ -96,5 +96,17 @@ public class SearchUserIdFragment extends Fragment {
         binding.webView.loadUrl(url);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.webView.onResume();
+        binding.webView.resumeTimers();
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        binding.webView.onPause();
+        binding.webView.pauseTimers();
+    }
 }
