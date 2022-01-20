@@ -58,7 +58,8 @@
                 android:id="@+id/imvWishCourse"
                 android:layout_width="93dp"
                 android:layout_height="97dp"
-                android:src="@drawable/download" />
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_no_image" />
 
             <LinearLayout
                 android:layout_width="match_parent"

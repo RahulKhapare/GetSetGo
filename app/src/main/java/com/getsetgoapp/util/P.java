@@ -106,12 +106,11 @@ public class P {
     public static String app_id = "app_id";
     public static String type = "type";
     public static String content = "content";
-    public static String new_password="new_password";
-    public static String user_data="user_data";
+    public static String new_password = "new_password";
+    public static String user_data = "user_data";
     public static String cast = "cast";
     public static String director = "director";
     public static String similar_series = "similar_series";
-
 
 
     public static String course = "course";

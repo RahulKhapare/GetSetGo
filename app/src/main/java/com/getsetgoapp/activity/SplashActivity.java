@@ -75,9 +75,9 @@ public class SplashActivity extends AppCompatActivity {
         checkInstallReferrer();
         getFirebaseToken();
         initView();
-        if (CheckConnection.isVailable(activity)){
+        if (CheckConnection.isVailable(activity)) {
             hitInitApi(activity);
-        }else {
+        } else {
             MessageBox.showOkMessage(activity, "Message", "No internet connection available", () -> {
             });
         }
@@ -86,9 +86,9 @@ public class SplashActivity extends AppCompatActivity {
 
     public void hashFromSHA1(String sha1) {
         String[] arr = sha1.split(":");
-        byte[] byteArr = new  byte[arr.length];
+        byte[] byteArr = new byte[arr.length];
 
-        for (int i = 0; i< arr.length; i++) {
+        for (int i = 0; i < arr.length; i++) {
             byteArr[i] = Integer.decode("0x" + arr[i]).byteValue();
         }
 
@@ -165,8 +165,8 @@ public class SplashActivity extends AppCompatActivity {
 
     // Tracker for Classic GA (call this if you are using Classic GA only)
     private void trackInstallReferrer(final String referrerUrl) {
-        Log.e("TAG", "trackInstallReferrerURL: "+ referrerUrl );
-        new Session(activity).addString(P.referrerUrl,referrerUrl);
+        Log.e("TAG", "trackInstallReferrerURL: " + referrerUrl);
+        new Session(activity).addString(P.referrerUrl, referrerUrl);
         new Handler(getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
@@ -209,9 +209,11 @@ public class SplashActivity extends AppCompatActivity {
 
         new Handler().postDelayed(() -> {
             if (token == null || token.isEmpty()) {
-                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                if (activity.getPackageName().equals("com.getsetgoapp")) {
+                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
             } else {
                 H.log("tokenIs", token + "");
                 App.startHomeActivity(SplashActivity.this);
@@ -224,8 +226,7 @@ public class SplashActivity extends AppCompatActivity {
         }, 2000);
     }
 
-    private void showUpdatePopUP()
-    {
+    private void showUpdatePopUP() {
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
         adb.setTitle("Message");
         adb.setMessage("New Update available.");
@@ -244,8 +245,7 @@ public class SplashActivity extends AppCompatActivity {
         }).show();
     }
 
-    private void redirectToPlayStore()
-    {
+    private void redirectToPlayStore() {
         final String appPackageName = this.getPackageName();
         try {
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
@@ -282,20 +282,20 @@ public class SplashActivity extends AppCompatActivity {
                             String android_min_version = Json1.getString(P.android_min_version);
                             String android_current_version = Json1.getString(P.android_current_version);
                             termConditionUrl = Json1.getString(P.terms_and_conditions_url);
-                            if (!TextUtils.isEmpty(android_min_version) || !android_min_version.equals("null")){
+                            if (!TextUtils.isEmpty(android_min_version) || !android_min_version.equals("null")) {
                                 int versionCode = BuildConfig.VERSION_CODE;
                                 String versionName = BuildConfig.VERSION_NAME;
                                 try {
                                     int currentVersion = Integer.parseInt(android_min_version);
-                                    if (versionCode<currentVersion){
+                                    if (versionCode < currentVersion) {
                                         showUpdatePopUP();
-                                    }else {
+                                    } else {
                                         startNextActivity();
                                     }
-                                }catch (Exception e){
+                                } catch (Exception e) {
                                     startNextActivity();
                                 }
-                            }else {
+                            } else {
                                 startNextActivity();
                             }
                         }
@@ -308,7 +308,7 @@ public class SplashActivity extends AppCompatActivity {
         Session session = new Session(this);
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
             String newToken = instanceIdResult.getToken();
-            session.addString(P.fcm_value,newToken);
+            session.addString(P.fcm_value, newToken);
         });
     }
 

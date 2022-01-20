@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onClick(View v) {
                 Click.preventTwoClick(v);
-                Intent intent = new Intent(activity,ForgetPasswordActivity.class);
+                Intent intent = new Intent(activity, ForgetPasswordActivity.class);
                 startActivity(intent);
             }
         });
@@ -286,7 +286,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             String name = result.getSignInAccount().getDisplayName();
             String email = result.getSignInAccount().getEmail();
             Uri image = result.getSignInAccount().getPhotoUrl();
-            successDialog(googleFlag,name,email,image);
+            successDialog(googleFlag, name, email, image);
         } else {
             H.showMessage(activity, "Sign in cancel");
         }
@@ -318,24 +318,24 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             String email = currentUser.getEmail();
                             currentUser.getUid();
                             Uri image = currentUser.getPhotoUrl();
-                            successDialog(facebookFlag,name,email,image);
+                            successDialog(facebookFlag, name, email, image);
                         } else {
-                            H.showMessage(activity,"Authentication failed.");
+                            H.showMessage(activity, "Authentication failed.");
                         }
                     }
                 });
     }
 
-    private void checkForFacebookLogin(AccessToken token){
+    private void checkForFacebookLogin(AccessToken token) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser==null){
+        if (currentUser == null) {
             handleFacebookAccessToken(token);
-        }else {
+        } else {
             String name = currentUser.getDisplayName();
             String email = currentUser.getEmail();
             currentUser.getUid();
             Uri image = currentUser.getPhotoUrl();
-            successDialog(facebookFlag,name,email,image);
+            successDialog(facebookFlag, name, email, image);
         }
     }
 
@@ -345,61 +345,59 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         callbackManager = CallbackManager.Factory.create();
 
         loginManager.registerCallback(
-                        callbackManager,
-                        new FacebookCallback<LoginResult>() {
+                callbackManager,
+                new FacebookCallback<LoginResult>() {
 
-                            @Override
-                            public void onSuccess(LoginResult loginResult) {
-                                GraphRequest request = GraphRequest.newMeRequest(
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        GraphRequest request = GraphRequest.newMeRequest(
 
-                                        loginResult.getAccessToken(),
+                                loginResult.getAccessToken(),
 
-                                        new GraphRequest.GraphJSONObjectCallback() {
+                                new GraphRequest.GraphJSONObjectCallback() {
 
-                                            @Override
-                                            public void onCompleted(JSONObject object,
-                                                                    GraphResponse response) {
+                                    @Override
+                                    public void onCompleted(JSONObject object,
+                                                            GraphResponse response) {
 
-                                                if (object != null) {
-                                                    try {
-                                                        String name = object.getString("name");
-                                                        String email = object.getString("email");
-                                                        String fbUserID = object.getString("id");
-                                                        checkForFacebookLogin(loginResult.getAccessToken());
-                                                        disconnectFromFacebook();
-                                                    } catch (JSONException | NullPointerException e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                }
-
+                                        if (object != null) {
+                                            try {
+                                                String name = object.getString("name");
+                                                String email = object.getString("email");
+                                                String fbUserID = object.getString("id");
+                                                checkForFacebookLogin(loginResult.getAccessToken());
+                                                disconnectFromFacebook();
+                                            } catch (JSONException | NullPointerException e) {
+                                                e.printStackTrace();
                                             }
-                                        });
+                                        }
 
-                                Bundle parameters = new Bundle();
-                                parameters.putString(
-                                        "fields",
-                                        "id, name, email, gender, birthday");
-                                request.setParameters(parameters);
-                                request.executeAsync();
-                            }
+                                    }
+                                });
 
-                            @Override
-                            public void onCancel() {
-                                H.showMessage(activity,"Something went wrong, try again");
-                            }
+                        Bundle parameters = new Bundle();
+                        parameters.putString(
+                                "fields",
+                                "id, name, email, gender, birthday");
+                        request.setParameters(parameters);
+                        request.executeAsync();
+                    }
 
-                            @Override
-                            public void onError(FacebookException error) {
-                                // here write code when get error
-                                H.showMessage(activity,"Something went wrong, try again");
-                            }
-                        });
+                    @Override
+                    public void onCancel() {
+                        H.showMessage(activity, "Something went wrong, try again");
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        // here write code when get error
+                        H.showMessage(activity, "Something went wrong, try again");
+                    }
+                });
     }
 
 
-
-    public void disconnectFromFacebook()
-    {
+    public void disconnectFromFacebook() {
         if (AccessToken.getCurrentAccessToken() == null) {
             return; // already logged out
         }
@@ -412,15 +410,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 new GraphRequest
                         .Callback() {
                     @Override
-                    public void onCompleted(GraphResponse graphResponse)
-                    {
+                    public void onCompleted(GraphResponse graphResponse) {
                         LoginManager.getInstance().logOut();
                     }
                 })
                 .executeAsync();
     }
 
-    private void successDialog(int flag,String name, String email, Uri image) {
+    private void successDialog(int flag, String name, String email, Uri image) {
         Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        dialog.setTitle("");
@@ -434,10 +431,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         txtTitle.setText("Google Login");
 
-        if (flag==facebookFlag){
+        if (flag == facebookFlag) {
             txtTitle.setText("Facebook Login");
             txtChangeAccount.setText("Cancel");
-        }else if (flag==googleFlag){
+        } else if (flag == googleFlag) {
             txtTitle.setText("Google Login");
         }
 
@@ -446,9 +443,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         txtChangeAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (flag==facebookFlag){
+                if (flag == facebookFlag) {
                     dialog.cancel();
-                }else if (flag==googleFlag){
+                } else if (flag == googleFlag) {
                     dialog.cancel();
                     logOutFromGoogle();
                 }

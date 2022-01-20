@@ -71,7 +71,7 @@ public class ViewAllCategoriesAdapter extends RecyclerView.Adapter<ViewAllCatego
             }
         }
 
-        Picasso.get().load(json.getString("image")).placeholder(R.drawable.ic_wp).error(R.drawable.ic_wp).into(holder.imgCategory);
+        Picasso.get().load(json.getString("image")).placeholder(R.drawable.ic_no_image).error(R.drawable.ic_no_image).into(holder.imgCategory);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -13,8 +13,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -63,7 +61,6 @@ import com.getsetgoapp.Fragment.HelpAndSupportFragment;
 import com.getsetgoapp.Fragment.HomeFragment;
 import com.getsetgoapp.Fragment.IncentivesFragment;
 import com.getsetgoapp.Fragment.KYCDocumentFragment;
-import com.getsetgoapp.Fragment.MyCourseDetailFragment;
 import com.getsetgoapp.Fragment.MyCrashCourseFragment;
 import com.getsetgoapp.Fragment.MyOrderFragment;
 import com.getsetgoapp.Fragment.MyPointsFragment;
@@ -89,7 +86,6 @@ import com.getsetgoapp.util.JumpToLogin;
 import com.getsetgoapp.util.OpenFile;
 import com.getsetgoapp.util.P;
 import com.getsetgoapp.util.WindowView;
-import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -143,7 +139,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
     TotalDirectUsersFragment totalDirectUsersFragment;
     CurrentLearningFragment currentLearningFragment;
     LinearLayout lnrDashboard, lnrCrashCourse, lnrUser, lnrEarning, lnrBusiness, lnrTransaction, lnrInsentive, lnrPoints;
-    CheckBox cbMyEarning, cbCrashCourse,cbUsers, cbBusiness, cbTransaction;
+    CheckBox cbMyEarning, cbCrashCourse, cbUsers, cbBusiness, cbTransaction;
     OnBackPressedCallback onBackPressedCallback;
     private LoadingDialog loadingDialog;
 
@@ -185,7 +181,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
 
         try {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        }catch (Exception e){
+        } catch (Exception e) {
         }
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_base_screen);
@@ -193,8 +189,8 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         init();
 
         String mobile_terms_accepted = new Session(activity).getString(P.mobile_terms_accepted);
-        if (TextUtils.isEmpty(mobile_terms_accepted) || mobile_terms_accepted.equals("0") || mobile_terms_accepted.equals("null")){
-            welcomeDialog(Config.WELCOME_VIDEO,Config.WELCOME_MESSAGE);
+        if (TextUtils.isEmpty(mobile_terms_accepted) || mobile_terms_accepted.equals("0") || mobile_terms_accepted.equals("null")) {
+            welcomeDialog(Config.WELCOME_VIDEO, Config.WELCOME_MESSAGE);
         }
 
     }
@@ -404,7 +400,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         SplashActivity.deviceWidth = H.getDeviceWidth(this);
         SplashActivity.deviceHeight = H.getDeviceHeight(this);
 
-        Log.e("TAG", "UserTokenInit: "+ token );
+        Log.e("TAG", "UserTokenInit: " + token);
 
         onCheckView();
         checkAffiliate();
@@ -782,7 +778,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
 
     public void shareApp(Context context, String link) {
 
-        String shareMessage = Config.SHARE_MESSAGE_1 + "\n\n" + "Link: "+link  + "\nRelationship Manager ID: " + new Session(activity).getString(P.referral_code) +  "\n\n"  + Config.SHARE_MESSAGE_2;
+        String shareMessage = Config.SHARE_MESSAGE_1 + "\n\n" + "Link: " + link + "\nRelationship Manager ID: " + new Session(activity).getString(P.referral_code) + "\n\n" + Config.SHARE_MESSAGE_2;
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
@@ -1135,8 +1131,8 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
         playerView = dialog.findViewById(R.id.playerView);
 
         TextView txtAgree = dialog.findViewById(R.id.txtAgree);
-        LinearLayout lnrTelegram = dialog.findViewById(R.id.lnrTelegram);
-        LinearLayout lnrFacebook = dialog.findViewById(R.id.lnrFacebook);
+        LinearLayout lnrTele = dialog.findViewById(R.id.lnrTele);
+        LinearLayout lnrFace = dialog.findViewById(R.id.lnrFace);
 
 
         txtAgree.setOnClickListener(new View.OnClickListener() {
@@ -1146,22 +1142,22 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
                 updateFistVisitStatus();
             }
         });
-        lnrTelegram.setOnClickListener(new View.OnClickListener() {
+        lnrTele.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (exoPlayer != null) {
                     exoPlayer.pause();
                 }
-                openLink(Config.WELCOME_TELEGRAM);
+                openLink(Config.WELCOME_TELE);
             }
         });
-        lnrFacebook.setOnClickListener(new View.OnClickListener() {
+        lnrFace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (exoPlayer != null) {
                     exoPlayer.pause();
                 }
-                openLink(Config.WELCOME_FACEBOOK);
+                openLink(Config.WELCOME_FACE);
             }
         });
 
@@ -1411,7 +1407,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
     }
 
     public void openLink(String url) {
-        if (!TextUtils.isEmpty(url) && !url.equals("null")){
+        if (!TextUtils.isEmpty(url) && !url.equals("null")) {
             try {
                 Intent i = new Intent();
                 i.setAction(Intent.ACTION_VIEW);
@@ -1420,7 +1416,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
             } catch (Exception e) {
                 H.showMessage(activity, "Something went wrong to open link");
             }
-        }else {
+        } else {
             H.showMessage(activity, "Path not present, try after some time");
         }
 
@@ -1451,8 +1447,8 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
                         JumpToLogin.call(Json1, this);
                         loadingDialog.dismiss();
                         if (Json1.getInt(P.status) == 1) {
-                            new Session(activity).addString(P.mobile_terms_accepted,"1");
-                            H.showMessage(activity,Json1.getString(P.msg));
+                            new Session(activity).addString(P.mobile_terms_accepted, "1");
+                            H.showMessage(activity, Json1.getString(P.msg));
                             binding.bottomNavigation.setSelectedItemId(R.id.menu_freeCourse);
                         }
                     }

@@ -19,7 +19,7 @@
             android:layout_width="@dimen/x72"
             android:layout_height="@dimen/x72"
             android:scaleType="fitXY"
-            android:src="@drawable/download"
+            android:src="@drawable/ic_no_image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:riv_corner_radius="5dp" />

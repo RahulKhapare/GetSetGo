@@ -11,69 +11,68 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="20dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="20dp">
 
                 <pl.droidsonroids.gif.GifImageView
                     android:layout_width="166dp"
                     android:layout_height="62dp"
-                    android:layout_marginTop="15dp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/appicon_anim"
-                    />
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/appicon_anim" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:text="Login"
                     android:layout_marginTop="35dp"
                     android:fontFamily="@font/nunito_sans_semibold"
-                    android:textColor="@color/colorTextDark">
+                    android:text="Login"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="24sp">
 
                 </TextView>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:text="Please enter your details to Login"
                     android:fontFamily="@font/nunito_sans_semibold"
-                    android:textColor="@color/colorTextDark">
+                    android:text="Please enter your details to Login"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="16sp">
 
                 </TextView>
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColorHint="@color/colorTextHint"
-                    android:layout_marginTop="15dp">
+                    android:layout_marginTop="15dp"
+                    android:textColorHint="@color/colorTextHint">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etxEmailAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorTextDark"
+                        android:fontFamily="@font/nunito_sans_regular"
                         android:hint="Email Address"
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
-                        android:textColorHint="@color/colorTextHint"
-                        android:fontFamily="@font/nunito_sans_regular"
                         android:textColor="@color/colorTextDark"
-                        android:backgroundTint="@color/colorTextDark"
-                        />
+                        android:textColorHint="@color/colorTextHint" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColorHint="@color/colorTextHint"
                     android:layout_marginTop="15dp"
+                    android:textColorHint="@color/colorTextHint"
                     app:passwordToggleEnabled="true"
                     app:passwordToggleTint="@color/colorPrimaryDark">
 
@@ -81,14 +80,13 @@
                         android:id="@+id/etxPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Password"
-                        android:inputType="textPassword"
-                        android:imeOptions="actionNext"
-                        android:textColorHint="@color/colorTextHint"
-                        android:fontFamily="@font/nunito_sans_regular"
-                        android:textColor="@color/colorTextDark"
                         android:backgroundTint="@color/colorTextDark"
-                        />
+                        android:fontFamily="@font/nunito_sans_regular"
+                        android:hint="Password"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPassword"
+                        android:textColor="@color/colorTextDark"
+                        android:textColorHint="@color/colorTextHint" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -97,13 +95,13 @@
                     android:id="@+id/txtForgot"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
+                    android:layout_marginTop="7dp"
+                    android:fontFamily="@font/nunit_sans_bold"
                     android:gravity="right"
                     android:padding="10dp"
-                    android:layout_marginTop="7dp"
                     android:text="Forgot Password?"
-                    android:fontFamily="@font/nunit_sans_bold"
-                    android:textColor="@color/colorTextDark">
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="16sp">
 
                 </TextView>
 
@@ -111,91 +109,78 @@
                     android:id="@+id/txtLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:padding="20dp"
                     android:layout_gravity="center"
-                    android:gravity="center"
                     android:layout_marginTop="10dp"
-                    android:text="Login"
                     android:background="@drawable/button_dark_bg"
                     android:fontFamily="@font/nunit_sans_bold"
-                    android:textColor="@color/colorWhite">
-                </TextView>
+                    android:gravity="center"
+                    android:padding="20dp"
+                    android:text="Login"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="16sp"></TextView>
 
 
                 <TextView
                     android:id="@+id/txtSignUp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:padding="20dp"
                     android:layout_gravity="center"
-                    android:gravity="center"
                     android:layout_marginTop="15dp"
-                    android:text="Sign Up"
                     android:background="@drawable/button_corner_bg"
                     android:fontFamily="@font/nunit_sans_bold"
-                    android:textColor="@color/colorTextDark">
-                </TextView>
+                    android:gravity="center"
+                    android:padding="20dp"
+                    android:text="Sign Up"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="16sp"></TextView>
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
                     android:layout_gravity="center"
-                    android:gravity="center"
                     android:layout_marginTop="10dp"
-                    android:text="OR"
                     android:fontFamily="@font/nunito_sans_regular"
-                    android:textColor="@color/colorGray"/>
+                    android:gravity="center"
+                    android:text="OR"
+                    android:textColor="@color/colorGray"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
                     android:layout_gravity="center"
-                    android:gravity="center"
                     android:layout_marginTop="10dp"
-                    android:text="Login With"
                     android:fontFamily="@font/nunit_sans_bold"
-                    android:textColor="@color/colorBlack"/>
+                    android:gravity="center"
+                    android:text="Login With"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="12sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginTop="15dp"
                     android:gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <FrameLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp">
+                        android:layout_height="wrap_content">
 
                         <com.facebook.login.widget.LoginButton
-                            android:id="@+id/login_button"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone" />
-
-                        <ImageView
                             android:id="@+id/imgFacebook"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:clickable="true"
-                            android:onClick="onFacebookClick"
-                            android:src="@drawable/ic_facebook" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
 
                     </FrameLayout>
 
-
-                    <ImageView
+                    <com.google.android.gms.common.SignInButton
                         android:id="@+id/imgGoogle"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:layout_marginLeft="10dp"
-                        android:src="@drawable/ic_google" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp" />
 
                 </LinearLayout>
 

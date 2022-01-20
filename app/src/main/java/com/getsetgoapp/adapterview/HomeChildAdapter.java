@@ -75,7 +75,7 @@ public class HomeChildAdapter extends RecyclerView.Adapter<HomeChildAdapter.Chil
 //            imagePath = "pathMustNotBeEmpty";
 //
 //        LoadImage.picasso(holder.ivCourseImage, imagePath);
-        Picasso.get().load(childItem.getString("image")).placeholder(R.drawable.ic_wp).error(R.drawable.ic_wp).into(holder.ivCourseImage);
+        Picasso.get().load(childItem.getString("image")).placeholder(R.drawable.ic_no_image).error(R.drawable.ic_no_image).into(holder.ivCourseImage);
 
         holder.llMain.setOnClickListener(new View.OnClickListener() {
             @Override

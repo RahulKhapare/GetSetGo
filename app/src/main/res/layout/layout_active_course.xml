@@ -20,7 +20,7 @@
             android:layout_height="@dimen/x100"
             android:paddingVertical="@dimen/x2"
             android:scaleType="fitXY"
-            android:src="@drawable/images"
+            android:src="@drawable/ic_no_image"
             app:riv_corner_radius="@dimen/x10" />
 
         <LinearLayout

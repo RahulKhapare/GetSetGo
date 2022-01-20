@@ -50,7 +50,7 @@ public class StudentsFeedbackAdapter extends RecyclerView.Adapter<StudentsFeedba
                 holder.ivProfile.setVisibility(View.VISIBLE);
 
                 Picasso.get().load(list.getJsonArray("course_testimonials").getJSONObject(position).getString("image"))
-                        .placeholder(R.drawable.ic_wp).error(R.drawable.ic_wp).into(holder.ivProfile);
+                        .placeholder(R.drawable.ic_no_image).error(R.drawable.ic_no_image).into(holder.ivProfile);
             }
 
         } catch (Exception e) {
