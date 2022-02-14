@@ -89,7 +89,7 @@ public class NotificationsFragment extends Fragment {
             @Override
             public void handleOnBackPressed() {
                 // Handle the back button event
-               onBackClick();
+                onBackClick();
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
@@ -97,34 +97,33 @@ public class NotificationsFragment extends Fragment {
     }
 
 
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void init(){
+    private void init() {
 
         notificationModelList = new ArrayList<>();
-        notificationAdapter = new NotificationAdapter(getContext(),notificationModelList);
+        notificationAdapter = new NotificationAdapter(getContext(), notificationModelList);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         binding.recyclerViewNotifications.setLayoutManager(linearLayoutManager);
         binding.recyclerViewNotifications.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerViewNotifications.setAdapter(notificationAdapter);
 
         onClick();
-        hitNotificationApi(getActivity(),pageCount);
+        hitNotificationApi(getActivity(), pageCount);
         setPagination();
 
     }
 
 
-    private void setPagination(){
+    private void setPagination() {
         binding.recyclerViewNotifications.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
                     loading = true;
                 }
             }
@@ -135,12 +134,12 @@ public class NotificationsFragment extends Fragment {
                 totalItemCount = linearLayoutManager.getItemCount();
                 pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition();
 
-                if (loading && (visibleItemCount + pastVisiblesItems == totalItemCount)){
+                if (loading && (visibleItemCount + pastVisiblesItems == totalItemCount)) {
                     loading = false;
-                    if (notificationModelList!=null && !notificationModelList.isEmpty()){
-                        if (notificationModelList.size()<count){
+                    if (notificationModelList != null && !notificationModelList.isEmpty()) {
+                        if (notificationModelList.size() < count) {
                             pageCount++;
-                            hitNotificationApi(getActivity(),pageCount);
+                            hitNotificationApi(getActivity(), pageCount);
                         }
                     }
                 }
@@ -148,7 +147,7 @@ public class NotificationsFragment extends Fragment {
         });
     }
 
-    private void onClick(){
+    private void onClick() {
 
         BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,13 +158,13 @@ public class NotificationsFragment extends Fragment {
 
     }
 
-    private void hitNotificationApi(Context context,int pageCount) {
+    private void hitNotificationApi(Context context, int pageCount) {
         String page = "";
-        if (pageCount!=0){
-            page = "page="+ pageCount + "";
+        if (pageCount != 0) {
+            page = "page=" + pageCount + "";
         }
         LoadingDialog loadingDialog = new LoadingDialog(context, false);
-        Api.newApi(context, P.baseUrl + "user_notifications?"+page)
+        Api.newApi(context, P.baseUrl + "user_notifications?" + page)
                 .setMethod(Api.GET)
                 .onHeaderRequest(App::getHeaders)
                 .onLoading(isLoading -> {
@@ -190,8 +189,8 @@ public class NotificationsFragment extends Fragment {
                             Json1 = Json1.getJson(P.data);
                             count = Json1.getInt(P.num_rows);
                             JsonList list = Json1.getJsonList(P.list);
-                            if (list!=null&&list.size()!=0){
-                                for (Json jsonData : list){
+                            if (list != null && list.size() != 0) {
+                                for (Json jsonData : list) {
                                     String title = jsonData.getString(P.title);
                                     String description = jsonData.getString(P.description);
                                     String action = jsonData.getString(P.action);
@@ -217,15 +216,15 @@ public class NotificationsFragment extends Fragment {
     }
 
 
-    private void checkError(){
-        if (notificationModelList.isEmpty()){
+    private void checkError() {
+        if (notificationModelList.isEmpty()) {
             binding.txtError.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             binding.txtError.setVisibility(View.GONE);
         }
     }
 
-    private void onBackClick(){
+    private void onBackClick() {
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             if (isFromBottom) {
                 getFragmentManager().popBackStackImmediate();
