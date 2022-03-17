@@ -8,13 +8,13 @@ public class P {
     public static String action_data = "action_data";
     public static String icon = "icon";
 
-//    public static String baseUrl = "https://getsetgoworld.com/dev_env/api/";
-//    public static String buy_course_base_dev = "https://getsetgoworld.com/dev_env/courses/app_purchase/";
-//    public static String buy_course_base_prod = "https://getsetgoworld.com/dev_env/program_service/app_purchase/";
+    public static String baseUrl = "https://getsetgoworld.com/dev_env/api/";
+    public static String buy_course_base_dev = "https://getsetgoworld.com/dev_env/courses/app_purchase/";
+    public static String buy_course_base_prod = "https://getsetgoworld.com/dev_env/program_service/app_purchase/";
 
-    public static String baseUrl = "https://getsetgoworld.com/api/";
-    public static String buy_course_base_dev = "https://getsetgoworld.com/courses/app_purchase/";
-    public static String buy_course_base_prod = "https://getsetgoworld.com/program_service/app_purchase/";
+//    public static String baseUrl = "https://getsetgoworld.com/api/";
+//    public static String buy_course_base_dev = "https://getsetgoworld.com/courses/app_purchase/";
+//    public static String buy_course_base_prod = "https://getsetgoworld.com/program_service/app_purchase/";
 
     public static String registration_purpose_list = "registration_purpose_list";
     public static String referrerUrl = "referrerUrl";
@@ -208,5 +208,18 @@ public class P {
     public static String country_name = "country_name";
     public static String country_shortname = "country_shortname";
     public static String referral_code = "referral_code";
+
+    public static String instructor_id = "instructor_id";
+    public static String program_date = "program_date";
+    public static String program_end_date = "program_end_date";
+    public static String program_time = "program_time";
+    public static String program_end_time = "program_end_time";
+    public static String session = "session";
+    public static String mlm_price = "mlm_price";
+    public static String skill_level = "skill_level";
+    public static String language = "language";
+    public static String instructors = "instructors";
+    public static String share_url = "share_url";
+    public static String active_course_list = "active_course_list";
 
 }

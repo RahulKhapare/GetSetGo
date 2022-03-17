@@ -28,14 +28,21 @@
 
         </LinearLayout>
 
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/recyclerViewChild"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/llSmartSchoolLabel"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:layout_marginBottom="20dp"-->
+<!--            android:paddingLeft="16dp"-->
+<!--            android:overScrollMode="never"/>-->
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewChild"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/llSmartSchoolLabel"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="20dp"
-            android:paddingLeft="16dp"
             android:overScrollMode="never"/>
 
     </RelativeLayout>

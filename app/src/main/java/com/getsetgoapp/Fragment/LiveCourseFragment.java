@@ -19,13 +19,11 @@ import com.adoisstudio.helper.Json;
 import com.adoisstudio.helper.JsonList;
 import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
-import com.getsetgoapp.Adapter.AllCrashCourseAdapter;
-import com.getsetgoapp.Adapter.ParentItemAdapter;
-import com.getsetgoapp.Model.AllCrashCourseModel;
+import com.getsetgoapp.Adapter.LiveCourseAdapter;
+import com.getsetgoapp.Model.LiveCoursesModel;
 import com.getsetgoapp.R;
 import com.getsetgoapp.activity.BaseScreenActivity;
-import com.getsetgoapp.databinding.FragmentAllCrashCourseBinding;
-import com.getsetgoapp.databinding.FragmentParentCategoriesBinding;
+import com.getsetgoapp.databinding.FragmentLiveCourseBinding;
 import com.getsetgoapp.util.App;
 import com.getsetgoapp.util.JumpToLogin;
 import com.getsetgoapp.util.P;
@@ -33,25 +31,25 @@ import com.getsetgoapp.util.P;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllCrashCourseFragment extends Fragment {
+public class LiveCourseFragment extends Fragment {
 
-    FragmentAllCrashCourseBinding binding;
-    List<AllCrashCourseModel> allCrashCourseModelList;
-    AllCrashCourseAdapter adapter;
+    FragmentLiveCourseBinding binding;
+    private LiveCourseAdapter liveCourseAdapter;
+    private List<LiveCoursesModel> liveCoursesModelList;
 
-    public AllCrashCourseFragment() {
+    public LiveCourseFragment() {
 
     }
 
-    public static AllCrashCourseFragment newInstance() {
-        AllCrashCourseFragment fragment = new AllCrashCourseFragment();
+    public static LiveCourseFragment newInstance() {
+        LiveCourseFragment fragment = new LiveCourseFragment();
         return fragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_all_crash_course, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_live_course, container, false);
         View rootView = binding.getRoot();
         init(rootView);
         BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
@@ -64,14 +62,13 @@ public class AllCrashCourseFragment extends Fragment {
     }
 
     private void init(View view) {
-//        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("All Crash Courses");
-        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("All Courses");
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Live Courses");
 
-        allCrashCourseModelList = new ArrayList<>();
-        adapter = new AllCrashCourseAdapter(getActivity(), allCrashCourseModelList);
-        binding.recyclerviewAllCrashCurse.setLayoutManager(new LinearLayoutManager(getActivity()));
-        binding.recyclerviewAllCrashCurse.setHasFixedSize(true);
-        binding.recyclerviewAllCrashCurse.setAdapter(adapter);
+        liveCoursesModelList = new ArrayList<>();
+        liveCourseAdapter = new LiveCourseAdapter(getActivity(), liveCoursesModelList);
+        binding.recyclerLiveCurses.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.recyclerLiveCurses.setHasFixedSize(true);
+        binding.recyclerLiveCurses.setAdapter(liveCourseAdapter);
 
         BaseScreenActivity.binding.incFragmenttool.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +77,7 @@ public class AllCrashCourseFragment extends Fragment {
             }
         });
 
-        callAllCrashCourseAPI(getActivity());
+//        callLiveCourseAPI(getActivity());
 
     }
 
@@ -97,7 +94,7 @@ public class AllCrashCourseFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    private void callAllCrashCourseAPI(Context context) {
+    private void callLiveCourseAPI(Context context) {
 
         LoadingDialog loadingDialog = new LoadingDialog(context, false);
         Api.newApi(context, P.baseUrl + "all_crash_course")
@@ -120,36 +117,17 @@ public class AllCrashCourseFragment extends Fragment {
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(context, Json1.getString(P.err));
                         } else {
-                            Json jsonData = Json1.getJson(P.data);
-                            JsonList jsonListData = jsonData.getJsonList(P.list);
+                            JsonList jsonListData = Json1.getJsonList(P.data);
                             if (jsonListData != null && !jsonListData.isEmpty()) {
-                                for (Json jsonValue : jsonListData) {
-                                    AllCrashCourseModel model = new AllCrashCourseModel();
-                                    model.setId(jsonValue.getString(P.id));
-                                    model.setInstructor_id(jsonValue.getString(P.instructor_id));
-                                    model.setName(jsonValue.getString(P.name));
-                                    model.setSlug(jsonValue.getString(P.slug));
-                                    model.setProgram_date(jsonValue.getString(P.program_date));
-                                    model.setProgram_end_date(jsonValue.getString(P.program_end_date));
-                                    model.setProgram_time(jsonValue.getString(P.program_time));
-                                    model.setProgram_end_time(jsonValue.getString(P.program_end_time));
-                                    model.setSession(jsonValue.getString(P.session));
-                                    model.setPrice(jsonValue.getString(P.price));
-                                    model.setMlm_price(jsonValue.getString(P.mlm_price));
-                                    model.setCategory_name(jsonValue.getString(P.category_name));
-                                    model.setSkill_level(jsonValue.getString(P.skill_level));
-                                    model.setLanguage(jsonValue.getString(P.language));
-                                    model.setShare_url(jsonValue.getString(P.share_url));
-                                    model.setIs_purchased(jsonValue.getInt(P.is_purchased));
-                                    model.setInstructors(jsonValue.getJsonList(P.instructors));
-                                    allCrashCourseModelList.add(model);
+                                for (Json jsonData : jsonListData) {
+                                    LiveCoursesModel model = new LiveCoursesModel();
                                 }
-                                adapter.notifyDataSetChanged();
+                                liveCourseAdapter.notifyDataSetChanged();
                             }
                         }
                     }
 
-                }).run("all_crash_course");
+                }).run("live_course");
     }
 
     private void onBackClick() {

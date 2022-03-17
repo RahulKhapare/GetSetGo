@@ -125,7 +125,8 @@ public class MyCrashCourseDetailFragment extends Fragment implements Player.Even
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_crash_course_details, container, false);
             context = inflater.getContext();
             courseSlug = Config.myCourseSlug;
-            BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Crash Course Details");
+            BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Course Details");
+//            BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Crash Course Details");
             BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
             BaseScreenActivity.binding.bottomNavigation.setVisibility(View.GONE);
             initView();

@@ -61,6 +61,7 @@ import com.getsetgoapp.Fragment.HelpAndSupportFragment;
 import com.getsetgoapp.Fragment.HomeFragment;
 import com.getsetgoapp.Fragment.IncentivesFragment;
 import com.getsetgoapp.Fragment.KYCDocumentFragment;
+import com.getsetgoapp.Fragment.LiveCourseFragment;
 import com.getsetgoapp.Fragment.MyCrashCourseFragment;
 import com.getsetgoapp.Fragment.MyOrderFragment;
 import com.getsetgoapp.Fragment.MyPointsFragment;
@@ -142,6 +143,7 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
     CheckBox cbMyEarning, cbCrashCourse, cbUsers, cbBusiness, cbTransaction;
     OnBackPressedCallback onBackPressedCallback;
     private LoadingDialog loadingDialog;
+    LiveCourseFragment liveCourseFragment;
 
     private static final int REQUEST_GALLARY = 9;
     private static final int PIC_CROP = 22;
@@ -729,8 +731,11 @@ public class BaseScreenActivity extends AppCompatActivity implements Player.Even
                     myCrashCourseFragment = MyCrashCourseFragment.newInstance();
                 fragmentLoader(myCrashCourseFragment, true);
                 break;
-
-
+            case R.id.txtLiveCourses:
+                if (liveCourseFragment == null)
+                    liveCourseFragment = LiveCourseFragment.newInstance();
+                fragmentLoader(liveCourseFragment, true);
+                break;
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START);
     }

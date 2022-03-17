@@ -267,11 +267,44 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_crash_course" />
+
+                        <TextView
+                            android:id="@+id/txtLiveCourses"
+                            android:layout_width="0dp"
+                            android:layout_height="35dp"
+                            android:layout_marginLeft="25dp"
+                            android:layout_weight="9"
+                            android:clickable="true"
+                            android:fontFamily="@font/nunito_sans_regular"
+                            android:gravity="start|center"
+                            android:onClick="onDrawerItemClick"
+                            android:text="Live Courses"
+                            android:textColor="@color/colorTextDark"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/lnrCrashCourse"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:orientation="horizontal"
+                        android:visibility="visible"
                         android:weightSum="10">
 
                         <ImageView
@@ -289,7 +322,7 @@
                             android:layout_weight="7.5"
                             android:fontFamily="@font/nunito_sans_regular"
                             android:gravity="start|center"
-                            android:text="Crash Courses"
+                            android:text="Live Courses"
                             android:textColor="@color/colorTextDark"
                             android:textSize="16sp" />
 
@@ -332,7 +365,7 @@
                                 android:fontFamily="@font/nunito_sans_regular"
                                 android:gravity="start|center"
                                 android:onClick="onDrawerItemClick"
-                                android:text="All Crash Courses"
+                                android:text="All Courses"
                                 android:textColor="@color/colorTextHighLight"
                                 android:textSize="14sp" />
 
@@ -361,7 +394,7 @@
                                 android:fontFamily="@font/nunito_sans_regular"
                                 android:gravity="start|center"
                                 android:onClick="onDrawerItemClick"
-                                android:text="My Crash Courses"
+                                android:text="My Courses"
                                 android:textColor="@color/colorTextHighLight"
                                 android:textSize="14sp" />
 

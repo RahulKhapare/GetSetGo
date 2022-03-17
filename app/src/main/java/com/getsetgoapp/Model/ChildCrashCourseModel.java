@@ -12,6 +12,15 @@ public class ChildCrashCourseModel {
     String price;
     String sale_price;
     String share_link;
+    String text;
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 
     public String getShare_link() {
         return share_link;

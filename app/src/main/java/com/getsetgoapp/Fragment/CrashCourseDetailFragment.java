@@ -101,6 +101,7 @@ import java.util.concurrent.TimeUnit;
 
 import static android.content.Context.AUDIO_SERVICE;
 import static com.facebook.FacebookSdk.getApplicationContext;
+import static com.getsetgoapp.util.Utilities.binding;
 import static com.getsetgoapp.util.Utilities.pxFromDp;
 
 public class CrashCourseDetailFragment extends Fragment implements GestureDetector.OnGestureListener, Api.OnHeaderRequestListener, Player.EventListener,VideoCourseQualityAdapter.onClick {
@@ -334,10 +335,12 @@ public class CrashCourseDetailFragment extends Fragment implements GestureDetect
 
         initializePlayer(view);
 
+
         String title = this.getArguments().getString("title");
         String slug = this.getArguments().getString("slug");
         isFromHome = this.getArguments().getBoolean("isFromHome");
-        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Crash Course Details");
+//        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Crash Course Details");
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("Live Course Details");
         BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.GONE);
 //        BaseScreenActivity.binding.incFragmenttool.llSubCategory.setVisibility(View.VISIBLE);
         BaseScreenActivity.binding.incFragmenttool.txtSubCat.setText(title);
@@ -372,8 +375,9 @@ public class CrashCourseDetailFragment extends Fragment implements GestureDetect
         recyclerInstructor.setHasFixedSize(true);
         recyclerInstructor.setAdapter(instructorAdapter);
 
-        callCourseDetailsApi(getActivity(), slug);
 
+        rlBuyNow.setVisibility(View.GONE);
+        callCourseDetailsApi(getActivity(), slug);
 
         txtShowMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -452,12 +456,12 @@ public class CrashCourseDetailFragment extends Fragment implements GestureDetect
         txtViewCategoryNewPrice.setText("₹ " + list.getString("saleprice"));
         txtViewCategoryOldPrice.setText("₹ " + list.getString("price"));
 
-        if (list.getBoolean("has_purchased")) {
-            rlBuyNow.setVisibility(View.GONE);
-        } else {
-            rlBuyNow.setVisibility(View.VISIBLE);
-
-        }
+//        if (list.getBoolean("has_purchased")) {
+//            rlBuyNow.setVisibility(View.GONE);
+//        } else {
+//            rlBuyNow.setVisibility(View.VISIBLE);
+//
+//        }
 
         try {
             ArrayList<String> mVideoList = new ArrayList<>();

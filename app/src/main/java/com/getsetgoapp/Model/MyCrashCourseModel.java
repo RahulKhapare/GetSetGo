@@ -2,7 +2,7 @@ package com.getsetgoapp.Model;
 
 import com.adoisstudio.helper.JsonList;
 
-public class AllCrashCourseModel {
+public class MyCrashCourseModel {
 
    String id;
    String instructor_id;

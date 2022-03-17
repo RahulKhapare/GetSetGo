@@ -20,6 +20,8 @@ import com.adoisstudio.helper.JsonList;
 import com.adoisstudio.helper.LoadingDialog;
 import com.adoisstudio.helper.MessageBox;
 import com.getsetgoapp.Adapter.MyCrashCourseAdapter;
+import com.getsetgoapp.Model.AllCrashCourseModel;
+import com.getsetgoapp.Model.MyCrashCourseModel;
 import com.getsetgoapp.R;
 import com.getsetgoapp.activity.BaseScreenActivity;
 import com.getsetgoapp.databinding.FragmentMyCrashCourseBinding;
@@ -27,11 +29,15 @@ import com.getsetgoapp.util.App;
 import com.getsetgoapp.util.JumpToLogin;
 import com.getsetgoapp.util.P;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MyCrashCourseFragment extends Fragment {
 
     FragmentMyCrashCourseBinding binding;
     MyCrashCourseAdapter myCourseAdapter;
-    JsonList activeCourseJsonList = new JsonList();
+    List<MyCrashCourseModel> myCrashCourseModelList;
+//    JsonList activeCourseJsonList = new JsonList();
 
     public MyCrashCourseFragment() {
         // Required empty public constructor
@@ -62,7 +68,8 @@ public class MyCrashCourseFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_crash_course, container, false);
         View rootView = binding.getRoot();
         init();
-        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("My Crash Courses");
+//        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("My Crash Courses");
+        BaseScreenActivity.binding.incFragmenttool.txtTittle.setText("My Courses");
         return rootView;
     }
 
@@ -84,7 +91,9 @@ public class MyCrashCourseFragment extends Fragment {
     }
 
     private void setupRecyclerViewForYourCourse() {
-        myCourseAdapter = new MyCrashCourseAdapter(getContext(),activeCourseJsonList);
+        myCrashCourseModelList = new ArrayList<>();
+        myCourseAdapter = new MyCrashCourseAdapter(getContext(),myCrashCourseModelList);
+//        myCourseAdapter = new MyCrashCourseAdapter(getContext(),activeCourseJsonList);
         binding.recyclerViewCourse.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerViewCourse.setAdapter(myCourseAdapter);
         myCourseAdapter.notifyDataSetChanged();
@@ -97,7 +106,7 @@ public class MyCrashCourseFragment extends Fragment {
                 .setMethod(Api.GET)
                 .onHeaderRequest(App::getHeaders)
                 .onLoading(isLoading -> {
-                    checkData(activeCourseJsonList);
+                    checkData(myCrashCourseModelList);
                     if (isLoading)
                         loadingDialog.show("loading...");
                     else
@@ -106,7 +115,7 @@ public class MyCrashCourseFragment extends Fragment {
                 .onError(() ->
                         MessageBox.showOkMessage(context, "Message", "Failed to login. Please try again", () -> {
                             loadingDialog.dismiss();
-                            checkData(activeCourseJsonList);
+                            checkData(myCrashCourseModelList);
                         }))
                 .onSuccess(Json1 -> {
                     if (Json1 != null) {
@@ -115,25 +124,42 @@ public class MyCrashCourseFragment extends Fragment {
                         if (Json1.getInt(P.status) == 0) {
                             H.showMessage(context, Json1.getString(P.err));
                         } else {
-                            Json json = Json1.getJson(P.data);
-                            JsonList activeCourses = new JsonList();
-                            activeCourses = json.getJsonList("active_course_list");
-
-                            if (activeCourses != null && !activeCourses.isEmpty()) {
-                                activeCourseJsonList.clear();
-                                activeCourseJsonList.addAll(activeCourses);
+                            Json jsonData = Json1.getJson(P.data);
+                            JsonList jsonListData = jsonData.getJsonList(P.active_course_list);
+                            if (jsonListData != null && !jsonListData.isEmpty()) {
+                                for (Json jsonValue : jsonListData) {
+                                    MyCrashCourseModel model = new MyCrashCourseModel();
+                                    model.setId(jsonValue.getString(P.id));
+                                    model.setInstructor_id(jsonValue.getString(P.instructor_id));
+                                    model.setName(jsonValue.getString(P.name));
+                                    model.setSlug(jsonValue.getString(P.slug));
+                                    model.setProgram_date(jsonValue.getString(P.program_date));
+                                    model.setProgram_end_date(jsonValue.getString(P.program_end_date));
+                                    model.setProgram_time(jsonValue.getString(P.program_time));
+                                    model.setProgram_end_time(jsonValue.getString(P.program_end_time));
+                                    model.setSession(jsonValue.getString(P.session));
+                                    model.setPrice(jsonValue.getString(P.price));
+                                    model.setMlm_price(jsonValue.getString(P.mlm_price));
+                                    model.setCategory_name(jsonValue.getString(P.category_name));
+                                    model.setSkill_level(jsonValue.getString(P.skill_level));
+                                    model.setLanguage(jsonValue.getString(P.language));
+                                    model.setShare_url(jsonValue.getString(P.share_url));
+                                    model.setIs_purchased(jsonValue.getInt(P.is_purchased));
+                                    model.setInstructors(jsonValue.getJsonList(P.instructors));
+                                    myCrashCourseModelList.add(model);
+                                }
                                 myCourseAdapter.notifyDataSetChanged();
                             }
                         }
-                        checkData(activeCourseJsonList);
+                        checkData(myCrashCourseModelList);
                     }
 
                 }).run("active_crash_courses");
     }
 
 
-    private void checkData(JsonList jsonList){
-        if (jsonList==null || jsonList.size()==0){
+    private void checkData(List<MyCrashCourseModel> list){
+        if (list==null || list.size()==0){
             binding.txtError.setVisibility(View.VISIBLE);
         }else {
             binding.txtError.setVisibility(View.GONE);
