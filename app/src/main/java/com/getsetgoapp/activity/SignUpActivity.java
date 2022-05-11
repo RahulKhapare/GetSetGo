@@ -625,14 +625,18 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        webView.onPause();
-        webView.pauseTimers();
+        if (webView != null) {
+            webView.onPause();
+            webView.pauseTimers();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        webView.onResume();
-        webView.resumeTimers();
+        if (webView != null) {
+            webView.onResume();
+            webView.resumeTimers();
+        }
     }
 }
